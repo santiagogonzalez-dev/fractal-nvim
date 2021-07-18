@@ -1,4 +1,3 @@
-require('settings')
-require('keymappings')
-require('plugins')
-vim.cmd('source ~/.config/nvim/vimscript/init.vim')
+require('settings') -- General settings
+require('keymappings') -- Mappings
+vim.cmd('source ~/.config/nvim/vimscript/init.vim') -- If I can't do it on lua it's probable in here.
