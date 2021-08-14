@@ -1,4 +1,5 @@
 ----  KEYMAPPINGS  ----
+-- TODO move everything from here and put in on the settings file
 
 local api = vim.api
 local cmd = vim.cmd
@@ -22,13 +23,13 @@ api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
 api.nvim_set_keymap("n", "<TAB>", ":bnext<CR>", { noremap = true, silent = true })
 api.nvim_set_keymap("n", "<S-TAB>", ":bprevious<CR>", { noremap = true, silent = true })
 
--- Move current line / block with Alt-j/k ala vscode.
-api.nvim_set_keymap("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent = true })
-api.nvim_set_keymap("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
-api.nvim_set_keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true })
-api.nvim_set_keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
-api.nvim_set_keymap("x", "<A-j>", ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
-api.nvim_set_keymap("x", "<A-k>", ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
+-- Move current block with Alt-j/k ala vscode.
+api.nvim_set_keymap("n", "<C-j>", ":m .+1<CR>==", { noremap = true, silent = true })
+api.nvim_set_keymap("n", "<C-k>", ":m .-2<CR>==", { noremap = true, silent = true })
+api.nvim_set_keymap("i", "<C-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true })
+api.nvim_set_keymap("i", "<C-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
+api.nvim_set_keymap("x", "<C-j>", ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
+api.nvim_set_keymap("x", "<C-k>", ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
 
 -- Better nav for omnicomplete
 cmd 'inoremap <expr> <c-j> ("\\<C-n>")'
