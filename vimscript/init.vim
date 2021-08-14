@@ -12,3 +12,12 @@ augroup JIUMYLOVE
     autocmd!
     autocmd BufWritePre * :call TrimWhitespace()
 augroup END
+
+noremap <expr> <SID>(search-forward) 'Nn'[v:searchforward]
+noremap <expr> <SID>(search-backward) 'nN'[v:searchforward]
+
+nmap n <SID>(search-forward)zzzv
+xmap n <SID>(search-forward)zzzv
+
+nmap N <SID>(search-backward)zzzv
+xmap N <SID>(search-backward)zzzv
