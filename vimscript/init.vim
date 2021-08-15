@@ -21,3 +21,9 @@ xmap n <SID>(search-forward)zzzv
 
 nmap N <SID>(search-backward)zzzv
 xmap N <SID>(search-backward)zzzv
+
+" Undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
