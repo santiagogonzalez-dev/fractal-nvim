@@ -23,12 +23,11 @@ vim.opt.colorcolumn = '83' -- Limiter line
 vim.opt.cursorline = true -- Draw line on cursor
 vim.opt.cmdheight = 1 -- Space for displaying messages in the command line
 -- vim.opt.guifont = 'JetBrainsMono Nerd Font:h18'
-vim.opt.showmatch = true -- Show the matching part of the pair for [] {} and ()
 vim.opt.signcolumn = 'yes' -- Show/hide signs column
 vim.api.nvim_exec('highlight visual cterm=reverse gui=reverse', false) -- Visual mode reversed colors
 vim.opt.termguicolors = false -- set term gui colors (most terminals support this)
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' } -- Menu options
-vim.opt.lazyredraw = true -- Faster scrolling
+vim.opt.lazyredraw = false -- Faster scrolling
 vim.opt.inccommand = 'split' -- Live preview of :s results
 vim.opt.scrolloff = 8 -- Cursor does not reach top/bottom
 vim.opt.sidescrolloff = 8 -- Cursor does not reach sides
@@ -45,7 +44,7 @@ vim.opt.shiftwidth = 4 -- Number of spaces per tab for indentation
 vim.opt.tabstop = 4 -- Tab length
 
 -- The function on vimscript/init.vim works better without moving your cursor to the whitespace on :w so I'll use that
--- vim.api.nvim_exec('set list listchars=nbsp:¬,tab:»·,trail:·,extends:>', false) -- Show whitespaces
+vim.api.nvim_exec('set list listchars=nbsp:¬,tab:»·,trail:·,extends:>', false) -- Show whitespaces
 -- vim.cmd([[au BufWritePre * :%s/\s\+$//e]]) -- Remove whitespace on save
 -- vim.cmd 'autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=grey' -- Show whitespace
 
@@ -65,7 +64,10 @@ vim.opt.fillchars = {
 }
 
 vim.cmd 'filetype plugin on'
+vim.cmd 'set path+=**'
+vim.cmd 'set tags+=./tags;,tags'
 vim.cmd 'set iskeyword+=-'
+
 -- Jump to the last position when reopening a file instead of typing '. to go to the last mark
 vim.cmd([[
 if has("autocmd")
@@ -73,9 +75,9 @@ if has("autocmd")
 endif
 ]])
 
--- -- 2 spaces for selected filetypes
--- cmd([[ autocmd FileType xml,html,xhtml,css,scssjavascript,lua,dart setlocal shiftwidth=2 tabstop=2 ]])
--- -- 4 spaces for selected filetypes
--- cmd([[ autocmd FileType python,c,cpp setlocal shiftwidth=4 tabstop=4 ]])
--- -- 8 spaces for Go files
--- cmd([[ autocmd FileType go setlocal shiftwidth=8 tabstop=8 ]])
+-- 2 spaces for selected filetypes
+vim.cmd([[ autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2 ]])
+-- 4 spaces for selected filetypes
+vim.cmd([[ autocmd FileType html,css,scssjavascript,lua,dart,python,c,cpp,md,sh setlocal shiftwidth=4 tabstop=4 ]])
+-- 8 spaces for Go files
+vim.cmd([[ autocmd FileType go setlocal shiftwidth=8 tabstop=8 ]])
