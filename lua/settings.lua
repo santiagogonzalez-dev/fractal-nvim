@@ -1,7 +1,6 @@
 vim.opt.ignorecase = true -- Ignore case
 vim.opt.smartcase = true -- Smart case
 vim.opt.smartindent = true -- Smart identation
-
 vim.opt.conceallevel = 0 -- Show text normally
 vim.opt.pumheight = 10 -- Pop up menu height
 vim.opt.showmode = true -- Hides/shows mode status below status line
@@ -15,7 +14,7 @@ vim.opt.list = true -- Show whitespace
 vim.opt.backspace= 'indent,start,eol' -- Make backspace behave like normal again
 vim.opt.clipboard = 'unnamedplus' -- Uses the system clipboard
 vim.opt.fileencoding = 'utf-8' -- The encode used in the file
-vim.opt.wildignore  = '*.o,*.rej,*.so'
+-- vim.opt.wildignore  = '*.o,*.rej,*.so'
 vim.opt.hidden = true -- It keeps buffers open in memory
 vim.opt.hlsearch = true -- ingremental search
 vim.opt.mouse = 'a' -- mouse can select, paste and
@@ -27,16 +26,14 @@ vim.opt.signcolumn = 'yes' -- Show/hide signs column
 vim.api.nvim_exec('highlight visual cterm=reverse gui=reverse', false) -- Visual mode reversed colors
 vim.opt.termguicolors = false -- set term gui colors (most terminals support this)
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' } -- Menu options
-vim.opt.lazyredraw = false -- Faster scrolling
+-- vim.opt.lazyredraw = false -- Faster scrolling
 vim.opt.inccommand = 'split' -- Live preview of :s results
 vim.opt.scrolloff = 8 -- Cursor does not reach top/bottom
 vim.opt.sidescrolloff = 8 -- Cursor does not reach sides
 vim.opt.splitbelow = true -- Force splits to go below current window
 vim.opt.splitright = true -- Force all vertical splits to go to the right of current window
-
 vim.opt.swapfile = false -- It does (not) creates a swapfile
 vim.opt.undofile = true -- Persistent undo - undo after you re-open the file
-
 vim.opt.showtabline = 2 -- Show top tab bar
 vim.opt.expandtab = true -- Convert tabs to spaces
 vim.opt.shiftround = true
