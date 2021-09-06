@@ -34,3 +34,7 @@ augroup numbertoggle
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
+
+" Toggle spell checking
+nnoremap <silent> <F11> :set spell!<cr>
+inoremap <silent> <F11> <C-O>:set spell!<cr>

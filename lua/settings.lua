@@ -1,8 +1,20 @@
+-- Jump to the last position when reopening a file instead of typing '. to go to the last mark
+vim.cmd([[
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+]])
+
 vim.opt.ignorecase = true -- Ignore case
 vim.opt.smartcase = true -- Smart case
 vim.opt.smartindent = true -- Smart identation
 vim.opt.conceallevel = 0 -- Show text normally
 vim.opt.pumheight = 10 -- Pop up menu height
+vim.opt.path = '**'
+vim.cmd 'filetype plugin on'
+vim.opt.tags = './tags;,tags'
+vim.cmd 'set iskeyword+=-'
+vim.opt.spelllang = 'en,cjk'
 vim.opt.showmode = true -- Hides/shows mode status below status line
 vim.opt.timeoutlen = 333 -- Time given for doing a sequence
 vim.opt.updatetime = 333 -- Faster completion - CursorHold interval
@@ -14,19 +26,15 @@ vim.opt.list = true -- Show whitespace
 vim.opt.backspace= 'indent,start,eol' -- Make backspace behave like normal again
 vim.opt.clipboard = 'unnamedplus' -- Uses the system clipboard
 vim.opt.fileencoding = 'utf-8' -- The encode used in the file
--- vim.opt.wildignore  = '*.o,*.rej,*.so'
+vim.opt.wildignore  = '*.o,*.rej,*.so'
 vim.opt.hidden = true -- It keeps buffers open in memory
 vim.opt.hlsearch = true -- ingremental search
 vim.opt.mouse = 'a' -- mouse can select, paste and
 vim.opt.colorcolumn = '83' -- Limiter line
 vim.opt.cursorline = true -- Draw line on cursor
 vim.opt.cmdheight = 1 -- Space for displaying messages in the command line
--- vim.opt.guifont = 'JetBrainsMono Nerd Font:h18'
-vim.opt.signcolumn = 'yes' -- Show/hide signs column
-vim.api.nvim_exec('highlight visual cterm=reverse gui=reverse', false) -- Visual mode reversed colors
-vim.opt.termguicolors = false -- set term gui colors (most terminals support this)
+vim.api.nvim_exec('highlight visual cterm=reverse gui=reverse', true) -- Visual mode reversed colors
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' } -- Menu options
--- vim.opt.lazyredraw = false -- Faster scrolling
 vim.opt.inccommand = 'split' -- Live preview of :s results
 vim.opt.scrolloff = 8 -- Cursor does not reach top/bottom
 vim.opt.sidescrolloff = 8 -- Cursor does not reach sides
@@ -39,11 +47,22 @@ vim.opt.expandtab = true -- Convert tabs to spaces
 vim.opt.shiftround = true
 vim.opt.shiftwidth = 4 -- Number of spaces per tab for indentation
 vim.opt.tabstop = 4 -- Tab length
+vim.opt.guifont = 'JetBrainsMono Nerd Font:h18'
+vim.opt.signcolumn = 'yes' -- Show/hide signs column
+vim.opt.termguicolors = true -- set term gui colors (most terminals support this)
+vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[let g:tokyonight_style = 'night' "]])
 
--- The function on vimscript/init.vim works better without moving your cursor to the whitespace on :w so I'll use that
-vim.api.nvim_exec('set list listchars=nbsp:¬,tab:»·,trail:·,extends:>', false) -- Show whitespaces
--- vim.cmd([[au BufWritePre * :%s/\s\+$//e]]) -- Remove whitespace on save
--- vim.cmd 'autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=grey' -- Show whitespace
+vim.tbl_map(
+  function(p)
+    vim.g["loaded_" .. p] = vim.endswith(p, "provider") and 0 or 0
+  end,
+  {
+    "perl_provider",
+    "python_provider",
+    "ruby_provider",
+  }
+)
 
 vim.opt.listchars = {
     nbsp        = '⦸',  -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
@@ -59,18 +78,6 @@ vim.opt.fillchars = {
     fold        = '·', -- MIDDLE DOT (U+00B7, UTF-8: C2 B7)
     vert        = ' ', -- remove ugly vertical lines on window division
 }
-
-vim.cmd 'filetype plugin on'
-vim.cmd 'set path+=**'
-vim.cmd 'set tags+=./tags;,tags'
-vim.cmd 'set iskeyword+=-'
-
--- Jump to the last position when reopening a file instead of typing '. to go to the last mark
-vim.cmd([[
-if has("autocmd")
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-endif
-]])
 
 -- 2 spaces for selected filetypes
 vim.cmd([[ autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2 ]])
