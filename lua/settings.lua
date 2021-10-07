@@ -1,6 +1,6 @@
 -- NEOVIM SETTINGS IN LUA
 
-vim.opt.guifont = 'Iosevka Nerd Font:h16'  -- Font used in GUI applications
+vim.opt.guifont = 'VictorMono Nerd Font'  -- Font used in GUI applications
 vim.opt.laststatus = 0  -- Mode of the status bar
 vim.opt.smartcase = true  -- Smart case
 -- vim.opt.ignorecase = true  -- Ignore case
