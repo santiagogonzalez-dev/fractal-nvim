@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["impatient.nvim"] = {
+    loaded = true,
+    path = "/home/st/.local/share/nvim/site/pack/packer/start/impatient.nvim"
+  },
   ["nvim-autopairs"] = {
     config = { "\27LJ\1\2<\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\19nvim-autopairs\frequire\0" },
     loaded = true,

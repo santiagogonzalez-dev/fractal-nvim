@@ -1,6 +1,6 @@
 -- NEOVIM SETTINGS IN LUA
 
-vim.opt.guifont = 'Fira Code Regular Nerd Font Complete:h15'  -- Font used in GUI applications
+vim.opt.guifont = 'Iosevka Nerd Font:h16'  -- Font used in GUI applications
 vim.opt.laststatus = 0  -- Mode of the status bar
 vim.opt.smartcase = true  -- Smart case
 -- vim.opt.ignorecase = true  -- Ignore case
@@ -8,9 +8,7 @@ vim.opt.conceallevel = 0  -- Show text normally
 vim.opt.smartindent = true  -- Smart indentation
 vim.opt.pumheight = 10  -- Pop up menu height
 vim.opt.path = '**'
-vim.cmd 'filetype plugin on'
 vim.opt.tags = './tags;,tags'
-vim.cmd 'set iskeyword+=-'
 vim.opt.spelllang = 'en,cjk'  -- Spell checking languages
 vim.opt.showmode = false  -- Hides/shows mode status below status line
 vim.opt.timeoutlen = 333 -- Time given for doing a sequence
@@ -47,10 +45,7 @@ vim.opt.tabstop = 4  -- Tab length
 vim.opt.shiftwidth = 4  -- Number of spaces per tab for indentation
 vim.opt.shiftround = true  -- Round indent to multiple of 'shiftwidth'
 vim.opt.signcolumn = 'number'  -- Show/hide signs column
-vim.opt.termguicolors = true  -- Set term gui colors
-
-vim.cmd([[colorscheme tokyonight]])
-vim.cmd([[let g:tokyonight_style = 'night' "]])
+-- vim.opt.termguicolors = true  -- Set term gui colors
 
 -- Disable certain sections in :checkhealth
 vim.tbl_map(
@@ -79,13 +74,6 @@ vim.opt.fillchars = {
     fold     = '·',
     vert     = ' ',
 }
-
--- 2 spaces for selected filetypes
-vim.cmd([[autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2]])
--- 4 spaces for selected filetypes
-vim.cmd([[autocmd FileType html,css,scssjavascript,lua,dart,python,c,cpp,md,sh setlocal shiftwidth=4 tabstop=4]])
--- 8 spaces for Go files
-vim.cmd([[autocmd FileType go setlocal shiftwidth=8 tabstop=8]])
 
 
 
@@ -164,6 +152,19 @@ endif
 
 
 -- VIMSCRIPT ONLY FUNCTIONS
+
+-- Vimscript settings
+vim.cmd 'filetype plugin on'
+vim.cmd 'set iskeyword+=-'
+-- vim.cmd([[colorscheme tokyonight]])
+-- vim.cmd([[let g:tokyonight_style = 'night' "]])
+
+-- 2 spaces for selected filetypes
+vim.cmd([[autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2]])
+-- 4 spaces for selected filetypes
+vim.cmd([[autocmd FileType html,css,scssjavascript,lua,dart,python,c,cpp,md,sh setlocal shiftwidth=4 tabstop=4]])
+-- 8 spaces for Go files
+vim.cmd([[autocmd FileType go setlocal shiftwidth=8 tabstop=8]])
 
 -- Trim white spaces
 vim.cmd([[
