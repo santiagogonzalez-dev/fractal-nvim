@@ -86,6 +86,10 @@ _G.packer_plugins = {
   ["packer.nvim"] = {
     loaded = true,
     path = "/home/st/.local/share/nvim/site/pack/packer/start/packer.nvim"
+  },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/home/st/.local/share/nvim/site/pack/packer/start/tokyonight.nvim"
   }
 }
 

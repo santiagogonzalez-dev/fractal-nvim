@@ -45,7 +45,7 @@ vim.opt.tabstop = 4  -- Tab length
 vim.opt.shiftwidth = 4  -- Number of spaces per tab for indentation
 vim.opt.shiftround = true  -- Round indent to multiple of 'shiftwidth'
 vim.opt.signcolumn = 'number'  -- Show/hide signs column
--- vim.opt.termguicolors = true  -- Set term gui colors
+vim.opt.termguicolors = true  -- Set term gui colors
 
 -- Disable certain sections in :checkhealth
 vim.tbl_map(
@@ -156,8 +156,8 @@ endif
 -- Vimscript settings
 vim.cmd 'filetype plugin on'
 vim.cmd 'set iskeyword+=-'
--- vim.cmd([[colorscheme tokyonight]])
--- vim.cmd([[let g:tokyonight_style = 'night' "]])
+vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[let g:tokyonight_style = 'night' "]])
 
 -- 2 spaces for selected filetypes
 vim.cmd([[autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2]])
