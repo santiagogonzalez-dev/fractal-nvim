@@ -1,6 +1,6 @@
 -- NEOVIM SETTINGS IN LUA
 
-vim.opt.guifont = 'VictorMono Nerd Font:h16'  -- Font used in GUI applications
+vim.opt.guifont = 'Iosevka Nerd Font:h16'  -- Font used in GUI applications
 vim.opt.laststatus = 0  -- Mode of the status bar
 vim.opt.smartcase = true  -- Smart case
 -- vim.opt.ignorecase = true  -- Ignore case
@@ -78,24 +78,25 @@ vim.opt.fillchars = {
 
 
 
--- KEYMAPPINGS, FUNCTIONS, AUTOMATION --
+-- KEYMAPPINGS, FUNCTIONS
 
 -- Leader key
 vim.g.mapleader = ";"
 
 -- Quick semicolon
 vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', {noremap = true, silent = true})
-
 -- Quick colon
 vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', {noremap = true, silent = true})
+-- Quick comma
+vim.api.nvim_set_keymap('n', '<Leader>,', '$a,<Esc>', {noremap = true, silent = true})
 
--- View opened buffers
-vim.api.nvim_set_keymap('n', '<Leader>ob', ':buffers<cr>', {noremap = true, silent = true})
+-- Open buffer
+vim.api.nvim_set_keymap('n', '<Leader>ob', ':buffers<cr>:b ', {noremap = true, silent = true})
 
 -- Quick save and quit
 vim.api.nvim_set_keymap('n', '<Leader>x', ':x<cr>', {noremap = true, silent = true})
 
--- Quick save and quit
+-- Quick save
 vim.api.nvim_set_keymap('n', '<Leader>w', ':w<cr>', {noremap = true, silent = true})
 
 -- Insert empty line without leaving normal mode
@@ -103,14 +104,14 @@ vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>0"_D', {noremap = true, silent 
 vim.api.nvim_set_keymap('n', '<Leader>O', 'O<Esc>0"_D', {noremap = true, silent = true})
 
 -- Switch buffers using TAB
-vim.api.nvim_set_keymap("n", "<TAB>", ":bnext<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-TAB>", ":bprevious<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', { noremap = true, silent = true })
 
 -- Move current block with Ctrl + j/k
 vim.api.nvim_set_keymap("n", "<C-j>", ":m .+1<CR>==", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", ":m .-2<CR>==", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("x", "<C-j>", ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("x", "<C-k>", ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '<C-k>', ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
 
 -- Toggle incremental search with Leader + h
 vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
@@ -127,6 +128,9 @@ vim.api.nvim_set_keymap('i', '?', '?<C-g>u', {noremap = true, silent = true})
 -- Toggle spell checking
 vim.api.nvim_set_keymap('i', '<silent> <F11>', '<C-O>:set spell!<cr>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<silent> <F11>', ':set spell!<cr>', {noremap = true, silent = true})
+
+-- Nvim tree
+vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 
 
 
