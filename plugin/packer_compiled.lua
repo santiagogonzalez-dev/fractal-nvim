@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["barbar.nvim"] = {
+    loaded = true,
+    path = "/home/st/.local/share/nvim/site/pack/packer/start/barbar.nvim"
+  },
   ["impatient.nvim"] = {
     loaded = true,
     path = "/home/st/.local/share/nvim/site/pack/packer/start/impatient.nvim"
@@ -82,6 +86,10 @@ _G.packer_plugins = {
     config = { "\27LJ\1\2:\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\17nvim_comment\frequire\0" },
     loaded = true,
     path = "/home/st/.local/share/nvim/site/pack/packer/start/nvim-comment"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/home/st/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
