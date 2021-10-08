@@ -1,19 +1,12 @@
 return require('packer').startup(function()
+
     -- Packer
-    use { 'wbthomason/packer.nvim' }
-
-    -- lsp
-    use {
-        'neovim/nvim-lspconfig',
-        'tamago324/nlsp-settings.nvim',
-        'williamboman/nvim-lsp-installer',
-    }
-
+    use 'wbthomason/packer.nvim'
 
     -- Comments
     use {
         'terrortylor/nvim-comment',
-        event = "BufRead",
+        event = 'BufRead',
         config = function()
             require('nvim_comment').setup({
                 marker_padding = true,
@@ -24,7 +17,6 @@ return require('packer').startup(function()
                 hook = nil,
             })
     end }
-
 
     -- Autopairs
     use {
@@ -47,7 +39,6 @@ return require('packer').startup(function()
             })
     end }
 
-
     -- Colorizer
     use {
         'norcalli/nvim-colorizer.lua',
@@ -55,14 +46,11 @@ return require('packer').startup(function()
             require('colorizer').setup()
     end }
 
-
     -- Colorschemes
-    use { 'folke/tokyonight.nvim' }
-
+    use 'folke/tokyonight.nvim'
 
     -- Icons
-    use { 'kyazdani42/nvim-web-devicons' }
-
+    use 'kyazdani42/nvim-web-devicons'
 
     -- Tabs Viewer
     use {
@@ -70,62 +58,41 @@ return require('packer').startup(function()
         event = "BufWinEnter",
     }
 
-
     -- Plenary
-    use { 'nvim-lua/plenary.nvim' }
-
+    use 'nvim-lua/plenary.nvim'
 
     -- Git Signs
     use {
         'lewis6991/gitsigns.nvim',
         event = "BufRead",
-        config = function()
-            require('gitsigns').setup({
-                signs = {
-                    add = {
-                        hl = "GitSignsAdd",
-                        text = "▎",
-                        numhl = "GitSignsAddNr",
-                        linehl = "GitSignsAddLn",
-                    },
-                    change = {
-                        hl = "GitSignsChange",
-                        text = "▎",
-                        numhl = "GitSignsChangeNr",
-                        linehl = "GitSignsChangeLn",
-                    },
-                    delete = {
-                        hl = "GitSignsDelete",
-                        text = "契",
-                        numhl = "GitSignsDeleteNr",
-                        linehl = "GitSignsDeleteLn",
-                    },
-                    topdelete = {
-                        hl = "GitSignsDelete",
-                        text = "契",
-                        numhl = "GitSignsDeleteNr",
-                        linehl = "GitSignsDeleteLn",
-                    },
-                    changedelete = {
-                        hl = "GitSignsChange",
-                        text = "▎",
-                        numhl = "GitSignsChangeNr",
-                        linehl = "GitSignsChangeLn",
-                    },
-                },
-                numhl = false,
-                linehl = false,
-                keymaps = {
-                    -- Default keymap options
-                    noremap = true,
-                    buffer = true,
-                },
-                watch_gitdir = { interval = 1000 },
-                sign_priority = 6,
-                update_debounce = 200,
-                status_formatter = nil, -- Use default
-            })
+        config = function () require('gitsigns').setup()
     end }
 
+    -- treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        config = function() require('nvim-treesitter.configs').setup {
+            ensure_installed = {
+                "lua", "bash", "python", "typescript", "javascript",
+                "html", "css", "c", "java", "json",
+            },
+            highlight = {
+                enable = true,
+            },
+            indent = {
+                enable = true
+            },
+            autotag = {
+                enable = true
+            },
+        }
+    end }
+
+    -- nvim-tree
+    use {
+        'kyazdani42/nvim-tree.lua',
+        config = function() require('nvim-tree').setup()
+    end }
 
 end )
