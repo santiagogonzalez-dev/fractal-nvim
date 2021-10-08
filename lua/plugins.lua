@@ -71,7 +71,7 @@ return require('packer').startup(function()
     -- treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
-        'nvim-treesitter/nvim-treesitter-textobjects',
+        requires = 'nvim-treesitter/nvim-treesitter-textobjects',
         config = function() require('nvim-treesitter.configs').setup {
             ensure_installed = {
                 "lua", "bash", "python", "typescript", "javascript",
