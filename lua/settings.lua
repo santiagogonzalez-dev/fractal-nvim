@@ -1,7 +1,7 @@
 -- NEOVIM SETTINGS IN LUA
 
 vim.opt.guifont = 'VictorMono Nerd Font'  -- Font used in GUI applications
-vim.opt.laststatus = 0  -- Mode of the status bar
+vim.opt.laststatus = 2  -- Mode of the status bar
 vim.opt.smartcase = true  -- Smart case
 vim.opt.ignorecase = true  -- Ignore case
 vim.opt.conceallevel = 0  -- Show text normally
@@ -27,27 +27,28 @@ vim.opt.hidden = true  -- It keeps buffers open in memory
 vim.opt.hlsearch = true  -- incremental search
 vim.opt.mouse = 'a'  -- mouse can select, paste and
 vim.opt.colorcolumn = '90'  -- Limiter line
-vim.opt.cursorline = true  -- Draw line on cursor
 vim.opt.cmdheight = 1  -- Space for displaying messages in the command line
-vim.api.nvim_exec('highlight visual cterm=reverse gui=reverse', true)  -- Visual mode reversed colors
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }  -- Menu options
 vim.opt.inccommand = 'nosplit'  -- Live preview of :s results
-vim.opt.scrolloff = 6  -- Cursor does not reach top/bottom
-vim.opt.sidescrolloff = 6  -- Cursor does not reach sides
 vim.opt.splitbelow = true  -- Force splits to go below current window
 vim.opt.splitright = true  -- Force all vertical splits to go to the right of current window
 vim.opt.swapfile = false  -- It does (not) creates a swapfile
 vim.opt.undofile = true  -- Persistent undo - undo after you re-open the file
-vim.opt.showtabline = 0  -- Show top tab bar
+vim.opt.showtabline = 2  -- Show top tab bar
 vim.opt.showmode = false  -- Hides/shows mode status below status line
-vim.opt.showmatch = true  -- Show matching braces
-vim.opt.matchtime = 3
+-- vim.opt.showmatch = true  -- Show matching braces
+vim.opt.matchtime = 3  -- Time for showing matching brace
 vim.opt.expandtab = true  -- Convert tabs to spaces
 vim.opt.tabstop = 4  -- Tab length
 vim.opt.shiftwidth = 4  -- Number of spaces per tab for indentation
 vim.opt.shiftround = true  -- Round indent to multiple of 'shiftwidth'
 vim.opt.signcolumn = 'number'  -- Show/hide signs column
 vim.opt.termguicolors = true  -- Set term gui colors
+vim.api.nvim_exec('highlight Visual cterm=reverse gui=reverse', true)  -- Visual mode reversed colors
+vim.opt.cursorline = true  -- Draw line on cursor
+vim.opt.cursorcolumn = true  -- Draw line on cursor
+vim.opt.scrolloff = 6  -- Cursor does not reach top/bottom
+vim.opt.sidescrolloff = 6  -- Cursor does not reach sides
 
 -- Disable certain sections in :checkhealth
 vim.tbl_map(
@@ -121,15 +122,14 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true,
 -- Yank until the end of line with Y
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
 
+-- Toggle crosshair cursor
+vim.api.nvim_set_keymap('n', '<Leader>c', ':set cursorline! cursorcolumn!<CR>', {noremap = true, silent = true})
+
 -- Undo break points
 vim.api.nvim_set_keymap('i', ',', ',<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '.', '.<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '!', '!<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '?', '?<C-g>u', {noremap = true, silent = true})
-
--- Toggle spell checking
-vim.api.nvim_set_keymap('i', '<silent> <F11>', '<C-O>:set spell!<cr>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<silent> <F11>', ':set spell!<cr>', {noremap = true, silent = true})
 
 -- Nvim tree
 vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
@@ -159,18 +159,17 @@ endif
 
 -- VIMSCRIPT ONLY FUNCTIONS
 
--- Vimscript settings
 vim.cmd 'filetype plugin on'
 vim.cmd 'set iskeyword+=-'
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd 'colorscheme tokyonight'
 vim.cmd([[let g:tokyonight_style = 'night' "]])
 
--- 2 spaces for selected filetypes
-vim.cmd([[autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2]])
--- 4 spaces for selected filetypes
-vim.cmd([[autocmd FileType html,css,scssjavascript,lua,dart,python,c,cpp,md,sh setlocal shiftwidth=4 tabstop=4]])
--- 8 spaces for Go files
-vim.cmd([[autocmd FileType go setlocal shiftwidth=8 tabstop=8]])
+-- Spaces used for indentation and tabs depending on the file
+vim.cmd([[
+autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2
+autocmd FileType html,css,scssjavascript,lua,dart,python,c,cpp,md,sh setlocal shiftwidth=4 tabstop=4
+autocmd FileType go setlocal shiftwidth=8 tabstop=8
+]])
 
 -- Trim white spaces
 vim.cmd([[

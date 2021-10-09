@@ -8,43 +8,25 @@ return require('packer').startup(function()
         'terrortylor/nvim-comment',
         event = 'BufRead',
         config = function()
-            require('nvim_comment').setup({
-                marker_padding = true,
-                comment_empty = false,
-                create_mappings = true,
-                line_mapping = 'gcc',
-                operator_mapping = 'gc',
-                hook = nil,
-            })
-    end }
+            require('configs.comments')
+        end,
+    }
 
     -- Autopairs
     use {
         'windwp/nvim-autopairs',
         config = function()
-            require('nvim-autopairs').setup({
-                map_cr = true,
-                auto_select = true,
-                insert = false,
-                map_char = {
-                    all = '(',
-                    tex = '{'
-                },
-                check_ts = true;
-                ts_config = {
-                    lua = { 'string' },
-                    javascript = { 'template_string' },
-                    java = false,
-                },
-            })
-    end }
+            require('configs.autopairs')
+        end,
+    }
 
     -- Colorizer
     use {
         'norcalli/nvim-colorizer.lua',
         config = function()
-            require('colorizer').setup()
-    end }
+            require('colorizer').setup()  -- Defaults
+        end,
+    }
 
     -- Colorschemes
     use 'folke/tokyonight.nvim'
@@ -53,46 +35,30 @@ return require('packer').startup(function()
     use 'kyazdani42/nvim-web-devicons'
 
     -- Tabs Viewer
-    use {
-        'romgrk/barbar.nvim',
-        event = "BufWinEnter",
-    }
-
-    -- Plenary
-    use 'nvim-lua/plenary.nvim'
+    use { 'romgrk/barbar.nvim',
+        event = 'BufWinEnter' }
 
     -- Git Signs
-    use {
-        'lewis6991/gitsigns.nvim',
-        event = "BufRead",
-        config = function () require('gitsigns').setup()
-    end }
+    use { 'lewis6991/gitsigns.nvim',
+        requires = 'nvim-lua/plenary.nvim',  -- Plenary
+        event = 'BufRead',
+        config = function () require('gitsigns').setup()  -- Defaults
+        end,
+    }
 
     -- treesitter
-    use {
-        'nvim-treesitter/nvim-treesitter',
+    use { 'nvim-treesitter/nvim-treesitter',
         requires = 'nvim-treesitter/nvim-treesitter-textobjects',
-        config = function() require('nvim-treesitter.configs').setup {
-            ensure_installed = {
-                "lua", "bash", "python", "typescript", "javascript",
-                "html", "css", "c", "java", "json",
-            },
-            highlight = {
-                enable = true,
-            },
-            indent = {
-                enable = true
-            },
-            autotag = {
-                enable = true
-            },
-        }
-    end }
+        config = function()
+            require('configs.treesitter')
+        end,
+    }
 
     -- nvim-tree
     use {
         'kyazdani42/nvim-tree.lua',
-        config = function() require('nvim-tree').setup()
-    end }
+        config = function() require('nvim-tree').setup()  -- Defaults
+        end,
+    }
 
 end )
