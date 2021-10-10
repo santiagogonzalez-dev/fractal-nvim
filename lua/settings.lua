@@ -1,28 +1,31 @@
 -- NEOVIM SETTINGS IN LUA
 
 vim.opt.guifont = 'Iosevka Nerd Font:h15'  -- Font used in GUI applications
+vim.opt.iskeyword = '@,48-57,192-255'  -- Word separator
 vim.opt.laststatus = 0  -- Mode of the status bar
 vim.opt.smartcase = true  -- Smart case
 vim.opt.ignorecase = true  -- Ignore case
 vim.opt.conceallevel = 0  -- Show text normally
 vim.opt.smartindent = true  -- Smart indentation
 vim.opt.pumheight = 10  -- Pop up menu height
-vim.opt.path = '**'
-vim.opt.tags = './tags;,tags'
+vim.opt.path = '**'  -- Search files recursively
+vim.opt.tags = './tags;,tags'  -- Where to search for ctags
 vim.opt.spelllang = 'en,cjk'  -- Spell checking languages
 vim.opt.timeoutlen = 333 -- Time given for doing a sequence
 vim.opt.updatetime = 33  -- Faster completion - CursorHold interval
 vim.opt.title = true  -- Set the window title based on the value of titlestring
+vim.opt.confirm = true  -- Confirm dialogs
 vim.opt.wrap = false  -- Wrap text
 vim.opt.number = true  -- Display line number on the side
-vim.opt.list = true  -- Display line number on the side
 vim.opt.relativenumber = true  -- Display line number relative to the cursor
+vim.opt.signcolumn = 'number'  -- Show/hide signs column
 vim.opt.numberwidth = 3  -- Gutter column number width
 vim.opt.cpoptions = 'aABceFs_nm' -- See :help cpoptions, this are the defaults aABceFs_
-vim.opt.backspace= 'indent,start,eol'  -- Make backspace behave like normal again
+vim.opt.backspace = 'indent,start,eol'  -- Make backspace behave like normal again
 vim.opt.clipboard = 'unnamedplus'  -- Uses the system clipboard
 vim.opt.fileencoding = 'utf-8'  -- The encode used in the file
-vim.opt.wildignore  = '*.o,*.rej,*.so'
+vim.opt.wildmenu = true  -- Enables "enhanced mode" of command-line completion
+vim.opt.wildignore = '*.o,*.rej,*.so'  -- File patterns for wildmenu
 vim.opt.hidden = true  -- It keeps buffers open in memory
 vim.opt.hlsearch = true  -- incremental search
 vim.opt.mouse = 'a'  -- mouse can select, paste and
@@ -31,7 +34,7 @@ vim.opt.cmdheight = 1  -- Space for displaying messages in the command line
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }  -- Menu options
 vim.opt.inccommand = 'nosplit'  -- Live preview of :s results
 vim.opt.splitbelow = true  -- Force splits to go below current window
-vim.opt.splitright = true  -- Force all vertical splits to go to the right of current window
+vim.opt.splitright = true  -- Force vertical splits to go to the right of current window
 vim.opt.swapfile = false  -- It does (not) creates a swapfile
 vim.opt.undofile = true  -- Persistent undo - undo after you re-open the file
 vim.opt.showtabline = 2  -- Show top tab bar
@@ -42,31 +45,42 @@ vim.opt.expandtab = false  -- Convert tabs to spaces
 vim.opt.tabstop = 4  -- Tab length
 vim.opt.shiftwidth = 4  -- Number of spaces per tab for indentation
 vim.opt.shiftround = true  -- Round indent to multiple of 'shiftwidth'
-vim.opt.signcolumn = 'number'  -- Show/hide signs column
 vim.opt.termguicolors = true  -- Set term gui colors
 vim.opt.cursorline = true  -- Draw line on cursor
 vim.opt.cursorcolumn = true  -- Draw line on cursor
 vim.opt.scrolloff = 9  -- Cursor does not reach top/bottom
 vim.opt.sidescrolloff = 9  -- Cursor does not reach sides
-vim.opt.winblend = 33  -- Enable transparency in floating windows
+vim.opt.winblend = 1  -- Enable transparency in floating windows and menus
+
 
 -- Neovide
-vim.cmd([[let g:neovide_refresh_rate=60]])
-vim.cmd([[let g:neovide_cursor_vfx_mode = "sonicboom"]])
-vim.cmd([[let g:neovide_cursor_antialiasing=v:true]])
+vim.g.neovide_refresh_rate = 60
+vim.g.neovide_cursor_vfx_mode = 'sonicboom'
+vim.g.neovide_cursor_antialiasing = 'v:true'
 
 -- Disable certain sections in :checkhealth
 vim.tbl_map(
 	function(p)
-		vim.g["loaded_" .. p] = vim.endswith(p, "provider") and 0 or 0
+		vim.g['loaded_' .. p] = vim.endswith(p, 'provider') and 0 or 0
 	end,
-	{
-		"perl_provider",
-		"python_provider",
-		"ruby_provider"
-	}
+	{ 'perl_provider', 'python_provider', 'ruby_provider' }
 )
 
+-- Disable certain builtin plugins
+vim.g.loaded_gzip         	= 1
+vim.g.loaded_tar          	= 1
+vim.g.loaded_grep        	= 1
+vim.g.loaded_tarPlugin    	= 1
+vim.g.loaded_zipPlugin    	= 1
+vim.g.loaded_2html_plugin	= 1
+vim.g.loaded_netrw        	= 1
+vim.g.loaded_netrwPlugin  	= 1
+vim.g.loaded_matchit      	= 1
+vim.g.loaded_matchparen   	= 1
+vim.g.loaded_spec         	= 1
+
+-- Show whitespaces, tabs, etc
+vim.opt.list = true  -- To show them
 vim.opt.listchars = {
     nbsp     = '⦸',
     extends  = '»',
@@ -75,7 +89,6 @@ vim.opt.listchars = {
     trail    = '•',
     space    = ' ',
 }
-
 vim.opt.fillchars = {
     diff     = '∙',
     eob      = ' ',
@@ -87,8 +100,7 @@ vim.opt.fillchars = {
 
 -- KEYMAPPINGS, FUNCTIONS
 
--- Leader key
-vim.g.mapleader = ";"
+vim.g.mapleader = ';'  -- Leader key
 
 vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', {noremap = true, silent = true})
@@ -106,16 +118,20 @@ vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = t
 vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', { noremap = true, silent = true })
 
 -- Move current block with Ctrl + j/k
-vim.api.nvim_set_keymap("n", "<C-j>", ":m .+1<CR>==", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-k>", ":m .-2<CR>==", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("x", "<C-j>", ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':m .+1<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', ':m .-2<CR>==', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '<C-j>', ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('x', '<C-k>', ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
+
+-- Center search
+vim.api.nvim_set_keymap('n', 'n', 'nzz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'N', 'Nzz', { noremap = true, silent = true })
 
 -- Toggle to show/hide searched terms
 vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
 
 -- Yank until the end of line with Y
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
+vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
 -- Undo break points
 vim.api.nvim_set_keymap('i', ',', ',<C-g>u', {noremap = true, silent = true})
@@ -140,7 +156,7 @@ augroup end
 
 -- Jump to the last position when reopening a file instead of typing '. to go to the last mark
 vim.api.nvim_exec([[
-if has("autocmd")
+if has('autocmd')
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
 ]], true)
@@ -149,10 +165,14 @@ endif
 
 -- VIMSCRIPT ONLY FUNCTIONS
 
+-- Filetype plugin enabled
 vim.cmd 'filetype plugin on'
-vim.cmd 'set iskeyword+=-'
+-- Default filetype for files without extension
+vim.cmd([[autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif]])
+
+-- Colorscheme
 vim.cmd 'colorscheme tokyonight'
-vim.cmd([[let g:tokyonight_style = 'night' "]])
+vim.g.tokyonight_style = 'night'
 
 -- Spaces used for indentation and tabs depending on the file
 vim.cmd([[
@@ -184,8 +204,8 @@ vim.cmd([[
 ]])
 
 -- Colors in visual mode
--- vim.api.nvim_exec('highlight Visual cterm=reverse gui=reverse', true)  -- Gets overwritten by colorscheme
 vim.cmd([[autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse]])
+-- vim.api.nvim_exec('highlight Visual cterm=reverse gui=reverse', true)  -- Gets overwritten by colorscheme
 
 -- LSP MOVE TO OTHER FILES, REFORMAT EVERYTHING
 local nvim_lsp = require 'lspconfig'

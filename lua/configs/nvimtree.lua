@@ -1,57 +1,64 @@
+vim.g.nvim_tree_indent_markers = 1
+vim.g.nvim_tree_git_hl = 1
+
 require('nvim-tree').setup({
-    on_config_done = nil,
-    setup = {
-        open_on_setup = 0,
-        auto_close = 1,
-        open_on_tab = 0,
-        update_focused_file = {
-            enable = 1,
-        },
-        lsp_diagnostics = 1,
-        view = {
-            width = 30,
-            side = "left",
-            auto_resize = false,
-            mappings = {
-                custom_only = false,
-            },
-        },
-    },
-    show_icons = {
-        git = 1,
-        folders = 1,
-        files = 1,
-        folder_arrows = 1,
-        tree_width = 30,
-    },
-    ignore = { ".git", "node_modules", ".cache" },
-    quit_on_open = 0,
-    hide_dotfiles = 1,
-    git_hl = 1,
-    root_folder_modifier = ":t",
-    allow_resize = 1,
-    auto_ignore_ft = { "startify", "dashboard" },
-    icons = {
-        default = "",
-        symlink = "",
-        git = {
-            unstaged = "",
-            staged = "S",
-            unmerged = "",
-            renamed = "➜",
-            deleted = "",
-            untracked = "U",
-            ignored = "◌",
-        },
-        folder = {
-            default = "",
-            open = "",
-            empty = "",
-            empty_open = "",
-            symlink = "",
-        },
-    },
+	view = {
+		side = 'right',
+		width = 33,
+		auto_resize = true,
+	},
+	auto_open = 1,
+	auto_close = 1,
+	follow = 1,
+	disable_netrw = 0,
+	setup = {
+		open_on_setup = 1,
+		auto_close = 1,
+		open_on_tab = 1,
+		update_focused_file = {
+			enable = 1,
+		},
+		lsp_diagnostics = 1,
+	},
+	show_icons = {
+		git = 1,
+		folders = 1,
+		files = 1,
+		folder_arrows = 1,
+		tree_width = 33,
+	},
+	gitignore = 1,
+	ignore = { ".git", "node_modules", ".cache" },
+	quit_on_open = 0,
+	hide_dotfiles = 0,
+	git_hl = 1,
+	root_folder_modifier = ":t",
+	allow_resize = 1,
+	icons = {
+		default = " ",
+		symlink = " ",
+		git = {
+			unstaged = " ",
+			staged = "S ",
+			unmerged = " ",
+			renamed = "➜ ",
+			deleted = " ",
+			untracked = "U ",
+			ignored = "◌ ",
+		},
+		folder = {
+			default = " ",
+			open = " ",
+			empty = " ",
+			empty_open = " ",
+			symlink = " ",
+		},
+	},
 })
+
+require('nvim-tree.events').on_nvim_tree_ready(function()
+	vim.cmd 'NvimTreeRefresh'
+end)
 
 -- Keymappings
 vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
