@@ -6,3 +6,7 @@ require('nvim_comment').setup({
     operator_mapping = 'gc',
     hook = nil,
 })
+
+-- Keymappings
+vim.api.nvim_set_keymap('n', '<Leader>c', ':CommentToggle<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<Leader>c', ':\'<,\'>CommentToggle<CR>', {noremap = true, silent = true})

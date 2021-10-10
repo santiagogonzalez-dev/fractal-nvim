@@ -1,7 +1,10 @@
 return require('packer').startup(function()
 
     -- Packer
-    use 'wbthomason/packer.nvim'
+    use {
+        'wbthomason/packer.nvim',
+        disable = false,
+    }
 
     -- Comments
     use {
@@ -12,6 +15,15 @@ return require('packer').startup(function()
         end,
         disable = false,
     }
+
+	-- Hop
+	use {
+		'phaazon/hop.nvim',
+		as = 'hop',
+		config = function()
+			require('configs.hop')
+		end,
+	}
 
     -- Autopairs
     use {
@@ -47,9 +59,10 @@ return require('packer').startup(function()
     use { 'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',  -- Plenary
         event = 'BufRead',
-        config = function () require('gitsigns').setup()  -- Defaults
+        config = function ()
+            require('configs.gitsigns')
         end,
-        disable = false,
+        disable = false,  -- Check config, slows down some motions/actions
     }
 
     -- treesitter
@@ -64,18 +77,20 @@ return require('packer').startup(function()
     -- nvim-tree
     use {
         'kyazdani42/nvim-tree.lua',
-        config = function() require('nvim-tree').setup()  -- Defaults
+        config = function()
+            require('configs.nvimtree')
         end,
         disable = false,
     }
 
     -- Everything for completion
-    -- use {
-    --     'williamboman/nvim-lsp-installer',
-    --     'neovim/nvim-lspconfig',
-    --     config = function() require('nvim-lsp-installer').setup()  -- Defaults
-    --     end,
-    --     disable = false,
-    -- }
+    use {
+        'neovim/nvim-lspconfig',
+        'hrsh7th/nvim-cmp',
+        'hrsh7th/cmp-nvim-lsp',
+        'saadparwaiz1/cmp_luasnip',
+        'L3MON4D3/LuaSnip',
+        disable = false,
+    }
 
 end )
