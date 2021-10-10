@@ -10,6 +10,7 @@ return require('packer').startup(function()
         config = function()
             require('configs.comments')
         end,
+        disable = false,
     }
 
     -- Autopairs
@@ -18,6 +19,7 @@ return require('packer').startup(function()
         config = function()
             require('configs.autopairs')
         end,
+        disable = false,
     }
 
     -- Colorizer
@@ -26,6 +28,7 @@ return require('packer').startup(function()
         config = function()
             require('colorizer').setup()  -- Defaults
         end,
+        disable = false,
     }
 
     -- Colorschemes
@@ -36,7 +39,9 @@ return require('packer').startup(function()
 
     -- Tabs Viewer
     use { 'romgrk/barbar.nvim',
-        event = 'BufWinEnter' }
+        event = 'BufWinEnter',
+        disable = false,
+        }
 
     -- Git Signs
     use { 'lewis6991/gitsigns.nvim',
@@ -44,6 +49,7 @@ return require('packer').startup(function()
         event = 'BufRead',
         config = function () require('gitsigns').setup()  -- Defaults
         end,
+        disable = false,
     }
 
     -- treesitter
@@ -52,6 +58,7 @@ return require('packer').startup(function()
         config = function()
             require('configs.treesitter')
         end,
+        disable = false,
     }
 
     -- nvim-tree
@@ -59,6 +66,16 @@ return require('packer').startup(function()
         'kyazdani42/nvim-tree.lua',
         config = function() require('nvim-tree').setup()  -- Defaults
         end,
+        disable = false,
     }
+
+    -- Everything for completion
+    -- use {
+    --     'williamboman/nvim-lsp-installer',
+    --     'neovim/nvim-lspconfig',
+    --     config = function() require('nvim-lsp-installer').setup()  -- Defaults
+    --     end,
+    --     disable = false,
+    -- }
 
 end )

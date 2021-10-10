@@ -44,7 +44,6 @@ vim.opt.shiftwidth = 4  -- Number of spaces per tab for indentation
 vim.opt.shiftround = true  -- Round indent to multiple of 'shiftwidth'
 vim.opt.signcolumn = 'number'  -- Show/hide signs column
 vim.opt.termguicolors = true  -- Set term gui colors
-vim.api.nvim_exec('highlight Visual cterm=reverse gui=reverse', true)  -- Visual mode reversed colors
 vim.opt.cursorline = true  -- Draw line on cursor
 vim.opt.cursorcolumn = true  -- Draw line on cursor
 vim.opt.scrolloff = 6  -- Cursor does not reach top/bottom
@@ -131,6 +130,9 @@ vim.api.nvim_set_keymap('i', '.', '.<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '!', '!<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '?', '?<C-g>u', {noremap = true, silent = true})
 
+-- Toggle spell checking
+vim.api.nvim_set_keymap('n', '<Leader>s', ':set spell!<CR>', {noremap = true, silent = true})
+
 -- Nvim tree
 vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 
@@ -192,3 +194,7 @@ autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | se
 autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
 ]])
+
+-- Colors in visual mode
+-- vim.api.nvim_exec('highlight Visual cterm=reverse gui=reverse', true)  -- Gets overwritten by colorscheme
+vim.cmd([[autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse]])
