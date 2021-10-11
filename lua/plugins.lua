@@ -81,8 +81,7 @@ return require('packer').startup(function()
 
 	-- Git Signs
 	use { 'lewis6991/gitsigns.nvim',
-		-- requires = 'nvim-lua/plenary.nvim',  -- Plenary
-		event = 'BufWinEnter',
+   		event = "BufRead",
 		config = function()
 			require('configs.gitsigns')
 		end,
@@ -101,7 +100,6 @@ return require('packer').startup(function()
 	-- Telescope
 	use {
 		'nvim-telescope/telescope.nvim',
-		-- requires = 'nvim-lua/plenary.nvim',  -- Plenary
 		config = function()
 			require('configs.telescope')
 		end,

@@ -52,11 +52,10 @@ vim.opt.scrolloff = 9  -- Cursor does not reach top/bottom
 vim.opt.sidescrolloff = 9  -- Cursor does not reach sides
 vim.opt.winblend = 1  -- Enable transparency in floating windows and menus
 
-
 -- Neovide
 vim.g.neovide_refresh_rate = 90
 vim.g.neovide_cursor_vfx_mode = 'sonicboom'
-vim.g.neovide_cursor_antialiasing = 1
+vim.g.neovide_cursor_antialiasing = 0
 
 -- Disable certain sections in :checkhealth
 vim.tbl_map(
@@ -105,7 +104,7 @@ vim.g.mapleader = ';'  -- Leader key
 vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', {noremap = true, silent = true})  -- Quick semicolon
 vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', {noremap = true, silent = true})  -- Quick colon
 vim.api.nvim_set_keymap('n', '<Leader>,', '$a,<Esc>', {noremap = true, silent = true})  -- Quick comma
-vim.api.nvim_set_keymap('n', '<Leader>x', ':x<CR>', {noremap = true, silent = true})  -- Quick write and save
+vim.api.nvim_set_keymap('n', '<Leader>x', ':xa<CR>', {noremap = true, silent = true})  -- Quick write and save
 
 -- Insert empty line without leaving normal mode
 vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>0"_D', {noremap = true, silent = true})
@@ -118,7 +117,7 @@ vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = t
 vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', { noremap = true, silent = true })
 
 -- Capitalize word under cursor
-vim.api.nvim_set_keymap('n', '<C-U>', 'b~', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-C>', 'b~', {noremap = true, silent = true})
 
 -- Move current block
 vim.api.nvim_set_keymap('n', '<C-j>', ':m .+1<CR>==', { noremap = true, silent = true })
@@ -126,7 +125,7 @@ vim.api.nvim_set_keymap('n', '<C-k>', ':m .-2<CR>==', { noremap = true, silent =
 vim.api.nvim_set_keymap('x', '<C-j>', ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('x', '<C-k>', ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
 
--- -- Center search
+-- Center search
 vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
 
@@ -267,10 +266,43 @@ for _, lsp in ipairs(servers) do
     }
 end
 
+-- Example custom server
+-- local sumneko_root_path = vim.fn.getenv 'HOME' .. '/.local/bin/sumneko_lua' -- Change to your sumneko root installation
+local sumneko_root_path = '/usr/bin' -- Change to your sumneko root installation
+local sumneko_binary = sumneko_root_path .. '/lua-language-server'
+
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
+
+require('lspconfig').sumneko_lua.setup {
+  cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file('', true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
