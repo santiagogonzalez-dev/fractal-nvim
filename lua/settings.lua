@@ -1,15 +1,15 @@
 -- NEOVIM SETTINGS IN LUA
 
 vim.opt.guifont = 'Iosevka Nerd Font:h15'  -- Font used in GUI applications
-vim.opt.iskeyword = '@,48-57,192-255'  -- Word separator
 vim.opt.laststatus = 0  -- Mode of the status bar
 vim.opt.smartcase = true  -- Smart case
 vim.opt.ignorecase = true  -- Ignore case
 vim.opt.conceallevel = 0  -- Show text normally
 vim.opt.smartindent = true  -- Smart indentation
+vim.opt.iskeyword:remove { '_' }  -- Word separators
 vim.opt.pumheight = 10  -- Pop up menu height
 vim.opt.path = '**'  -- Search files recursively
-vim.opt.tags = './tags;,tags'  -- Where to search for ctags
+vim.opt.tags:append './tags;,tags'  -- Where to search for ctags
 vim.opt.spelllang = 'en,cjk'  -- Spell checking languages
 vim.opt.timeoutlen = 333 -- Time given for doing a sequence
 vim.opt.updatetime = 33  -- Faster completion - CursorHold interval
@@ -20,7 +20,7 @@ vim.opt.number = true  -- Display line number on the side
 vim.opt.relativenumber = true  -- Display line number relative to the cursor
 vim.opt.signcolumn = 'number'  -- Show/hide signs column
 vim.opt.numberwidth = 3  -- Gutter column number width
-vim.opt.cpoptions = 'aABceFs_nm' -- See :help cpoptions, this are the defaults aABceFs_
+vim.opt.cpoptions:append 'nm' -- See :help cpoptions, this are the defaults aABceFs_
 vim.opt.backspace = 'indent,start,eol'  -- Make backspace behave like normal again
 vim.opt.clipboard = 'unnamedplus'  -- Uses the system clipboard
 vim.opt.fileencoding = 'utf-8'  -- The encode used in the file
@@ -54,9 +54,9 @@ vim.opt.winblend = 1  -- Enable transparency in floating windows and menus
 
 
 -- Neovide
-vim.g.neovide_refresh_rate = 60
+vim.g.neovide_refresh_rate = 90
 vim.g.neovide_cursor_vfx_mode = 'sonicboom'
-vim.g.neovide_cursor_antialiasing = 'v:true'
+vim.g.neovide_cursor_antialiasing = 1
 
 -- Disable certain sections in :checkhealth
 vim.tbl_map(
@@ -102,10 +102,10 @@ vim.opt.fillchars = {
 
 vim.g.mapleader = ';'  -- Leader key
 
-vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>,', '$a,<Esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>x', ':x<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', {noremap = true, silent = true})  -- Quick semicolon
+vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', {noremap = true, silent = true})  -- Quick colon
+vim.api.nvim_set_keymap('n', '<Leader>,', '$a,<Esc>', {noremap = true, silent = true})  -- Quick comma
+vim.api.nvim_set_keymap('n', '<Leader>x', ':x<CR>', {noremap = true, silent = true})  -- Quick write and save
 
 -- Insert empty line without leaving normal mode
 vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>0"_D', {noremap = true, silent = true})
@@ -117,15 +117,22 @@ vim.api.nvim_set_keymap('n', '<Leader>ob', ':buffers<CR>:b ', {noremap = true, s
 vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', { noremap = true, silent = true })
 
--- Move current block with Ctrl + j/k
+-- Capitalize word under cursor
+vim.api.nvim_set_keymap('n', '<C-U>', 'b~', {noremap = true, silent = true})
+
+-- Move current block
 vim.api.nvim_set_keymap('n', '<C-j>', ':m .+1<CR>==', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-k>', ':m .-2<CR>==', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('x', '<C-j>', ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('x', '<C-k>', ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
 
--- Center search
-vim.api.nvim_set_keymap('n', 'n', 'nzz', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'N', 'Nzz', { noremap = true, silent = true })
+-- -- Center search
+vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
+
+-- Reselect selection after shifting code block
+vim.api.nvim_set_keymap("x", "<", "<gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("x", ">", ">gv", { noremap = true, silent = true })
 
 -- Toggle to show/hide searched terms
 vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
@@ -138,9 +145,21 @@ vim.api.nvim_set_keymap('i', ',', ',<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '.', '.<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '!', '!<C-g>u', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('i', '?', '?<C-g>u', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', ' ', ' <C-g>u', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '_', '_<C-g>u', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', '<CR>', '<CR><C-g>u', {noremap = true, silent = true})
 
 -- Toggle spell checking
 vim.api.nvim_set_keymap('n', '<Leader>s', ':set spell!<CR>', {noremap = true, silent = true})
+
+-- Move windows using arrows
+vim.api.nvim_set_keymap("n", "<down>", ":wincmd J<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<left>", ":wincmd H<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<up>", ":wincmd K<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<right>", ":wincmd L<CR>", {noremap = true, silent = true})
+
+-- Give fenced codeblock in markdown files
+vim.g.markdown_fenced_languages = { "bash", "rust", "python", "html", "javascript", "typescript", "css", "scss", "lua", "vim" }
 
 
 
@@ -173,6 +192,7 @@ vim.cmd([[autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=mar
 -- Colorscheme
 vim.cmd 'colorscheme tokyonight'
 vim.g.tokyonight_style = 'night'
+vim.g.tokyodark_transparent_background = true
 
 -- Spaces used for indentation and tabs depending on the file
 vim.cmd([[
