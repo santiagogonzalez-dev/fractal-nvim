@@ -1,2 +1,2 @@
-require('settings') -- General settings
-require('plugins') -- Plugins
+require('settings')
+require('plugins')

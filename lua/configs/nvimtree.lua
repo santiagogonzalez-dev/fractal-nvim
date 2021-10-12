@@ -11,14 +11,10 @@ require('nvim-tree').setup({
 	auto_close = 1,
 	follow = 1,
 	disable_netrw = 0,
-	setup = {
-		open_on_setup = 1,
-		auto_close = 1,
-		open_on_tab = 1,
-		update_focused_file = {
-			enable = 1,
-		},
-		lsp_diagnostics = 1,
+	open_on_setup = 1,
+	open_on_tab = 1,
+	update_focused_file = {
+		enable = 1,
 	},
 	show_icons = {
 		git = 1,
@@ -29,7 +25,7 @@ require('nvim-tree').setup({
 	},
 	gitignore = 1,
 	ignore = { ".git", "node_modules", ".cache" },
-	quit_on_open = 0,
+	quit_on_open = 1,
 	hide_dotfiles = 0,
 	git_hl = 1,
 	root_folder_modifier = ":t",

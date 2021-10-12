@@ -1,6 +1,6 @@
 -- NEOVIM SETTINGS IN LUA
 
-vim.opt.guifont = 'Iosevka Nerd Font:h15'  -- Font used in GUI applications
+vim.opt.guifont = 'Iosevka Nerd Font:h16'  -- Font used in GUI applications
 vim.opt.laststatus = 0  -- Mode of the status bar
 vim.opt.smartcase = true  -- Smart case
 vim.opt.ignorecase = true  -- Ignore case
@@ -12,7 +12,7 @@ vim.opt.path = '**'  -- Search files recursively
 vim.opt.tags:append './tags;,tags'  -- Where to search for ctags
 vim.opt.spelllang = 'en,cjk'  -- Spell checking languages
 vim.opt.timeoutlen = 333 -- Time given for doing a sequence
-vim.opt.updatetime = 33  -- Faster completion - CursorHold interval
+vim.opt.updatetime = 333  -- Faster completion - CursorHold interval
 vim.opt.title = true  -- Set the window title based on the value of titlestring
 vim.opt.confirm = true  -- Confirm dialogs
 vim.opt.wrap = false  -- Wrap text
@@ -25,6 +25,8 @@ vim.opt.backspace = 'indent,start,eol'  -- Make backspace behave like normal aga
 vim.opt.clipboard = 'unnamedplus'  -- Uses the system clipboard
 vim.opt.fileencoding = 'utf-8'  -- The encode used in the file
 vim.opt.wildmenu = true  -- Enables "enhanced mode" of command-line completion
+vim.opt.wildmode= 'full'  -- Options for wildmenu
+vim.opt.winblend = 1  -- Enable transparency in floating windows and menus
 vim.opt.wildignore = '*.o,*.rej,*.so'  -- File patterns for wildmenu
 vim.opt.hidden = true  -- It keeps buffers open in memory
 vim.opt.hlsearch = true  -- incremental search
@@ -41,7 +43,7 @@ vim.opt.showtabline = 2  -- Show top tab bar
 vim.opt.showmode = false  -- Hides/shows mode status below status line
 vim.opt.showmatch = true  -- Show matching braces
 vim.opt.matchtime = 1  -- Time for showing matching brace
-vim.opt.expandtab = false  -- Convert tabs to spaces
+vim.opt.expandtab = true  -- Convert tabs to spaces
 vim.opt.tabstop = 4  -- Tab length
 vim.opt.shiftwidth = 4  -- Number of spaces per tab for indentation
 vim.opt.shiftround = true  -- Round indent to multiple of 'shiftwidth'
@@ -50,19 +52,18 @@ vim.opt.cursorline = true  -- Draw line on cursor
 vim.opt.cursorcolumn = true  -- Draw line on cursor
 vim.opt.scrolloff = 9  -- Cursor does not reach top/bottom
 vim.opt.sidescrolloff = 9  -- Cursor does not reach sides
-vim.opt.winblend = 1  -- Enable transparency in floating windows and menus
 
 -- Neovide
 vim.g.neovide_refresh_rate = 90
 vim.g.neovide_cursor_vfx_mode = 'sonicboom'
-vim.g.neovide_cursor_antialiasing = 0
+vim.g.neovide_cursor_antialiasing = 1
 
 -- Disable certain sections in :checkhealth
 vim.tbl_map(
-	function(p)
-		vim.g['loaded_' .. p] = vim.endswith(p, 'provider') and 0 or 0
-	end,
-	{ 'perl_provider', 'python_provider', 'ruby_provider' }
+    function(p)
+        vim.g['loaded_' .. p] = vim.endswith(p, 'provider') and 0 or 0
+    end,
+    { 'perl_provider', 'python_provider', 'ruby_provider' }
 )
 
 -- Disable certain builtin plugins
@@ -99,7 +100,7 @@ vim.opt.fillchars = {
 
 -- KEYMAPPINGS, FUNCTIONS
 
-vim.g.mapleader = ';'  -- Leader key
+vim.g.mapleader = ' '  -- Leader key
 
 vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', {noremap = true, silent = true})  -- Quick semicolon
 vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', {noremap = true, silent = true})  -- Quick colon
@@ -110,8 +111,6 @@ vim.api.nvim_set_keymap('n', '<Leader>x', ':xa<CR>', {noremap = true, silent = t
 vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>0"_D', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>O', 'O<Esc>0"_D', {noremap = true, silent = true})
 
--- Change buffer
-vim.api.nvim_set_keymap('n', '<Leader>ob', ':buffers<CR>:b ', {noremap = true, silent = true})
 -- Switch buffers using TAB and SHIFT-TAB
 vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', { noremap = true, silent = true })
@@ -134,7 +133,7 @@ vim.api.nvim_set_keymap("x", "<", "<gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("x", ">", ">gv", { noremap = true, silent = true })
 
 -- Toggle to show/hide searched terms
-vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-N>', ':set hlsearch!<CR>', {noremap = true, silent = true})
 
 -- Yank until the end of line with Y
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
@@ -150,6 +149,12 @@ vim.api.nvim_set_keymap('i', '<CR>', '<CR><C-g>u', {noremap = true, silent = tru
 
 -- Toggle spell checking
 vim.api.nvim_set_keymap('n', '<Leader>s', ':set spell!<CR>', {noremap = true, silent = true})
+
+-- Move between windows
+vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>h', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', { noremap = true, silent = true })
 
 -- Move windows using arrows
 vim.api.nvim_set_keymap("n", "<down>", ":wincmd J<CR>", {noremap = true, silent = true})
@@ -167,17 +172,17 @@ vim.g.markdown_fenced_languages = { "bash", "rust", "python", "html", "javascrip
 -- Highlight on yank
 vim.api.nvim_exec([[
 augroup yankhighlight
-    autocmd!
-    autocmd textyankpost * silent! lua vim.highlight.on_yank()
+autocmd!
+autocmd textyankpost * silent! lua vim.highlight.on_yank()
 augroup end
-]], true)
+    ]], true)
 
 -- Jump to the last position when reopening a file instead of typing '. to go to the last mark
 vim.api.nvim_exec([[
 if has('autocmd')
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
-]], true)
+    ]], true)
 
 
 
@@ -185,8 +190,12 @@ endif
 
 -- Filetype plugin enabled
 vim.cmd 'filetype plugin on'
+
 -- Default filetype for files without extension
-vim.cmd([[autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif]])
+vim.cmd([[ autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]])
+
+-- Set correct filetype
+vim.cmd([[ autocmd BufNewFile,BufRead *.conf set filetype=conf ]])
 
 -- Colorscheme
 vim.cmd 'colorscheme tokyonight'
@@ -195,31 +204,31 @@ vim.g.tokyodark_transparent_background = true
 
 -- Spaces used for indentation and tabs depending on the file
 vim.cmd([[
-	autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2
-	autocmd FileType html,css,scssjavascript,lua,dart,python,c,cpp,md,sh setlocal shiftwidth=4 tabstop=4
-	autocmd FileType go setlocal shiftwidth=8 tabstop=8
+autocmd FileType xml,xhtml,dart setlocal shiftwidth=2 tabstop=2
+autocmd FileType html,css,scssjavascript,lua,dart,python,c,cpp,md,sh setlocal shiftwidth=4 tabstop=4
+autocmd FileType go setlocal shiftwidth=8 tabstop=8
 ]])
 
 -- Trim white spaces
 vim.cmd([[
-	fun! TrimWhitespace()
-		let l:save = winsaveview()
-		keeppatterns %s/\s\+$//e
-		call winrestview(l:save)
-	endfun
-	augroup JIUMYLOVE
-		autocmd!
-		autocmd BufWritePre * :call TrimWhitespace()
-	augroup END
+fun! TrimWhitespace()
+let l:save = winsaveview()
+keeppatterns %s/\s\+$//e
+call winrestview(l:save)
+endfun
+augroup JIUMYLOVE
+autocmd!
+autocmd BufWritePre * :call TrimWhitespace()
+augroup END
 ]])
 
 -- Automatic toggling between line number modes
 vim.cmd([[
-	augroup numbertoggle
-	autocmd!
-	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-	autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
-	augroup END
+augroup numbertoggle
+autocmd!
+autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
 ]])
 
 -- Colors in visual mode
@@ -258,13 +267,14 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'bashls', 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
         capabilities = capabilities,
     }
 end
+
 
 -- Example custom server
 -- local sumneko_root_path = vim.fn.getenv 'HOME' .. '/.local/bin/sumneko_lua' -- Change to your sumneko root installation
@@ -277,31 +287,31 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 require('lspconfig').sumneko_lua.setup {
-  cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file('', true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
+    cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = runtime_path,
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file('', true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
     },
-  },
 }
 
 -- Set completeopt to have a better completion experience

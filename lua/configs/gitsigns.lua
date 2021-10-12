@@ -46,3 +46,6 @@ require('gitsigns').setup({
         status_formatter = nil, -- Use default
     },
 })
+
+-- Keymappings
+vim.api.nvim_set_keymap('n', '<Leader>gs', ':Gitsigns toggle_signs<CR>', { noremap = true, silent = true })
