@@ -1,12 +1,13 @@
                              -- NEOVIM SETTINGS --
 
 vim.o.spelllang = 'en,cjk'  -- Spell checking languages
-vim.o.timeoutlen = 333 -- Time given for doing a sequence
+vim.o.timeoutlen = 333  -- Time given for doing a sequence
 vim.o.updatetime = 333  -- Faster completion - CursorHold interval
 vim.o.clipboard = 'unnamedplus'  -- Uses the system clipboard
 vim.o.hidden = true  -- It keeps buffers open in memory
 vim.opt.grepprg = "rg --vimgrep"  -- Grep command
-vim.opt.joinspaces = false -- No double spaces with join after a dot
+vim.o.shell = 'zsh'  -- Shell to use for `!`, `:!`, `system()` etc.
+vim.opt.joinspaces = false  -- No double spaces with join after a dot
 
 vim.o.laststatus = 0  -- Mode of the status bar
 vim.o.conceallevel = 0  -- Show text normally
@@ -22,16 +23,16 @@ vim.o.showmatch = true  -- Show matching braces
 vim.o.matchtime = 1  -- Time for showing matching brace
 vim.o.number = true  -- Display line number on the side
 vim.o.relativenumber = true  -- Display line number relative to the cursor
-vim.o.signcolumn = 'yes:1' -- 'number' -- Always show signcolumn
+vim.o.signcolumn = 'yes:1'  -- 'number' -- Always show signcolumn
 vim.o.numberwidth = 3  -- Gutter column number width
 vim.o.colorcolumn = '80'  -- Limiter line
 vim.o.pumheight = 10  -- Pop up menu height
 vim.opt.pumblend = 5  -- Popup blend
 vim.o.confirm = true  -- Confirm dialogs
 vim.o.backspace = 'indent,start,eol'  -- Make backspace behave like normal again
-vim.opt.cpoptions:append 'nm' -- See :help cpoptions, this are the defaults aABceFs_
-vim.opt.shm:append 'c' -- Helps to avoid all the |hit-enter| prompts
-vim.opt.iskeyword:remove '_' -- Word separators
+vim.opt.cpoptions:append 'nm'  -- See :help cpoptions, this are the defaults aABceFs_
+vim.opt.shm:append 'c'  -- Helps to avoid all the |hit-enter| prompts
+vim.opt.iskeyword:remove '_'  -- Word separators
 vim.opt.tags:append './tags;,tags'  -- Where to search for ctags
 
 vim.wo.cursorline = true  -- Draw line on cursor
@@ -55,7 +56,7 @@ vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }  -- Menu options
 local indent = 4
 vim.o.expandtab = true  -- Convert tabs to spaces
 vim.o.shiftround = true  -- Round indent to multiple of 'shiftwidth'
-vim.o.shiftwidth = indent  -- Size of an indent
+vim.o.shiftwidth = indent  -- Size of a > or < when indenting
 vim.o.tabstop = indent  -- Tab length
 vim.o.softtabstop = indent  -- Tab length
 vim.o.smartindent = true  -- Smart indentation
@@ -64,8 +65,8 @@ vim.o.smarttab = true  -- Smart indentation
 vim.o.ignorecase = true  -- Ignore case
 vim.o.smartcase = true  -- Smart case
 vim.o.lazyredraw = true  -- Lazy redraw the screen
-vim.o.hlsearch = true  -- incremental search
-vim.o.incsearch = true
+vim.o.hlsearch = true  -- Highlighting search
+vim.o.incsearch = true  -- Incremental search
 vim.o.inccommand = 'nosplit'  -- Live preview of :s results
 
 vim.o.list = true  -- Show invisible characters
@@ -128,8 +129,8 @@ vim.cmd([[
 vim.o.termguicolors = true  -- Set term gui colors
 vim.cmd 'colorscheme tokyonight'  -- Select colorscheme
 vim.g.tokyonight_style = 'night'  -- Colorscheme specific settings
-vim.g.tokyodark_transparent_background = true  -- Colorscheme specific setting
-vim.api.nvim_exec([[ autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse ]], true) -- Colors in visual mode
+vim.g.tokyodark_transparent_background = false  -- Colorscheme specific setting
+vim.api.nvim_exec([[ autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse ]], true)  -- Colors in visual mode
 
 
                                  -- NEOVIDE --

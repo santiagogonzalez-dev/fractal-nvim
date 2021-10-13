@@ -5,6 +5,10 @@ require('packer').startup(function(use)
     use {
         'wbthomason/packer.nvim',
         disable = false,
+        config = {
+            -- Move to lua dir so impatient.nvim can cache it
+            compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'
+        }
     }
 
 
