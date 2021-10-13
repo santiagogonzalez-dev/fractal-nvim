@@ -5,22 +5,8 @@ require('packer').startup(function(use)
     use {
         'wbthomason/packer.nvim',
         disable = false,
-        config = {
-            -- Move to lua dir so impatient.nvim can cache it
-            compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'
-        }
     }
 
-
-    -- Impatient
-    use {
-        'lewis6991/impatient.nvim',
-        opt = true,
-        config = function()
-            require 'impatient'
-            require('impatient').enable_profile()
-        end,
-    }
 
     -- Comment
     use {
@@ -139,7 +125,6 @@ require('packer').startup(function(use)
     -- treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
-        after = 'impatient.nvim',
         module = 'nvim-treesitter',
         opt = true,
         event = 'BufRead',
@@ -154,7 +139,6 @@ require('packer').startup(function(use)
     -- Telescope
     use {
         'nvim-telescope/telescope.nvim',
-        after = "impatient.nvim",
         cmd = { "Telescope" },
         event = { "CursorMoved", "CursorHold" },
         config = function()
