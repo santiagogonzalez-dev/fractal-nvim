@@ -1,4 +1,4 @@
-return require('packer').startup(function()
+require('packer').startup(function(use)
 
 
     -- Packer
@@ -8,9 +8,20 @@ return require('packer').startup(function()
     }
 
 
+    -- Impatient
+    use {
+        'lewis6991/impatient.nvim',
+        opt = true,
+        config = function()
+            require 'impatient'
+            require('impatient').enable_profile()
+        end,
+    }
+
     -- Comment
     use {
         'numToStr/Comment.nvim',
+        event = 'BufEnter',
         config = function()
             require('Comment').setup({
                 ignore = '^$',
@@ -23,12 +34,12 @@ return require('packer').startup(function()
     -- Autopairs
     use {
         'windwp/nvim-autopairs',
+        event = 'InsertEnter',
         config = function()
             require('nvim-autopairs').setup({
                 check_ts = true,
                 ts_config = {
-                    -- lua = { "string" },
-                    javascript = { "template_string" },
+                    javascript = { 'template_string' },
                     java = false,
                 },
             })
@@ -46,6 +57,7 @@ return require('packer').startup(function()
     use {
         'phaazon/hop.nvim',
         as = 'hop',
+        event = 'BufEnter',
         config = function()
             require('hop').setup({
                 keys = 'aoeusnthlrcg,.p'
@@ -53,7 +65,7 @@ return require('packer').startup(function()
         end,
 
         -- Keymappings
-        vim.api.nvim_set_keymap('n', '<Leader>m', ':HopPattern<CR>', {noremap = true, silent = true}),
+        vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<CR>', {noremap = true, silent = true}),
 
         disable = false,
     }
@@ -61,10 +73,17 @@ return require('packer').startup(function()
 
     -- Colorizer
     use {
-        'norcalli/nvim-colorizer.lua',
-        filetype = "html,css", -- or "latex"
+        "norcalli/nvim-colorizer.lua",
+        event = { "CursorMoved", "CursorHold" },
+        module = 'nvim-colorizer',
+        opt = true,
         config = function()
-            require('colorizer').setup()  -- Defaults
+            require("colorizer").setup({
+                "*",
+            }, {
+                    mode = "foreground",
+                })
+            vim.cmd [[ColorizerAttachToBuffer]]
         end,
         disable = false,
     }
@@ -78,30 +97,34 @@ return require('packer').startup(function()
     use {
         'kyazdani42/nvim-web-devicons',
         module = 'nvim-web-devicons',
+        opt = true,
         disable = false,
     }
 
 
     -- Tabs Viewer
     use { 'romgrk/barbar.nvim',
+        module = 'barbar',
+        opt = true,
         event = 'BufWinEnter',
-        disable = false,
         config = function()
             require('configs.barbar')
         end,
+        disable = false,
     }
 
 
     -- Plenary
     use {
         'nvim-lua/plenary.nvim',
-        module = 'plenary',
+        disable = false,
     }
 
 
     -- Git Signs
-    use { 'lewis6991/gitsigns.nvim',
-        event = "BufRead",
+    use {
+        'lewis6991/gitsigns.nvim',
+        event = 'BufRead',
         config = function()
             require('configs.gitsigns')
         end,
@@ -110,8 +133,13 @@ return require('packer').startup(function()
 
 
     -- treesitter
-    use { 'nvim-treesitter/nvim-treesitter',
-        requires = 'nvim-treesitter/nvim-treesitter-textobjects',
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        after = 'impatient.nvim',
+        module = 'nvim-treesitter',
+        opt = true,
+        event = 'BufRead',
+        require = 'nvim-treesitter/nvim-treesitter-textobjects',
         config = function()
             require('configs.treesitter')
         end,
@@ -122,6 +150,9 @@ return require('packer').startup(function()
     -- Telescope
     use {
         'nvim-telescope/telescope.nvim',
+        after = "impatient.nvim",
+        cmd = { "Telescope" },
+        event = { "CursorMoved", "CursorHold" },
         config = function()
             require('telescope').setup()
         end,
@@ -133,9 +164,7 @@ return require('packer').startup(function()
     use {
         'kyazdani42/nvim-tree.lua',
         module = 'nvim-tree',
-        -- keys = {
-        --     {"n", "<Leader>n"}
-        -- },
+        opt = true,
         config = function()
             require('configs.nvimtree')
         end,
@@ -147,6 +176,7 @@ return require('packer').startup(function()
     use {
         'neovim/nvim-lspconfig',
         'williamboman/nvim-lsp-installer',
+        event = 'InsertEnter',
         disable = false,
     }
 
@@ -157,6 +187,7 @@ return require('packer').startup(function()
         'hrsh7th/cmp-nvim-lsp',
         'saadparwaiz1/cmp_luasnip',
         'L3MON4D3/LuaSnip',
+        event = 'InsertEnter',
         config = function()
             require('configs.cmp')
         end,

@@ -5,6 +5,8 @@ vim.o.timeoutlen = 333 -- Time given for doing a sequence
 vim.o.updatetime = 333  -- Faster completion - CursorHold interval
 vim.o.clipboard = 'unnamedplus'  -- Uses the system clipboard
 vim.o.hidden = true  -- It keeps buffers open in memory
+vim.opt.grepprg = "rg --vimgrep"  -- Grep command
+vim.opt.joinspaces = false -- No double spaces with join after a dot
 
 vim.o.laststatus = 0  -- Mode of the status bar
 vim.o.conceallevel = 0  -- Show text normally
@@ -20,10 +22,11 @@ vim.o.showmatch = true  -- Show matching braces
 vim.o.matchtime = 1  -- Time for showing matching brace
 vim.o.number = true  -- Display line number on the side
 vim.o.relativenumber = true  -- Display line number relative to the cursor
-vim.o.signcolumn = 'number'  -- Show/hide signs column
+vim.o.signcolumn = 'yes:1' -- 'number' -- Always show signcolumn
 vim.o.numberwidth = 3  -- Gutter column number width
 vim.o.colorcolumn = '80'  -- Limiter line
 vim.o.pumheight = 10  -- Pop up menu height
+vim.opt.pumblend = 5  -- Popup blend
 vim.o.confirm = true  -- Confirm dialogs
 vim.o.backspace = 'indent,start,eol'  -- Make backspace behave like normal again
 vim.opt.cpoptions:append 'nm' -- See :help cpoptions, this are the defaults aABceFs_
@@ -38,20 +41,23 @@ vim.wo.sidescrolloff = 9  -- Cursor does not reach sides
 
 vim.o.swapfile = false  -- It does (not) creates a swapfile
 vim.o.undofile = true  -- Persistent undo - undo after you re-open the file
+vim.opt.undolevels = 10000  -- Levels of undoing
 vim.o.fileencoding = 'utf-8'  -- The encode used in the file
 vim.o.path = '**'  -- Search files recursively
 
 vim.o.wildmenu = true  -- Enables 'enhanced mode' of command-line completion
-vim.o.wildmode= 'full'  -- Options for wildmenu
-vim.o.winblend = 1  -- Enable transparency in floating windows and menus
+vim.o.wildmode= 'longest:full,full'  -- Options for wildmenu
+vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
+vim.o.winblend = 0  -- Enable transparency in floating windows and menus
 vim.o.wildignore = '*.o,*.rej,*.so'  -- File patterns for wildmenu
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }  -- Menu options
 
+local indent = 4
 vim.o.expandtab = true  -- Convert tabs to spaces
 vim.o.shiftround = true  -- Round indent to multiple of 'shiftwidth'
-vim.o.shiftwidth = 4  -- Number of spaces per tab for indentation
-vim.o.tabstop = 4  -- Tab length
-vim.o.softtabstop = 4  -- Tab length
+vim.o.shiftwidth = indent  -- Size of an indent
+vim.o.tabstop = indent  -- Tab length
+vim.o.softtabstop = indent  -- Tab length
 vim.o.smartindent = true  -- Smart indentation
 vim.o.smarttab = true  -- Smart indentation
 
@@ -62,10 +68,10 @@ vim.o.hlsearch = true  -- incremental search
 vim.o.incsearch = true
 vim.o.inccommand = 'nosplit'  -- Live preview of :s results
 
-vim.o.list = true  -- Show whitespaces, tabs, etc
+vim.o.list = true  -- Show invisible characters
 vim.o.showbreak = "↪"
 vim.opt.listchars = {
-    nbsp     = '⦸',
+    nbsp     = '␣',
     extends  = '»',
     precedes = '«',
     tab      = '▷-',
@@ -95,7 +101,7 @@ vim.g.markdown_fenced_languages = {
 }
 
 -- In case you misspell commands
-vim.cmd [[
+vim.cmd([[
     abbr slef self
     abbr cosntants constants
     abbr unkown unknown
@@ -114,7 +120,7 @@ vim.cmd [[
     cnoreabbrev W w
     cnoreabbrev Q q
     cnoreabbrev Qa qa
-]]
+]])
 
 
                                -- COLORSCHEME --
@@ -123,6 +129,7 @@ vim.o.termguicolors = true  -- Set term gui colors
 vim.cmd 'colorscheme tokyonight'  -- Select colorscheme
 vim.g.tokyonight_style = 'night'  -- Colorscheme specific settings
 vim.g.tokyodark_transparent_background = true  -- Colorscheme specific setting
+vim.api.nvim_exec([[ autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse ]], true) -- Colors in visual mode
 
 
                                  -- NEOVIDE --
@@ -149,31 +156,30 @@ vim.tbl_map(
 
 -- Disable certain builtin plugins
 local disabled_built_ins = {
-    "2html_plugin",
-    "getscript",
-    "getscriptPlugin",
-    "gzip",
-    "zip",
-    "zipPlugin",
-    "logipat",
-    "matchit",
-    "matchparen",
-    "netrw",
-    "netrwPlugin",
-    "netrwFileHandlers",
-    "netrwSettings",
-    "remote_plugins",
-    "tar",
-    "rrhelper",
-    "tarPlugin",
-    "shada_plugin",
-    "spec",
-    "tutor_mode_plugin",
-    "vimball",
-    "vimballPlugin",
+    '2html_plugin',
+    'getscript',
+    'getscriptPlugin',
+    'gzip',
+    'zip',
+    'zipPlugin',
+    'logipat',
+    'matchit', 'matchparen',
+    'netrw',
+    'netrwPlugin',
+    'netrwFileHandlers',
+    'netrwSettings',
+    'remote_plugins',
+    'tar',
+    'rrhelper',
+    'tarPlugin',
+    'shada_plugin',
+    'spec',
+    'tutor_mode_plugin',
+    'vimball',
+    'vimballPlugin',
 }
 for _, plugin in pairs(disabled_built_ins) do
-    vim.g["loaded_" .. plugin] = 1
+    vim.g['loaded_' .. plugin] = 1
 end
 
 
@@ -246,33 +252,44 @@ vim.api.nvim_set_keymap('n', '<right>', ':wincmd L<CR>', {noremap = true, silent
 
                        -- AUTOMATION AND AUTOCOMMANDS --
 
--- Highlight on yank
+-- Automatically reload file if contents changed
+vim.api.nvim_exec([[autocmd FocusGained * :checktime]], true)
+
+-- Show cursor crosshair only in active window
 vim.api.nvim_exec([[
-augroup yankhighlight
-    autocmd!
-    autocmd textyankpost * silent! lua vim.highlight.on_yank()
-augroup end
+autocmd InsertLeave,WinEnter * set cursorline
+autocmd InsertEnter,WinLeave * set nocursorline
+autocmd InsertLeave,WinEnter * set cursorcolumn
+autocmd InsertEnter,WinLeave * set nocursorcolumn
 ]], true)
+
+-- Set spellchecking in files
+vim.api.nvim_exec([[autocmd Filetype gitcommit,md,tex,txt setlocal spell]], true)
+
+-- Write to all buffers when exit
+vim.api.nvim_exec([[
+augroup ConfigGroup
+    autocmd!
+    autocmd FocusLost * silent! wa!
+augroup END
+]], true)
+
+-- Highlight on yank
+vim.api.nvim_exec([[ autocmd TextYankPost * silent! lua vim.highlight.on_yank {} ]], true)
 
 -- Jump to the last position when reopening a file instead of typing '. to go to the last mark
-vim.api.nvim_exec([[
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-]], true)
+vim.api.nvim_exec([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif ]], true)
 
--- Default filetype for files without extension
-vim.api.nvim_exec([[
-autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif
-]], true)
-
--- Set correct filetype
+-- Filetype set correctly
 vim.api.nvim_exec([[ autocmd BufNewFile,BufRead *.conf set filetype=conf ]], true)
 
+-- Default filetype for files without extension
+vim.api.nvim_exec([[ autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]], true)
+
 -- Spaces used for indentation and tabs depending on the file extension
-vim.api.nvim_exec([[
-autocmd FileType html,css,scss,xml,xhtml,dart setlocal shiftwidth=2 tabstop=2
-autocmd FileType javascript,lua,dart,python,c,cpp,md,sh,java setlocal shiftwidth=4 tabstop=4
-autocmd FileType go setlocal shiftwidth=8 tabstop=8
-]], true)
+vim.api.nvim_exec([[ autocmd FileType html,css,scss,xml,xhtml,dart setlocal shiftwidth=2 tabstop=2 ]], true)
+vim.api.nvim_exec([[ autocmd FileType javascript,lua,dart,python,c,cpp,md,sh,java setlocal shiftwidth=4 tabstop=4 ]], true)
+vim.api.nvim_exec([[ autocmd FileType go setlocal shiftwidth=8 tabstop=8 ]], true)
 
 -- Trim white spaces
 vim.api.nvim_exec([[
@@ -295,24 +312,6 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
 ]], true)
-
--- Colors in visual mode
-vim.api.nvim_exec([[
-autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse
-]], true)
-
-
-                            -- TERMINAL EMULATOR --
-
-vim.cmd [[
-augroup ConfigGroup
-    autocmd!
-    autocmd FocusLost * silent! wa!
-    autocmd BufRead,BufNewFile *.har set filetype=json
-    autocmd FileType yaml,javascript,json,html,jinja.html,toml,vue setlocal sw=2 ts=2 sts=2
-    autocmd Filetype gitcommit,md,tex,txt setlocal spell
-augroup END
-]]
 
                -- LSP MOVE TO OTHER FILES, REFORMAT EVERYTHING --
 local nvim_lsp = require 'lspconfig'

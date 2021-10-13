@@ -1,4 +1,4 @@
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.configs').setup({
     ensure_installed = {"lua", "python", "java", "bash", "javascript"},
     highlight = {
         enable = true,
@@ -10,4 +10,4 @@ require('nvim-treesitter.configs').setup {
     autotag = {
         enable = true
     },
-}
+})
