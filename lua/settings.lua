@@ -5,7 +5,7 @@ vim.o.timeoutlen = 333  -- Time given for doing a sequence
 vim.o.updatetime = 333  -- Faster completion - CursorHold interval
 vim.o.clipboard = 'unnamedplus'  -- Uses the system clipboard
 vim.o.hidden = true  -- It keeps buffers open in memory
-vim.opt.grepprg = "rg --vimgrep"  -- Grep command
+vim.opt.grepprg = 'rg --vimgrep'  -- Grep command
 vim.o.shell = 'zsh'  -- Shell to use for `!`, `:!`, `system()` etc.
 vim.opt.joinspaces = false  -- No double spaces with join after a dot
 
@@ -48,7 +48,7 @@ vim.o.path = '**'  -- Search files recursively
 
 vim.o.wildmenu = true  -- Enables 'enhanced mode' of command-line completion
 vim.o.wildmode= 'longest:full,full'  -- Options for wildmenu
-vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
+vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize' }
 vim.o.winblend = 0  -- Enable transparency in floating windows and menus
 vim.o.wildignore = '*.o,*.rej,*.so'  -- File patterns for wildmenu
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }  -- Menu options
@@ -70,7 +70,7 @@ vim.o.incsearch = true  -- Incremental search
 vim.o.inccommand = 'nosplit'  -- Live preview of :s results
 
 vim.o.list = true  -- Show invisible characters
-vim.o.showbreak = "↪"
+vim.o.showbreak = '↪'
 vim.opt.listchars = {
     nbsp     = '␣',
     extends  = '»',
