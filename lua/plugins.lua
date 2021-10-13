@@ -132,9 +132,10 @@ return require('packer').startup(function()
     -- nvim-tree
     use {
         'kyazdani42/nvim-tree.lua',
-        keys = {
-            {"n", "<Leader>n"}
-        },
+        module = 'nvim-tree',
+        -- keys = {
+        --     {"n", "<Leader>n"}
+        -- },
         config = function()
             require('configs.nvimtree')
         end,
