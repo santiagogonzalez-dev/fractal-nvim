@@ -1,4 +1,5 @@
                              -- NEOVIM SETTINGS --
+
 vim.o.spelllang = 'en,cjk'  -- Spell checking languages
 vim.o.timeoutlen = 333  -- Time given for doing a sequence
 vim.o.updatetime = 333  -- Faster completion - CursorHold interval
