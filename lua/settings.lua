@@ -1,5 +1,4 @@
                              -- NEOVIM SETTINGS --
-
 vim.o.spelllang = 'en,cjk'  -- Spell checking languages
 vim.o.timeoutlen = 333  -- Time given for doing a sequence
 vim.o.updatetime = 333  -- Faster completion - CursorHold interval
@@ -141,179 +140,6 @@ vim.g.neovide_cursor_vfx_mode = 'sonicboom'
 vim.g.neovide_cursor_antialiasing = 1
 
 
-                            -- DISABLED SETTINGS --
-
--- Disable certain sections in :checkhealth
-vim.tbl_map(
-    function(p)
-        vim.g['loaded_' .. p] = vim.endswith(p, 'provider') and 0 or 0
-    end,
-    {
-        'perl_provider',
-        'python_provider',
-        'ruby_provider',
-    }
-)
-
--- Disable certain builtin plugins
-local disabled_built_ins = {
-    '2html_plugin',
-    'getscript',
-    'getscriptPlugin',
-    'gzip',
-    'zip',
-    'zipPlugin',
-    'logipat',
-    'matchit', 'matchparen',
-    'netrw',
-    'netrwPlugin',
-    'netrwFileHandlers',
-    'netrwSettings',
-    'remote_plugins',
-    'tar',
-    'rrhelper',
-    'tarPlugin',
-    'shada_plugin',
-    'spec',
-    'tutor_mode_plugin',
-    'vimball',
-    'vimballPlugin',
-}
-for _, plugin in pairs(disabled_built_ins) do
-    vim.g['loaded_' .. plugin] = 1
-end
-
-
-                               -- KEYMAPPINGS --
-
--- Leader key
-vim.g.mapleader = ' '
-
--- Quick actions
-vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>,', '$a,<Esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>x', ':xa<CR>', {noremap = true, silent = true})
-
--- Insert empty line without leaving normal mode
-vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>O', 'O<Esc>', {noremap = true, silent = true})
-
--- Switch buffers using TAB and SHIFT-TAB
-vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', { noremap = true, silent = true })
-
--- Capitalize word under cursor
-vim.api.nvim_set_keymap('n', '<C-C>', 'b~', {noremap = true, silent = true})
-
--- Move current block
-vim.api.nvim_set_keymap('n', '<C-j>', ':m .+1<CR>==', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', ':m .-2<CR>==', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '<C-j>', ":m '>+1<CR>gv-gv", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '<C-k>', ":m '<-2<CR>gv-gv", { noremap = true, silent = true })
-
--- Center searches
-vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
-
--- Reselect selection after shifting code block
-vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true, silent = true })
-
--- Toggle to show/hide searched terms
-vim.api.nvim_set_keymap('n', '<C-N>', ':set hlsearch!<CR>', {noremap = true, silent = true})
-
--- Yank until the end of line with Y
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
-
--- Undo break points
-vim.api.nvim_set_keymap('i', ',', ',<C-g>u', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '.', '.<C-g>u', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '!', '!<C-g>u', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '?', '?<C-g>u', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', ' ', ' <C-g>u', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '_', '_<C-g>u', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '<CR>', '<CR><C-g>u', {noremap = true, silent = true})
-
--- Toggle spell checking
-vim.api.nvim_set_keymap('n', '<Leader>s', ':set spell!<CR>', {noremap = true, silent = true})
-
--- Move between windows
-vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>h', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', { noremap = true, silent = true })
-
--- Rearrange windows using arrows
-vim.api.nvim_set_keymap('n', '<down>', ':wincmd J<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<left>', ':wincmd H<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<up>', ':wincmd K<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<right>', ':wincmd L<CR>', {noremap = true, silent = true})
-
-
-                       -- AUTOMATION AND AUTOCOMMANDS --
-
--- Automatically reload file if contents changed
-vim.api.nvim_exec([[autocmd FocusGained * :checktime]], true)
-
--- Show cursor crosshair only in active window
-vim.api.nvim_exec([[
-autocmd InsertLeave,WinEnter * set cursorline
-autocmd InsertEnter,WinLeave * set nocursorline
-autocmd InsertLeave,WinEnter * set cursorcolumn
-autocmd InsertEnter,WinLeave * set nocursorcolumn
-]], true)
-
--- Set spellchecking in files
-vim.api.nvim_exec([[autocmd Filetype gitcommit,md,tex,txt setlocal spell]], true)
-
--- Write to all buffers when exit
-vim.api.nvim_exec([[
-augroup ConfigGroup
-    autocmd!
-    autocmd FocusLost * silent! wa!
-augroup END
-]], true)
-
--- Highlight on yank
-vim.api.nvim_exec([[ autocmd TextYankPost * silent! lua vim.highlight.on_yank {} ]], true)
-
--- Jump to the last position when reopening a file instead of typing '. to go to the last mark
-vim.api.nvim_exec([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif ]], true)
-
--- Filetype set correctly
-vim.api.nvim_exec([[ autocmd BufNewFile,BufRead *.conf set filetype=conf ]], true)
-
--- Default filetype for files without extension
-vim.api.nvim_exec([[ autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]], true)
-
--- Spaces used for indentation and tabs depending on the file extension
-vim.api.nvim_exec([[ autocmd FileType html,css,scss,xml,xhtml,dart setlocal shiftwidth=2 tabstop=2 ]], true)
-vim.api.nvim_exec([[ autocmd FileType javascript,lua,dart,python,c,cpp,md,sh,java setlocal shiftwidth=4 tabstop=4 ]], true)
-vim.api.nvim_exec([[ autocmd FileType go setlocal shiftwidth=8 tabstop=8 ]], true)
-
--- Trim white spaces
-vim.api.nvim_exec([[
-fun! TrimWhitespace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-endfun
-augroup JIUMYLOVE
-    autocmd!
-    autocmd BufWritePre * :call TrimWhitespace()
-augroup END
-]], true)
-
--- Automatic toggling between line number modes
-vim.api.nvim_exec([[
-augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-    autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
-augroup END
-]], true)
-
                -- LSP MOVE TO OTHER FILES, REFORMAT EVERYTHING --
 local nvim_lsp = require 'lspconfig'
 local on_attach = function(_, bufnr)
@@ -346,7 +172,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'bashls', 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'bashls', 'clangd', 'rust_analyzer', 'pyright', 'denols' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
@@ -374,9 +200,9 @@ require('lspconfig').sumneko_lua.setup {
             runtime = {
                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                 version = 'LuaJIT',
-                -- Setup your lua path
                 path = runtime_path,
             },
+            -- Setup your lua path
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
                 globals = { 'vim' },
