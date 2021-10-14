@@ -16,6 +16,7 @@ require('packer').startup(function(use)
             require('Comment').setup({
                 ignore = '^$',
             })
+            require('Comment.ft').set('dosini', '#%s')
         end,
         disable = false,
     }

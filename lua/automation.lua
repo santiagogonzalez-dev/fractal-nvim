@@ -29,7 +29,7 @@ vim.api.nvim_exec([[ autocmd TextYankPost * silent! lua vim.highlight.on_yank {}
 vim.api.nvim_exec([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif ]], true)
 
 -- Filetype set correctly
-vim.api.nvim_exec([[ autocmd BufNewFile,BufRead *.conf set filetype=conf ]], true)
+-- vim.api.nvim_exec([[ autocmd BufNewFile,BufRead *.conf set filetype=conf ]], true)
 
 -- Default filetype for files without extension
 vim.api.nvim_exec([[ autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]], true)
