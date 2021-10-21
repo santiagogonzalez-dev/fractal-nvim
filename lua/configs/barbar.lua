@@ -3,7 +3,7 @@ vim.g.bufferline = {
     animation = true,
 
     -- Enable/disable auto-hiding the tab bar when there is a single buffer
-    auto_hide = true,
+    auto_hide = false,
 
     -- Enable/disable current/total tabpages indicator (top right corner)
     tabpages = true,
@@ -67,4 +67,4 @@ vim.g.bufferline = {
 
 -- Keymappings
 -- For this mapping, you either do <Leader>bw + <CR> or <Leader>bw + <BUFFER NUMBER> + <CR>
-vim.api.nvim_set_keymap('n', '<Leader>bw', ':BufferWipeout ', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>bw', ':BufferWipeout<CR>', { noremap = true, silent = true })

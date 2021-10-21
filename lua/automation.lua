@@ -1,4 +1,4 @@
-                              --  AUTOCOMMANDS --
+--  AUTOCOMMANDS --
 
 -- Automatically reload file if contents changed
 vim.api.nvim_exec([[autocmd FocusGained * :checktime]], true)
@@ -29,14 +29,13 @@ vim.api.nvim_exec([[ autocmd TextYankPost * silent! lua vim.highlight.on_yank {}
 vim.api.nvim_exec([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif ]], true)
 
 -- Filetype set correctly
--- vim.api.nvim_exec([[ autocmd BufNewFile,BufRead *.conf set filetype=conf ]], true)
+vim.api.nvim_exec([[ autocmd BufNewFile,BufRead *.conf set filetype=dosini ]], true)
 
 -- Default filetype for files without extension
 vim.api.nvim_exec([[ autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]], true)
 
 -- Spaces used for indentation and tabs depending on the file extension
 vim.api.nvim_exec([[ autocmd FileType html,css,scss,xml,xhtml setlocal shiftwidth=2 tabstop=2 ]], true)
-vim.api.nvim_exec([[ autocmd FileType javascript,lua,dart,python,c,cpp,md,sh,java setlocal shiftwidth=4 tabstop=4 ]], true)
 vim.api.nvim_exec([[ autocmd FileType go setlocal shiftwidth=8 tabstop=8 ]], true)
 
 -- Trim white spaces
@@ -60,3 +59,9 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
 ]], true)
+
+-- Disable limiter line in certain type of files
+vim.api.nvim_exec([[ autocmd FileType help,zsh,conf,dosini,text,markdown,html,javascript,typescript setlocal colorcolumn=0 ]], true)
+
+-- Add + and = as pairs for java, c and cpp
+vim.api.nvim_exec([[ autocmd FileType c,cpp,java set mps+==:; ]], true)

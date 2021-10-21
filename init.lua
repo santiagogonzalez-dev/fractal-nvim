@@ -1,53 +1,64 @@
-                            -- DISABLED SETTINGS --
-
--- Disable certain sections in :checkhealth
-vim.tbl_map(
-    function(p)
-        vim.g['loaded_' .. p] = vim.endswith(p, 'provider') and 0 or 0
-    end,
-    {
-        'perl_provider',
-        'python_provider',
-        'ruby_provider',
-    }
-)
-
 -- Disable certain builtin plugins
-local disabled_built_ins = {
-    '2html_plugin',
-    'getscript',
-    'getscriptPlugin',
-    'gzip',
-    'zip',
-    'zipPlugin',
-    'logipat',
-    'matchit', 'matchparen',
-    'netrw',
-    'netrwPlugin',
-    'netrwFileHandlers',
-    'netrwSettings',
-    'remote_plugins',
-    'tar',
-    'rrhelper',
-    'tarPlugin',
-    'shada_plugin',
-    'spec',
-    'tutor_mode_plugin',
-    'vimball',
-    'vimballPlugin',
-}
-for _, plugin in pairs(disabled_built_ins) do
-    vim.g['loaded_' .. plugin] = 1
-end
 
--- Plugins, configs and keymappings, some will have them in lua/configs
-require('plugins')
+vim.cmd [[
+    syntax off
+    filetype off
+]]
+-- filetype plugin indent off  -- Messes up with Comment.nvim
 
--- Most of the settings
-require('settings')
+vim.o.shadafile = "NONE"
 
--- Keymappings native to Neovim
-require('keymappings')
+vim.g.loaded_netrw = false
+vim.g.loaded_netrwFileHandlers = false
+vim.g.loaded_netrwPlugin = false
+vim.g.loaded_netrwSettings = false
+vim.g.loaded_2html_plugin = false
+vim.g.loaded_getscript = false
+vim.g.loaded_getscriptPlugin = false
+vim.g.loaded_gzip = false
+vim.g.loaded_logipat = false
+vim.g.loaded_man = false
+vim.g.loaded_remote_plugins = false
+vim.g.loaded_rrhelper = false
+vim.g.loaded_shada_plugin = false
+vim.g.loaded_spec = false
+vim.g.loaded_tar = false
+vim.g.loaded_tarPlugin = false
+vim.g.loaded_tutor_mode_plugin = false
+vim.g.loaded_vimball = false
+vim.g.loaded_vimballPlugin = false
+vim.g.loaded_zip = false
+vim.g.loaded_zip = false
+vim.g.loaded_zipPlugin = false
+vim.g.loaded_perl_provider = false
+vim.g.loaded_python_provider = false
+vim.g.loaded_ruby_provider = false
 
--- Autocammands and stuff that should be done automatically
-require('automation')
+vim.g.matchit = true
+vim.g.matchparen = true
+
+
+-- Defer the load of everything
+
+vim.g.mapleader = " "
+vim.opt.termguicolors = true
+
+vim.defer_fn(function ()
+
+    vim.o.shadafile = ""
+
+    require('plugins')
+    require('lsp.init')
+    require('settings')
+    require('keymappings')
+    require('automation')
+
+    vim.cmd([[
+        rshada!
+        doautocmd BufRead
+        syntax on
+        filetype on
+    ]])
+    -- filetype plugin indent on  -- Messes up with Comment.nvim
+
+end, 0)

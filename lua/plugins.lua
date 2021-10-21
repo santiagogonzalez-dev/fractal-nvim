@@ -1,10 +1,29 @@
 require('packer').startup(function(use)
 
-
     -- Packer
     use {
         'wbthomason/packer.nvim',
-        disable = false,
+        vim.api.nvim_set_keymap('n', '<Leader>ps', ':PackerSync<CR>', {noremap = true, silent = true}),
+        vim.api.nvim_set_keymap('n', '<Leader>pu', ':PackerUpdate<CR>', {noremap = true, silent = true}),
+        vim.api.nvim_set_keymap('n', '<Leader>pc', ':PackerCompile<CR>', {noremap = true, silent = true}),
+    }
+
+    use {
+        'folke/tokyonight.nvim',
+        'sainnhe/everforest',
+        'sainnhe/sonokai',
+    }
+
+    -- ColorScheme
+    vim.g.tokyonight_style='night'
+    vim.api.nvim_exec([[ autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse ]], true)  -- Colors in visual mode
+    -- vim.g.sonokai_style = 'andromeda'
+    vim.cmd([[ colorscheme tokyonight ]])  -- Select colorscheme
+
+
+    -- Icons
+    use {
+        'kyazdani42/nvim-web-devicons',
     }
 
 
@@ -12,13 +31,15 @@ require('packer').startup(function(use)
     use {
         'numToStr/Comment.nvim',
         event = 'BufEnter',
+        keys = { '<Leader>c', 'gc' },
         config = function()
             require('Comment').setup({
                 ignore = '^$',
             })
             require('Comment.ft').set('dosini', '#%s')
+            require('Comment.ft').set('zsh', '#%s')
+            require('Comment.ft').set('help', '#%s')
         end,
-        disable = false,
     }
 
 
@@ -26,21 +47,29 @@ require('packer').startup(function(use)
     use {
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
+        after = 'nvim-cmp',
         config = function()
             require('nvim-autopairs').setup({
                 check_ts = true,
                 ts_config = {
                     javascript = { 'template_string' },
-                    java = false,
+                    java = true,
                 },
+                enable_check_bracket_line = false,
             })
             require('nvim-autopairs.completion.cmp').setup {
-                map_cr = true, --  map <CR> on insert mode
-                map_complete = true, -- it will auto insert `(` after select function or method item
-                auto_select = true, -- automatically select the first item
+                map_cr = true,  -- map <CR> on insert mode
+                map_complete = true,  -- it will auto insert `(` after select function or method item
+                auto_select = true,  -- automatically select the first item
             }
         end,
-        disable = false,
+    }
+
+
+    -- Autotags
+    use {
+        'windwp/nvim-ts-autotag',
+        after = 'nvim-treesitter',
     }
 
 
@@ -53,134 +82,110 @@ require('packer').startup(function(use)
             require('hop').setup({
                 keys = 'aoeusnthlrcg,.p'
             })
-        end,
-
-        -- Keymappings
+        end, -- Keymappings
         vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<CR>', {noremap = true, silent = true}),
+    }
 
-        disable = false,
+
+    -- Treesitter textobjects
+    use {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        opt = true,
+    }
+
+
+    -- Treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        event = 'BufRead',  -- For some reason nvim-ts-autotag only works when I don't lazyload treesitter
+        requires = 'nvim-treesitter-textobjects',
+        config = function()
+            require('configs.treesitter')
+        end,
+    }
+
+
+    -- Nvim-tree
+    use {
+        'kyazdani42/nvim-tree.lua',
+        config = function()
+            require('configs.nvimtree')
+        end,
+    }
+
+
+    -- Tabs Viewer
+    use {
+        'romgrk/barbar.nvim',
+        event = 'BufEnter',
+        config = function()
+            require('configs.barbar')
+        end,
     }
 
 
     -- Colorizer
     use {
-        "norcalli/nvim-colorizer.lua",
-        event = { "CursorMoved", "CursorHold" },
-        module = 'nvim-colorizer',
-        opt = true,
+        'norcalli/nvim-colorizer.lua',
+        ft = {
+            'html',
+            'css',
+        },
+        event = { 'CursorMoved', 'CursorHold' },
         config = function()
-            require("colorizer").setup({
-                "*",
+            require('colorizer').setup({
+                '*',
             }, {
-                    mode = "foreground",
+                    mode = 'foreground',
                 })
             vim.cmd [[ColorizerAttachToBuffer]]
         end,
-        disable = false,
-    }
-
-
-    -- Colorschemes
-    use 'folke/tokyonight.nvim'
-
-
-    -- Icons
-    use {
-        'kyazdani42/nvim-web-devicons',
-        module = 'nvim-web-devicons',
-        opt = true,
-        disable = false,
-    }
-
-
-    -- Tabs Viewer
-    use { 'romgrk/barbar.nvim',
-        module = 'barbar',
-        opt = true,
-        event = 'BufWinEnter',
-        config = function()
-            require('configs.barbar')
-        end,
-        disable = false,
     }
 
 
     -- Plenary
     use {
         'nvim-lua/plenary.nvim',
-        disable = false,
     }
 
 
     -- Git Signs
     use {
         'lewis6991/gitsigns.nvim',
-        event = 'BufRead',
+        -- event = 'BufRead',
+        event = 'VimEnter',
+        after = 'plenary.nvim',
+        requires = 'plenary.nvim',
         config = function()
-            require('configs.gitsigns')
+            require('configs.gitcolumnsigns')
         end,
-        disable = false,  -- Check config, slows down some motions/actions
     }
 
 
-    -- treesitter
+    -- Indent Blankline
     use {
-        'nvim-treesitter/nvim-treesitter',
-        module = 'nvim-treesitter',
-        opt = true,
-        event = 'BufRead',
-        require = 'nvim-treesitter/nvim-treesitter-textobjects',
+        'lukas-reineke/indent-blankline.nvim',
+        cmd = 'IndentBlanklineToggle',
         config = function()
-            require('configs.treesitter')
+            require('indent_blankline').setup({
+                show_current_context = true,
+            })
         end,
-        disable = false,
+        -- Keymapping to toggle them, because I find the lines very annoyying displayed all the time
+        vim.api.nvim_set_keymap('n', '<C-i>', ':IndentBlanklineToggle<CR>', {noremap = true, silent = true}),
+
     }
 
 
-    -- Telescope
-    use {
-        'nvim-telescope/telescope.nvim',
-        cmd = { "Telescope" },
-        event = { "CursorMoved", "CursorHold" },
-        config = function()
-            require('telescope').setup()
-        end,
-        disable = false,
-    }
-
-
-    -- nvim-tree
-    use {
-        'kyazdani42/nvim-tree.lua',
-        module = 'nvim-tree',
-        opt = true,
-        config = function()
-            require('configs.nvimtree')
-        end,
-        disable = false,
-    }
-
-
-    -- LSP and language server installation
-    use {
-        'neovim/nvim-lspconfig',
-        'williamboman/nvim-lsp-installer',
-        event = 'InsertEnter',
-        disable = false,
-    }
-
-
-    -- Completion engine with cmp
+    -- Completion engine with cmp and
+    -- LSP and snippets
     use {
         'hrsh7th/nvim-cmp',
         'hrsh7th/cmp-nvim-lsp',
+        'L3MON4D3/LuaSnip',  -- Snippets plugin
         'saadparwaiz1/cmp_luasnip',
-        'L3MON4D3/LuaSnip',
+        'neovim/nvim-lspconfig',  -- Collection of configurations for built-in LSP client
         event = 'InsertEnter',
-        config = function()
-            require('configs.cmp')
-        end,
-        disable = false,
     }
 
 
