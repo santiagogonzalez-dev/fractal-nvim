@@ -171,9 +171,6 @@ require('packer').startup(function(use)
                 show_current_context = true,
             })
         end,
-        -- Keymapping to toggle them, because I find the lines very annoyying displayed all the time
-        vim.api.nvim_set_keymap('n', '<C-i>', ':IndentBlanklineToggle<CR>', {noremap = true, silent = true}),
-
     }
 
 

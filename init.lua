@@ -1,4 +1,5 @@
--- Disable certain builtin plugins
+-- INIT --
+
 
 vim.cmd [[
     syntax off
@@ -37,21 +38,19 @@ vim.g.loaded_ruby_provider = false
 vim.g.matchit = true
 vim.g.matchparen = true
 
-
 -- Defer the load of everything
 
 vim.g.mapleader = " "
 vim.opt.termguicolors = true
 
 vim.defer_fn(function ()
-
     vim.o.shadafile = ""
 
+    -- Plugins
     require('plugins')
+    -- Completion, LSP, cmp
     require('lsp.init')
     require('settings')
-    require('keymappings')
-    require('automation')
 
     vim.cmd([[
         rshada!
@@ -60,5 +59,4 @@ vim.defer_fn(function ()
         filetype on
     ]])
     -- filetype plugin indent on  -- Messes up with Comment.nvim
-
 end, 0)
