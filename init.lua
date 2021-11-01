@@ -1,18 +1,13 @@
--- INIT --
+vim.cmd([[
+	syntax off
+	filetype off
+	filetype plugin indent off
+]])
 
+local rtp = vim.opt.runtimepath:get()
+vim.opt.runtimepath = ''
+vim.o.shadafile = 'NONE'
 
-vim.cmd [[
-    syntax off
-    filetype off
-]]
--- filetype plugin indent off  -- Messes up with Comment.nvim
-
-vim.o.shadafile = "NONE"
-
-vim.g.loaded_netrw = false
-vim.g.loaded_netrwFileHandlers = false
-vim.g.loaded_netrwPlugin = false
-vim.g.loaded_netrwSettings = false
 vim.g.loaded_2html_plugin = false
 vim.g.loaded_getscript = false
 vim.g.loaded_getscriptPlugin = false
@@ -34,29 +29,28 @@ vim.g.loaded_zipPlugin = false
 vim.g.loaded_perl_provider = false
 vim.g.loaded_python_provider = false
 vim.g.loaded_ruby_provider = false
+-- vim.g.loaded_netrw = false
+-- vim.g.loaded_netrwFileHandlers = false
+-- vim.g.loaded_netrwPlugin = false
+-- vim.g.loaded_netrwSettings = false
+-- vim.g.matchit = false
+-- vim.g.matchparen = false
 
-vim.g.matchit = true
-vim.g.matchparen = true
-
--- Defer the load of everything
-
-vim.g.mapleader = " "
-vim.opt.termguicolors = true
+vim.o.shadafile = ''
+vim.opt.runtimepath = rtp
+vim.g.mapleader = ' '
+vim.g.localleader = ' '
+require('settings')
+require('plugins')
 
 vim.defer_fn(function ()
-    vim.o.shadafile = ""
-
-    -- Plugins
-    require('plugins')
-    -- Completion, LSP, cmp
-    require('lsp.init')
-    require('settings')
-
-    vim.cmd([[
-        rshada!
-        doautocmd BufRead
-        syntax on
-        filetype on
-    ]])
-    -- filetype plugin indent on  -- Messes up with Comment.nvim
-end, 0)
+	vim.cmd([[
+		rshada!
+		doautocmd BufRead
+		syntax on
+		filetype on
+		filetype plugin indent on
+		silent! bufdo e
+	]])
+end, 33)
+require('lsp.init')

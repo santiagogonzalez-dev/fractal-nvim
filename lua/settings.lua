@@ -1,280 +1,221 @@
-local opts = { noremap = true, silent = true }
-local indent = 4
+vim.o.laststatus = 0 -- Mode of the status bar
+vim.o.conceallevel = 2 -- Show text normally
+vim.o.mouse = 'a' -- Mouse options, all enabled
+vim.o.mousefocus = true -- Focusing cursor on the window with the keyboard focus
+vim.o.cmdheight = 1 -- Space for displaying messages in the command line
+vim.o.splitbelow = true -- Force splits to go below current window
+vim.o.splitright = true -- Force vertical splits to go to the right of current window
+vim.o.title = true -- Set the window title based on the value of titlestring
+vim.o.showmode = false -- Show or hide the mode you are on in the status line
+vim.o.number = true -- Display line number on the side
+vim.o.relativenumber = true -- Display line number relative to the cursor
+vim.o.signcolumn = 'auto' -- 'number' -- Always show signcolumn
+vim.o.numberwidth = 3 -- Gutter column number width
+vim.o.colorcolumn = '90' -- Limiter line
+vim.o.textwidth = 120
+vim.o.clipboard = 'unnamedplus' -- Uses the system clipboard
+vim.o.termguicolors = true -- Enable colors in the terminal
+vim.o.grepprg = 'rg --vimgrep' -- Grep command
+vim.o.shell = 'zsh' -- Shell to use for `!`, `:!`, `system()` etc.
+vim.o.joinspaces = false -- No double spaces with join after a dot
+vim.o.compatible = false -- 'compatible' is not set
+vim.o.ruler = true
+vim.o.guifont = 'Iosevka Term:h16' -- Font for GUIs -- JetBrains Mono:h15 Fira Code:h15
+vim.o.pumheight = 10 -- Pop up menu height
+vim.o.pumblend = 15 -- Transparency for the pop up menu
+vim.o.spelllang = 'en,cjk' -- Spell checking languages
+vim.o.showtabline = 0  -- Show top tab bar
+vim.o.hidden = true -- It keeps buffers open in memory
+vim.o.lazyredraw = true -- Lazy redraw the screen
+vim.o.redrawtime = 600 -- Time for redrawing the display
+vim.o.inccommand = 'split' -- Shows just like nosplit, but partially off-screen
+vim.o.foldenable = true -- Enable folds
+vim.o.foldmethod = 'manual' -- Method used for idents
+vim.o.foldcolumn = 'auto' -- Column to display where the folds are
+vim.o.timeoutlen = 300 -- Time given for doing a sequence
+vim.o.updatetime = 600 -- Faster completion
+vim.o.wrap = true -- Wrap text
+vim.o.showbreak = '↪' -- Shows when text is being wrapped
+vim.o.confirm = true -- Confirm dialogs
+vim.o.backspace = 'indent,start,eol' -- Make backspace behave like normal again
+vim.opt.cpoptions:append 'nm' -- See :help cpoptions, this are the defaults aABceFs_
+vim.opt.tags:append './tags;,tags' -- Where to search for ctags
 
-vim.o.timeoutlen = 333  -- Time given for doing a sequence
-vim.o.updatetime = 333  -- Faster completion
+vim.o.cursorline = true -- Draw line on cursor
+vim.o.cursorcolumn = true -- Draw line on cursor
+vim.o.scrolloff = 6 -- Cursor does not reach top/bottom
+vim.o.sidescrolloff = 12 -- Cursor does not reach sides
+vim.opt.guicursor:append { 'v:hor50', 'i:ver25-iCursor' } -- Better cursor for visual mode
 
-vim.o.clipboard = 'unnamedplus'  -- Uses the system clipboard
-vim.o.hidden = true  -- It keeps buffers open in memory
-vim.o.grepprg = 'rg --vimgrep'  -- Grep command
-vim.o.shell = 'zsh'  -- Shell to use for `!`, `:!`, `system()` etc.
-vim.o.joinspaces = false  -- No double spaces with join after a dot
-vim.o.compatible = false  -- 'compatible' is not set
+vim.o.swapfile = false -- It does (not) creates a swapfileWage
+vim.o.undofile = true -- Persistent undo - undo after you re-open the file
+vim.o.undolevels = 10000 -- Levels of undoing
+vim.o.history = 100 -- Saved spaces in each table of history
+vim.o.fileencoding = 'utf-8' -- Enconding used for files
+vim.o.path = '**' -- Search files recursively
+vim.o.backupdir = '/tmp/nvim'
+vim.o.directory = '/tmp/nvim'
+vim.o.undodir = '/tmp/nvim'
 
-vim.o.foldenable = true  -- Enable folds
-vim.o.foldmethod = 'manual'  -- Method used for idents
-vim.o.foldcolumn = 'auto'  -- Column to display where the folds are
-
-vim.o.laststatus = 0  -- Mode of the status bar
-vim.o.conceallevel = 0  -- Show text normally
-vim.o.wrap = false  -- Wrap text
-vim.o.mouse = 'a'  -- Mouse options, all enabled
-vim.o.cmdheight = 1  -- Space for displaying messages in the command line
-vim.o.splitbelow = true  -- Force splits to go below current window
-vim.o.splitright = true  -- Force vertical splits to go to the right of current window
-vim.o.title = true  -- Set the window title based on the value of titlestring
-vim.o.showtabline = 2  -- Show top tab bar
-vim.o.showmode = false  -- Hides/shows mode status below status line
-vim.o.number = true  -- Display line number on the side
-vim.o.relativenumber = true  -- Display line number relative to the cursor
-vim.o.signcolumn = 'auto'  -- 'number' -- Always show signcolumn
-vim.o.numberwidth = 3  -- Gutter column number width
-vim.o.colorcolumn = '90'  -- Limiter line
-vim.o.pumheight = 10  -- Pop up menu height
-vim.o.pumblend = 15  -- Popup blend
-vim.api.nvim_exec([[ highlight PmenuSel blend=0 ]], true)  -- Make the selected option in a solid color
-
--- Automatic toggling between line number modes
-vim.api.nvim_exec([[
-    augroup numbertoggle
-        autocmd!
-        autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-        autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
-    augroup END
-]], true)
-
-vim.o.confirm = true  -- Confirm dialogs
-vim.o.backspace = 'indent,start,eol'  -- Make backspace behave like normal again
-vim.opt.cpoptions:append 'nm'  -- See :help cpoptions, this are the defaults aABceFs_
-vim.opt.shm:append 'c'  -- Helps to avoid all the |hit-enter| prompts
-vim.opt.iskeyword:remove '_'  -- Word separators
-vim.opt.tags:append './tags;,tags'  -- Where to search for ctags
-
-vim.wo.cursorline = true  -- Draw line on cursor
-vim.wo.cursorcolumn = true  -- Draw line on cursor
-vim.wo.scrolloff = 9  -- Cursor does not reach top/bottom
-vim.wo.sidescrolloff = 9  -- Cursor does not reach sides
-vim.api.nvim_set_keymap('n', '<C-C>', 'b~', opts)  -- Capitalize word under cursor
--- Show cursor crosshair only in active window
-vim.api.nvim_exec([[
-    autocmd InsertLeave,WinEnter * set cursorline cursorcolumn
-    autocmd InsertEnter,WinLeave * set nocursorline nocursorcolumn
-]], true)
-vim.opt.guifont = 'Iosevka Term:h16'  -- Font used in GUI applications
--- vim.opt.guifont = 'JetBrains Mono:h15'  -- Font used in GUI applications
--- vim.opt.guifont = 'Fira Code:h15'  -- Font used in GUI applications
-vim.opt.guicursor='v:hor50'  -- Fixes blinking in visual mode
-
-vim.o.swapfile = false  -- It does (not) creates a swapfile
-vim.o.undofile = true  -- Persistent undo - undo after you re-open the file
-vim.o.undolevels = 10000  -- Levels of undoing
-vim.o.history = 100  -- Saved spaces in each table of history
-vim.o.fileencoding = 'utf-8'  -- The encode used in the file
-vim.o.path = '**'  -- Search files recursively
-
-vim.o.wildmenu = true  -- Enables 'enhanced mode' of command-line completion
-vim.o.wildmode= 'longest:full,full'  -- Options for wildmenu
-vim.o.winblend = 0  -- Enable transparency in floating windows and menus
-vim.o.wildignore = '*.o,*.rej,*.so'  -- File patterns to ignore
+vim.o.wildmenu = true -- Enables 'enhanced mode' of command-line completion
+vim.o.wildmode= 'longest:full,full' -- Options for wildmenu
+vim.o.wildignore = '*.o,*.rej,*.so' -- File patterns to ignore
+vim.o.wildcharm = 26 -- Trigger completion in macros
+vim.o.wildignorecase = true -- Ignore case command completion menu
+vim.o.winblend = 3 -- Enable transparency in floating windows and menus
 vim.opt.sessionoptions:append { 'buffers', 'curdir', 'tabpages', 'winsize' }
-vim.opt.completeopt:append { 'menuone', 'noselect', 'noinsert' }  -- Menu options
+vim.opt.completeopt:append { 'menuone', 'noselect', 'noinsert' } -- Menu options
+vim.opt.shortmess:append 'IFawsc' -- Less and shorter messages in command line
 
-vim.o.expandtab = true  -- Convert tabs to spaces
-vim.o.shiftround = true  -- Round indent to multiple of 'shiftwidth'
-vim.o.shiftwidth = indent  -- Size of a > or < when indenting
-vim.o.tabstop = indent  -- Tab length
-vim.o.softtabstop = indent  -- Tab length
-vim.o.smartindent = true  -- Smart indentation
-vim.o.smarttab = true  -- Smart indentation
-vim.o.autoindent = true  -- Copy indent from current line when starting a new line
--- Spaces used for indentation and tabs depending on the file extension
-vim.api.nvim_exec([[ autocmd FileType html,css,scss,xml,xhtml setlocal shiftwidth=2 tabstop=2 ]], true)
-vim.api.nvim_exec([[ autocmd FileType go setlocal shiftwidth=8 tabstop=8 ]], true)
+vim.o.smartindent = true -- Smart indentation
+vim.o.smarttab = true -- Smart indentation
+vim.o.autoindent = true -- Copy indent from current line when starting a new line
+vim.o.ignorecase = true -- Ignore case
+vim.o.smartcase = true -- Smart case
+vim.o.expandtab = false -- Convert tabs to spaces
+vim.o.tabstop = 4 -- Tab length
+vim.o.shiftround = true -- Round indent to multiple of 'shiftwidth'
+vim.o.shiftwidth = 4 -- Size of a > or < when indenting
+vim.o.softtabstop = -1 -- Tab length, if negative shiftwidth value is used
 
-vim.o.ignorecase = true  -- Ignore case
-vim.o.smartcase = true  -- Smart case
-vim.o.lazyredraw = false  -- Lazy redraw the screen
-vim.o.redrawtime = 600  -- Time for redrawing the display
-vim.o.hlsearch = true  -- Highlighting search
-vim.o.incsearch = true  -- Incremental search
-vim.o.inccommand = 'nosplit'  -- Live preview of :s results
+vim.o.hlsearch = true -- Highlighting search
+vim.o.incsearch = true -- Incremental search
+vim.o.showmatch = false -- Show match brace, set to false because :DoMatchParen does enough
+vim.o.matchtime = 1 -- Time for showing matching brace
+vim.opt.matchpairs:append { '<:>' } -- Characters that shold be considered as pairs
 
-vim.o.list = true  -- Show invisible characters
-vim.o.showbreak = '↪'  -- Shows when text is being wrapped
-vim.o.linebreak = true
+vim.o.list = true -- Show invisible characters
+vim.opt.listchars:append { nbsp = '␣', extends = '»', precedes = '«', trail = '␣', tab  = '  ', --[[ eol  = '↴' --]] }
+vim.opt.fillchars:append { diff = '∙', vert = '┃', fold = '·', foldopen = '▾', foldsep = '│', foldclose = '▸' }
 
-vim.opt.listchars:append {
-    nbsp     = '␣',
-    extends  = '»',
-    precedes = '«',
-    trail    = '␣',  -- Whitespaces will show up with this symbol
-    -- tab      = '<->',  -- How TABs are represented
-    -- space    = ' ',  -- Adding this space makes it appear on visual mode
-    -- eol      = '↴',  -- You can see the \n with this
-    -- trail    = '•',
-    -- space    = '␣',
-}
 
-vim.opt.fillchars:append {
-    diff     = '∙',
-    -- eob      = ' ',  -- Commented out because I like the ~ at the end of the files
-    -- vert     = ' ',
-    -- fold     = '·',
-}
+local map = vim.api.nvim_set_keymap
+local nore_sil = { noremap = true, silent = true }
+local nore_exp_sil = { noremap = true, expr = true, silent = true }
 
--- Give fenced codeblock in markdown files
-vim.g.markdown_fenced_languages = {
-    'bash',
-    'rust',
-    'python',
-    'html',
-    'javascript',
-    'typescript',
-    'css',
-    'scss',
-    'lua',
-    'java',
-    'vim',
-}
-
--- In case you misspell commands
-vim.api.nvim_exec([[
-    abbr slef self
-    abbr cosntants constants
-    abbr unkown unknown
-    abbr clas class
-    abbr krags kwargs
-    abbr __clas__ __class__
-    cnoreabbrev W! w!
-    cnoreabbrev Q! q!
-    cnoreabbrev Qa! qa!
-    cnoreabbrev Wqa! wqa!
-    cnoreabbrev Wq wq
-    cnoreabbrev Wa wa
-    cnoreabbrev wQ wq
-    cnoreabbrev WQ wq
-    cnoreabbrev Wqa wqa
-    cnoreabbrev W w
-    cnoreabbrev Q q
-    cnoreabbrev Qa qa
-]], true)
-
--- Neovide
-vim.g.neovide_refresh_rate = 60
-vim.g.neovide_cursor_vfx_mode = 'sonicboom'
-vim.g.neovide_cursor_antialiasing = 0
-
--- Quick actions
-vim.api.nvim_set_keymap('n', '<Leader>;', '$a;<Esc>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>:', '$a:<Esc>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>,', '$a,<Esc>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>x', ':xa<CR>', opts)
-
--- Insert empty line without leaving normal mode
-vim.api.nvim_set_keymap('n', '<Leader>o', 'o<Esc>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>O', 'O<Esc>', opts)
-
--- Switch buffers using TAB and SHIFT-TAB
-vim.api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', opts)
-vim.api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', opts)
-
--- May PageUp and PageDown
-vim.api.nvim_set_keymap("n", "<PageUp>", ":bnext<CR>", opts)
-vim.api.nvim_set_keymap("n", "<PageDown>", ":bprev<CR>", opts)
-
--- Move current block
-vim.api.nvim_set_keymap('n', '<C-j>', ':m .+1<CR>==', opts)
-vim.api.nvim_set_keymap('n', '<C-k>', ':m .-2<CR>==', opts)
-vim.api.nvim_set_keymap('x', '<C-j>', ":m '>+1<CR>gv-gv", opts)
-vim.api.nvim_set_keymap('x', '<C-k>', ":m '<-2<CR>gv-gv", opts)
-
--- Center searches
-vim.api.nvim_set_keymap('n', 'n', 'nzzzv', opts)
-vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', opts)
-
--- Execute buffer with node
-vim.api.nvim_set_keymap('n', '<Leader>bn', ':w !node<CR>', opts)  -- :!node %<CR>
-vim.api.nvim_set_keymap('n', '<Leader>tn', ':terminal node %<CR>', opts)
-
--- Reselect selection after shifting code block
-vim.api.nvim_set_keymap('x', '<', '<gv', opts)
-vim.api.nvim_set_keymap('x', '>', '>gv', opts)
-
--- Toggle to show/hide searched terms
-vim.api.nvim_set_keymap('n', '<C-N>', ':set hlsearch!<CR>', opts)
-
--- Undo break points
-vim.api.nvim_set_keymap('i', ',', ',<C-g>u', opts)
-vim.api.nvim_set_keymap('i', '.', '.<C-g>u', opts)
-vim.api.nvim_set_keymap('i', '!', '!<C-g>u', opts)
-vim.api.nvim_set_keymap('i', '?', '?<C-g>u', opts)
-vim.api.nvim_set_keymap('i', ' ', ' <C-g>u', opts)
-vim.api.nvim_set_keymap('i', '_', '_<C-g>u', opts)
-vim.api.nvim_set_keymap('i', '<CR>', '<CR><C-g>u', opts)
-
--- Spell checking
-vim.api.nvim_set_keymap('n', '<Leader>s', ':set spell!<CR>', opts)  -- Toggle spell checking
-vim.o.spelllang = 'en,cjk'  -- Spell checking languages
+map('n', '<Leader>;', '$a;<Esc>', nore_sil) -- Insert a semicolon
+map('n', '<Leader>:', '$a:<Esc>', nore_sil) -- Insert a colon
+map('n', '<Leader>,', '$a,<Esc>', nore_sil) -- Insert a comma
+map('v', '<Leader>,', ":'<,'>norm A,<Cr>", nore_sil) -- Insert a comma in v-mode
+map('n', '<Leader>x', ':wqa<Cr>', nore_sil) -- Write into all buffers and quit
+map('n', '<Leader>e', ':w | :e%<Cr>zz', nore_sil) -- Write and reload the file
+map('n', '<Leader>bw', ':bw<Cr>', nore_sil) -- Close buffer
+map('n', '<Leader>s', ':set spell!<Cr>', nore_sil) -- Toggle spell checking
+map('n', '<Leader>n', ':set hlsearch!<Cr>', nore_sil) -- Highlight toggle for searched words
 
 -- Move between windows with
-vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>h', opts)
-vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', opts)
-vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', opts)
-vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', opts)
+map('n', '<A-h>', '<C-w>h', nore_sil)
+map('n', '<A-l>', '<C-w>l', nore_sil)
+map('n', '<A-j>', '<C-w>j', nore_sil)
+map('n', '<A-k>', '<C-w>k', nore_sil)
 
--- Rearrange windows using arrows
-vim.api.nvim_set_keymap('n', '<down>', ':wincmd J<CR>', opts)
-vim.api.nvim_set_keymap('n', '<left>', ':wincmd H<CR>', opts)
-vim.api.nvim_set_keymap('n', '<up>', ':wincmd K<CR>', opts)
-vim.api.nvim_set_keymap('n', '<right>', ':wincmd L<CR>', opts)
+-- Move current block
+map('n', '<C-j>', ':m .+1<Cr>==', nore_sil)
+map('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
+map('x', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil)
+map('x', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
 
--- Highlight line and create mark
-vim.cmd([[ nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR> ]])
+-- Center searches
+map('n', 'n', 'nzzzv', nore_sil)
+map('n', 'N', 'Nzzzv', nore_sil)
+
+-- Reselect selection after shifting code block
+map('x', '<', '<gv', nore_sil)
+map('x', '>', '>gv', nore_sil)
+
+-- Highlight last pasted code with gvp
+vim.cmd([[ nnoremap <expr> gvp '`[' . strpart(getregtype(), 0, 1) . '`]' ]])
+
+-- Switch buffers using TAB and SHIFT-TAB
+map('n', '<Tab>', ':bnext<Cr>', nore_sil)
+map('n', '<S-Tab>', ':bprevious<Cr>', nore_sil)
+
+-- Undo break points
+map('i', ',', ',<C-g>u', nore_sil)
+map('i', '.', '.<C-g>u', nore_sil)
+map('i', '!', '!<C-g>u', nore_sil)
+map('i', '?', '?<C-g>u', nore_sil)
+map('i', ' ', ' <C-g>u', nore_sil)
+map('i', '_', '_<C-g>u', nore_sil)
+map('i', '-', '-<C-g>u', nore_sil)
+map('i', '=', '=<C-g>u', nore_sil)
+map('i', '<Cr>', '<Cr><C-g>u', nore_sil)
+
+-- Better navigation inside wrapped text
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", nore_exp_sil)
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", nore_exp_sil)
+
+
+-- Add = and ; as pairs for java, c and cpp
+vim.cmd([[ au FileType c,cpp,java set mps+==:; ]])
 
 -- Automatically reload file if contents changed
-vim.api.nvim_exec([[autocmd FocusGained * :checktime]], true)
+vim.cmd([[ au FocusGained * :checktime ]])
 
--- Write to all buffers when exit
-vim.api.nvim_exec([[
-    augroup ConfigGroup
-        autocmd!
-        autocmd FocusLost * silent! wa!
-    augroup END
-]], true)
+-- Straight red underline instead of curly line
+vim.cmd([[ au BufRead * highlight SpellBad guibg=NONE guifg=NONE gui=underline guisp=red ]])
 
 -- Highlight on yank
-vim.api.nvim_exec([[ autocmd TextYankPost * silent! lua vim.highlight.on_yank {} ]], true)
-
--- Yank until the end of line with Y
-vim.api.nvim_set_keymap('n', 'Y', 'y$', opts)
+vim.cmd([[ au TextYankPost * silent! lua vim.highlight.on_yank {} ]])
 
 -- Jump to the last position when reopening a file instead of typing '. to go to the last mark
-vim.api.nvim_exec([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif ]], true)
+vim.cmd([[ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"zz" | endif ]])
 
 -- Filetype set correctly
-vim.api.nvim_exec([[ autocmd BufNewFile,BufRead *.conf set filetype=dosini ]], true)
+vim.cmd([[ au BufNewFile,BufRead *.conf set filetype=dosini ]])
 
--- Default filetype for files without extension
-vim.api.nvim_exec([[ autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]], true)
+-- Default syntax highlighting for files without extension
+vim.cmd([[ au BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]])
 
--- Trim white spaces
-vim.api.nvim_exec([[
-    fun! TrimWhitespace()
-        let l:save = winsaveview()
-        keeppatterns %s/\s\+$//e
-        call winrestview(l:save)
-    endfun
-    augroup JIUMYLOVE
-        autocmd!
-        autocmd BufWritePre * :call TrimWhitespace()
-    augroup END
-]], true)
+-- Trim whitespace on save
+vim.cmd([[ au BufWritePre * :%s/\s\+$//e ]])
+
+-- Indentation override for this type of files
+vim.cmd([[ au FileType html,css,scss,xml,xhtml setlocal shiftwidth=2 tabstop=2 ]])
+vim.cmd([[ au FileType go setlocal shiftwidth=8 tabstop=8 ]])
+
+-- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
+vim.cmd([[ au CursorMoved * exe printf('match DiagnosticVirtualTextWarn /\V\<%s\>/', escape(expand('<cword>'), '/\')) ]])
+
+-- Show cursor only in active window
+vim.cmd([[ au InsertLeave,WinEnter * set cursorline cursorcolumn ]])
+vim.cmd([[ au InsertEnter,WinLeave * set nocursorline nocursorcolumn ]])
+
+-- Colors in visual mode
+vim.cmd([[ au ColorScheme * highlight Visual cterm=reverse gui=reverse ]])
 
 -- Disable delimiter line in certain type of files
-vim.api.nvim_exec([[ autocmd FileType help,zsh,conf,dosini,text,markdown,html,javascript,typescript setlocal colorcolumn=0 ]], true)
+vim.cmd([[ au FileType help,zsh,conf,dosini,text,markdown,html setlocal colorcolumn=0 ]])
 
--- Pairs
-vim.api.nvim_exec([[ autocmd FileType c,cpp,java set mps+==:; ]], true)  -- Add = and ; as pairs for java, c and cpp
-vim.opt.matchpairs:append { '<:>' }  -- Characters that shold be considered as pairs
-vim.o.showmatch = false  -- Show match brace, set to false because :DoMatchParen does enough
-vim.o.matchtime = 1  -- Time for showing matching brace
+
+-- Hide last run command in the command line after 3 seconds
+vim.cmd([[
+	aug cmdline
+		au!
+		au CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 6000)
+	aug END
+]])
+
+-- Write to all buffers when exit
+vim.cmd([[
+	aug ConfigGroup
+		au!
+		au FocusLost * silent! wa!
+	aug END
+]])
+
+-- Switch to numbers when in insert mode, and to relative numbers when in command mode
+vim.cmd([[
+	aug numbertoggle
+		au!
+		au BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != 'i' | set rnu   | endif
+		au BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+	aug END
+]])
+
+
+-- Make the selected option in a solid color
+vim.cmd([[ highlight PmenuSel blend=0 ]])
+
+-- Insert cursor in orange
+vim.cmd([[ highlight iCursor guifg=white guibg=orange ]])

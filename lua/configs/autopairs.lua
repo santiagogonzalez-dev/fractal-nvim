@@ -1,14 +1,23 @@
 require('nvim-autopairs').setup({
-    check_ts = true,
-    ts_config = {
-        javascript = { 'template_string' },
-        java = false,
-    },
-    enable_check_bracket_line = false,
+	check_ts = true,
+	ts_config = {
+		javascript = { 'template_string' },
+		java = false,  -- There's some problems with java and treesitter, disabled for now
+	},
+	enable_check_bracket_line = true,  -- Check for closing brace so it will not add a close pair
+	fast_wrap = {
+		map = '<C-f>',
+		chars = { '{', '[', '(', '"', "'", "<" },
+		pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], '%s+', '' ),
+		offset = -1,  -- Offset from pattern match, with -1 you can insert before the comma
+		end_key = '$',
+		keys = 'aoeusnthdiqjkzvwmbxlrcgp',  -- Because I use dvorak BTW
+		check_comma = true,
+		highlight = 'Search',
+		highlight_grey = 'Comment'
+	},
 })
 
--- require('nvim-autopairs.completion.cmp').setup {
---     map_cr = true, --  map <CR> on insert mode
---     map_complete = true, -- it will auto insert `(` after select function or method item
---     auto_select = true, -- automatically select the first item
--- }
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done())
