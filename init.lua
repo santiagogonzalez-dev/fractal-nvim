@@ -38,6 +38,7 @@ vim.g.loaded_ruby_provider = false
 
 vim.o.shadafile = ''
 vim.opt.runtimepath = rtp
+
 vim.g.mapleader = ' '
 vim.g.localleader = ' '
 require('settings')
@@ -50,7 +51,9 @@ vim.defer_fn(function ()
 		syntax on
 		filetype on
 		filetype plugin indent on
+		doautocmd VimEnter
 		silent! bufdo e
 	]])
-end, 33)
+end, 0)
+
 require('lsp.init')

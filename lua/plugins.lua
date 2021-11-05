@@ -5,7 +5,6 @@ require('packer').startup({function(use)
 	use {
 		'wbthomason/packer.nvim',
 		vim.api.nvim_set_keymap('n', '<Leader>ps', ':PackerSync<CR>', opts),
-		vim.api.nvim_set_keymap('n', '<Leader>pu', ':PackerUpdate<CR>', opts),
 		vim.api.nvim_set_keymap('n', '<Leader>pc', ':PackerCompile<CR>', opts),
 	}
 
@@ -42,6 +41,13 @@ require('packer').startup({function(use)
 		end,
 	}
 
+	-- Autotags
+	use {
+		'windwp/nvim-ts-autotag',
+		after = 'nvim-treesitter',
+		event = 'InsertEnter',
+	}
+
 	-- Hop
 	use {
 		'phaazon/hop.nvim',
@@ -51,10 +57,11 @@ require('packer').startup({function(use)
 			require('hop').setup({
 				keys = 'aoeusnthdiqjkzvwmbxlrcgp',
 				term_seq_bias = 0.5,
+				vim.cmd([[highlight HopNextKey guifg=orange gui=nocombine]]),
 			})
 		end,
 		-- Keymappings
-		vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<CR>', opts),
+		vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<CR>', opts)
 	}
 
 	-- Tabs Viewer
@@ -69,7 +76,7 @@ require('packer').startup({function(use)
 	-- Surround
 	use {
 		'tpope/vim-surround',
-		event = 'BufEnter',
+		event = 'VimEnter',
 	}
 
 	-- Terminal
@@ -84,6 +91,7 @@ require('packer').startup({function(use)
 	-- Treesitter textobjects
 	use {
 		'nvim-treesitter/nvim-treesitter-textobjects',
+		after = 'nvim-treesitter',
 		opt = true,
 	}
 
@@ -91,7 +99,6 @@ require('packer').startup({function(use)
 	use {
 		'nvim-treesitter/nvim-treesitter',
 		event = 'BufRead',
-		requires = 'nvim-treesitter-textobjects',
 		config = function()
 			require('configs.treesitter')
 		end,
@@ -115,13 +122,14 @@ require('packer').startup({function(use)
 			{
 				mode = 'foreground',
 			})
-			vim.cmd [[ColorizerAttachToBuffer]]
+			vim.cmd([[ ColorizerAttachToBuffer ]])
 		end,
 	}
 
 	-- Plenary
 	use {
 		'nvim-lua/plenary.nvim',
+		event = 'BufEnter',
 	}
 
 	-- Git Signs
@@ -137,22 +145,24 @@ require('packer').startup({function(use)
 	-- Indent Blankline
 	use {
 		'lukas-reineke/indent-blankline.nvim',
-		event = 'BufRead',
+		event = 'VimEnter',
 		config = function()
 			require('indent_blankline').setup({
 				show_current_context = true,
 				show_end_of_line = false,
 				space_char_blankline = ' ',
+				buftype_exclude = { 'terminal', 'nofile', 'NvimTree' },
+				filetype_exclude = { 'help', 'packer', 'NvimTree' },
 			})
 			-- vim.g.indent_blankline_char = ''
-			vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
-			vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 			vim.g.indent_blankline_char_highlight = 'LineNr'
 			vim.g.indent_blankline_show_trailing_blankline_indent = false
+			vim.g.indent_blankline_use_treesitter = true
+			vim.cmd([[highlight IndentBlanklineContextChar guifg=orange gui=nocombine]])
 		end,
 		-- Keymapping
 		vim.api.nvim_set_keymap('n', '<Leader>i', ':IndentBlanklineToggle<CR>', opts)
-	}
+ 	}
 
 	-- Completion and lsp
 	use {
@@ -162,6 +172,9 @@ require('packer').startup({function(use)
 		'hrsh7th/cmp-path',
 		'hrsh7th/cmp-cmdline',
 		'neovim/nvim-lspconfig',
+		'L3MON4D3/LuaSnip',
+		'saadparwaiz1/cmp_luasnip',
+		event = 'BufEnter',
 	}
 end,
 config = {

@@ -1,6 +1,6 @@
 require('nvim-treesitter.configs').setup({
 
-	ensure_installed = {'lua', 'python', 'java', 'bash', 'javascript'},
+	ensure_installed = {'lua', 'python', 'java', 'bash', 'javascript', 'html'},
 
 	-- ensure_installed = 'maintained',
 
@@ -17,7 +17,7 @@ require('nvim-treesitter.configs').setup({
 
 	indent = {
 		enable = true,
-		disable = { 'python' },
+		-- disable = { 'python' },
 	},
 
 	textsubjects = {
@@ -27,13 +27,24 @@ require('nvim-treesitter.configs').setup({
 		},
 	},
 
+	textobjects = {
+		select = {
+			enable = true,
+			lookahead = true,
+		},
+		move = {
+			enable = true,
+			set_jumps = true, -- Whether to set jumps in the jumplist
+		}
+	},
+
 	refactor = {
 		highlight_definitions = { enable = true },
 		highlight_current_scope = { enable = true },
 	},
 
 	autopairs = {
-		enable = true,  -- I don't even know how this is going to behave with the autopairs plugin
+		enable = true,
 	},
 
 	autotag = {
@@ -43,6 +54,7 @@ require('nvim-treesitter.configs').setup({
 			'javascript',
 			'javascriptreact',
 			'typescript',
+			'typescriptreact',
 			'svelte',
 			'vue',
 			'markdown',
@@ -62,7 +74,7 @@ require('nvim-treesitter.configs').setup({
 	query_linter = {
 		enable = true,
 		use_virtual_text = true,
-		lint_events = { 'BufWrite', 'CursorHold' },
+		lint_events = { 'BufWrite', 'CursorHold', 'CursorHold' },
 	},
 
 	playground = {

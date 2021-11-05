@@ -12,8 +12,8 @@ vim.o.relativenumber = true -- Display line number relative to the cursor
 vim.o.signcolumn = 'auto' -- 'number' -- Always show signcolumn
 vim.o.numberwidth = 3 -- Gutter column number width
 vim.o.colorcolumn = '90' -- Limiter line
-vim.o.textwidth = 120
-vim.o.clipboard = 'unnamedplus' -- Uses the system clipboard
+vim.o.textwidth = 90 -- Delimit text blocks to 90 columns
+vim.o.clipboard = 'unnamed' -- unnamedplus -- Uses the system clipboard
 vim.o.termguicolors = true -- Enable colors in the terminal
 vim.o.grepprg = 'rg --vimgrep' -- Grep command
 vim.o.shell = 'zsh' -- Shell to use for `!`, `:!`, `system()` etc.
@@ -34,8 +34,8 @@ vim.o.foldmethod = 'manual' -- Method used for idents
 vim.o.foldcolumn = 'auto' -- Column to display where the folds are
 vim.o.timeoutlen = 300 -- Time given for doing a sequence
 vim.o.updatetime = 600 -- Faster completion
-vim.o.wrap = true -- Wrap text
-vim.o.showbreak = '↪' -- Shows when text is being wrapped
+vim.o.wrap = false -- Wrap text
+vim.o.showbreak = '↪ ' -- Shows when text is being wrapped
 vim.o.confirm = true -- Confirm dialogs
 vim.o.backspace = 'indent,start,eol' -- Make backspace behave like normal again
 vim.opt.cpoptions:append 'nm' -- See :help cpoptions, this are the defaults aABceFs_
@@ -43,8 +43,8 @@ vim.opt.tags:append './tags;,tags' -- Where to search for ctags
 
 vim.o.cursorline = true -- Draw line on cursor
 vim.o.cursorcolumn = true -- Draw line on cursor
-vim.o.scrolloff = 6 -- Cursor does not reach top/bottom
-vim.o.sidescrolloff = 12 -- Cursor does not reach sides
+vim.o.scrolloff = 8 -- Cursor does not reach top/bottom
+vim.o.sidescrolloff = 8 -- Cursor does not reach sides
 vim.opt.guicursor:append { 'v:hor50', 'i:ver25-iCursor' } -- Better cursor for visual mode
 
 vim.o.swapfile = false -- It does (not) creates a swapfileWage
@@ -53,9 +53,9 @@ vim.o.undolevels = 10000 -- Levels of undoing
 vim.o.history = 100 -- Saved spaces in each table of history
 vim.o.fileencoding = 'utf-8' -- Enconding used for files
 vim.o.path = '**' -- Search files recursively
-vim.o.backupdir = '/tmp/nvim'
-vim.o.directory = '/tmp/nvim'
-vim.o.undodir = '/tmp/nvim'
+vim.o.backupdir = '/tmp/nvim' -- Change location of files
+vim.o.directory = '/tmp/nvim' -- Change location of files
+vim.o.undodir = '/tmp/nvim' -- Change location of files
 
 vim.o.wildmenu = true -- Enables 'enhanced mode' of command-line completion
 vim.o.wildmode= 'longest:full,full' -- Options for wildmenu
@@ -85,7 +85,7 @@ vim.o.matchtime = 1 -- Time for showing matching brace
 vim.opt.matchpairs:append { '<:>' } -- Characters that shold be considered as pairs
 
 vim.o.list = true -- Show invisible characters
-vim.opt.listchars:append { nbsp = '␣', extends = '»', precedes = '«', trail = '␣', tab  = '  ', --[[ eol  = '↴' --]] }
+vim.opt.listchars:append { nbsp = '␣', extends = '', precedes = '', trail = '␣', tab  = '  ', --[[ eol  = '↴' --]] }
 vim.opt.fillchars:append { diff = '∙', vert = '┃', fold = '·', foldopen = '▾', foldsep = '│', foldclose = '▸' }
 
 
@@ -93,15 +93,20 @@ local map = vim.api.nvim_set_keymap
 local nore_sil = { noremap = true, silent = true }
 local nore_exp_sil = { noremap = true, expr = true, silent = true }
 
+map('n', '<Space>', '<Nop>', nore_sil)  -- So it stops moving the cursor
+map('n', '<Cr>', '<Nop>', nore_sil)  -- So it stops moving the cursor
+
 map('n', '<Leader>;', '$a;<Esc>', nore_sil) -- Insert a semicolon
 map('n', '<Leader>:', '$a:<Esc>', nore_sil) -- Insert a colon
 map('n', '<Leader>,', '$a,<Esc>', nore_sil) -- Insert a comma
 map('v', '<Leader>,', ":'<,'>norm A,<Cr>", nore_sil) -- Insert a comma in v-mode
-map('n', '<Leader>x', ':wqa<Cr>', nore_sil) -- Write into all buffers and quit
+map('n', '<Leader>w', ':wqa<Cr>', nore_sil) -- Write into all buffers and quit
 map('n', '<Leader>e', ':w | :e%<Cr>zz', nore_sil) -- Write and reload the file
 map('n', '<Leader>bw', ':bw<Cr>', nore_sil) -- Close buffer
-map('n', '<Leader>s', ':set spell!<Cr>', nore_sil) -- Toggle spell checking
+-- map('n', '<Leader>s', ':set spell!<Cr>', nore_sil) -- Toggle spell checking
 map('n', '<Leader>n', ':set hlsearch!<Cr>', nore_sil) -- Highlight toggle for searched words
+map('n', '<Leader>c', ':set cul! cuc!<Cr>', nore_sil) -- Toggle cursor line and column
+map('n', '<Leader>s', ':e ~/.config/nvim/skeletons<Cr>', nore_sil) -- Toggle cursor line and column
 
 -- Move between windows with
 map('n', '<A-h>', '<C-w>h', nore_sil)
@@ -175,7 +180,7 @@ vim.cmd([[ au FileType html,css,scss,xml,xhtml setlocal shiftwidth=2 tabstop=2 ]
 vim.cmd([[ au FileType go setlocal shiftwidth=8 tabstop=8 ]])
 
 -- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
-vim.cmd([[ au CursorMoved * exe printf('match DiagnosticVirtualTextWarn /\V\<%s\>/', escape(expand('<cword>'), '/\')) ]])
+vim.cmd([[ au CursorMoved * exe printf('match TSNote /\V\<%s\>/', escape(expand('<cword>'), '/\')) ]])
 
 -- Show cursor only in active window
 vim.cmd([[ au InsertLeave,WinEnter * set cursorline cursorcolumn ]])
@@ -186,6 +191,15 @@ vim.cmd([[ au ColorScheme * highlight Visual cterm=reverse gui=reverse ]])
 
 -- Disable delimiter line in certain type of files
 vim.cmd([[ au FileType help,zsh,conf,dosini,text,markdown,html setlocal colorcolumn=0 ]])
+
+-- Make the selected option in a solid color
+vim.cmd([[ au ColorScheme * highlight PmenuSel blend=0 ]])
+
+-- Insert cursor in orange, doesn't work in konsole
+vim.cmd([[ au ColorScheme * highlight iCursor guifg=white guibg=orange ]])
+
+-- Set spellchecking only in insert mode
+vim.cmd([[ au InsertEnter,InsertLeave * set spell! ]])
 
 
 -- Hide last run command in the command line after 3 seconds
@@ -213,9 +227,10 @@ vim.cmd([[
 	aug END
 ]])
 
-
--- Make the selected option in a solid color
-vim.cmd([[ highlight PmenuSel blend=0 ]])
-
--- Insert cursor in orange
-vim.cmd([[ highlight iCursor guifg=white guibg=orange ]])
+-- Skeletons, basically Templates
+vim.cmd([[
+	aug skeletons
+		au!
+		au BufNewFile *.* silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
+	aug END
+]])

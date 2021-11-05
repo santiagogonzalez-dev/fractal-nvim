@@ -16,7 +16,6 @@ local on_attach = function(_, bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
@@ -24,7 +23,9 @@ local on_attach = function(_, bufnr)
 	vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
-require'lspconfig'.pyright.setup{}
+-- Configure servers
+require('lspconfig').pyright.setup{}
+require('lspconfig').bashls.setup{}
 
 local sumneko_root_path = '/usr/bin' -- Change to your sumneko root installation
 local sumneko_binary = sumneko_root_path .. '/lua-language-server'
@@ -41,7 +42,7 @@ require('lspconfig').sumneko_lua.setup {
 	settings = {
 		Lua = {
 			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				-- Tell the language server which version of Lua you're using
 				version = 'LuaJIT',
 				-- Setup your lua path
 				path = runtime_path,
@@ -62,9 +63,17 @@ require('lspconfig').sumneko_lua.setup {
 	},
 }
 
+-- LuaSnip
+local luasnip = require('luasnip')
+
 -- CMP
-local cmp = require 'cmp'
+local cmp = require('cmp')
 cmp.setup {
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
 	mapping = {
 		['<C-p>'] = cmp.mapping.select_prev_item(),
 		['<C-n>'] = cmp.mapping.select_next_item(),
@@ -79,6 +88,8 @@ cmp.setup {
 		['<Tab>'] = function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jumpable()
 			else
 				fallback()
 			end
@@ -86,15 +97,34 @@ cmp.setup {
 		['<S-Tab>'] = function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
 			else
 				fallback()
 			end
 		end,
 	},
 	sources = {
+		{ name = 'luasnip' },
 		{ name = 'nvim_lsp' },
 	},
 }
 
--- Show LSP error details
-vim.cmd([[ au CursorHold * lua vim.diagnostic.open_float(0, {scope="cursor"}) ]])
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+	sources = {
+		{ name = 'buffer' }
+	}
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+	sources = cmp.config.sources({
+		{ name = 'path' }
+	}, {
+		{ name = 'cmdline' }
+	})
+})
+
+-- -- Show LSP error details
+-- vim.cmd([[ au CursorHold * lua vim.diagnostic.open_float(0, {scope="cursor"}) ]])

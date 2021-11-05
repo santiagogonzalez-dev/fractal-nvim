@@ -7,7 +7,7 @@ require('nvim-autopairs').setup({
 	enable_check_bracket_line = true,  -- Check for closing brace so it will not add a close pair
 	fast_wrap = {
 		map = '<C-f>',
-		chars = { '{', '[', '(', '"', "'", "<" },
+		chars = { '{', '[', '(', '"', "'" },
 		pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], '%s+', '' ),
 		offset = -1,  -- Offset from pattern match, with -1 you can insert before the comma
 		end_key = '$',
