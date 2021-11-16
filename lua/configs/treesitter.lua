@@ -1,12 +1,11 @@
 require('nvim-treesitter.configs').setup({
-
 	ensure_installed = {'lua', 'python', 'java', 'bash', 'javascript', 'html'},
 
 	-- ensure_installed = 'maintained',
 
 	highlight = {
 		enable = true,
-		aditional_vim_regex_highlighting = true,
+		-- aditional_vim_regex_highlighting = true,
 		disable = { 'latex' },
 	},
 
@@ -25,17 +24,6 @@ require('nvim-treesitter.configs').setup({
 		keymaps = {
 			[','] = 'textsubjects-smart',
 		},
-	},
-
-	textobjects = {
-		select = {
-			enable = true,
-			lookahead = true,
-		},
-		move = {
-			enable = true,
-			set_jumps = true, -- Whether to set jumps in the jumplist
-		}
 	},
 
 	refactor = {
@@ -79,10 +67,10 @@ require('nvim-treesitter.configs').setup({
 
 	playground = {
 		enable = true,
-		updatetime = 25,
+		updatetime = 33,
 		persist_queries = false,
 		keybindings = {
-			toggel_query_editor = 'o',
+			toggle_query_editor = 'o',
 			toggle_hl_groups = 'i',
 			toggle_injected_languages = 't',
 			toggle_language_display = 'I',

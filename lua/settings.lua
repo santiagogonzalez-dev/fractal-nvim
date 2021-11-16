@@ -13,17 +13,18 @@ vim.o.signcolumn = 'auto' -- 'number' -- Always show signcolumn
 vim.o.numberwidth = 3 -- Gutter column number width
 vim.o.colorcolumn = '90' -- Limiter line
 vim.o.textwidth = 90 -- Delimit text blocks to 90 columns
-vim.o.clipboard = 'unnamed' -- unnamedplus -- Uses the system clipboard
+vim.o.clipboard = 'unnamedplus' -- Uses the system clipboard
 vim.o.termguicolors = true -- Enable colors in the terminal
 vim.o.grepprg = 'rg --vimgrep' -- Grep command
 vim.o.shell = 'zsh' -- Shell to use for `!`, `:!`, `system()` etc.
 vim.o.joinspaces = false -- No double spaces with join after a dot
 vim.o.compatible = false -- 'compatible' is not set
-vim.o.ruler = true
-vim.o.guifont = 'Iosevka Term:h16' -- Font for GUIs -- JetBrains Mono:h15 Fira Code:h15
-vim.o.pumheight = 10 -- Pop up menu height
+vim.o.ruler = true -- Show the line and column number of the cursor position
+vim.o.guifont = 'Iosevka Term:h19' -- Font for GUIs -- JetBrains Mono:h15 Fira Code:h15
+vim.o.pumheight = 20 -- Pop up menu height
 vim.o.pumblend = 15 -- Transparency for the pop up menu
 vim.o.spelllang = 'en,cjk' -- Spell checking languages
+vim.o.spelloptions = 'camel' -- Options for spell checking
 vim.o.showtabline = 0  -- Show top tab bar
 vim.o.hidden = true -- It keeps buffers open in memory
 vim.o.lazyredraw = true -- Lazy redraw the screen
@@ -32,7 +33,7 @@ vim.o.inccommand = 'split' -- Shows just like nosplit, but partially off-screen
 vim.o.foldenable = true -- Enable folds
 vim.o.foldmethod = 'manual' -- Method used for idents
 vim.o.foldcolumn = 'auto' -- Column to display where the folds are
-vim.o.timeoutlen = 300 -- Time given for doing a sequence
+vim.o.timeoutlen = 400 -- Time given for doing a sequence
 vim.o.updatetime = 600 -- Faster completion
 vim.o.wrap = false -- Wrap text
 vim.o.showbreak = '↪ ' -- Shows when text is being wrapped
@@ -88,6 +89,14 @@ vim.o.list = true -- Show invisible characters
 vim.opt.listchars:append { nbsp = '␣', extends = '', precedes = '', trail = '␣', tab  = '  ', --[[ eol  = '↴' --]] }
 vim.opt.fillchars:append { diff = '∙', vert = '┃', fold = '·', foldopen = '▾', foldsep = '│', foldclose = '▸' }
 
+-- To approrpiately highlight codefences
+vim.g.markdown_fenced_languages = {
+  "ts=typescript",
+  "tsx=typescriptreact",
+  "js=javascript",
+  "jsx=javascriptreact",
+}
+
 
 local map = vim.api.nvim_set_keymap
 local nore_sil = { noremap = true, silent = true }
@@ -96,29 +105,31 @@ local nore_exp_sil = { noremap = true, expr = true, silent = true }
 map('n', '<Space>', '<Nop>', nore_sil)  -- So it stops moving the cursor
 map('n', '<Cr>', '<Nop>', nore_sil)  -- So it stops moving the cursor
 
-map('n', '<Leader>;', '$a;<Esc>', nore_sil) -- Insert a semicolon
-map('n', '<Leader>:', '$a:<Esc>', nore_sil) -- Insert a colon
-map('n', '<Leader>,', '$a,<Esc>', nore_sil) -- Insert a comma
-map('v', '<Leader>,', ":'<,'>norm A,<Cr>", nore_sil) -- Insert a comma in v-mode
+map('n', '<Leader>;', '$a;<Esc>', nore_sil) -- Semicolon
+map('n', '<Leader>:', '$a:<Esc>', nore_sil) -- Colon
+map('n', '<Leader>\\', '$a \\<Esc>', nore_sil) -- Backslash
+map('n', '<Leader>,', '$a,<Esc>', nore_sil) -- Comma
+map('v', '<Leader>,', ":'<,'>norm A,<Cr>", nore_sil) -- Comma in v-mode
+map('n', '<Leader>.', '$a.<Esc>', nore_sil) -- Dot
 map('n', '<Leader>w', ':wqa<Cr>', nore_sil) -- Write into all buffers and quit
 map('n', '<Leader>e', ':w | :e%<Cr>zz', nore_sil) -- Write and reload the file
 map('n', '<Leader>bw', ':bw<Cr>', nore_sil) -- Close buffer
--- map('n', '<Leader>s', ':set spell!<Cr>', nore_sil) -- Toggle spell checking
+map('n', '<Leader>s', ':set spell!<Cr>', nore_sil) -- Toggle spell checking
 map('n', '<Leader>n', ':set hlsearch!<Cr>', nore_sil) -- Highlight toggle for searched words
 map('n', '<Leader>c', ':set cul! cuc!<Cr>', nore_sil) -- Toggle cursor line and column
-map('n', '<Leader>s', ':e ~/.config/nvim/skeletons<Cr>', nore_sil) -- Toggle cursor line and column
+map('n', '<Leader>sk', ':read ~/.config/nvim/skeletons/', nore_sil) -- Toggle cursor line and column
 
 -- Move between windows with
-map('n', '<A-h>', '<C-w>h', nore_sil)
-map('n', '<A-l>', '<C-w>l', nore_sil)
-map('n', '<A-j>', '<C-w>j', nore_sil)
-map('n', '<A-k>', '<C-w>k', nore_sil)
+map('n', '<C-h>', '<C-w>h', nore_sil)
+map('n', '<C-l>', '<C-w>l', nore_sil)
+map('n', '<C-j>', '<C-w>j', nore_sil)
+map('n', '<C-k>', '<C-w>k', nore_sil)
 
--- Move current block
-map('n', '<C-j>', ':m .+1<Cr>==', nore_sil)
-map('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
-map('x', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil)
-map('x', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
+-- -- Move current block
+-- map('n', '<C-j>', ':m .+1<Cr>==', nore_sil)
+-- map('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
+-- map('x', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil)
+-- map('x', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
 
 -- Center searches
 map('n', 'n', 'nzzzv', nore_sil)
@@ -152,85 +163,78 @@ map('n', 'j', "v:count == 0 ? 'gj' : 'j'", nore_exp_sil)
 
 
 -- Add = and ; as pairs for java, c and cpp
-vim.cmd([[ au FileType c,cpp,java set mps+==:; ]])
+vim.cmd([[ autocmd FileType c,cpp,java set mps+==:; ]])
 
 -- Automatically reload file if contents changed
-vim.cmd([[ au FocusGained * :checktime ]])
+vim.cmd([[ autocmd FocusGained * :checktime ]])
 
 -- Straight red underline instead of curly line
-vim.cmd([[ au BufRead * highlight SpellBad guibg=NONE guifg=NONE gui=underline guisp=red ]])
+vim.cmd([[ autocmd BufRead * highlight SpellBad guibg=NONE guifg=NONE gui=underline guisp=red ]])
 
 -- Highlight on yank
-vim.cmd([[ au TextYankPost * silent! lua vim.highlight.on_yank {} ]])
+vim.cmd([[ autocmd TextYankPost * silent! lua vim.highlight.on_yank {} ]])
 
 -- Jump to the last position when reopening a file instead of typing '. to go to the last mark
-vim.cmd([[ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"zz" | endif ]])
+vim.cmd([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"zz" | endif ]])
 
 -- Filetype set correctly
-vim.cmd([[ au BufNewFile,BufRead *.conf set filetype=dosini ]])
+vim.cmd([[ autocmd BufNewFile,BufRead *.conf set filetype=dosini ]])
 
 -- Default syntax highlighting for files without extension
-vim.cmd([[ au BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]])
+vim.cmd([[ autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif ]])
 
 -- Trim whitespace on save
-vim.cmd([[ au BufWritePre * :%s/\s\+$//e ]])
+vim.cmd([[ autocmd BufWritePre * :%s/\s\+$//e ]])
 
 -- Indentation override for this type of files
-vim.cmd([[ au FileType html,css,scss,xml,xhtml setlocal shiftwidth=2 tabstop=2 ]])
-vim.cmd([[ au FileType go setlocal shiftwidth=8 tabstop=8 ]])
+vim.cmd([[ autocmd FileType css,html,scss,xhtml,xml setlocal shiftwidth=2 tabstop=2 ]])
+vim.cmd([[ autocmd FileType go setlocal shiftwidth=8 tabstop=8 ]])
 
 -- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
-vim.cmd([[ au CursorMoved * exe printf('match TSNote /\V\<%s\>/', escape(expand('<cword>'), '/\')) ]])
+-- vim.cmd([[ autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\')) ]])
+vim.cmd([[ autocmd CursorHold * exe printf('match RedrawDebugComposed /\V\<%s\>/', escape(expand('<cword>'), '/\')) ]])
 
 -- Show cursor only in active window
-vim.cmd([[ au InsertLeave,WinEnter * set cursorline cursorcolumn ]])
-vim.cmd([[ au InsertEnter,WinLeave * set nocursorline nocursorcolumn ]])
+vim.cmd([[ autocmd InsertLeave,WinEnter * set cursorline cursorcolumn ]])
+vim.cmd([[ autocmd InsertEnter,WinLeave * set nocursorline nocursorcolumn ]])
 
 -- Colors in visual mode
-vim.cmd([[ au ColorScheme * highlight Visual cterm=reverse gui=reverse ]])
+vim.cmd([[ autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse ]])
 
 -- Disable delimiter line in certain type of files
-vim.cmd([[ au FileType help,zsh,conf,dosini,text,markdown,html setlocal colorcolumn=0 ]])
+vim.cmd([[ autocmd FileType conf,dosini,help,html,markdown,text,zsh setlocal colorcolumn=0 ]])
 
 -- Make the selected option in a solid color
-vim.cmd([[ au ColorScheme * highlight PmenuSel blend=0 ]])
+vim.cmd([[ autocmd ColorScheme * highlight PmenuSel blend=0 ]])
 
--- Insert cursor in orange, doesn't work in konsole
-vim.cmd([[ au ColorScheme * highlight iCursor guifg=white guibg=orange ]])
+-- -- Set spellchecking only in insert mode
+-- vim.cmd([[ autocmd InsertEnter,InsertLeave * set spell! ]])
 
--- Set spellchecking only in insert mode
-vim.cmd([[ au InsertEnter,InsertLeave * set spell! ]])
+-- Insert cursor in orange, doesn't work in Konsole
+vim.cmd([[ autocmd ColorScheme * highlight iCursor guifg=white guibg=orange ]])
 
 
 -- Hide last run command in the command line after 3 seconds
 vim.cmd([[
-	aug cmdline
-		au!
-		au CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 6000)
-	aug END
+	augroup cmdline
+		autocmd!
+		autocmd CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 6000)
+	augroup END
 ]])
 
 -- Write to all buffers when exit
 vim.cmd([[
-	aug ConfigGroup
-		au!
-		au FocusLost * silent! wa!
-	aug END
+	augroup ConfigGroup
+		autocmd!
+		autocmd FocusLost * silent! wa!
+	augroup END
 ]])
 
 -- Switch to numbers when in insert mode, and to relative numbers when in command mode
 vim.cmd([[
-	aug numbertoggle
-		au!
-		au BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != 'i' | set rnu   | endif
-		au BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
-	aug END
-]])
-
--- Skeletons, basically Templates
-vim.cmd([[
-	aug skeletons
-		au!
-		au BufNewFile *.* silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
-	aug END
+	augroup numbertoggle
+		autocmd!
+		autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != 'i' | set rnu   | endif
+		autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+	augroup END
 ]])

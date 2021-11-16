@@ -36,15 +36,16 @@ vim.g.loaded_ruby_provider = false
 -- vim.g.matchit = false
 -- vim.g.matchparen = false
 
-vim.o.shadafile = ''
 vim.opt.runtimepath = rtp
+vim.o.shadafile = ''
 
 vim.g.mapleader = ' '
 vim.g.localleader = ' '
 require('settings')
 require('plugins')
+require('lsp.init')
 
-vim.defer_fn(function ()
+vim.defer_fn(function()
 	vim.cmd([[
 		rshada!
 		doautocmd BufRead
@@ -55,5 +56,3 @@ vim.defer_fn(function ()
 		silent! bufdo e
 	]])
 end, 0)
-
-require('lsp.init')
