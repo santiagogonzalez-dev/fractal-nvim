@@ -175,7 +175,7 @@ require('packer').startup({function(use)
 			vim.g.indent_blankline_use_treesitter = true
 			vim.g.indent_blankline_char_highlight = 'LineNr'
 			vim.g.indent_blankline_show_trailing_blankline_indent = false
-			vim.g.indent_blankline_enabled = false
+			-- vim.g.indent_blankline_enabled = false
 			vim.cmd([[ highlight IndentBlanklineContextChar guifg=orange gui=nocombine ]])
 		end,
 
@@ -193,6 +193,7 @@ require('packer').startup({function(use)
 		'neovim/nvim-lspconfig',
 		'L3MON4D3/LuaSnip',
 		'saadparwaiz1/cmp_luasnip',
+		'williamboman/nvim-lsp-installer',
 		event = 'BufWinEnter',
 	}
 end,

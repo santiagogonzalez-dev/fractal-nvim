@@ -39,6 +39,7 @@ vim.o.wrap = false -- Wrap text
 vim.o.showbreak = '↪ ' -- Shows when text is being wrapped
 vim.o.confirm = true -- Confirm dialogs
 vim.o.backspace = 'indent,start,eol' -- Make backspace behave like normal again
+vim.o.exrc = true -- Use local .nvimrc or .exrc
 vim.opt.cpoptions:append 'nm' -- See :help cpoptions, this are the defaults aABceFs_
 vim.opt.tags:append './tags;,tags' -- Where to search for ctags
 
@@ -118,24 +119,32 @@ map('n', '<Leader>s', ':set spell!<Cr>', nore_sil) -- Toggle spell checking
 map('n', '<Leader>n', ':set hlsearch!<Cr>', nore_sil) -- Highlight toggle for searched words
 map('n', '<Leader>c', ':set cul! cuc!<Cr>', nore_sil) -- Toggle cursor line and column
 map('n', '<Leader>sk', ':read ~/.config/nvim/skeletons/', nore_sil) -- Toggle cursor line and column
+map('n', '<Leader>Q', ':bufdo bdelete<Cr>', nore_sil) -- Toggle cursor line and column
+map('n', 'gf', ':edit <cfile><Cr>', nore_sil) -- Go gf to open non-existing files
 
 -- Move between windows with
-map('n', '<C-h>', '<C-w>h', nore_sil)
-map('n', '<C-l>', '<C-w>l', nore_sil)
-map('n', '<C-j>', '<C-w>j', nore_sil)
-map('n', '<C-k>', '<C-w>k', nore_sil)
+map('n', '<A-h>', '<C-w>h', nore_sil)
+map('n', '<A-l>', '<C-w>l', nore_sil)
+map('n', '<A-j>', '<C-w>j', nore_sil)
+map('n', '<A-k>', '<C-w>k', nore_sil)
 
--- -- Move current block
--- map('n', '<C-j>', ':m .+1<Cr>==', nore_sil)
--- map('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
--- map('x', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil)
--- map('x', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
+-- Move current block
+map('n', '<C-j>', ':m .+1<Cr>==', nore_sil)
+map('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
+map('x', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil)
+map('x', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
 
--- Center searches
+-- Center commands
 map('n', 'n', 'nzzzv', nore_sil)
 map('n', 'N', 'Nzzzv', nore_sil)
+map('v', 'y', 'myy`y', nore_sil)
+map('v', 'Y', 'myY`y', nore_sil)
+map('v', 'J', 'mzJ`z', nore_sil)
 
--- Reselect selection after shifting code block
+-- Save with sudo
+map('n', 'w!!', '%!sudo tee > /dev/null %', nore_sil)
+
+-- Keep visual selection after shifting code block
 map('x', '<', '<gv', nore_sil)
 map('x', '>', '>gv', nore_sil)
 

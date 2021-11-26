@@ -1,102 +1,130 @@
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = 'single',
-})
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
 
-local root_pattern = require('lspconfig/util').root_pattern
+-- local root_pattern = require('lspconfig/util').root_pattern
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local on_attach = function(_, bufnr)
-	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
+-- local on_attach = function(_, bufnr)
+-- 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- end
 
 -- CONFIGURE SERVERS
+local lsp_installer = require('nvim-lsp-installer')
+lsp_installer.on_server_ready(function(server)
+	local opts = {}
 
--- Python
-require('lspconfig').pyright.setup{}
-
--- Bash
-require('lspconfig').bashls.setup{}
-
--- Javascript and Typescript
-require('lspconfig').denols.setup{
-	cmd = { 'deno', 'lsp' },
-    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
-	init_options = {
-		enable = true,
-		lint = false,
-		unstable = false,
-	},
-	root_dir = root_pattern('deno.json', 'deno.jsonc', 'package.json', 'tsconfig.json', '.git', 'index.html'),
-}
-
--- HTML
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-require('lspconfig').html.setup{
-	cmd = { 'vscode-html-languageserver', '--stdio' },
-	capabilities = capabilities,
-	filetypes = { 'html' },
-	init_options = {
-		configurationSection = { 'html', 'css', 'javascript', 'typescript' },
-		embeddedLanguages = {
-			css = true,
-			javascript = true,
-			javascriptreact = true,
-			typescript = true,
-			typescriptreact = true,
+	if server.name == 'sumneko_lua' then
+		opts.settings = {
+			Lua = {
+				runtime = {
+					-- Tell the language server which version of Lua you're using
+					version = 'LuaJIT',
+					-- Setup your lua path
+					path = vim.split(package.path, ";")
+				},
+				diagnostics = {
+					-- Get the language server to recognize the `vim` global
+					globals = { 'vim' },
+				},
+				workspace = {
+					-- Make the server aware of Neovim runtime files
+					library = vim.api.nvim_get_runtime_file('', true),
+				},
+				-- Do not send telemetry data containing a randomized but unique identifier
+				telemetry = {
+					enable = false,
+				},
+			}
 		}
-	},
-	settings = {},
-	single_file_support = true,
-}
+	end
 
--- CSS
-require('lspconfig').cssls.setup{
-	cmd = { 'vscode-css-languageserver', '--stdio' },
-	capabilities = capabilities,
-}
+    server:setup(opts)
+end)
 
--- Lua
-local sumneko_root_path = '/usr/bin' -- Change to your sumneko root installation
-local sumneko_binary = sumneko_root_path .. '/lua-language-server'
+-- -- Python
+-- require('lspconfig').pyright.setup{}
 
--- Make runtime files discoverable to the server
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
+-- -- Bash
+-- require('lspconfig').bashls.setup{}
 
-require('lspconfig').sumneko_lua.setup {
-	cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using
-				version = 'LuaJIT',
-				-- Setup your lua path
-				path = runtime_path,
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { 'vim' },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file('', true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
-}
+-- -- Javascript and Typescript
+-- require('lspconfig').denols.setup{
+-- 	cmd = { 'deno', 'lsp' },
+--     filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+-- 	init_options = {
+-- 		enable = true,
+-- 		lint = false,
+-- 		unstable = false,
+-- 	},
+-- 	root_dir = root_pattern('deno.json', 'deno.jsonc', 'package.json', 'tsconfig.json', '.git', 'index.html'),
+-- }
+
+-- -- HTML
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- require('lspconfig').html.setup{
+-- 	cmd = { 'vscode-html-languageserver', '--stdio' },
+-- 	capabilities = capabilities,
+-- 	filetypes = { 'html' },
+-- 	init_options = {
+-- 		configurationSection = { 'html', 'css', 'javascript', 'typescript' },
+-- 		embeddedLanguages = {
+-- 			css = true,
+-- 			javascript = true,
+-- 			javascriptreact = true,
+-- 			typescript = true,
+-- 			typescriptreact = true,
+-- 		}
+-- 	},
+-- 	settings = {},
+-- 	single_file_support = true,
+-- }
+
+-- -- CSS
+-- require('lspconfig').cssls.setup{
+-- 	cmd = { 'vscode-css-languageserver', '--stdio' },
+-- 	capabilities = capabilities,
+-- }
+
+-- -- Lua
+-- local sumneko_root_path = '/usr/bin' -- Change to your sumneko root installation
+-- local sumneko_binary = sumneko_root_path .. '/lua-language-server'
+
+-- -- Make runtime files discoverable to the server
+-- local runtime_path = vim.split(package.path, ';')
+-- table.insert(runtime_path, 'lua/?.lua')
+-- table.insert(runtime_path, 'lua/?/init.lua')
+
+-- require('lspconfig').sumneko_lua.setup {
+-- 	cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- 	settings = {
+-- 		Lua = {
+-- 			runtime = {
+-- 				-- Tell the language server which version of Lua you're using
+-- 				version = 'LuaJIT',
+-- 				-- Setup your lua path
+-- 				path = runtime_path,
+-- 			},
+-- 			diagnostics = {
+-- 				-- Get the language server to recognize the `vim` global
+-- 				globals = { 'vim' },
+-- 			},
+-- 			workspace = {
+-- 				-- Make the server aware of Neovim runtime files
+-- 				library = vim.api.nvim_get_runtime_file('', true),
+-- 			},
+-- 			-- Do not send telemetry data containing a randomized but unique identifier
+-- 			telemetry = {
+-- 				enable = false,
+-- 			},
+-- 		},
+-- 	},
+-- }
 
 -- LuaSnip
 local luasnip = require('luasnip')
-
 
 -- CMP
 local cmp = require('cmp')
