@@ -1,18 +1,15 @@
 require('nvim-treesitter.configs').setup({
-    -- ensure_installed = {'lua', 'python', 'java', 'bash', 'javascript', 'html'},
     ensure_installed = 'maintained',
     highlight = {
         enable = true,
-        -- aditional_vim_regex_highlighting = true,
+        aditional_vim_regex_highlighting = true,
         disable = { 'latex' },
     },
     context_commentstring = {
         enable = true,
-        config = { css = '// %s' },
     },
     indent = {
         enable = true,
-        -- disable = { 'python' },
     },
     textsubjects = {
         enable = true,

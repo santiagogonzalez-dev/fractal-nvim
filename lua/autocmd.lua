@@ -43,6 +43,9 @@ vim.cmd([[ autocmd ColorScheme * highlight PmenuSel blend=0 ]])
 -- Insert cursor in orange, doesn't work in Konsole
 vim.cmd([[ autocmd ColorScheme * highlight iCursor guifg=white guibg=orange ]])
 
+-- Disable autocomment when pressing enter
+vim.cmd([[ autocmd BufWinEnter * :set formatoptions-=c formatoptions-=r formatoptions-=o ]])
+
 -- Hide last run command in the command line after 3 seconds
 vim.cmd([[
     augroup cmdline

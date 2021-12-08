@@ -33,6 +33,7 @@ vim.g.loaded_netrwSettings = false
 -- vim.g.matchit = false
 -- vim.g.matchparen = false
 
+
 vim.g.mapleader = ' '
 vim.g.localleader = ' '
 require('settings')

@@ -47,7 +47,7 @@ keymap('n', '<Leader>c', ':set cul! cuc!<Cr>', nore_sil)
 keymap('n', '<Leader>sk', ':read ~/.config/nvim/skeletons/', nore_sil)
 
 -- Quit all buffers
-keymap('n', '<Leader>q', ':bufdo bdelete<Cr>', nore_sil)
+keymap('n', '<Leader>Q', ':bufdo bdelete<Cr>', nore_sil)
 
 -- Close buffer
 keymap('n', '<Leader>bw', ':bw<Cr>', nore_sil)
@@ -92,9 +92,8 @@ keymap('n', '<Tab>', ':bnext<Cr>', nore_sil)
 keymap('n', '<S-Tab>', ':bprevious<Cr>', nore_sil)
 
 -- Naviagate buffers SHIFT-L SHIFT-H
-keymap('n', '<S-l>', ':bnext<CR>', nore_sil)
-keymap('n', '<S-h>', ':bprevious<CR>', nore_sil)
-
+keymap('n', '<A-l>', ':bnext<CR>', nore_sil)
+keymap('n', '<A-h>', ':bprevious<CR>', nore_sil)
 
 -- Undo break points
 keymap('i', ',', ',<C-g>u', nore_sil)

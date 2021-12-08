@@ -1,5 +1,6 @@
 -- Automatically install packer
 local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     PACKER_BOOTSTRAP = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
     print("Installing packer, close and reopen Neovim...")
@@ -43,10 +44,7 @@ return packer.startup(function(use)
         'rose-pine/neovim',
         as = 'rose-pine',
         config = function()
-            -- Options (see available options below)
             vim.g.rose_pine_variant = 'base'
-            -- vim.g.rose_pine_variant = 'moon'
-            -- vim.g.rose_pine_variant = 'dawn'
         end,
     }
     -- Load colorscheme after options
@@ -180,7 +178,7 @@ return packer.startup(function(use)
     }
     use {
         'neovim/nvim-lspconfig',
-        'williamboman/nvim-lsp-installer',
+        -- 'williamboman/nvim-lsp-installer',
     }
     -- Completion
     use {
@@ -200,6 +198,7 @@ return packer.startup(function(use)
         'mfussenegger/nvim-jdtls',
         event = 'BufEnter',
     }
+
     if PACKER_BOOTSTRAP then
         require('packer').sync()
     end
