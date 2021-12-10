@@ -37,14 +37,19 @@ vim.cmd([[ autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse ]])
 -- Disable delimiter line in certain type of files
 vim.cmd([[ autocmd FileType conf,dosini,help,html,markdown,text,zsh setlocal colorcolumn=0 ]])
 
--- Make the selected option in a solid color
+-- Make the selected option in completion menus in a solid color
 vim.cmd([[ autocmd ColorScheme * highlight PmenuSel blend=0 ]])
 
 -- Insert cursor in orange, doesn't work in Konsole
 vim.cmd([[ autocmd ColorScheme * highlight iCursor guifg=white guibg=orange ]])
 
 -- Disable autocomment when pressing enter
-vim.cmd([[ autocmd BufWinEnter * :set formatoptions-=c formatoptions-=r formatoptions-=o ]])
+vim.cmd([[
+    augroup disablecomment
+        autocmd!
+        autocmd BufWinEnter * :set formatoptions-=c formatoptions-=r formatoptions-=o
+    augroup END
+]])
 
 -- Hide last run command in the command line after 3 seconds
 vim.cmd([[

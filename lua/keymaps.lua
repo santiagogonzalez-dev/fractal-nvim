@@ -17,6 +17,7 @@ keymap('n', '<Bs>', '<Nop>', nore_sil)
 
 -- Semicolon
 keymap('n', '<Leader>;', '$a;<Esc>', nore_sil)
+keymap('v', '<Leader>;', ":'<,'>norm A;<Cr>", nore_sil)
 
 -- Colon
 keymap('n', '<Leader>:', '$a:<Esc>', nore_sil)
@@ -64,17 +65,18 @@ keymap('n', '<Leader>x', ':xa<Cr>', nore_sil)
 -- Go gf to open non-existing files
 keymap('n', 'gf', ':edit <cfile><Cr>', nore_sil)
 
--- Move between windows with
-keymap('n', '<A-h>', '<C-w>h', nore_sil)
-keymap('n', '<A-l>', '<C-w>l', nore_sil)
-keymap('n', '<A-j>', '<C-w>j', nore_sil)
-keymap('n', '<A-k>', '<C-w>k', nore_sil)
+-- -- Move between windows with
+-- I'm going to use <C-w>j, k, h and l for now
+-- keymap('n', '<A-H>', '<C-w>h', nore_sil)
+-- keymap('n', '<A-L>', '<C-w>l', nore_sil)
+-- keymap('n', '<A-J>', '<C-w>j', nore_sil)
+-- keymap('n', '<A-K>', '<C-w>k', nore_sil)
 
--- Move current block
-keymap('n', '<C-j>', ':m .+1<Cr>==', nore_sil)
+-- Move current block of text up and down
+keymap('n', '<C-j>', ':m .+1<Cr>==', nore_sil) -- Normal mode
 keymap('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
-keymap('x', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil)
-keymap('x', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
+keymap('v', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil) -- Visual mode
+keymap('v', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
 
 -- Center commands
 keymap('n', 'n', 'nzzzv', nore_sil)
@@ -87,11 +89,9 @@ keymap('v', 'J', 'mzJ`z', nore_sil)
 keymap('x', '<', '<gv', nore_sil)
 keymap('x', '>', '>gv', nore_sil)
 
--- Navigate buffers using TAB and SHIFT-TAB
+-- Navigate buffers
 keymap('n', '<Tab>', ':bnext<Cr>', nore_sil)
 keymap('n', '<S-Tab>', ':bprevious<Cr>', nore_sil)
-
--- Naviagate buffers SHIFT-L SHIFT-H
 keymap('n', '<A-l>', ':bnext<CR>', nore_sil)
 keymap('n', '<A-h>', ':bprevious<CR>', nore_sil)
 
@@ -113,6 +113,6 @@ keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", nore_exp_sil)
 -- Highlight last pasted code with gvp
 vim.cmd([[ nnoremap <expr> gvp '`[' . strpart(getregtype(), 0, 1) . '`]' ]])
 
--- Menu navigation
+-- Menu navigation on the command line
 keymap('c', '<C-j>',  'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } )
 keymap('c', '<C-k>',  'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } )

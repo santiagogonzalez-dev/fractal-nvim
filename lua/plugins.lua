@@ -39,6 +39,7 @@ return packer.startup(function(use)
         vim.api.nvim_set_keymap('n', '<Leader>ps', ':PackerSync<Cr>', opts),
         vim.api.nvim_set_keymap('n', '<Leader>pc', ':PackerCompile<Cr>', opts),
     }
+
     -- Colorscheme
     use{
         'rose-pine/neovim',
@@ -47,13 +48,16 @@ return packer.startup(function(use)
             vim.g.rose_pine_variant = 'base'
         end,
     }
+
     -- Load colorscheme after options
     vim.cmd('colorscheme rose-pine')
+
     -- Icons
     use {
         'kyazdani42/nvim-web-devicons',
         module = 'nvim-web-devicons',
     }
+
     -- Comment
     use {
         'numToStr/Comment.nvim',
@@ -61,18 +65,21 @@ return packer.startup(function(use)
         event = 'BufEnter',
         config = function() require('configs.comment') end,
     }
+
     -- Autopairs
     use {
         'windwp/nvim-autopairs',
         after = 'nvim-treesitter',
         config = function() require('configs.autopairs') end,
     }
+
     -- Autotags
     use {
         'windwp/nvim-ts-autotag',
         after = 'nvim-treesitter',
         event = 'InsertEnter',
     }
+
     -- Hop
     use {
         'phaazon/hop.nvim',
@@ -87,12 +94,14 @@ return packer.startup(function(use)
         -- Keymappings
         vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<Cr>', opts)
     }
+
     -- Tabs Viewer
     use {
         'romgrk/barbar.nvim',
         event = 'BufEnter',
         config = function() require('configs.barbar') end,
     }
+
     -- Surround
     use {
         'tpope/vim-surround',
@@ -104,24 +113,28 @@ return packer.startup(function(use)
         keys = { '<C-t>', '<Leader>r' },
         config = function() require('configs.toggleterm') end,
     }
+
     -- Stabilize
     use {
         'luukvbaal/stabilize.nvim',
         event = 'BufEnter',
         config = function() require('stabilize').setup() end,
     }
+
     -- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         event = 'BufRead',
         config = function() require('configs.treesitter') end,
     }
+
     -- Nvim-tree
     use {
         'kyazdani42/nvim-tree.lua',
         event = 'BufEnter',
         config = function() require('configs.nvimtree') end,
     }
+
     -- Colorizer
     use {
         'norcalli/nvim-colorizer.lua',
@@ -134,6 +147,7 @@ return packer.startup(function(use)
             vim.cmd([[ ColorizerAttachToBuffer ]])
         end,
     }
+
     -- Plenary
     use {
         'nvim-lua/plenary.nvim',
@@ -146,6 +160,7 @@ return packer.startup(function(use)
         event = 'BufRead',
         config = function() require('configs.telescope') end,
     }
+
     -- Git Signs
     use {
         'lewis6991/gitsigns.nvim',
@@ -153,6 +168,7 @@ return packer.startup(function(use)
         requires = 'plenary.nvim',
         config = function() require('configs.gitcolumnsigns') end,
     }
+
     -- Indent Blankline
     use {
         'lukas-reineke/indent-blankline.nvim',
@@ -176,10 +192,13 @@ return packer.startup(function(use)
         -- Keymappings
         vim.api.nvim_set_keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', opts)
     }
+
+    -- LSP
     use {
         'neovim/nvim-lspconfig',
         -- 'williamboman/nvim-lsp-installer',
     }
+
     -- Completion
     use {
         'hrsh7th/nvim-cmp',
@@ -193,6 +212,7 @@ return packer.startup(function(use)
         'saadparwaiz1/cmp_luasnip',
         event = 'InsertEnter',
     }
+
     -- Java
     use {
         'mfussenegger/nvim-jdtls',
