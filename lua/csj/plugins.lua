@@ -109,19 +109,12 @@ return packer.startup(function(use)
         event = 'VimEnter',
     }
 
-    -- -- Terminal
-    -- use {
-    --     'akinsho/toggleterm.nvim',
-    --     keys = { '<C-t>', '<Leader>r' },
-    --     -- config = function() require('configs.toggleterm') end,
-    -- }
-
-    -- -- Stabilize
-    -- use {
-    --     'luukvbaal/stabilize.nvim',
-    --     event = 'BufEnter',
-    --     config = function() require('stabilize').setup() end,
-    -- }
+    -- Terminal
+    use {
+        'akinsho/toggleterm.nvim',
+        keys = { '<C-t>', '<Leader>r' },
+        config = function() require('csj.configs.toggleterm') end,
+    }
 
     -- Treesitter
     use {

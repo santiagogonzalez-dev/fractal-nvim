@@ -38,6 +38,7 @@ require('csj.plugins')
 require('csj.colorscheme')
 require('csj.configs.cmp')
 require('csj.lsp')
+
 vim.defer_fn(function()
     vim.o.shadafile = ''
     vim.cmd([[
