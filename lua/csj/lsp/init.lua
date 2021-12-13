@@ -34,7 +34,6 @@ local on_attach = function(client, bufnr)
 end
 
 local root_pattern = require('lspconfig/util').root_pattern
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
@@ -49,18 +48,25 @@ capabilities.textDocument.codeAction = {
     codeActionLiteralSupport = {
         codeActionKind = {
             valueSet = {
-                "",
-                "quickfix",
-                "refactor",
-                "refactor.extract",
-                "refactor.inline",
-                "refactor.rewrite",
-                "source",
-                "source.organizeImports",
+                '',
+                'quickfix',
+                'refactor',
+                'refactor.extract',
+                'refactor.inline',
+                'refactor.rewrite',
+                'source',
+                'source.organizeImports',
             },
         },
     },
 }
+
+-- Nvim LSP Installer
+require('nvim-lsp-installer').on_server_ready(function(server)
+    local opts = {}
+
+    server:setup(opts)
+end)
 
 -- Python
 require('lspconfig').pyright.setup{}
@@ -106,12 +112,6 @@ require('lspconfig').jsonls.setup{
     capabilities = capabilities,
 }
 
--- -- eslint
--- require('lspconfig').eslint.setup{
---     on_attach = on_attach,
---     capabilities = capabilities,
--- }
-
 -- Lua
 local sumneko_root_path = "/usr/bin/" -- Change to your sumneko root installation
 local sumneko_binary = sumneko_root_path .. 'lua-language-server'
@@ -148,9 +148,3 @@ require('lspconfig').sumneko_lua.setup {
         },
     },
 }
-
-local on_attach = function(_, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
-
-require('configs.cmp')

@@ -1,9 +1,11 @@
--- Automatically install packer
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local fn = vim.fn
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    print("Installing packer, close and reopen Neovim...")
+-- Automatically install packer
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+    PACKER_BOOTSTRAP = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    print("Installing packer close and reopen Neovim...")
+    vim.cmd [[packadd packer.nvim]]
 end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
@@ -15,7 +17,7 @@ vim.cmd([[
 ]])
 
 -- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
+local status_ok, packer = pcall(require, 'packer')
 if not status_ok then
     return
 end
@@ -40,6 +42,9 @@ return packer.startup(function(use)
         vim.api.nvim_set_keymap('n', '<Leader>pc', ':PackerCompile<Cr>', opts),
     }
 
+    -- Plenary
+    use 'nvim-lua/plenary.nvim'
+
     -- Colorscheme
     use{
         'rose-pine/neovim',
@@ -48,9 +53,6 @@ return packer.startup(function(use)
             vim.g.rose_pine_variant = 'base'
         end,
     }
-
-    -- Load colorscheme after options
-    vim.cmd('colorscheme rose-pine')
 
     -- Icons
     use {
@@ -63,14 +65,14 @@ return packer.startup(function(use)
         'numToStr/Comment.nvim',
         after = 'nvim-treesitter',
         event = 'BufEnter',
-        config = function() require('configs.comment') end,
+        config = function() require('csj.configs.comment') end,
     }
 
     -- Autopairs
     use {
         'windwp/nvim-autopairs',
         after = 'nvim-treesitter',
-        config = function() require('configs.autopairs') end,
+        config = function() require('csj.configs.autopairs') end,
     }
 
     -- Autotags
@@ -95,11 +97,10 @@ return packer.startup(function(use)
         vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<Cr>', opts)
     }
 
-    -- Tabs Viewer
+    -- Bufferline
     use {
-        'romgrk/barbar.nvim',
-        event = 'BufEnter',
-        config = function() require('configs.barbar') end,
+        'akinsho/bufferline.nvim',
+        config = function() require('csj.configs.bufferline') end,
     }
 
     -- Surround
@@ -107,32 +108,38 @@ return packer.startup(function(use)
         'tpope/vim-surround',
         event = 'VimEnter',
     }
-    -- Terminal
-    use {
-        'akinsho/toggleterm.nvim',
-        keys = { '<C-t>', '<Leader>r' },
-        config = function() require('configs.toggleterm') end,
-    }
 
-    -- Stabilize
-    use {
-        'luukvbaal/stabilize.nvim',
-        event = 'BufEnter',
-        config = function() require('stabilize').setup() end,
-    }
+    -- -- Terminal
+    -- use {
+    --     'akinsho/toggleterm.nvim',
+    --     keys = { '<C-t>', '<Leader>r' },
+    --     -- config = function() require('configs.toggleterm') end,
+    -- }
+
+    -- -- Stabilize
+    -- use {
+    --     'luukvbaal/stabilize.nvim',
+    --     event = 'BufEnter',
+    --     config = function() require('stabilize').setup() end,
+    -- }
 
     -- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         event = 'BufRead',
-        config = function() require('configs.treesitter') end,
+        config = function() require('csj.configs.treesitter') end,
+    }
+
+    use {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        event = 'BufRead',
     }
 
     -- Nvim-tree
     use {
         'kyazdani42/nvim-tree.lua',
         event = 'BufEnter',
-        config = function() require('configs.nvimtree') end,
+        config = function() require('csj.configs.nvimtree') end,
     }
 
     -- Colorizer
@@ -141,24 +148,11 @@ return packer.startup(function(use)
         event = { 'CursorMoved', 'CursorHold' },
         config = function()
             require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript', },
-                {
-                    -- mode = 'foreground',
-                })
+            {
+                -- mode = 'foreground',
+            })
             vim.cmd([[ ColorizerAttachToBuffer ]])
         end,
-    }
-
-    -- Plenary
-    use {
-        'nvim-lua/plenary.nvim',
-    }
-    -- TelescopePrompt
-    use {
-        'nvim-telescope/telescope.nvim',
-        opt = true,
-        cmd = 'Telescope',
-        event = 'BufRead',
-        config = function() require('configs.telescope') end,
     }
 
     -- Git Signs
@@ -166,7 +160,7 @@ return packer.startup(function(use)
         'lewis6991/gitsigns.nvim',
         event = 'VimEnter',
         requires = 'plenary.nvim',
-        config = function() require('configs.gitcolumnsigns') end,
+        config = function() require('csj.configs.gitsigns') end,
     }
 
     -- Indent Blankline
@@ -189,35 +183,25 @@ return packer.startup(function(use)
             -- vim.g.indent_blankline_enabled = false
             vim.cmd([[ highlight IndentBlanklineContextChar guifg=orange gui=nocombine ]])
         end,
-        -- Keymappings
-        vim.api.nvim_set_keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', opts)
-    }
-
-    -- LSP
-    use {
-        'neovim/nvim-lspconfig',
-        -- 'williamboman/nvim-lsp-installer',
     }
 
     -- Completion
     use {
-        'hrsh7th/nvim-cmp',
-        'L3MON4D3/LuaSnip',
-        'hrsh7th/cmp-nvim-lua',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-path',
+        'L3MON4D3/LuaSnip', -- Snippet engine
+        'saadparwaiz1/cmp_luasnip', -- Snippet completions
+        'hrsh7th/cmp-buffer', -- Buffer completions
         'hrsh7th/cmp-calc',
-        'hrsh7th/cmp-buffer',
-        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-cmdline', -- cmdline completion
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-nvim-lua',
+        'hrsh7th/cmp-path', -- Path completion
+        'hrsh7th/nvim-cmp', -- The completion plugin
         event = 'InsertEnter',
     }
 
-    -- Java
-    use {
-        'mfussenegger/nvim-jdtls',
-        event = 'BufEnter',
-    }
+    -- LSP
+    use { 'neovim/nvim-lspconfig' }
+    use { 'williamboman/nvim-lsp-installer' }
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

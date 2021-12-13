@@ -10,6 +10,10 @@ local nore_exp_sil = { noremap = true, expr = true, silent = true }
 --    term_mode = "t",
 --    command_mode = "c",
 
+-- Remap space as leader key
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Avoid moving the cursor with space, enter or backspace when in normal mode
 keymap('n', '<Space>', '<Nop>', nore_sil)
 keymap('n', '<Cr>', '<Nop>', nore_sil)
@@ -62,15 +66,14 @@ keymap('n', '<Leader>W', '%!sudo tee > /dev/null %', nore_sil)
 -- Write to all buffers and quit
 keymap('n', '<Leader>x', ':xa<Cr>', nore_sil)
 
+-- Navigate buffers
+keymap('n', '<Tab>', ':bnext<Cr>', nore_sil)
+keymap('n', '<S-Tab>', ':bprevious<Cr>', nore_sil)
+keymap('n', '<A-l>', ':bnext<CR>', nore_sil)
+keymap('n', '<A-h>', ':bprevious<CR>', nore_sil)
+
 -- Go gf to open non-existing files
 keymap('n', 'gf', ':edit <cfile><Cr>', nore_sil)
-
--- -- Move between windows with
--- I'm going to use <C-w>j, k, h and l for now
--- keymap('n', '<A-H>', '<C-w>h', nore_sil)
--- keymap('n', '<A-L>', '<C-w>l', nore_sil)
--- keymap('n', '<A-J>', '<C-w>j', nore_sil)
--- keymap('n', '<A-K>', '<C-w>k', nore_sil)
 
 -- Move current block of text up and down
 keymap('n', '<C-j>', ':m .+1<Cr>==', nore_sil) -- Normal mode
@@ -88,12 +91,6 @@ keymap('v', 'J', 'mzJ`z', nore_sil)
 -- Keep visual selection after shifting code block
 keymap('x', '<', '<gv', nore_sil)
 keymap('x', '>', '>gv', nore_sil)
-
--- Navigate buffers
-keymap('n', '<Tab>', ':bnext<Cr>', nore_sil)
-keymap('n', '<S-Tab>', ':bprevious<Cr>', nore_sil)
-keymap('n', '<A-l>', ':bnext<CR>', nore_sil)
-keymap('n', '<A-h>', ':bprevious<CR>', nore_sil)
 
 -- Undo break points
 keymap('i', ',', ',<C-g>u', nore_sil)
@@ -116,3 +113,13 @@ vim.cmd([[ nnoremap <expr> gvp '`[' . strpart(getregtype(), 0, 1) . '`]' ]])
 -- Menu navigation on the command line
 keymap('c', '<C-j>',  'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } )
 keymap('c', '<C-k>',  'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } )
+
+-- Comment toggle
+keymap('n', '<Leader>/', '<Cmd>lua require("Comment").toggle()<Cr>', nore_sil)
+keymap('v', '<leader>/', ':lua require(\'Comment.api\').gc(vim.fn.visualmode())<cr>', nore_sil)
+
+-- Open nvim-tree
+vim.api.nvim_set_keymap('n', '<Leader>t', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
+
+-- Toggle Indent Blankline
+vim.api.nvim_set_keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', nore_sil)

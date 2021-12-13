@@ -1,5 +1,11 @@
-require('nvim-treesitter.configs').setup({
+local status_ok, configs = pcall(require, "nvim-treesitter.configs")
+if not status_ok then
+    return
+end
+
+configs.setup {
     ensure_installed = 'maintained',
+    sync_install = false,
     highlight = {
         enable = true,
         aditional_vim_regex_highlighting = true,
@@ -7,15 +13,11 @@ require('nvim-treesitter.configs').setup({
     },
     context_commentstring = {
         enable = true,
+        enable_autocmd = false,
     },
     indent = {
         enable = true,
-    },
-    textsubjects = {
-        enable = true,
-        keymaps = {
-            [','] = 'textsubjects-smart',
-        },
+        disable = { 'yaml' },
     },
     refactor = {
         highlight_definitions = { enable = true },
@@ -67,4 +69,4 @@ require('nvim-treesitter.configs').setup({
             show_help = '?',
         }
     },
-})
+}

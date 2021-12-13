@@ -3,8 +3,8 @@ vim.cmd([[
     filetype off
     filetype plugin indent off
 ]])
-
 vim.o.shadafile = 'NONE'
+
 vim.g.loaded_2html_plugin = false
 vim.g.loaded_getscript = false
 vim.g.loaded_getscriptPlugin = false
@@ -30,20 +30,16 @@ vim.g.loaded_netrw = false
 vim.g.loaded_netrwFileHandlers = false
 vim.g.loaded_netrwPlugin = false
 vim.g.loaded_netrwSettings = false
--- vim.g.matchit = false
--- vim.g.matchparen = false
 
-
-vim.g.mapleader = ' '
-vim.g.localleader = ' '
-require('settings')
-require('keymaps')
-require('autocmd')
-require('plugins')
-require('lsp.init')
-vim.o.shadafile = ''
-
+require('csj.settings')
+require('csj.autocmd')
+require('csj.keymaps')
+require('csj.plugins')
+require('csj.colorscheme')
+require('csj.configs.cmp')
+require('csj.lsp')
 vim.defer_fn(function()
+    vim.o.shadafile = ''
     vim.cmd([[
         rshada!
         doautocmd BufRead
