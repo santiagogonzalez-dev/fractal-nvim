@@ -5,7 +5,7 @@ end
 
 bufferline.setup {
     options = {
-        numbers = "buffer_id", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
+        numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
         close_command = "Bdelete! %d",       -- can be a string | function, see "Mouse actions"
         right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
         left_mouse_command = "buffer %d",    -- can be a string | function, see "Mouse actions"
@@ -14,7 +14,7 @@ bufferline.setup {
         -- and so changing this is NOT recommended, this is intended
         -- as an escape hatch for people who cannot bear it for whatever reason
         indicator_icon = '▎',
-        buffer_close_icon = '',
+        buffer_close_icon = ' ',
         -- buffer_close_icon = '',
         modified_icon = '●',
         close_icon = '',
@@ -31,10 +31,10 @@ bufferline.setup {
         --     return vim.fn.fnamemodify(buf.name, ':t:r')
         --   end
         -- end,
-        max_name_length = 30,
-        max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
-        tab_size = 25,
-        diagnostics = 'nvim_lsp', -- | "nvim_lsp" | "coc",
+        max_name_length = 40,
+        max_prefix_length = 20, -- prefix used when a buffer is de-duplicated
+        tab_size = 20,
+        diagnostics = 'nvim_lsp',
         diagnostics_update_in_insert = false,
         -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
         --   return "("..count..")"
@@ -65,7 +65,7 @@ bufferline.setup {
         -- [focused and unfocused]. eg: { '|', '|' }
         separator_style = "thin", -- | "thick" | "thin" | { 'any', 'any' },
         enforce_regular_tabs = true,
-        always_show_bufferline = true,
+        always_show_bufferline = false,
         sort_by = 'relative_directory'
         --   -- add custom logic
         --   return buffer_a.modified > buffer_b.modified

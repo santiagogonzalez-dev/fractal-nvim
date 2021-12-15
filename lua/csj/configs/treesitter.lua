@@ -1,10 +1,24 @@
-local status_ok, configs = pcall(require, "nvim-treesitter.configs")
+local status_ok, configs = pcall(require, 'nvim-treesitter.configs')
 if not status_ok then
     return
 end
 
 configs.setup {
-    ensure_installed = 'maintained',
+    -- ensure_installed = 'maintained',
+    ensure_installed = {
+        'comment',
+        'css',
+        'html',
+        'java',
+        'javascript',
+        'json',
+        'lua',
+        'markdown',
+        'python',
+        'svelte',
+        'typescript',
+        'vim',
+    },
     sync_install = false,
     highlight = {
         enable = true,

@@ -19,7 +19,7 @@ vim.cmd([[
     augroup _general_settings
         autocmd!
         autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-        autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})
+        autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'iCursor', timeout = 200})
     augroup end
 
     augroup _git
@@ -85,7 +85,7 @@ vim.cmd([[
 vim.cmd([[
     augroup _highlight_match
         autocmd!
-        autocmd CursorMoved * exe printf('match RedrawDebugComposed /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+        autocmd CursorMoved * exe printf('match iCursor /\V\<%s\>/', escape(expand('<cword>'), '/\'))
     augroup end
 ]])
 

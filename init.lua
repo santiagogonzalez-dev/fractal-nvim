@@ -21,7 +21,6 @@ vim.g.loaded_tutor_mode_plugin = false
 vim.g.loaded_vimball = false
 vim.g.loaded_vimballPlugin = false
 vim.g.loaded_zip = false
-vim.g.loaded_zip = false
 vim.g.loaded_zipPlugin = false
 vim.g.loaded_perl_provider = false
 vim.g.loaded_python_provider = false
@@ -32,9 +31,10 @@ vim.g.loaded_netrwPlugin = false
 vim.g.loaded_netrwSettings = false
 
 require('csj.settings')
-require('csj.autocmd')
 require('csj.keymaps')
 require('csj.plugins')
+require('csj.autocmd')
+require('csj.functions')
 require('csj.colorscheme')
 require('csj.configs.cmp')
 require('csj.lsp')

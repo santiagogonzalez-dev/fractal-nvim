@@ -20,10 +20,40 @@ toggleterm.setup({
         border = 'curved',
         winblend = 0,
         width = 80,
-        height = 60,
+        -- height = (vim.o.columns / 2),
+        height = 100,
         highlights = {
             border = 'FloatBorder',
             background = 'NormalFloat',
         },
     },
 })
+
+local files = {
+    python = 'python -i ' .. vim.fn.expand '%:t',
+    lua = 'lua ' .. vim.fn.expand '%:t',
+    c = 'gcc -o temp ' .. vim.fn.expand '%:t' .. ' && ./temp && rm ./temp',
+    java = 'javac ' .. vim.fn.expand '%:t' .. ' && java ' .. vim.fn.expand '%:t:r' .. ' && rm *.class',
+    rust = 'cargo run',
+    javascript = 'node ' .. vim.fn.expand '%:t',
+    typescript = 'tsc ' .. vim.fn.expand '%:t' .. ' && node ' .. vim.fn.expand '%:t:r' .. '.js',
+}
+
+-- function Run_file()
+-- 	local command = files[vim.bo.filetype]
+-- 	if command ~= nil then
+-- 		require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = true }):toggle()
+-- 		print('Running: ' .. command)
+-- 	end
+-- end
+
+function Run_file()
+    local command = files[vim.bo.filetype]
+    if command ~= nil then
+        require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = false }):toggle()
+        print('Running: ' .. command)
+    end
+end
+
+-- If you change the mapping you also need to enable it in your packer conf
+vim.api.nvim_buf_set_keymap( vim.api.nvim_get_current_buf(), 'n', '<Leader>r', ':w<Cr>:lua Run_file()<Cr>', { noremap = true, silent = true })

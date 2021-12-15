@@ -1,7 +1,6 @@
 local options = {
     autoindent = true,              -- Copy indent from current line when starting a new line
     backspace = 'indent,start,eol', -- Make backspace behave like normal again
-    backupdir = '/tmp/nvim',        -- Change location of files
     clipboard = 'unnamedplus',      -- Uses the system clipboard
     cmdheight = 1,                  -- Space for displaying messages in the command line
     colorcolumn = '90',             -- Limiter line
@@ -9,8 +8,9 @@ local options = {
     confirm = true,                 -- Confirm dialogs
     cursorcolumn = true,            -- Draw line on cursor
     cursorline = true,              -- Draw line on cursor
+    backupdir = '/tmp/nvim',        -- Change location of files
     directory = '/tmp/nvim',        -- Change location of files
-    expandtab = true,               -- Convert tabs to spaces
+    undodir =   '/tmp/nvim',        -- Change location of files
     exrc = true,                    -- Use local .nvimrc or .exrc
     fileencoding = 'utf-8',         -- Enconding used for files
     foldcolumn = 'auto',            -- Column to display where the folds are
@@ -32,7 +32,7 @@ local options = {
     mousefocus = true,              -- Focusing cursor on the window with the keyboard focus
     number = true,                  -- Display line number on the side
     path = '**',                    -- Search files recursively
-    pumblend = 15,                  -- Transparency for the pop up menu
+    pumblend = 8,                   -- Transparency for the pop up menu
     pumheight = 20,                 -- Pop up menu height
     redrawtime = 600,               -- Time for redrawing the display
     relativenumber = true,          -- Display line number relative to the cursor
@@ -43,25 +43,25 @@ local options = {
     showbreak = '↪ ',               -- Shows when text is being wrapped
     showmatch = false,              -- Show match brace, set to false because :DoMatchParen does enough
     showmode = false,               -- Show or hide the mode you are on in the status line
-    showtabline = 0,                -- Show top tab bar
     scrolloff = 8,                  -- Cursor does not reach top/bottom
     sidescrolloff = 8,              -- Cursor does not reach sides
     signcolumn = 'auto',             -- Always show signcolumn
     smartcase = true,               -- Smart case
     smartindent = true,             -- Smart indentation
+    showtabline = 0,                -- Show top tab bar
+    expandtab = true,               -- Convert tabs to spaces
     smarttab = true,                -- Smart indentation
     softtabstop = -1,               -- Tab length, if negative shiftwidth value is used
+    tabstop = 4,                    -- Tab length
     spelllang = 'en,cjk',           -- Spell checking languages
     spelloptions = 'camel',         -- Options for spell checking
     splitbelow = true,              -- Force splits to go below current window
     splitright = true,              -- Force vertical splits to go to the right of current window
     swapfile = false,               -- It does (not) creates a swapfileWage
-    tabstop = 4,                    -- Tab length
     termguicolors = true,           -- Enable colors in the terminal
     textwidth = 90,                 -- Delimit text blocks to N columns
     timeoutlen = 400,               -- Time given for doing a sequence
     title = true,                   -- Set the window title based on the value of titlestring
-    undodir =   '/tmp/nvim',        -- Change location of files
     undofile = true,                -- Persistent undo - undo after you re-open the file
     undolevels = 10000,             -- Levels of undoing
     updatetime = 600,               -- Faster completion
@@ -90,7 +90,7 @@ vim.opt.matchpairs:append {
 
 vim.opt.tags:append {
     './tags',
-    'tags'
+    'tags',
 }
 
 -- Better cursor for visual mode

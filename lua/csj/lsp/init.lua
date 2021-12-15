@@ -1,7 +1,8 @@
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
 
-local on_attach = function(client, bufnr)
+-- local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -14,26 +15,26 @@ local on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     -- this buf_set_keymap() is not working correctly on startup
     -- running :source ~/.config/nvim/lua/main.lua makes the gd command work tho
-    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    -- buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<Cr>', opts)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<Cr>', opts)
+    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<Cr>', opts)
+    -- buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<Cr>', opts)
+    -- buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<Cr>', opts)
+    buf_set_keymap('n', '<Space>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<Cr>', opts)
+    buf_set_keymap('n', '<Space>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', opts)
+    buf_set_keymap('n', '<Space>wl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<Cr>', opts)
+    buf_set_keymap('n', '<Space>D', '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', opts)
+    buf_set_keymap('n', '<Space>rn', '<Cmd>lua vim.lsp.buf.rename()<Cr>', opts)
+    buf_set_keymap('n', '<Space>ca', '<Cmd>lua vim.lsp.buf.code_action()<Cr>', opts)
+    buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<Cr>', opts)
+    -- buf_set_keymap('n', '<space>e', '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<Cr>', opts)
+    buf_set_keymap('n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<Cr>', opts)
+    buf_set_keymap('n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<Cr>', opts)
+    -- buf_set_keymap('n', '<space>q', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<Cr>', opts)
+    buf_set_keymap('n', '<space>f', '<Cmd>lua vim.lsp.buf.formatting()<Cr>', opts)
 end
 
-local root_pattern = require('lspconfig/util').root_pattern
+-- local root_pattern = require('lspconfig/util').root_pattern
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
@@ -77,9 +78,10 @@ require('lspconfig').bashls.setup{
 }
 
 -- Javascript and Typescript
-require('lspconfig').tsserver.setup{
-    root_dir = root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git')
-}
+require('lspconfig').tsserver.setup{}
+-- require('lspconfig').tsserver.setup{
+--     root_dir = root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git')
+-- }
 
 -- HTML
 require('lspconfig').html.setup{
@@ -113,7 +115,7 @@ require('lspconfig').jsonls.setup{
 }
 
 -- Lua
-local sumneko_root_path = "/usr/bin/" -- Change to your sumneko root installation
+local sumneko_root_path = "/usr/bin/"
 local sumneko_binary = sumneko_root_path .. 'lua-language-server'
 
 -- Make runtime files discoverable to the server
@@ -128,23 +130,20 @@ require('lspconfig').sumneko_lua.setup {
     settings = {
         Lua = {
             runtime = {
-                -- Tell the language server which version of Lua you're using
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = runtime_path,
+                version = 'LuaJIT', -- Tell the language server which version of Lua you're using
+                path = runtime_path, -- Setup your lua path
             },
             diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
+                globals = { 'vim' }, -- Get the language server to recognize the `vim` global
             },
             workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file('', true),
+                library = vim.api.nvim_get_runtime_file('', true), -- Make the server aware of Neovim runtime files
             },
-            -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = {
-                enable = false,
+                enable = false, -- Do not send telemetry data containing a randomized but unique identifier
             },
         },
     },
 }
+
+require("csj.lsp.handlers").setup()

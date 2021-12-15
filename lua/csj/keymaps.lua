@@ -60,20 +60,17 @@ keymap('n', '<Leader>bw', ':bw<Cr>', nore_sil)
 -- Write buffer
 keymap('n', '<Leader>w', ':w<Cr>', nore_sil)
 
--- Write buffers as sudo
-keymap('n', '<Leader>W', '%!sudo tee > /dev/null %', nore_sil)
-
 -- Write to all buffers and quit
 keymap('n', '<Leader>x', ':xa<Cr>', nore_sil)
+
+-- Write buffers as sudo
+keymap('n', '<Leader>W', '%!sudo tee > /dev/null %', nore_sil)
 
 -- Navigate buffers
 keymap('n', '<Tab>', ':bnext<Cr>', nore_sil)
 keymap('n', '<S-Tab>', ':bprevious<Cr>', nore_sil)
-keymap('n', '<A-l>', ':bnext<CR>', nore_sil)
-keymap('n', '<A-h>', ':bprevious<CR>', nore_sil)
-
--- Go gf to open non-existing files
-keymap('n', 'gf', ':edit <cfile><Cr>', nore_sil)
+keymap('n', '<A-l>', ':bnext<Cr>', nore_sil)
+keymap('n', '<A-h>', ':bprevious<Cr>', nore_sil)
 
 -- Move current block of text up and down
 keymap('n', '<C-j>', ':m .+1<Cr>==', nore_sil) -- Normal mode
@@ -108,18 +105,17 @@ keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", nore_exp_sil)
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", nore_exp_sil)
 
 -- Highlight last pasted code with gvp
-vim.cmd([[ nnoremap <expr> gvp '`[' . strpart(getregtype(), 0, 1) . '`]' ]])
+keymap('n', 'gvp', [['`[' . strpart(getregtype(), 0, 1) . '`]']], nore_sil)
 
--- Menu navigation on the command line
-keymap('c', '<C-j>',  'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } )
-keymap('c', '<C-k>',  'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } )
-
--- Comment toggle
+-- Additional mappings for Comments
 keymap('n', '<Leader>/', '<Cmd>lua require("Comment").toggle()<Cr>', nore_sil)
-keymap('v', '<leader>/', ':lua require(\'Comment.api\').gc(vim.fn.visualmode())<cr>', nore_sil)
+keymap('v', '<Leader>/', ':lua require(\'Comment.api\').gc(vim.fn.visualmode())<cr>', nore_sil)
 
--- Open nvim-tree
-vim.api.nvim_set_keymap('n', '<Leader>t', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
+-- Toggle nvim-tree
+keymap('n', '<Leader>t', ':NvimTreeToggle<Cr>', nore_sil)
 
 -- Toggle Indent Blankline
-vim.api.nvim_set_keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', nore_sil)
+keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', nore_sil)
+
+-- Cycle through relative number and number
+keymap('n', '<Leader>n', ':call Cycle_numbering()<Cr>', nore_sil)
