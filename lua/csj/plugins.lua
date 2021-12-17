@@ -24,7 +24,7 @@ end
 packer.init({
     display = {
         open_fn = function()
-            return require('packer.util').float({ border = 'single' })
+            return require('packer.util').float({ border = 'rounded' })
         end
     }
 })
@@ -32,6 +32,12 @@ packer.init({
 -- Install your plugins here
 return packer.startup(function(use)
     local opts = { noremap = true, silent = true }
+
+    -- Impatient
+    use {
+        'lewis6991/impatient.nvim',
+        config = function() require('csj.configs.impatient') end,
+    }
 
     -- Packer
     use {
