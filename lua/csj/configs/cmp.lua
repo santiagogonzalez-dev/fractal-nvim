@@ -106,9 +106,11 @@ cmp.setup({
     },
     sources = {
         { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
         { name = 'luasnip' },
         { name = 'path' },
         { name = 'buffer' },
+        { name = 'calc' },
     },
     confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
@@ -126,6 +128,7 @@ cmp.setup({
 cmp.setup.cmdline('/', {
     sources = {
         { name = 'buffer', Keyword_length = 1 },
+        { name = 'cmp-calc', Keyword_length = 1 },
     }
 })
 

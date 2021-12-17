@@ -61,7 +61,10 @@ return packer.startup(function(use)
     -- Comment
     use {
         'numToStr/Comment.nvim',
-        after = 'nvim-treesitter',
+        after = {
+            'nvim-treesitter',
+            'nvim-ts-context-commentstring'
+        },
         config = function() require('csj.configs.comment') end,
     }
 
@@ -195,7 +198,7 @@ return packer.startup(function(use)
     -- Java
     use {
         'mfussenegger/nvim-jdtls',
-        event = 'BufReadPost',
+        ft = 'java',
     }
 
     if PACKER_BOOTSTRAP then
