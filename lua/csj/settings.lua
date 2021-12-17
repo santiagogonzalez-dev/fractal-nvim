@@ -11,12 +11,13 @@ local options = {
     backupdir = '/tmp/nvim',        -- Change location of files
     directory = '/tmp/nvim',        -- Change location of files
     undodir =   '/tmp/nvim',        -- Change location of files
+    undofile = true,                -- Persistent undo - undo after you re-open the file
+    undolevels = 10000,             -- Levels of undoing
     exrc = true,                    -- Use local .nvimrc or .exrc
     fileencoding = 'utf-8',         -- Enconding used for files
     foldcolumn = 'auto',            -- Column to display where the folds are
     foldenable = true,              -- Enable folds
     foldmethod = 'manual',          -- Method used for idents
-    grepprg = 'rg --vimgrep',       -- Grep command
     hidden = true,                  -- It keeps buffers open in memory
     history = 100,                  -- Saved spaces in each table of history
     hlsearch = true,                -- Highlighting search
@@ -38,6 +39,7 @@ local options = {
     relativenumber = true,          -- Display line number relative to the cursor
     ruler = true,                   -- Show the line and column number of the cursor position
     shell = 'zsh',                  -- Shell to use for `!`, `:!`, `system()` etc.
+    grepprg = 'rg --vimgrep',       -- Grep command
     shiftround = true,              -- Round indent to multiple of 'shiftwidth'
     shiftwidth = 4,                 -- Size of a > or < when indenting
     showbreak = '↪ ',               -- Shows when text is being wrapped
@@ -45,7 +47,7 @@ local options = {
     showmode = false,               -- Show or hide the mode you are on in the status line
     scrolloff = 8,                  -- Cursor does not reach top/bottom
     sidescrolloff = 8,              -- Cursor does not reach sides
-    signcolumn = 'auto',             -- Always show signcolumn
+    signcolumn = 'auto',            -- Always show signcolumn
     smartcase = true,               -- Smart case
     smartindent = true,             -- Smart indentation
     showtabline = 0,                -- Show top tab bar
@@ -62,8 +64,6 @@ local options = {
     textwidth = 90,                 -- Delimit text blocks to N columns
     timeoutlen = 400,               -- Time given for doing a sequence
     title = true,                   -- Set the window title based on the value of titlestring
-    undofile = true,                -- Persistent undo - undo after you re-open the file
-    undolevels = 10000,             -- Levels of undoing
     updatetime = 600,               -- Faster completion
     wildcharm = 26,                 -- Trigger completion in macros
     wildignore = '*.o,*.rej,*.so',  -- File patterns to ignore
@@ -72,7 +72,6 @@ local options = {
     wildmode = 'longest:full,full', -- Options for wildmenu
     winblend = 3,                   -- Enable transparency in floating windows and menus
     wrap = false,                   -- Wrap text
-    -- guifont = 'Iosevka Term:h19',   -- Font for GUIs
 }
 
 for k, v in pairs(options) do
@@ -82,6 +81,8 @@ end
 vim.opt.cpoptions:append 'nm'       -- See :help cpoptions, this are the defaults aABceFs_
 vim.opt.shortmess:append 'IFawsc'   -- Less and shorter messages in command line
 vim.opt.iskeyword:remove '_'        -- A word separated by _ is being separated in multiple ones
+-- See https://github.com/neovim/neovim/pull/16480 for more info on cmdheight=0
+-- vim.opt.lines:append '1' -- Hide command line, currently very buggy
 
 vim.opt.matchpairs:append {
     '<:>',
@@ -113,13 +114,14 @@ vim.opt.completeopt:append {
 }
 
 vim.opt.listchars:append {
-    -- eol  = '↴',
-    extends = '',
+    extends = '◣',
+    precedes = '◢',
     nbsp = '␣',
-    precedes = '',
     tab  = '-->',
-    trail = '␣',
+    trail = '█',
 }
+
+vim.cmd([[ match errorMsg /\s\+$/ ]]) -- Show trail character in red
 
 vim.opt.fillchars:append {
     eob = '~',

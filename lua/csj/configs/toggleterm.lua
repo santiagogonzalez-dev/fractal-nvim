@@ -19,9 +19,8 @@ toggleterm.setup({
     float_opts = {
         border = 'curved',
         winblend = 0,
-        width = 80,
-        -- height = (vim.o.columns / 2),
-        height = 100,
+        width = 120,
+        height = 35,
         highlights = {
             border = 'FloatBorder',
             background = 'NormalFloat',
@@ -39,18 +38,10 @@ local files = {
     typescript = 'tsc ' .. vim.fn.expand '%:t' .. ' && node ' .. vim.fn.expand '%:t:r' .. '.js',
 }
 
--- function Run_file()
--- 	local command = files[vim.bo.filetype]
--- 	if command ~= nil then
--- 		require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = true }):toggle()
--- 		print('Running: ' .. command)
--- 	end
--- end
-
 function Run_file()
     local command = files[vim.bo.filetype]
     if command ~= nil then
-        require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = false }):toggle()
+        require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = true }):toggle()
         print('Running: ' .. command)
     end
 end

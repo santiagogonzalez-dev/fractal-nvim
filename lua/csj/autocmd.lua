@@ -40,6 +40,13 @@ vim.cmd([[
     augroup end
 ]])
 
+vim.cmd([[
+    augroup _color_mathparen
+        autocmd!
+        autocmd Colorscheme * highlight MatchParen guibg=orange
+    augroup end
+]])
+
 -- Jump to the last position when reopening a file instead of typing '. to go to the last mark
 vim.cmd([[
     augroup _last_position
@@ -81,13 +88,13 @@ vim.cmd([[
     augroup end
 ]])
 
--- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
-vim.cmd([[
-    augroup _highlight_match
-        autocmd!
-        autocmd CursorMoved * exe printf('match iCursor /\V\<%s\>/', escape(expand('<cword>'), '/\'))
-    augroup end
-]])
+-- -- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
+-- vim.cmd([[
+--     augroup _highlight_match
+--         autocmd!
+--         autocmd CursorMoved * exe printf('match iCursor /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+--     augroup end
+-- ]])
 
 -- Show cursor only in active window
 vim.cmd([[
@@ -137,11 +144,11 @@ vim.cmd([[
     augroup end
 ]])
 
--- Hide last run command in the command line after 3 seconds
+-- Hide last run command in the command line after N seconds
 vim.cmd([[
     augroup _cmdline
         autocmd!
-        autocmd CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 6000)
+        autocmd CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 12000)
     augroup end
 ]])
 

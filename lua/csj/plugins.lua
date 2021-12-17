@@ -139,10 +139,7 @@ return packer.startup(function(use)
         'norcalli/nvim-colorizer.lua',
         event = { 'CursorMoved', 'CursorHold' },
         config = function()
-            require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript', },
-            {
-                -- mode = 'foreground',
-            })
+            require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript', }, { --[[ mode = 'foreground', ]] })
             vim.cmd([[ ColorizerAttachToBuffer ]])
         end,
     }
@@ -194,6 +191,12 @@ return packer.startup(function(use)
     -- LSP
     use { 'neovim/nvim-lspconfig' }
     use { 'williamboman/nvim-lsp-installer' }
+
+    -- Java
+    use {
+        'mfussenegger/nvim-jdtls',
+        event = 'BufReadPost',
+    }
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()
