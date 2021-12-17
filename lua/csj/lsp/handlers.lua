@@ -3,10 +3,10 @@ local M = {}
 -- Setup
 M.setup = function()
     local signs = {
-        { name = 'DiagnosticSignError', text = '' },
-        { name = 'DiagnosticSignWarn',  text = '' },
-        { name = 'DiagnosticSignHint',  text = '' },
-        { name = 'DiagnosticSignInfo',  text = '' },
+        { name = 'DiagnosticSignError', text = '' }, -- ''
+        { name = 'DiagnosticSignWarn',  text = '' }, -- ''
+        { name = 'DiagnosticSignHint',  text = '' }, -- ''
+        { name = 'DiagnosticSignInfo',  text = '' }, -- ''
     }
 
     for _, sign in ipairs(signs) do
@@ -59,14 +59,14 @@ local function lsp_keymaps(bufnr)
     -- Mappings
     local nore_sil = { noremap = true, silent = true }
 
-    buf_set_keymap('n',     '<Leader>D',     '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>ca',    '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>f',     '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
+    buf_set_keymap('n',     '<Leader>D',    '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', nore_sil)
+    buf_set_keymap('n',     '<Leader>ca',   '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
+    buf_set_keymap('n',     '<Leader>f',    '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
     buf_set_keymap('n',     '<Leader>q',    '<Cmd>lua vim.diagnostic.setloclist()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>rn',    '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>wa',    '<Cmd>lua vim.lsp.buf.add_workspace_folder()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>wl',    '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>wr',    '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', nore_sil)
+    buf_set_keymap('n',     '<Leader>rn',   '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
+    buf_set_keymap('n',     '<Leader>wa',   '<Cmd>lua vim.lsp.buf.add_workspace_folder()<Cr>', nore_sil)
+    buf_set_keymap('n',     '<Leader>wl',   '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<Cr>', nore_sil)
+    buf_set_keymap('n',     '<Leader>wr',   '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', nore_sil)
     buf_set_keymap('n',     '[d',           '<Cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<Cr>', nore_sil)
     buf_set_keymap('n',     ']d',           '<Cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<Cr>', nore_sil)
     buf_set_keymap('n',     'gD',           '<Cmd>lua vim.lsp.buf.declaration()<Cr>', nore_sil)
@@ -91,8 +91,6 @@ end
 
 -- On attach
 M.on_attach = function(client, bufnr)
-    -- Servers
-
     -- tsserver
     if client.name == 'tsserver' then
         client.resolved_capabilities.document_formatting = false

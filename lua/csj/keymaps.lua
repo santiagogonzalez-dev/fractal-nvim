@@ -112,10 +112,13 @@ keymap('n', '<Leader>/', '<Cmd>lua require("Comment").toggle()<Cr>', nore_sil)
 keymap('v', '<Leader>/', ':lua require(\'Comment.api\').gc(vim.fn.visualmode())<cr>', nore_sil)
 
 -- Toggle nvim-tree
-keymap('n', '<Leader>t', ':NvimTreeToggle<Cr>', nore_sil)
+keymap('n', '<Leader>v', ':NvimTreeToggle<Cr>', nore_sil)
 
 -- Toggle Indent Blankline
 keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', nore_sil)
 
 -- Cycle through relative number and number
 keymap('n', '<Leader>n', ':call Cycle_numbering()<Cr>', nore_sil)
+
+keymap('n', '<Leader>t', ':Telescope ', nore_sil)
+keymap('n', '<Leader>tl', ':Telescope live_grep<Cr>', nore_sil)

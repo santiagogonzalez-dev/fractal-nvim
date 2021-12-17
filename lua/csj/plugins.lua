@@ -56,7 +56,7 @@ return packer.startup(function(use)
     }
 
     -- Colorscheme
-    use{
+    use {
         'rose-pine/neovim',
         as = 'rose-pine',
         config = function()
@@ -131,6 +131,7 @@ return packer.startup(function(use)
         config = function() require('csj.configs.treesitter') end,
     }
 
+    -- Treesitter context commentstring
     use {
         'JoosepAlviste/nvim-ts-context-commentstring',
         event = 'BufRead',
@@ -159,6 +160,14 @@ return packer.startup(function(use)
         event = 'VimEnter',
         requires = 'plenary.nvim',
         config = function() require('csj.configs.gitsigns') end,
+    }
+
+    -- Telescope
+    use {
+        'nvim-telescope/telescope.nvim',
+        module = 'telescope',
+        cmd = 'Telescope',
+        config = function() require('csj.configs.telescope') end,
     }
 
     -- Indent Blankline
