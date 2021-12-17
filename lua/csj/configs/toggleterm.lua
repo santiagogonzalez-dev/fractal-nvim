@@ -41,7 +41,7 @@ local files = {
 function Run_file()
     local command = files[vim.bo.filetype]
     if command ~= nil then
-        require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = true }):toggle()
+        require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = false }):toggle()
         print('Running: ' .. command)
     end
 end
