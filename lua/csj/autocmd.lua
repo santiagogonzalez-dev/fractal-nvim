@@ -128,13 +128,13 @@ vim.cmd([[
     augroup end
 ]])
 
--- -- Insert cursor in orange, doesn't work in Konsole
--- vim.cmd([[
---     augroup _orange_cursor_insertmode
---         autocmd!
---         autocmd ColorScheme * highlight iCursor guifg=white guibg=orange
---     augroup end
--- ]])
+-- Insert cursor in orange, doesn't work in Konsole
+vim.cmd([[
+    augroup _orange_cursor_insertmode
+        autocmd!
+        autocmd ColorScheme * highlight iCursor guifg=white guibg=orange
+    augroup end
+]])
 
 -- Disable autocomment when pressing enter
 vim.cmd([[
