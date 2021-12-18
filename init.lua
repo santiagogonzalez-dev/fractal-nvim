@@ -5,30 +5,30 @@ vim.cmd([[
 ]])
 vim.o.shadafile = 'NONE'
 
-vim.g.loaded_2html_plugin = false
-vim.g.loaded_getscript = false
-vim.g.loaded_getscriptPlugin = false
-vim.g.loaded_gzip = false
-vim.g.loaded_logipat = false
-vim.g.loaded_man = false
-vim.g.loaded_remote_plugins = false
-vim.g.loaded_rrhelper = false
-vim.g.loaded_shada_plugin = false
-vim.g.loaded_spec = false
-vim.g.loaded_tar = false
-vim.g.loaded_tarPlugin = false
-vim.g.loaded_tutor_mode_plugin = false
-vim.g.loaded_vimball = false
-vim.g.loaded_vimballPlugin = false
-vim.g.loaded_zip = false
-vim.g.loaded_zipPlugin = false
-vim.g.loaded_perl_provider = false
-vim.g.loaded_python_provider = false
-vim.g.loaded_ruby_provider = false
-vim.g.loaded_netrw = false
-vim.g.loaded_netrwFileHandlers = false
-vim.g.loaded_netrwPlugin = false
-vim.g.loaded_netrwSettings = false
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_logipat = 1
+vim.g.loaded_man = 1
+vim.g.loaded_remote_plugins = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_shada_plugin = 1
+vim.g.loaded_spec = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_tutor_mode_plugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_perl_provider = 1
+vim.g.loaded_python_provider = 1
+vim.g.loaded_ruby_provider = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwFileHandlers = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
 
 require('csj.settings')
 require('csj.keymaps')

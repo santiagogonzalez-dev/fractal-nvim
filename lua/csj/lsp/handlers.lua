@@ -58,7 +58,6 @@ M.on_attach = function(client, bufnr)
     -- jdtls
     if client.name == 'jdtls' then
         client.resolved_capabilities.document_formatting = false
-        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     end
 
     -- Keymaps

@@ -120,8 +120,8 @@ keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', nore_sil)
 -- Cycle through relative number and number
 keymap('n', '<Leader>n', ':call Cycle_numbering()<Cr>', nore_sil)
 
-keymap('n', '<Leader>t', ':Telescope ', nore_sil)
-keymap('n', '<Leader>tl', ':Telescope live_grep<Cr>', nore_sil)
+keymap('n', '<Leader>t',    ':Telescope<Cr>', nore_sil)
+keymap('n', '<Leader>tl',   ':Telescope live_grep<Cr>', nore_sil)
 
 -- Keymaps
 local maps = {}
