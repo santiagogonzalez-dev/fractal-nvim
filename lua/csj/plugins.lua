@@ -38,8 +38,6 @@ packer.init({
 
 -- Install your plugins here
 return packer.startup(function(use)
-    local opts = { noremap = true, silent = true }
-
     -- Impatient
     use({
         'lewis6991/impatient.nvim',
@@ -51,8 +49,6 @@ return packer.startup(function(use)
     -- Packer
     use({
         'wbthomason/packer.nvim',
-        vim.api.nvim_set_keymap('n', '<Leader>ps', ':PackerSync<Cr>', opts),
-        vim.api.nvim_set_keymap('n', '<Leader>pc', ':PackerCompile<Cr>', opts),
     })
 
     -- Plenary
@@ -105,7 +101,7 @@ return packer.startup(function(use)
     -- Hop
     use({
         'phaazon/hop.nvim',
-        event = 'VimEnter',
+        cmd = 'HopPattern',
         config = function()
             require('hop').setup({
                 keys = 'aoeusnthdiqjkzvwmbxlrcgp',
@@ -113,14 +109,12 @@ return packer.startup(function(use)
                 vim.cmd([[ highlight HopNextKey guifg=orange gui=nocombine ]]),
             })
         end,
-        -- Keymappings
-        vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<Cr>', opts),
     })
 
     -- Bufferline
     use({
         'akinsho/bufferline.nvim',
-        event = 'BufWinEnter',
+        event = 'VimEnter',
         config = function()
             require('csj.configs.bufferline')
         end,
@@ -166,6 +160,14 @@ return packer.startup(function(use)
         end,
     })
 
+    -- Project
+    use({
+        'ahmedkhalf/project.nvim',
+        config = function()
+            vim.g.nvim_tree_respect_buf_cwd = 1
+        end,
+    })
+
     -- Colorizer
     use({
         'norcalli/nvim-colorizer.lua',
@@ -195,6 +197,12 @@ return packer.startup(function(use)
         config = function()
             require('csj.configs.telescope')
         end,
+    })
+
+    -- Telescope-fzf-native extension
+    use({
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'make',
     })
 
     -- Indent Blankline

@@ -81,7 +81,7 @@ end
 vim.opt.cpoptions:append('nm') -- See :help cpoptions, this are the defaults aABceFs_
 vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
 vim.opt.iskeyword:remove('_') -- A word separated by _ is being separated in multiple ones
--- See https://github.com/neovim/neovim/pull/16480 for more info on cmdheight=0
+-- See https://github.com/neovim/neovim/pull/16251 for more info on cmdheight=0
 -- vim.opt.lines:append '1' -- Hide command line, currently very buggy
 
 vim.opt.matchpairs:append({

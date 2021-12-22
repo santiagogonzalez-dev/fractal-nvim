@@ -40,13 +40,13 @@ keymap('n', '<Leader>.', '$a.<Esc>', nore_sil)
 keymap('n', '<Leader>e', ':w | :e%<Cr>zz', nore_sil)
 
 -- Toggle spell checking
-keymap('n', '<Leader>s', ':set spell!<Cr>', nore_sil)
+keymap('n', '<Leader>s', '<Cmd>set spell!<Cr>', nore_sil)
 
 -- Highlight toggle for searched words
-keymap('n', '<Leader>n', ':set hlsearch!<Cr>', nore_sil)
+keymap('n', '<Leader>n', '<Cmd>set hlsearch!<Cr>', nore_sil)
 
 -- Toggle cursor line and column
-keymap('n', '<Leader>c', ':set cul! cuc!<Cr>', nore_sil)
+keymap('n', '<Leader>c', '<Cmd>set cul! cuc!<Cr>', nore_sil)
 
 -- Toggle cursor line and column
 keymap('n', '<Leader>sk', ':read ~/.config/nvim/skeletons/', nore_sil)
@@ -58,7 +58,7 @@ keymap('n', '<Leader>Q', ':bufdo bdelete<Cr>', nore_sil)
 keymap('n', '<Leader>bw', ':bw<Cr>', nore_sil)
 
 -- Write buffer
-keymap('n', '<Leader>w', ':w<Cr>', nore_sil)
+keymap('n', '<Leader>w', '<Cmd>w<Cr>', nore_sil)
 
 -- Write to all buffers and quit
 keymap('n', '<Leader>x', ':xa<Cr>', nore_sil)
@@ -78,12 +78,21 @@ keymap('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
 keymap('v', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil) -- Visual mode
 keymap('v', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
 
+-- Resize windows
+keymap('n', '<C-Up>', ':resize +2<CR>', nore_sil)
+keymap('n', '<C-Down>', ':resize -2<CR>', nore_sil)
+keymap('n', '<C-Left>', ':vertical resize +2<CR>', nore_sil)
+keymap('n', '<C-Right>', ':vertical resize -2<CR>', nore_sil)
+
 -- Center commands
 keymap('n', 'n', 'nzzzv', nore_sil)
 keymap('n', 'N', 'Nzzzv', nore_sil)
 keymap('v', 'y', 'myy`y', nore_sil)
 keymap('v', 'Y', 'myY`y', nore_sil)
 keymap('v', 'J', 'mzJ`z', nore_sil)
+
+-- Paste text without yanking
+keymap('v', 'p', '"_dP', nore_sil)
 
 -- Keep visual selection after shifting code block
 keymap('x', '<', '<gv', nore_sil)
@@ -107,21 +116,28 @@ keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", nore_exp_sil)
 -- Highlight last pasted code with gvp
 keymap('n', 'gvp', [[ '`[' . strpart(getregtype(), 0, 1) . '`]' ]], nore_sil)
 
--- Additional mappings for Comments
-keymap('n', '<Leader>/', '<Cmd>lua require("Comment").toggle()<Cr>', nore_sil)
-keymap('v', '<Leader>/', ':lua require(\'Comment.api\').gc(vim.fn.visualmode())<cr>', nore_sil)
+-- Packer
+keymap('n', '<Leader>ps', ':PackerSync<Cr>', nore_sil)
+keymap('n', '<Leader>pc', ':PackerCompile<Cr>', nore_sil)
+
+-- Hop
+keymap('n', '<Leader>h', ':HopPattern<Cr>', nore_sil)
 
 -- Toggle nvim-tree
-keymap('n', '<Leader>v', ':NvimTreeToggle<Cr>', nore_sil)
+keymap('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>', nore_sil)
 
 -- Toggle Indent Blankline
-keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', nore_sil)
+keymap('n', '<Leader>i', '<Cmd>IndentBlanklineToggle<Cr>', nore_sil)
+
+-- Toggle GitSigns
+keymap('n', '<Leader>g', '<Cmd>Gitsigns toggle_word_diff<Cr>', nore_sil)
 
 -- Cycle through relative number and number
-keymap('n', '<Leader>n', ':call Cycle_numbering()<Cr>', nore_sil)
+keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 
-keymap('n', '<Leader>t', ':Telescope<Cr>', nore_sil)
-keymap('n', '<Leader>tl', ':Telescope live_grep<Cr>', nore_sil)
+-- Telescope
+keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
+keymap('n', '<Leader>tl', '<Cmd>Telescope live_grep<Cr>', nore_sil)
 
 -- Keymaps
 local maps = {}

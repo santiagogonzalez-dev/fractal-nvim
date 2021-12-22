@@ -2,72 +2,72 @@
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 
 vim.g.nvim_tree_indent_markers = 1
-vim.g.nvim_tree_git_hl =1
+vim.g.nvim_tree_git_hl = 1
 
 vim.g.nvim_tree_icons = {
-    default = " ",
-    symlink = " ",
+    default = ' ',
+    symlink = ' ',
     git = {
-        unstaged = "N",
-        staged = "S ",
-        unmerged = " ",
-        renamed = "➜ ",
-        deleted = " ",
-        untracked = "U ",
-        ignored = "◌ ",
+        unstaged = 'N',
+        staged = 'S ',
+        unmerged = ' ',
+        renamed = '➜ ',
+        deleted = ' ',
+        untracked = 'U ',
+        ignored = '◌ ',
     },
     folder = {
-        default = " ",
-        open = " ",
-        empty = " ",
-        empty_open = " ",
-        symlink = " ",
+        default = ' ',
+        open = ' ',
+        empty = ' ',
+        empty_open = ' ',
+        symlink = ' ',
     },
 }
 
-local status_ok, nvim_tree = pcall(require, "nvim-tree")
+local status_ok, nvim_tree = pcall(require, 'nvim-tree')
 if not status_ok then
     return
 end
 
-nvim_tree.setup {
-    disable_netrw       = true,
-    hijack_netrw        = true,
-    open_on_setup       = true,
-    auto_close          = true,
-    open_on_tab         = true,
-    hijack_cursor       = true,
-    update_cwd          = true,
+nvim_tree.setup({
+    disable_netrw = true,
+    hijack_netrw = true,
+    open_on_setup = true,
+    auto_close = true,
+    open_on_tab = true,
+    hijack_cursor = true,
+    update_cwd = true,
     ignore_ft_on_setup = {
-        "startify",
-        "dashboard",
-        "alpha",
+        'startify',
+        'dashboard',
+        'alpha',
     },
-    update_to_buf_dir   = {
+    update_to_buf_dir = {
         enable = true,
         auto_open = true,
     },
     diagnostics = {
         enable = true,
         icons = {
-            hint = " ",
-            info = " ",
-            warning = " ",
-            error = " ",
-        }
+            hint = ' ',
+            info = ' ',
+            warning = ' ',
+            error = ' ',
+        },
     },
     update_focused_file = {
-        enable      = true,
-        update_cwd  = true,
-        ignore_list = {}
+        enable = true,
+        update_cwd = true,
+        ignore_list = {},
     },
     system_open = {
-        cmd  = nil,
-        args = {}
+        cmd = nil,
+        args = {},
     },
     filters = {
         dotfiles = false,
-        custom = {}
+        custom = {},
     },
     git = {
         enable = true,
@@ -82,19 +82,19 @@ nvim_tree.setup {
         auto_resize = true,
         mappings = {
             custom_only = false,
-            list = {}
+            list = {},
         },
         number = true,
         relativenumber = true,
     },
     trash = {
-        cmd = "trash",
-        require_confirm = true
+        cmd = 'trash',
+        require_confirm = true,
     },
     quit_on_open = 0,
     git_hl = 1,
     disable_window_picker = 0,
-    root_folder_modifier = ":t",
+    root_folder_modifier = ':t',
     show_icons = {
         git = 1,
         folders = 1,
@@ -102,4 +102,4 @@ nvim_tree.setup {
         folder_arrows = 1,
         tree_width = 30,
     },
-}
+})
