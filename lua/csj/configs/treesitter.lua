@@ -67,20 +67,4 @@ configs.setup {
         use_virtual_text = true,
         lint_events = { 'BufWrite', 'CursorHold', 'CursorHold' },
     },
-    playground = {
-        enable = true,
-        updatetime = 33,
-        persist_queries = false,
-        keybindings = {
-            toggle_query_editor = 'o',
-            toggle_hl_groups = 'i',
-            toggle_injected_languages = 't',
-            toggle_language_display = 'I',
-            focus_language = 'f',
-            unfocus_language = 'F',
-            update = 'R',
-            goto_node = '<CR>',
-            show_help = '?',
-        }
-    },
 }

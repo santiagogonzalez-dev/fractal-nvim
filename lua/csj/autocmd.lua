@@ -168,3 +168,11 @@ vim.cmd([[
         autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
     augroup end
 ]])
+
+-- Show lsp diagnostics
+vim.cmd([[
+    augroup _show_diagnostics
+        autocmd!
+        autocmd CursorHold * lua vim.diagnostic.open_float()
+    augroup end
+]])

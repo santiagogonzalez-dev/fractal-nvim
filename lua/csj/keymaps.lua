@@ -135,12 +135,12 @@ keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 
 -- Telescope
 keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
--- keymap('n', '<Leader>f', '<Cmd>Telescope find_files<Cr>', nore_sil)
 keymap('n', '<Leader>f', '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
+keymap('n', '<Leader>ff', '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
 keymap('n', '<Leader>g', '<Cmd>Telescope live_grep<Cr>', nore_sil)
 keymap('n', '<Leader>d', '<Cmd>Telescope lsp_definitions<Cr>', nore_sil)
 keymap('n', '<Leader>r', '<Cmd>Telescope lsp_references<Cr>', nore_sil)
-keymap('n', '<Leader>b', '<Cmd>Telescope git_branches<Cr>', nore_sil)
+keymap('n', '<Leader>gb', '<Cmd>Telescope git_branches<Cr>', nore_sil)
 
 -- Keymaps
 local maps = {}
@@ -172,7 +172,6 @@ function maps.lsp_keymaps(bufnr)
     -- buf_set_keymap('n', '<Leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', nore_sil)
     -- buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<Cr>', nore_sil)
     -- buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<Space>e', '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<Cr>', nore_sil)
     -- buf_set_keymap('n', '<Space>q', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<Cr>', nore_sil)
     -- buf_set_keymap('n', '<leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
     -- buf_set_keymap('n', '<leader>f', '<Cmd>lua vim.diagnostic.open_float()<Cr>', nore_sil)
