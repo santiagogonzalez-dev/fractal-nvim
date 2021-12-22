@@ -165,6 +165,7 @@ return packer.startup(function(use)
         'ahmedkhalf/project.nvim',
         config = function()
             vim.g.nvim_tree_respect_buf_cwd = 1
+            require('csj.configs.project')
         end,
     })
 

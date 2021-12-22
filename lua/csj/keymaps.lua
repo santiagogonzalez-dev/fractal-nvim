@@ -125,32 +125,39 @@ keymap('n', '<Leader>h', ':HopPattern<Cr>', nore_sil)
 
 -- Toggle nvim-tree
 keymap('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>', nore_sil)
+-- keymap('n', '<leader>v', ':Lex 30<cr>', nore_sil)
 
 -- Toggle Indent Blankline
 keymap('n', '<Leader>i', '<Cmd>IndentBlanklineToggle<Cr>', nore_sil)
-
--- Toggle GitSigns
-keymap('n', '<Leader>g', '<Cmd>Gitsigns toggle_word_diff<Cr>', nore_sil)
 
 -- Cycle through relative number and number
 keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 
 -- Telescope
 keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
-keymap('n', '<Leader>tl', '<Cmd>Telescope live_grep<Cr>', nore_sil)
+-- keymap('n', '<Leader>f', '<Cmd>Telescope find_files<Cr>', nore_sil)
+keymap('n', '<Leader>f', '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
+keymap('n', '<Leader>g', '<Cmd>Telescope live_grep<Cr>', nore_sil)
+keymap('n', '<Leader>d', '<Cmd>Telescope lsp_definitions<Cr>', nore_sil)
+keymap('n', '<Leader>r', '<Cmd>Telescope lsp_references<Cr>', nore_sil)
+keymap('n', '<Leader>b', '<Cmd>Telescope git_branches<Cr>', nore_sil)
 
 -- Keymaps
 local maps = {}
 function maps.lsp_keymaps(bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    local function buf_set_keymap(...)
+        vim.api.nvim_buf_set_keymap(bufnr, ...)
+    end
+    local function buf_set_option(...)
+        vim.api.nvim_buf_set_option(bufnr, ...)
+    end
 
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     buf_set_keymap('n', '<Leader>D', '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', nore_sil)
     buf_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
-    buf_set_keymap('n', '<Leader>f', '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
     buf_set_keymap('n', '<Leader>q', '<Cmd>lua vim.diagnostic.setloclist()<Cr>', nore_sil)
     buf_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
     buf_set_keymap('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<Cr>', nore_sil)
