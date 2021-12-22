@@ -1,9 +1,16 @@
 -- Automatically install packer
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    print("Installing packer close and reopen Neovim...")
-    vim.cmd [[packadd packer.nvim]]
+    PACKER_BOOTSTRAP = vim.fn.system({
+        'git',
+        'clone',
+        '--depth',
+        '1',
+        'https://github.com/wbthomason/packer.nvim',
+        install_path,
+    })
+    print('Installing packer close and reopen Neovim...')
+    vim.cmd([[ packadd packer.nvim ]])
 end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
@@ -25,8 +32,8 @@ packer.init({
     display = {
         open_fn = function()
             return require('packer.util').float({ border = 'rounded' })
-        end
-    }
+        end,
+    },
 })
 
 -- Install your plugins here
@@ -34,63 +41,69 @@ return packer.startup(function(use)
     local opts = { noremap = true, silent = true }
 
     -- Impatient
-    use {
+    use({
         'lewis6991/impatient.nvim',
-        config = function() require('csj.configs.impatient') end,
-    }
+        config = function()
+            require('csj.configs.impatient')
+        end,
+    })
 
     -- Packer
-    use {
+    use({
         'wbthomason/packer.nvim',
         vim.api.nvim_set_keymap('n', '<Leader>ps', ':PackerSync<Cr>', opts),
         vim.api.nvim_set_keymap('n', '<Leader>pc', ':PackerCompile<Cr>', opts),
-    }
+    })
 
     -- Plenary
-    use 'nvim-lua/plenary.nvim'
+    use('nvim-lua/plenary.nvim')
 
     -- Icons
-    use {
+    use({
         'kyazdani42/nvim-web-devicons',
         module = 'nvim-web-devicons',
-    }
+    })
 
     -- Colorscheme
-    use {
+    use({
         'rose-pine/neovim',
         as = 'rose-pine',
         config = function()
             vim.g.rose_pine_variant = 'base'
         end,
-    }
+    })
 
     -- Comment
-    use {
+    use({
         'numToStr/Comment.nvim',
         after = {
             'nvim-treesitter',
-            'nvim-ts-context-commentstring'
+            'nvim-ts-context-commentstring',
         },
-        config = function() require('csj.configs.comment') end,
-    }
+        config = function()
+            require('csj.configs.comment')
+        end,
+    })
 
     -- Autopairs
-    use {
+    use({
         'windwp/nvim-autopairs',
         after = 'nvim-treesitter',
         event = 'InsertEnter',
-        config = function() require('csj.configs.autopairs') end,
-    }
+        config = function()
+            require('csj.configs.autopairs')
+        end,
+    })
 
     -- Autotags, configured on treesitter config file
-    use {
+    use({
         'windwp/nvim-ts-autotag',
         after = 'nvim-treesitter',
         event = 'InsertEnter',
-    }
+    })
 
     -- Hop
-    use {
+    use({
         'phaazon/hop.nvim',
         event = 'VimEnter',
         config = function()
@@ -101,77 +114,91 @@ return packer.startup(function(use)
             })
         end,
         -- Keymappings
-        vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<Cr>', opts)
-    }
+        vim.api.nvim_set_keymap('n', '<Leader>h', ':HopPattern<Cr>', opts),
+    })
 
     -- Bufferline
-    use {
+    use({
         'akinsho/bufferline.nvim',
         event = 'BufWinEnter',
-        config = function() require('csj.configs.bufferline') end,
-    }
+        config = function()
+            require('csj.configs.bufferline')
+        end,
+    })
 
     -- Surround
-    use {
+    use({
         'tpope/vim-surround',
         event = 'VimEnter',
-    }
+    })
 
     -- Terminal
-    use {
+    use({
         'akinsho/toggleterm.nvim',
         keys = { '<C-t>', '<Leader>r' },
-        config = function() require('csj.configs.toggleterm') end,
-    }
+        config = function()
+            require('csj.configs.toggleterm')
+        end,
+    })
 
     -- Treesitter
-    use {
+    use({
         'nvim-treesitter/nvim-treesitter',
         event = 'BufRead',
-        config = function() require('csj.configs.treesitter') end,
-    }
+        run = ':TSUpdate',
+        config = function()
+            require('csj.configs.treesitter')
+        end,
+    })
 
     -- Treesitter context commentstring
-    use {
+    use({
         'JoosepAlviste/nvim-ts-context-commentstring',
         event = 'BufRead',
-    }
+    })
 
     -- Nvim-tree
-    use {
+    use({
         'kyazdani42/nvim-tree.lua',
         event = 'BufEnter',
-        config = function() require('csj.configs.nvimtree') end,
-    }
+        config = function()
+            require('csj.configs.nvimtree')
+        end,
+    })
 
     -- Colorizer
-    use {
+    use({
         'norcalli/nvim-colorizer.lua',
         event = { 'CursorMoved', 'CursorHold' },
         config = function()
-            require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript', }, { --[[ mode = 'foreground', ]] })
+            require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript' }, { --[[ mode = 'foreground', ]]
+            })
             vim.cmd([[ ColorizerAttachToBuffer ]])
         end,
-    }
+    })
 
     -- Git Signs
-    use {
+    use({
         'lewis6991/gitsigns.nvim',
         event = 'VimEnter',
         requires = 'plenary.nvim',
-        config = function() require('csj.configs.gitsigns') end,
-    }
+        config = function()
+            require('csj.configs.gitsigns')
+        end,
+    })
 
     -- Telescope
-    use {
+    use({
         'nvim-telescope/telescope.nvim',
         module = 'telescope',
         cmd = 'Telescope',
-        config = function() require('csj.configs.telescope') end,
-    }
+        config = function()
+            require('csj.configs.telescope')
+        end,
+    })
 
     -- Indent Blankline
-    use {
+    use({
         'lukas-reineke/indent-blankline.nvim',
         after = 'nvim-treesitter',
         event = 'VimEnter',
@@ -190,11 +217,12 @@ return packer.startup(function(use)
             -- vim.g.indent_blankline_enabled = false
             vim.cmd([[ highlight IndentBlanklineContextChar guifg=orange gui=nocombine ]])
         end,
-    }
+    })
 
     -- Completion
-    use {
+    use({
         'L3MON4D3/LuaSnip', -- Snippet engine
+        'rafamadriz/friendly-snippets',
         'saadparwaiz1/cmp_luasnip', -- Snippet completions
         'hrsh7th/cmp-buffer', -- Buffer completions
         'hrsh7th/cmp-calc',
@@ -204,17 +232,26 @@ return packer.startup(function(use)
         'hrsh7th/cmp-path', -- Path completion
         'hrsh7th/nvim-cmp', -- The completion plugin
         event = 'InsertEnter',
-    }
+    })
 
     -- LSP
-    use { 'neovim/nvim-lspconfig' }
-    use { 'williamboman/nvim-lsp-installer' }
+    use({ 'neovim/nvim-lspconfig' }) -- Enable LSP
+    use({ 'williamboman/nvim-lsp-installer' }) -- Install language servers
+
+    -- Null-LS
+    use({
+        'jose-elias-alvarez/null-ls.nvim', -- For formatters and linters
+        event = 'BufReadPost',
+        config = function()
+            require('csj.lsp.null-ls')
+        end,
+    })
 
     -- Java
-    use {
+    use({
         'mfussenegger/nvim-jdtls',
         ft = 'java',
-    }
+    })
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

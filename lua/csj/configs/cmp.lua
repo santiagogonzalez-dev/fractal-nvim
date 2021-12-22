@@ -9,37 +9,39 @@ if not snip_status_ok then
     return
 end
 
+require('luasnip/loaders/from_vscode').lazy_load()
+
 local check_backspace = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
+    local col = vim.fn.col '.' - 1
+    return col == 0 or vim.fn.getline '.' :sub(col, col):match '%s'
 end
 
 local kind_icons = {
-    Text = '  ',
-    Method = '  ',
-    Function = '  ',
-    Constructor = '  ',
-    Field = '  ',
-    Variable = '  ',
-    Class = '  ',
-    Interface = '  ',
-    Module = '  ',
-    Property = '  ',
-    Unit = '  ',
-    Value = '  ',
-    Enum = '  ',
-    Keyword = '  ',
-    Snippet = '  ',
-    Color = '  ',
-    File = '  ',
-    Reference = '  ',
-    Folder = '  ',
-    EnumMember = '  ',
-    Constant = '  ',
-    Struct = '  ',
-    Event = '  ',
-    Operator = '  ',
-    TypeParameter = '  ',
+    Text = '',
+    Method = 'm',
+    Function = '',
+    Constructor = '',
+    Field = '',
+    Variable = '',
+    Class = '',
+    Interface = '',
+    Module = '',
+    Property = '',
+    Unit = '',
+    Value = '',
+    Enum = '',
+    Keyword = '',
+    Snippet = '',
+    Color = '', --   
+    File = '',
+    Reference = '',
+    Folder = '',
+    EnumMember = '',
+    Constant = '',
+    Struct = '', -- ﯟ   פּ
+    Event = '',
+    Operator = '',
+    TypeParameter = '',
 }
 
 cmp.setup({
@@ -49,8 +51,8 @@ cmp.setup({
         end,
     },
     mapping = {
-        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { 'i', 'c' }),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { 'i', 'c' }),
+        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-3), { 'i', 'c' }),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(3), { 'i', 'c' }),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
         ['<C-e>'] = cmp.mapping({
@@ -73,45 +75,46 @@ cmp.setup({
                 fallback()
             end
         end, {
-        'i',
-        's',
-    }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-        else
-            fallback()
-        end
-    end, {
-        'i',
-        's',
-    }),
+            'i',
+            's',
+        }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, {
+            'i',
+            's',
+        }),
     },
     formatting = {
         fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item)
             -- Kind icons
-            vim_item.kind = string.format('%s', kind_icons[vim_item.kind])
-            -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+            -- vim_item.kind = string.format('%s', kind_icons[vim_item.kind])
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
             vim_item.menu = ({
                 nvim_lsp = '[LSP]',
+                nvim_lua = '[LSP]',
                 luasnip = '[Snippet]',
                 path = '[Path]',
                 buffer = '[Buffer]',
+                calc = '[Calc]',
             })[entry.source.name]
             return vim_item
         end,
     },
     sources = {
-        { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
+        { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'buffer', keyword_lenght = 3 },
         { name = 'path' },
-        { name = 'buffer', keyword_lenght = 5 },
         { name = 'calc' },
-        { name = 'treesitter' },
     },
     confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
@@ -121,7 +124,7 @@ cmp.setup({
         border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
     experimental = {
-        ghost_text = false,
+        ghost_text = true,
         native_menu = false,
     },
 })

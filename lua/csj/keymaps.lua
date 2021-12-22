@@ -105,7 +105,7 @@ keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", nore_exp_sil)
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", nore_exp_sil)
 
 -- Highlight last pasted code with gvp
-keymap('n', 'gvp', [['`[' . strpart(getregtype(), 0, 1) . '`]']], nore_sil)
+keymap('n', 'gvp', [[ '`[' . strpart(getregtype(), 0, 1) . '`]' ]], nore_sil)
 
 -- Additional mappings for Comments
 keymap('n', '<Leader>/', '<Cmd>lua require("Comment").toggle()<Cr>', nore_sil)
@@ -120,8 +120,8 @@ keymap('n', '<Leader>i', ':IndentBlanklineToggle<Cr>', nore_sil)
 -- Cycle through relative number and number
 keymap('n', '<Leader>n', ':call Cycle_numbering()<Cr>', nore_sil)
 
-keymap('n', '<Leader>t',    ':Telescope<Cr>', nore_sil)
-keymap('n', '<Leader>tl',   ':Telescope live_grep<Cr>', nore_sil)
+keymap('n', '<Leader>t', ':Telescope<Cr>', nore_sil)
+keymap('n', '<Leader>tl', ':Telescope live_grep<Cr>', nore_sil)
 
 -- Keymaps
 local maps = {}
@@ -132,20 +132,20 @@ function maps.lsp_keymaps(bufnr)
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    buf_set_keymap('n',     '<Leader>D',    '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>ca',   '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>f',    '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>q',    '<Cmd>lua vim.diagnostic.setloclist()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>rn',   '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>wa',   '<Cmd>lua vim.lsp.buf.add_workspace_folder()<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>wl',   '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<Cr>', nore_sil)
-    buf_set_keymap('n',     '<Leader>wr',   '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', nore_sil)
-    buf_set_keymap('n',     '[d',           '<Cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<Cr>', nore_sil)
-    buf_set_keymap('n',     ']d',           '<Cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<Cr>', nore_sil)
-    buf_set_keymap('n',     'gD',           '<Cmd>lua vim.lsp.buf.declaration()<Cr>', nore_sil)
-    buf_set_keymap('n',     'gd',           '<Cmd>lua vim.lsp.buf.definition()<Cr>', nore_sil)
-    buf_set_keymap('n',     'gl',           '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })<Cr>', nore_sil)
-    buf_set_keymap('n',     'gr',           '<Cmd>lua vim.lsp.buf.references()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>D', '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>f', '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>q', '<Cmd>lua vim.diagnostic.setloclist()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>wl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', nore_sil)
+    buf_set_keymap('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<Cr>', nore_sil)
+    buf_set_keymap('n', ']d', '<Cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<Cr>', nore_sil)
+    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<Cr>', nore_sil)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<Cr>', nore_sil)
+    buf_set_keymap('n', 'gl', '<Cmd>lua vim.diagnostic.open_float()<Cr>', nore_sil) -- 'vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })'
+    buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<Cr>', nore_sil)
 
     -- buf_set_keymap('n',     '<C-k>',        '<Cmd>lua vim.lsp.buf.signature_help()<Cr>', nore_sil)
     -- buf_set_keymap('n',     '<C-k>',        '<Cmd>lua vim.lsp.buf.signature_help()<Cr>', nore_sil)
