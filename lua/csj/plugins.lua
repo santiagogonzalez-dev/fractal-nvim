@@ -212,19 +212,7 @@ return packer.startup(function(use)
         after = 'nvim-treesitter',
         event = 'VimEnter',
         config = function()
-            require('indent_blankline').setup({
-                show_current_context = true,
-                -- show_current_context_start = true,
-                show_end_of_line = false,
-                buftype_exclude = { 'terminal', 'nofile', 'NvimTree' },
-                filetype_exclude = { 'help', 'packer', 'NvimTree' },
-            })
-            -- vim.g.indent_blankline_char = '' -- Only shows active indent line
-            vim.g.indent_blankline_use_treesitter = true
-            vim.g.indent_blankline_char_highlight = 'LineNr'
-            vim.g.indent_blankline_show_trailing_blankline_indent = false
-            -- vim.g.indent_blankline_enabled = false
-            vim.cmd([[ highlight IndentBlanklineContextChar guifg=orange gui=nocombine ]])
+            require('csj.configs.indentblankline')
         end,
     })
 

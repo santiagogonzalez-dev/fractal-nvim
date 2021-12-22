@@ -60,6 +60,9 @@ keymap('n', '<Leader>bw', ':bw<Cr>', nore_sil)
 -- Write buffer
 keymap('n', '<Leader>w', '<Cmd>w<Cr>', nore_sil)
 
+-- Quit
+keymap('n', '<Leader>q', ':q!<Cr>', nore_sil)
+
 -- Write to all buffers and quit
 keymap('n', '<Leader>x', ':xa<Cr>', nore_sil)
 
@@ -158,7 +161,6 @@ function maps.lsp_keymaps(bufnr)
     buf_set_keymap('n', '<Leader>D', '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', nore_sil)
     buf_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
     buf_set_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
-    buf_set_keymap('n', '<Leader>q', '<Cmd>lua vim.diagnostic.setloclist()<Cr>', nore_sil)
     buf_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
     buf_set_keymap('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<Cr>', nore_sil)
     buf_set_keymap('n', ']d', '<Cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<Cr>', nore_sil)
@@ -167,6 +169,7 @@ function maps.lsp_keymaps(bufnr)
     buf_set_keymap('n', 'gl', '<Cmd>lua vim.diagnostic.open_float()<Cr>', nore_sil) -- 'vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })'
     buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<Cr>', nore_sil)
 
+    -- buf_set_keymap('n', '<Leader>q', '<Cmd>lua vim.diagnostic.setloclist()<Cr>', nore_sil)
     -- buf_set_keymap('n', '<Leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<Cr>', nore_sil)
     -- buf_set_keymap('n', '<Leader>wl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<Cr>', nore_sil)
     -- buf_set_keymap('n', '<Leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', nore_sil)
