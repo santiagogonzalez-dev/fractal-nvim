@@ -60,11 +60,6 @@ M.on_attach = function(client, bufnr)
         client.resolved_capabilities.document_formatting = false
     end
 
-    -- jdtls
-    if client.name == 'jdtls' then
-        client.resolved_capabilities.document_formatting = false
-    end
-
     -- Keymaps
     require('csj.keymaps').lsp_keymaps(bufnr)
 

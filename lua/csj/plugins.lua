@@ -232,8 +232,8 @@ return packer.startup(function(use)
     })
 
     -- LSP
-    use({ 'neovim/nvim-lspconfig' }) -- Enable LSP
-    use({ 'williamboman/nvim-lsp-installer' }) -- Install language servers
+    use('neovim/nvim-lspconfig') -- Enable LSP
+    use('williamboman/nvim-lsp-installer') -- Install language servers
 
     -- Null-LS
     use({
@@ -245,10 +245,7 @@ return packer.startup(function(use)
     })
 
     -- Java
-    use({
-        'mfussenegger/nvim-jdtls',
-        ft = 'java',
-    })
+    use('mfussenegger/nvim-jdtls')
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()
