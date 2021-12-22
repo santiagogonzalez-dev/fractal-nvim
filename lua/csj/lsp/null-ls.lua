@@ -13,7 +13,7 @@ null_ls.setup({
             extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
         }),
         formatting.stylua,
-        -- formatting.black.with({ extra_args = { '--fast' } }),
+        formatting.black.with({ extra_args = { '--fast' } }),
         -- diagnostics.flake8
     },
 })
