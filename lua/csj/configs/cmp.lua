@@ -12,8 +12,8 @@ end
 require('luasnip/loaders/from_vscode').lazy_load()
 
 local check_backspace = function()
-    local col = vim.fn.col '.' - 1
-    return col == 0 or vim.fn.getline '.' :sub(col, col):match '%s'
+    local col = vim.fn.col('.') - 1
+    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
 local kind_icons = {
@@ -133,12 +133,12 @@ cmp.setup.cmdline('/', {
     sources = {
         { name = 'buffer', Keyword_length = 1 },
         { name = 'cmp-calc', Keyword_length = 1 },
-    }
+    },
 })
 
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
         { name = 'path' },
         { name = 'cmdline', keyword_lenght = 5 },
-    })
+    }),
 })

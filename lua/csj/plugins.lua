@@ -174,8 +174,7 @@ return packer.startup(function(use)
         'norcalli/nvim-colorizer.lua',
         event = { 'CursorMoved', 'CursorHold' },
         config = function()
-            require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript' }, { --[[ mode = 'foreground', ]]
-            })
+            require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript' }, {})
             vim.cmd([[ ColorizerAttachToBuffer ]])
         end,
     })
@@ -235,6 +234,12 @@ return packer.startup(function(use)
     use('neovim/nvim-lspconfig') -- Enable LSP
     use('williamboman/nvim-lsp-installer') -- Install language servers
 
+    -- Debug Adapter Protocol
+    use({
+        'mfussenegger/nvim-dap',
+        event = 'VimEnter',
+    })
+
     -- Null-LS
     use({
         'jose-elias-alvarez/null-ls.nvim', -- For formatters and linters
@@ -246,6 +251,12 @@ return packer.startup(function(use)
 
     -- Java
     use('mfussenegger/nvim-jdtls')
+
+    -- Codi
+    use({
+        'metakirby5/codi.vim',
+        cmd = 'Codi',
+    })
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

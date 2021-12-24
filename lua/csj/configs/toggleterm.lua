@@ -18,7 +18,7 @@ toggleterm.setup({
     shell = vim.o.shell,
     float_opts = {
         border = 'curved',
-        winblend = 0,
+        winblend = 3,
         width = 120,
         height = 35,
         highlights = {
@@ -29,13 +29,13 @@ toggleterm.setup({
 })
 
 local files = {
-    python = 'python -i ' .. vim.fn.expand '%:t',
-    lua = 'lua ' .. vim.fn.expand '%:t',
-    c = 'gcc -o temp ' .. vim.fn.expand '%:t' .. ' && ./temp && rm ./temp',
-    java = 'javac ' .. vim.fn.expand '%:t' .. ' && java ' .. vim.fn.expand '%:t:r' .. ' && rm *.class',
+    python = 'python -i ' .. vim.fn.expand('%:t'),
+    lua = 'lua ' .. vim.fn.expand('%:t'),
+    c = 'gcc -o temp ' .. vim.fn.expand('%:t') .. ' && ./temp && rm ./temp',
+    java = 'javac ' .. vim.fn.expand('%:t') .. ' && java ' .. vim.fn.expand('%:t:r') .. ' && rm *.class',
     rust = 'cargo run',
-    javascript = 'node ' .. vim.fn.expand '%:t',
-    typescript = 'tsc ' .. vim.fn.expand '%:t' .. ' && node ' .. vim.fn.expand '%:t:r' .. '.js',
+    javascript = 'node ' .. vim.fn.expand('%:t'),
+    typescript = 'tsc ' .. vim.fn.expand('%:t') .. ' && node ' .. vim.fn.expand('%:t:r') .. '.js',
 }
 
 function Run_file()
@@ -47,4 +47,10 @@ function Run_file()
 end
 
 -- If you change the mapping you also need to enable it in your packer conf
-vim.api.nvim_buf_set_keymap( vim.api.nvim_get_current_buf(), 'n', '<Leader>R', ':w<Cr>:lua Run_file()<Cr>', { noremap = true, silent = true })
+vim.api.nvim_buf_set_keymap(
+    vim.api.nvim_get_current_buf(),
+    'n',
+    '<Leader>R',
+    ':w<Cr>:lua Run_file()<Cr>',
+    { noremap = true, silent = true }
+)

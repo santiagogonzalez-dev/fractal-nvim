@@ -7,8 +7,33 @@ local actions = require('telescope.actions')
 
 telescope.setup({
     defaults = {
+        vimgrep_arguments = {
+            'rg',
+            '--column',
+            '--hidden',
+            '--line-number',
+            '--no-heading',
+            '--smart-case',
+            '--vimgrep',
+            '--with-filename',
+        },
+        selection_strategy = 'reset',
+        initial_mode = 'insert',
+        file_ignore_patterns = { '__pycache__', 'node_modules' },
+        file_sorter = require('telescope.sorters').get_fuzzy_file,
+        generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+        file_previewer = require('telescope.previewers').vim_buffer_cat.new,
+        grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
+        qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
+        -- Developer configurations: Not meant for general override
+        buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
+        set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+        color_devicons = true,
+        use_less = true,
+        winblend = 3,
         prompt_prefix = ' ',
         selection_caret = ' ',
+        entry_prefix = '  ',
         path_display = { 'smart' },
         mappings = {
             i = {

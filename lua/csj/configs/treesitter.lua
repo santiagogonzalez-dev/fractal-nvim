@@ -3,7 +3,7 @@ if not status_ok then
     return
 end
 
-configs.setup {
+configs.setup({
     -- ensure_installed = 'maintained',
     ensure_installed = {
         'comment',
@@ -67,4 +67,4 @@ configs.setup {
         use_virtual_text = true,
         lint_events = { 'BufWrite', 'CursorHold', 'CursorHold' },
     },
-}
+})
