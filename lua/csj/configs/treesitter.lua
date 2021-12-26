@@ -31,7 +31,10 @@ configs.setup({
     },
     indent = {
         enable = true,
-        disable = { 'yaml' },
+        disable = {
+            'yaml',
+            -- 'python',
+        },
     },
     refactor = {
         highlight_definitions = { enable = true },

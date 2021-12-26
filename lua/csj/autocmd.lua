@@ -106,9 +106,9 @@ vim.cmd([[
 
 -- Colors in visual mode
 vim.cmd([[
-    augroup _colored_visualmode
+    augroup _colored_visual_mode
         autocmd!
-        autocmd ColorScheme * highlight Visual cterm=reverse gui=reverse
+        autocmd ColorScheme * highlight Visual guifg=nocombine gui=reverse
     augroup end
 ]])
 
@@ -128,17 +128,17 @@ vim.cmd([[
     augroup end
 ]])
 
--- Insert cursor in orange, doesn't work in Konsole
+-- Insert cursor in orange. Normal mode cursor in reversed
 vim.cmd([[
     augroup _orange_cursor_insertmode
         autocmd!
-        autocmd ColorScheme * highlight iCursor guifg=white guibg=orange
+        autocmd ColorScheme * highlight iCursor guifg=nocombine guibg=orange
     augroup end
 ]])
 
 -- Disable autocomment when pressing enter
 vim.cmd([[
-    augroup _disablecomment
+    augroup _disable_comment
         autocmd!
         autocmd BufWinEnter * :set formatoptions-=cro
     augroup end
@@ -154,7 +154,7 @@ vim.cmd([[
 
 -- Write to all buffers when exit
 vim.cmd([[
-    augroup ConfigGroup
+    augroup _config_group
         autocmd!
         autocmd FocusLost * silent! wa!
     augroup end
@@ -173,6 +173,13 @@ vim.cmd([[
 vim.cmd([[
     augroup _show_diagnostics
         autocmd!
-        autocmd CursorHold * lua vim.diagnostic.open_float()
+        autocmd CursorMoved * lua vim.diagnostic.open_float()
+    augroup end
+]])
+
+vim.cmd([[
+    augroup _format_on_exit
+        autocmd!
+        autocmd BufWritePre * lua vim.lsp.buf.formatting()
     augroup end
 ]])

@@ -50,6 +50,10 @@ local function lsp_highlight_document(client)
         ]],
             false
         )
+
+        vim.cmd([[ highlight LspReferenceText guifg=nocombine gui=reverse ]])
+        vim.cmd([[ highlight LspReferenceRead guifg=nocombine gui=reverse ]])
+        vim.cmd([[ highlight LspReferenceWrite guifg=nocombine gui=reverse ]])
     end
 end
 

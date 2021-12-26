@@ -14,6 +14,23 @@ local nore_exp_sil = { noremap = true, expr = true, silent = true }
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Semicolon
+keymap('n', '<Leader>;', '$a;<Esc>', nore_sil)
+keymap('v', '<Leader>;', ":'<,'>norm A;<Cr>", nore_sil)
+
+-- Colon
+keymap('n', '<Leader>:', '$a:<Esc>', nore_sil)
+
+-- Backslash
+keymap('n', '<Leader>\\', '$a \\<Esc>', nore_sil)
+
+-- Comma
+keymap('n', '<Leader>,', '$a,<Esc>', nore_sil)
+keymap('v', '<Leader>,', ":'<,'>norm A,<Cr>", nore_sil)
+
+-- Dot
+keymap('n', '<Leader>.', '$a.<Esc>', nore_sil)
+
 -- Avoid moving the cursor with space, enter or backspace when in normal mode
 keymap('n', '<Space>', '<Nop>', nore_sil)
 keymap('n', '<Cr>', '<Nop>', nore_sil)
@@ -52,8 +69,8 @@ keymap('n', '<Leader>W', '%!sudo tee > /dev/null %', nore_sil)
 -- Navigate buffers
 keymap('n', '<Tab>', ':bnext<Cr>', nore_sil)
 keymap('n', '<S-Tab>', ':bprevious<Cr>', nore_sil)
-keymap('n', '<A-l>', ':bnext<Cr>', nore_sil)
-keymap('n', '<A-h>', ':bprevious<Cr>', nore_sil)
+keymap('n', '<A-h>', ':bnext<Cr>', nore_sil)
+keymap('n', '<A-l>', ':bprevious<Cr>', nore_sil)
 
 -- Move current block of text up and down
 keymap('n', '<C-j>', ':m .+1<Cr>==', nore_sil) -- Normal mode
@@ -114,29 +131,22 @@ keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 
 -- Telescope
 keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
-keymap('n', '<Leader>ff', '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
-keymap('n', '<Leader>fb', '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
+keymap(
+    'n',
+    '<Leader>ff',
+    '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
+    nore_sil
+)
+keymap(
+    'n',
+    '<Leader>fb',
+    '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
+    nore_sil
+)
 keymap('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>', nore_sil)
 keymap('n', '<Leader>d', '<Cmd>Telescope lsp_definitions<Cr>', nore_sil)
 keymap('n', '<Leader>r', '<Cmd>Telescope lsp_references<Cr>', nore_sil)
 keymap('n', '<Leader>gb', '<Cmd>Telescope git_branches<Cr>', nore_sil)
-
--- Semicolon
-keymap('n', '<Leader>;', '$a;<Esc>', nore_sil)
-keymap('v', '<Leader>;', ":'<,'>norm A;<Cr>", nore_sil)
-
--- Colon
-keymap('n', '<Leader>:', '$a:<Esc>', nore_sil)
-
--- Backslash
-keymap('n', '<Leader>\\', '$a \\<Esc>', nore_sil)
-
--- Comma
-keymap('n', '<Leader>,', '$a,<Esc>', nore_sil)
-keymap('v', '<Leader>,', ":'<,'>norm A,<Cr>", nore_sil)
-
--- Dot
-keymap('n', '<Leader>.', '$a.<Esc>', nore_sil)
 
 -- Keymaps
 local M = {}
@@ -158,23 +168,7 @@ function M.lsp_keymaps(bufnr)
     buf_set_keymap('n', ']d', '<Cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<Cr>', nore_sil)
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<Cr>', nore_sil)
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<Cr>', nore_sil)
-    buf_set_keymap('n', 'gl', '<Cmd>lua vim.diagnostic.open_float()<Cr>', nore_sil) -- 'vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })'
+    buf_set_keymap('n', 'gl', '<Cmd>lua vim.diagnostic.open_float()<Cr>', nore_sil)
     buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<Cr>', nore_sil)
-
-    -- buf_set_keymap('n', '<Leader>D', '<Cmd>lua vim.lsp.buf.type_definition()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<Leader>q', '<Cmd>lua vim.diagnostic.setloclist()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<Leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<Leader>wl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<Leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<Space>q', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<leader>f', '<Cmd>lua vim.diagnostic.open_float()<Cr>', nore_sil)
-    -- buf_set_keymap('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
-    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<Cr>', nore_sil)
-    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<Cr>', nore_sil)
-    -- buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<Cr>', nore_sil)
-    -- buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<Cr>', nore_sil)
 end
 return M

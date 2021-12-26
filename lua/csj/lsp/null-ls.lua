@@ -14,7 +14,24 @@ null_ls.setup({
             extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
         }),
         formatting.stylua,
-        formatting.black.with({ extra_args = { '--fast' } }),
-        diagnostics.flake8
+        formatting.black.with({
+            extra_args = {
+                -- '--fast'
+                '--skip-string-normalization',
+            },
+        }),
+        diagnostics.flake8.with({
+            extra_args = {
+                '--max-line-length', '120'
+            },
+        }),
+    },
+})
+
+require('null-ls').setup({
+    sources = {
+        formatting.prettier.with({
+            extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
+        }),
     },
 })

@@ -3,7 +3,7 @@ local options = {
     backspace = 'indent,start,eol', -- Make backspace behave like normal again
     clipboard = 'unnamedplus', -- Uses the system clipboard
     cmdheight = 1, -- Space for displaying messages in the command line
-    textwidth = 90, -- Delimit text blocks to N columns
+    textwidth = 120, -- Delimit text blocks to N columns
     colorcolumn = '+1', -- Limiter line, + line more than textwidth
     conceallevel = 2, -- Show text normally
     confirm = true, -- Confirm dialogs
@@ -35,7 +35,7 @@ local options = {
     mousefocus = true, -- Focusing cursor on the window with the keyboard focus
     number = true, -- Display line number on the side
     path = '**', -- Search files recursively
-    pumblend = 9, -- Transparency for the pop up menu
+    pumblend = 33, -- Transparency for the pop up menu
     pumheight = 20, -- Pop up menu height
     redrawtime = 600, -- Time for redrawing the display
     relativenumber = true, -- Display line number relative to the cursor
@@ -73,7 +73,7 @@ local options = {
     wildmenu = true, -- Enables "enhanced mode" of command-line completion
     winhighlight = 'NormalNC:WinNormalNC',
     wildmode = 'longest:full,full', -- Options for wildmenu
-    winblend = 3, -- Enable transparency in floating windows and menus
+    winblend = 9, -- Enable transparency in floating windows and menus
     wrap = false, -- Wrap text
 }
 

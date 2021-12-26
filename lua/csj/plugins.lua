@@ -174,8 +174,7 @@ return packer.startup(function(use)
         'norcalli/nvim-colorizer.lua',
         event = { 'CursorMoved', 'CursorHold' },
         config = function()
-            require('colorizer').setup({ 'html', 'css', 'javascript', 'typescript' }, {})
-            vim.cmd([[ ColorizerAttachToBuffer ]])
+            require('colorizer').setup()
         end,
     })
 
