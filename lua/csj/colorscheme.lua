@@ -28,7 +28,7 @@ end
 
 local actual_time = os.date('%H:%M')
 
-if (actual_time > noon_afternoon or actual_time < nigth_morning) then
+if (actual_time >= noon_afternoon or actual_time <= nigth_morning) then
     set_colorscheme(true)
 elseif actual_time > nigth_morning then
     set_colorscheme(false)
