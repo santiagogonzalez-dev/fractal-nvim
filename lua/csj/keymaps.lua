@@ -128,18 +128,9 @@ keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 
 -- Telescope
 keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
-keymap(
-    'n',
-    '<Leader>ff',
-    '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
-    nore_sil
-)
-keymap(
-    'n',
-    '<Leader>fb',
-    '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
-    nore_sil
-)
+keymap('n', '<Leader>ff', '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
+keymap('n', '<Leader>fb', '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
+keymap('n', '<Leader>P', '<Cmd>lua require("telescope").extensions.projects.projects()<Cr>', nore_sil)
 keymap('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>', nore_sil)
 keymap('n', '<Leader>d', '<Cmd>Telescope lsp_definitions<Cr>', nore_sil)
 keymap('n', '<Leader>r', '<Cmd>Telescope lsp_references<Cr>', nore_sil)
