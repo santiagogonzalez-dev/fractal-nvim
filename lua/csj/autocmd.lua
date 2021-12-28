@@ -177,9 +177,10 @@ vim.cmd([[
     augroup end
 ]])
 
-vim.cmd([[
-    augroup _format_on_exit
-        autocmd!
-        autocmd BufWritePre * lua vim.lsp.buf.formatting()
-    augroup end
-]])
+-- -- Use null-ls to formate text before writing the buffer to the file
+-- vim.cmd([[
+--     augroup _format_on_exit
+--         autocmd!
+--         autocmd BufWritePre * lua vim.lsp.buf.formatting()
+--     augroup end
+-- ]])

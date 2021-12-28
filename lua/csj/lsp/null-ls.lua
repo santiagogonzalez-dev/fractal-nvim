@@ -5,33 +5,43 @@ end
 
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
+local code_actions = null_ls.builtins.code_actions
+local methods = null_ls.methods
 
 null_ls.setup({
     debug = false,
     sources = {
-        null_ls.builtins.code_actions.gitsigns,
+        code_actions.gitsigns,
+        formatting.stylua,
         formatting.prettier.with({
+            prefer_local = 'node_modules/.bin',
+            command = 'npx prettier',
+            filetypes = {
+                'javascript',
+                'javascriptreact',
+                'typescript',
+                'typescriptreact',
+                'vue',
+                'css',
+                'scss',
+                'less',
+                'html',
+                'json',
+                'yaml',
+                'markdown',
+                'graphql',
+            },
             extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
         }),
-        formatting.stylua,
         formatting.black.with({
-            extra_args = {
-                -- '--fast'
-                '--skip-string-normalization',
-            },
+            extra_args = { '--fast', '--quiet', '--skip-string-normalization' },
+        }),
+        diagnostics.shellcheck.with({
+            method = methods.DIAGNOSTICS_ON_SAVE,
         }),
         diagnostics.flake8.with({
-            extra_args = {
-                '--max-line-length', '120'
-            },
-        }),
-    },
-})
-
-require('null-ls').setup({
-    sources = {
-        formatting.prettier.with({
-            extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
+            method = methods.DIAGNOSTICS_ON_SAVE,
+            extra_args = { '--max-line-length', '120' },
         }),
     },
 })

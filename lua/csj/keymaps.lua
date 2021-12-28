@@ -15,7 +15,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Semicolon
-keymap('n', '<Leader>;', '$a;<Esc>', nore_sil)
+-- keymap('n', '<Leader>;', '$a;<Esc>', nore_sil)
 keymap('v', '<Leader>;', ":'<,'>norm A;<Cr>", nore_sil)
 
 -- Colon
@@ -38,9 +38,6 @@ keymap('n', '<Bs>', '<Nop>', nore_sil)
 
 -- Write and reload the file
 keymap('n', '<Leader>e', ':w | :e%<Cr>zz', nore_sil)
-
--- Highlight toggle for searched words
-keymap('n', '<Leader>N', '<Cmd>set hlsearch!<Cr>', nore_sil)
 
 -- Toggle cursor line and column
 keymap('n', '<Leader>C', '<Cmd>set cul! cuc!<Cr>', nore_sil)
