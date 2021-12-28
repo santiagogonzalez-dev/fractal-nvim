@@ -3,7 +3,7 @@
 -- on the command mode this :lua lua print(os.time())
 -- The logic would be something like, if the time of the OS is beyond the 10 characters long number then it will set
 -- neovim to the dark mode, in this example I use the rose-pine colorscheme
-if os.time() >= 1630000000 then
+if os.time() >= 1800000000 then
     vim.cmd([[
         try
             set background=dark
