@@ -113,7 +113,7 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer', keyword_lenght = 3 },
-        { name = 'path' },
+        { name = 'path', keyword_lenght = 3 },
         { name = 'calc' },
     },
     confirm_opts = {
@@ -131,14 +131,17 @@ cmp.setup({
 
 cmp.setup.cmdline('/', {
     sources = {
-        { name = 'buffer', Keyword_length = 1 },
-        { name = 'cmp-calc', Keyword_length = 1 },
+        { name = 'buffer', Keyword_length = 3 },
+        { name = 'calc' },
     },
 })
 
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
+        { name = 'nvim_lua' },
+        { name = 'nvim_lsp' },
         { name = 'path' },
         { name = 'cmdline', keyword_lenght = 5 },
+        { name = 'calc' },
     }),
 })

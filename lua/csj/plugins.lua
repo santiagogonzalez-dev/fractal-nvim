@@ -129,7 +129,7 @@ return packer.startup(function(use)
     -- Terminal
     use({
         'akinsho/toggleterm.nvim',
-        keys = { '<C-t>', '<Leader>r' },
+        keys = { '<C-t>', '<Leader>R' },
         config = function()
             require('csj.configs.toggleterm')
         end,
@@ -182,7 +182,7 @@ return packer.startup(function(use)
     use({
         'lewis6991/gitsigns.nvim',
         event = 'VimEnter',
-        requires = 'plenary.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
         config = function()
             require('csj.configs.gitsigns')
         end,
@@ -191,8 +191,8 @@ return packer.startup(function(use)
     -- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        module = 'telescope',
-        cmd = 'Telescope',
+        requires = { 'nvim-lua/plenary.nvim' },
+        event = 'BufRead',
         config = function()
             require('csj.configs.telescope')
         end,
@@ -226,30 +226,35 @@ return packer.startup(function(use)
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-path', -- Path completion
         'hrsh7th/nvim-cmp', -- The completion plugin
-        event = 'InsertEnter',
+        -- event = 'InsertEnter',
     })
 
     -- LSP
-    use('neovim/nvim-lspconfig') -- Enable LSP
-    use('williamboman/nvim-lsp-installer') -- Install language servers
-
-    -- Debug Adapter Protocol
     use({
-        'mfussenegger/nvim-dap',
-        event = 'VimEnter',
+        'neovim/nvim-lspconfig', -- Enable LSP
+        'williamboman/nvim-lsp-installer', -- Install language servers
     })
 
     -- Null-LS
     use({
         'jose-elias-alvarez/null-ls.nvim', -- For formatters and linters
-        event = 'BufReadPost',
+        event = 'InsertLeave',
         config = function()
             require('csj.lsp.null-ls')
         end,
     })
 
-    -- Java
-    use('mfussenegger/nvim-jdtls')
+    -- -- Debug Adapter Protocol
+    -- use({
+    --     'mfussenegger/nvim-dap',
+    --     event = 'VimEnter',
+    -- })
+
+    -- -- Java
+    -- use({
+    --     'mfussenegger/nvim-jdtls',
+    --     ft = 'java',
+    -- })
 
     -- Codi
     use({

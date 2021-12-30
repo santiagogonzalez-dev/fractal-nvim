@@ -173,7 +173,7 @@ vim.cmd([[
 vim.cmd([[
     augroup _show_diagnostics
         autocmd!
-        autocmd CursorMoved * lua vim.diagnostic.open_float()
+        autocmd CursorHold * lua vim.diagnostic.open_float()
     augroup end
 ]])
 

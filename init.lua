@@ -29,19 +29,15 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwFileHandlers = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrwSettings = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwFileHandlers = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
 
 require('csj.settings')
 require('csj.keymaps')
 require('csj.plugins')
 require('csj.autocmd')
 require('csj.functions')
-require('csj.colorscheme')
 require('csj.configs.cmp')
 require('csj.lsp')
+require('csj.colorscheme')
 
 vim.defer_fn(function()
     vim.o.shadafile = ''

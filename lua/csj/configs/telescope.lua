@@ -26,12 +26,12 @@ telescope.setup({
         file_ignore_patterns = { '__pycache__', 'node_modules', '.venv' },
         set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
         color_devicons = true,
-        use_less = true,
+        use_less = false,
         winblend = 20,
+        path_display = { 'smart' },
         prompt_prefix = ' ',
         selection_caret = ' ',
         entry_prefix = '  ',
-        path_display = { 'smart' },
         mappings = {
             i = {
                 ['<C-n>'] = actions.cycle_history_next,
@@ -62,7 +62,6 @@ telescope.setup({
                 ['<M-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
                 ['<C-l>'] = actions.complete_tag,
             },
-
             n = {
                 ['<esc>'] = actions.close,
                 ['<CR>'] = actions.select_default,
@@ -91,6 +90,13 @@ telescope.setup({
 
                 ['<PageUp>'] = actions.results_scrolling_up,
                 ['<PageDown>'] = actions.results_scrolling_down,
+            },
+        },
+    },
+    pickers = {
+        find_files = {
+            find_files = {
+                find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix', '-H' },
             },
         },
     },

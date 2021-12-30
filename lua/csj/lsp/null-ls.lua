@@ -15,7 +15,7 @@ null_ls.setup({
         formatting.stylua,
         formatting.prettier.with({
             prefer_local = 'node_modules/.bin',
-            command = 'npx prettier',
+            command = 'prettier',
             filetypes = {
                 'javascript',
                 'javascriptreact',
@@ -31,12 +31,15 @@ null_ls.setup({
                 'markdown',
                 'graphql',
             },
-            extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
+            extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote', '--tab-width', '4' },
         }),
         formatting.black.with({
             extra_args = { '--fast', '--quiet', '--skip-string-normalization' },
         }),
         diagnostics.shellcheck.with({
+            method = methods.DIAGNOSTICS_ON_SAVE,
+        }),
+        diagnostics.eslint.with({
             method = methods.DIAGNOSTICS_ON_SAVE,
         }),
         diagnostics.flake8.with({

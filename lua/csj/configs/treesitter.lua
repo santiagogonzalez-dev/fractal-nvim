@@ -47,6 +47,8 @@ configs.setup({
         enable = true,
         filetypes = {
             'html',
+            'xhtml',
+            'xml',
             'javascript',
             'javascriptreact',
             'typescript',
@@ -64,10 +66,5 @@ configs.setup({
             scope_incremental = 'gns',
             node_decremental = 'gnp',
         },
-    },
-    query_linter = {
-        enable = true,
-        use_virtual_text = true,
-        lint_events = { 'BufWrite', 'CursorHold', 'CursorHold' },
     },
 })

@@ -45,7 +45,7 @@ keymap('n', '<Leader>C', '<Cmd>set cul! cuc!<Cr>', nore_sil)
 -- Insert skeleton
 keymap('n', '<Leader>sk', ':read ~/.config/nvim/skeletons/', nore_sil)
 
--- Quit all buffers
+-- Qut all buffers
 keymap('n', '<Leader>Q', '<Cmd>bufdo bdelete<Cr>', nore_sil)
 
 -- Close buffer
@@ -72,8 +72,8 @@ keymap('n', '<A-l>', ':bprevious<Cr>', nore_sil)
 -- Move current block of text up and down
 keymap('n', '<C-j>', ':m .+1<Cr>==', nore_sil) -- Normal mode
 keymap('n', '<C-k>', ':m .-2<Cr>==', nore_sil)
-keymap('v', '<C-j>', ":m '>+1<Cr>gv-gv", nore_sil) -- Visual mode
-keymap('v', '<C-k>', ":m '<-2<Cr>gv-gv", nore_sil)
+keymap('v', '<C-j>', ":m '>+1<Cr>gv=gv", nore_sil) -- Visual mode
+keymap('v', '<C-k>', ":m '<-2<Cr>gv=gv", nore_sil)
 
 -- Resize windows
 keymap('n', '<C-Up>', ':resize +2<CR>', nore_sil)
@@ -128,11 +128,28 @@ keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 
 -- Telescope
 keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
-keymap('n', '<Leader>ff', '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
-keymap('n', '<Leader>fb', '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
+-- Lists files in your current working directory, respects .gitignore
+keymap(
+    'n',
+    '<Leader>ff',
+    '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
+    nore_sil
+)
+-- Fuzzy search through the output of git ls-files command, respects .gitignore, optionally ignores untracked files
+keymap(
+    'n',
+    '<Leader>fg',
+    '<Cmd>lua require("telescope.builtin").git_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
+    nore_sil
+)
+keymap(
+    'n',
+    '<Leader>fb',
+    '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
+    nore_sil
+)
 keymap('n', '<Leader>P', '<Cmd>lua require("telescope").extensions.projects.projects()<Cr>', nore_sil)
-keymap('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>', nore_sil)
-keymap('n', '<Leader>d', '<Cmd>Telescope lsp_definitions<Cr>', nore_sil)
+keymap('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>', nore_sil) -- live_grep respects .gitignore
 keymap('n', '<Leader>r', '<Cmd>Telescope lsp_references<Cr>', nore_sil)
 keymap('n', '<Leader>gb', '<Cmd>Telescope git_branches<Cr>', nore_sil)
 

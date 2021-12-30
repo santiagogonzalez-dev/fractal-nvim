@@ -3,10 +3,10 @@ local M = {}
 -- Setup
 M.setup = function()
     local signs = {
-        { name = 'DiagnosticSignError', text = '' }, -- ''
-        { name = 'DiagnosticSignWarn', text = '' }, -- ''
-        { name = 'DiagnosticSignHint', text = '' }, -- ''
-        { name = 'DiagnosticSignInfo', text = '' }, -- ''
+        { name = 'DiagnosticSignError', text = '' }, -- '' ''
+        { name = 'DiagnosticSignWarn',  text = '' }, -- '' ''
+        { name = 'DiagnosticSignHint',  text = '' }, -- '' ''
+        { name = 'DiagnosticSignInfo',  text = '' }, -- '' ''
     }
 
     for _, sign in ipairs(signs) do
@@ -16,7 +16,7 @@ M.setup = function()
     local config = {
         virtual_text = false, -- Toggle virtual text
         signs = { active = signs }, -- Show signs
-        update_in_insert = true,
+        update_in_insert = false,
         underline = true,
         severity_sort = true,
         float = {

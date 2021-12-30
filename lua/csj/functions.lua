@@ -14,4 +14,4 @@ vim.cmd([[
 ]])
 
 -- Create command to format files using formatters
-vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])

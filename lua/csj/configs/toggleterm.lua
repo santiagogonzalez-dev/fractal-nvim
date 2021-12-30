@@ -34,15 +34,16 @@ local files = {
     c = 'gcc -o temp ' .. vim.fn.expand('%:t') .. ' && ./temp && rm ./temp',
     java = 'javac ' .. vim.fn.expand('%:t') .. ' && java ' .. vim.fn.expand('%:t:r') .. ' && rm *.class',
     rust = 'cargo run',
-    javascript = 'node ' .. vim.fn.expand('%:t'),
-    typescript = 'tsc ' .. vim.fn.expand('%:t') .. ' && node ' .. vim.fn.expand('%:t:r') .. '.js',
+    javascript = 'node ' .. vim.fn.expand('%:p'),
+    typescript = 'tsc ' .. vim.fn.expand('%:r') .. ' && node ' .. vim.fn.expand('%:r') .. '.js',
+    html = os.getenv('BROWSER') .. ' ' .. vim.fn.expand('%:r') .. '.html',
 }
 
 function Run_file()
     local command = files[vim.bo.filetype]
     if command ~= nil then
         require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = false }):toggle()
-        print('Running: ' .. command)
+        -- print('Running: ' .. command)
     end
 end
 
