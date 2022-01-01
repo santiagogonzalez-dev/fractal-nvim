@@ -5,8 +5,4 @@ return {
         '.git',
         '.zk',
     }),
-    settings = {
-        markdown = {
-        },
-    },
 }

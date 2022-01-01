@@ -225,6 +225,8 @@ return packer.startup(function(use)
     use({
         'nvim-telescope/telescope.nvim',
         event = 'BufRead',
+        module = 'telescope',
+        cmd = 'Telescope',
         config = function()
             require('csj.configs.telescope')
         end,
