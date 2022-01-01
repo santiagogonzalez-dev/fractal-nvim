@@ -47,18 +47,13 @@ return packer.startup(function(use)
     })
 
     -- Packer
-    use({
-        'wbthomason/packer.nvim',
-    })
+    use({ 'wbthomason/packer.nvim' })
 
     -- Plenary
-    use('nvim-lua/plenary.nvim')
+    use({ 'nvim-lua/plenary.nvim' })
 
     -- Icons
-    use({
-        'kyazdani42/nvim-web-devicons',
-        module = 'nvim-web-devicons',
-    })
+    use({ 'kyazdani42/nvim-web-devicons' })
 
     -- Colorscheme
     use({
@@ -129,7 +124,10 @@ return packer.startup(function(use)
     -- Terminal
     use({
         'akinsho/toggleterm.nvim',
-        keys = { '<C-t>', '<Leader>R' },
+        keys = {
+            '<C-t>',
+            '<Leader>R',
+        },
         config = function()
             require('csj.configs.toggleterm')
         end,
@@ -138,17 +136,11 @@ return packer.startup(function(use)
     -- Treesitter
     use({
         'nvim-treesitter/nvim-treesitter',
-        event = 'BufRead',
         run = ':TSUpdate',
         config = function()
             require('csj.configs.treesitter')
         end,
-    })
-
-    -- Treesitter context commentstring
-    use({
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        event = 'BufRead',
+        requires = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     })
 
     -- Nvim-tree
@@ -172,7 +164,10 @@ return packer.startup(function(use)
     -- Colorizer
     use({
         'norcalli/nvim-colorizer.lua',
-        event = { 'CursorMoved', 'CursorHold' },
+        event = {
+            'CursorMoved',
+            'CursorHold',
+        },
         config = function()
             require('colorizer').setup()
         end,
@@ -186,22 +181,6 @@ return packer.startup(function(use)
         config = function()
             require('csj.configs.gitsigns')
         end,
-    })
-
-    -- Telescope
-    use({
-        'nvim-telescope/telescope.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
-        event = 'BufRead',
-        config = function()
-            require('csj.configs.telescope')
-        end,
-    })
-
-    -- Telescope-fzf-native extension
-    use({
-        'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'make',
     })
 
     -- Indent Blankline
@@ -226,41 +205,40 @@ return packer.startup(function(use)
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-path', -- Path completion
         'hrsh7th/nvim-cmp', -- The completion plugin
-        -- event = 'InsertEnter',
+        event = 'InsertEnter',
     })
 
     -- LSP
-    use({
-        'neovim/nvim-lspconfig', -- Enable LSP
-        'williamboman/nvim-lsp-installer', -- Install language servers
-    })
+    use({ 'neovim/nvim-lspconfig' }) -- Enable LSP
+    use({ 'williamboman/nvim-lsp-installer' }) -- Install language servers
 
     -- Null-LS
     use({
         'jose-elias-alvarez/null-ls.nvim', -- For formatters and linters
-        event = 'InsertLeave',
+        event = 'Filetype',
         config = function()
             require('csj.lsp.null-ls')
         end,
     })
 
-    -- -- Debug Adapter Protocol
-    -- use({
-    --     'mfussenegger/nvim-dap',
-    --     event = 'VimEnter',
-    -- })
-
-    -- -- Java
-    -- use({
-    --     'mfussenegger/nvim-jdtls',
-    --     ft = 'java',
-    -- })
+    -- Telescope
+    use({
+        'nvim-telescope/telescope.nvim',
+        event = 'BufRead',
+        config = function()
+            require('csj.configs.telescope')
+        end,
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                run = 'make',
+            },
+        },
+    })
 
     -- Codi
-    use({
-        'metakirby5/codi.vim',
-        cmd = 'Codi',
-    })
+    use({ 'metakirby5/codi.vim' })
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

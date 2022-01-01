@@ -31,19 +31,31 @@ null_ls.setup({
                 'markdown',
                 'graphql',
             },
-            extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote', '--tab-width', '4' },
+            extra_args = {
+                '--no-semi',
+                '--single-quote',
+                '--jsx-single-quote',
+                '--tab-width',
+                '4',
+            },
         }),
         formatting.black.with({
-            extra_args = { '--fast', '--quiet', '--skip-string-normalization' },
+            extra_args = {
+                '--fast',
+                '--quiet',
+                '--skip-string-normalization',
+                '--line-length',
+                '120',
+            },
         }),
         diagnostics.shellcheck.with({
-            method = methods.DIAGNOSTICS_ON_SAVE,
+            -- method = methods.DIAGNOSTICS_ON_SAVE,
         }),
         diagnostics.eslint.with({
-            method = methods.DIAGNOSTICS_ON_SAVE,
+            -- method = methods.DIAGNOSTICS_ON_SAVE,
         }),
         diagnostics.flake8.with({
-            method = methods.DIAGNOSTICS_ON_SAVE,
+            -- method = methods.DIAGNOSTICS_ON_SAVE,
             extra_args = { '--max-line-length', '120' },
         }),
     },

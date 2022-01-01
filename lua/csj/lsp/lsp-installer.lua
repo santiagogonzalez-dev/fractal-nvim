@@ -39,5 +39,11 @@ lsp_installer.on_server_ready(function(server)
         opts = vim.tbl_deep_extend('force', tsserver_opts, opts)
     end
 
+    -- markdown
+    if server.name == 'zk' then
+        local zk_opts = require('csj.lsp.settings.zk')
+        opts = vim.tbl_deep_extend('force', zk_opts, opts)
+    end
+
     server:setup(opts)
 end)

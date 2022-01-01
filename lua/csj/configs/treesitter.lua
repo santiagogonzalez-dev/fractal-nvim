@@ -1,9 +1,9 @@
-local status_ok, configs = pcall(require, 'nvim-treesitter.configs')
+local status_ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
 if not status_ok then
     return
 end
 
-configs.setup({
+treesitter_configs.setup({
     -- ensure_installed = 'maintained',
     ensure_installed = {
         'comment',
@@ -40,9 +40,7 @@ configs.setup({
         highlight_definitions = { enable = true },
         highlight_current_scope = { enable = true },
     },
-    autopairs = {
-        enable = true,
-    },
+    autopairs = { enable = true },
     autotag = {
         enable = true,
         filetypes = {

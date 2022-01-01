@@ -129,25 +129,10 @@ keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 -- Telescope
 keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
 -- Lists files in your current working directory, respects .gitignore
-keymap(
-    'n',
-    '<Leader>ff',
-    '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
-    nore_sil
-)
+keymap('n', '<Leader>ff', '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
 -- Fuzzy search through the output of git ls-files command, respects .gitignore, optionally ignores untracked files
-keymap(
-    'n',
-    '<Leader>fg',
-    '<Cmd>lua require("telescope.builtin").git_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
-    nore_sil
-)
-keymap(
-    'n',
-    '<Leader>fb',
-    '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>',
-    nore_sil
-)
+keymap('n', '<Leader>fg', '<Cmd>lua require("telescope.builtin").git_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
+keymap('n', '<Leader>b', '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
 keymap('n', '<Leader>P', '<Cmd>lua require("telescope").extensions.projects.projects()<Cr>', nore_sil)
 keymap('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>', nore_sil) -- live_grep respects .gitignore
 keymap('n', '<Leader>r', '<Cmd>Telescope lsp_references<Cr>', nore_sil)
