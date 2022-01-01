@@ -43,7 +43,7 @@ keymap('n', '<Leader>e', ':w | :e%<Cr>zz', nore_sil)
 keymap('n', '<Leader>C', '<Cmd>set cul! cuc!<Cr>', nore_sil)
 
 -- Insert skeleton
-keymap('n', '<Leader>sk', ':read ~/.config/nvim/skeletons/', nore_sil)
+keymap('n', '<Leader>sk', ':0read ~/.config/nvim/skeletons/', nore_sil)
 
 -- Qut all buffers
 keymap('n', '<Leader>Q', '<Cmd>bufdo bdelete<Cr>', nore_sil)
