@@ -185,10 +185,10 @@ vim.cmd([[
 --     augroup end
 -- ]])
 
+-- Skeletons
 vim.cmd([[
     augroup _insert_skeleton
         autocmd!
-        " read in template files
         autocmd BufNewFile *.* silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
     augroup END
 ]])
