@@ -18,16 +18,17 @@ treesitter_configs.setup({
         'svelte',
         'typescript',
         'vim',
+        'haskell',
     },
     sync_install = false,
     highlight = {
         enable = true,
-        aditional_vim_regex_highlighting = true,
+        -- aditional_vim_regex_highlighting = true,
         disable = { 'latex' },
     },
     context_commentstring = {
         enable = true,
-        enable_autocmd = true,
+        enable_autocmd = false,
     },
     indent = {
         enable = true,
@@ -61,8 +62,8 @@ treesitter_configs.setup({
         keymaps = {
             init_selection = 'gnn',
             node_incremental = 'gnn',
-            scope_incremental = 'gns',
             node_decremental = 'gnp',
+            scope_incremental = 'gns',
         },
     },
 })

@@ -6,13 +6,14 @@ end
 
 npairs.setup({
     check_ts = true,
-    enable_afterquote = true, -- To use bracket pairs inside quotes
     ts_config = {
         javascript = { 'template_string' },
-        java = false, -- There's some problems with java and treesitter, disabled for now
+        -- java = false, -- There's some problems with java and treesitter, disabled for now
     },
     disable_filetype = { 'TelescopePrompt' },
+    enable_afterquote = true, -- To use bracket pairs inside quotes
     enable_check_bracket_line = true, -- Check for closing brace so it will not add a close pair
+    disable_in_macro = false,
     fast_wrap = {
         map = '<C-f>',
         chars = { '{', '[', '(', '"', "'" },

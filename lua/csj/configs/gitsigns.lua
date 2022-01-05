@@ -12,7 +12,7 @@ gitsigns.setup({
         changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
     },
     signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`
-    numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+    numhl = true, -- Toggle with `:Gitsigns toggle_numhl`
     linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
     word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
     watch_gitdir = {
@@ -23,9 +23,9 @@ gitsigns.setup({
     current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
     current_line_blame_opts = {
         virt_text = true,
-        virt_text_pos = 'right_align', -- 'eol' | 'overlay' | 'right_align'
+        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
         delay = 3000,
-        ignore_whitespace = false,
+        ignore_whitespace = true,
     },
     current_line_blame_formatter_opts = {
         relative_time = true,
@@ -33,10 +33,10 @@ gitsigns.setup({
     sign_priority = 6,
     update_debounce = 300,
     status_formatter = nil, -- Use default
-    max_file_length = 60000,
+    max_file_length = 90000,
     preview_config = {
         -- Options passed to nvim_open_win
-        border = 'single',
+        border = 'rounded',
         style = 'minimal',
         relative = 'cursor',
         row = 0,

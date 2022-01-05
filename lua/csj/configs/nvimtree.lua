@@ -5,23 +5,23 @@ vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_git_hl = 1
 
 vim.g.nvim_tree_icons = {
-    default = ' ',
-    symlink = ' ',
+    default = '',
+    symlink = '',
     git = {
         unstaged = 'N',
-        staged = 'S ',
-        unmerged = ' ',
-        renamed = '➜ ',
-        deleted = ' ',
-        untracked = 'U ',
-        ignored = '◌ ',
+        staged = 'S',
+        unmerged = '',
+        renamed = '➜',
+        deleted = '',
+        untracked = 'U',
+        ignored = '◌',
     },
     folder = {
-        default = ' ',
-        open = ' ',
-        empty = ' ',
-        empty_open = ' ',
-        symlink = ' ',
+        default = '',
+        open = '',
+        empty = '',
+        empty_open = '',
+        symlink = '',
     },
 }
 
@@ -75,17 +75,17 @@ nvim_tree.setup({
         timeout = 500,
     },
     view = {
-        width = 40,
+        width = 44,
         height = 20,
         hide_root_folder = false,
-        side = 'bottom',
+        side = 'right',
         auto_resize = true,
         mappings = {
             custom_only = false,
             list = {},
         },
-        number = true,
-        relativenumber = true,
+        number = false,
+        relativenumber = false,
     },
     trash = {
         cmd = 'trash',

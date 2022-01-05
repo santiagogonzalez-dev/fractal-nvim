@@ -123,11 +123,18 @@ keymap('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>', nore_sil) -- keymap('n', '<l
 -- Toggle Indent Blankline
 keymap('n', '<Leader>i', '<Cmd>IndentBlanklineToggle<Cr>', nore_sil)
 
+-- Gitsigns
+keymap('n', '<Leader>gj', '<Cmd>Gitsigns next_hunk<Cr>', nore_sil) -- Move to the next hunk
+keymap('n', '<Leader>gk', '<Cmd>Gitsigns prev_hunk<Cr>', nore_sil) -- Move to the previous hunk
+keymap('n', '<Leader>ghp', '<Cmd>Gitsigns preview_hunk<Cr>', nore_sil) -- Preview hunk
+keymap('n', '<Leader>ghr', '<Cmd>Gitsigns reset_hunk<Cr>', nore_sil) -- Reset hunk
+keymap('n', '<Leader>ghb', '<Cmd>Gitsigns reset_buffer<Cr>', nore_sil) -- Reset buffer hunk
+
 -- Cycle through relative number and number
 keymap('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>', nore_sil)
 
 -- Telescope
-keymap('n', '<Leader>t', '<Cmd>Telescope<Cr>', nore_sil)
+keymap('n', '<Leader>t', '<Cmd>lua require"telescope.builtin".find_files(require("telescope.themes").get_dropdown({}))<Cr>', nore_sil)
 -- Lists files in your current working directory, respects .gitignore
 keymap('n', '<Leader>ff', '<Cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>', nore_sil)
 -- Fuzzy search through the output of git ls-files command, respects .gitignore, optionally ignores untracked files
@@ -152,7 +159,7 @@ function M.lsp_keymaps(bufnr)
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     buf_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<Cr>', nore_sil)
-    buf_set_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting()<Cr>', nore_sil)
+    buf_set_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting_sync()<Cr>', nore_sil)
     buf_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<Cr>', nore_sil)
     buf_set_keymap('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<Cr>', nore_sil)
     buf_set_keymap('n', ']d', '<Cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<Cr>', nore_sil)

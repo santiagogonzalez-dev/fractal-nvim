@@ -17,33 +17,27 @@ toggleterm.setup({
     close_on_exit = true,
     shell = vim.o.shell,
     float_opts = {
-        border = 'curved',
+        border = 'rounded',
         winblend = 33,
         width = 120,
         height = 35,
-        highlights = {
-            border = 'FloatBorder',
-            background = 'NormalFloat',
-        },
     },
 })
 
+local exp = vim.fn.expand
 local files = {
-    python = 'python -i ' .. vim.fn.expand('%:t'),
-    lua = 'lua ' .. vim.fn.expand('%:t'),
-    c = 'gcc -o temp ' .. vim.fn.expand('%:t') .. ' && ./temp && rm ./temp',
-    java = 'javac ' .. vim.fn.expand('%:t') .. ' && java ' .. vim.fn.expand('%:t:r') .. ' && rm *.class',
-    rust = 'cargo run',
-    javascript = 'node ' .. vim.fn.expand('%:p'),
-    typescript = 'tsc ' .. vim.fn.expand('%:r') .. ' && node ' .. vim.fn.expand('%:r') .. '.js',
-    html = os.getenv('BROWSER') .. ' ' .. vim.fn.expand('%:r') .. '.html',
+    python = 'python -i ' .. exp('%:r') .. '.py', -- Start the REPL
+    java = 'javac ' .. exp('%:t') .. ' && java ' .. exp('%:t:r') .. ' && rm *.class',
+    javascript = 'node ' .. exp('%:p'),
+    typescript = 'tsc ' .. exp('%:r') .. ' && node ' .. exp('%:r') .. '.js',
+    html = os.getenv('BROWSER') .. ' ' .. exp('%:r') .. '.html',
+    haskell = 'ghci ' .. exp('%:r') .. '.hs', -- Start the REPL
 }
 
 function Run_file()
     local command = files[vim.bo.filetype]
     if command ~= nil then
         require('toggleterm.terminal').Terminal:new({ cmd = command, close_on_exit = false }):toggle()
-        -- print('Running: ' .. command)
     end
 end
 

@@ -59,9 +59,6 @@ return packer.startup(function(use)
     use({
         'rose-pine/neovim',
         as = 'rose-pine',
-        config = function()
-            vim.g.rose_pine_variant = 'base'
-        end,
     })
 
     -- Comment
@@ -101,7 +98,6 @@ return packer.startup(function(use)
             require('hop').setup({
                 keys = 'aoeusnthdiqjkzvwmbxlrcgp',
                 term_seq_bias = 0.5,
-                vim.cmd([[ highlight HopNextKey guifg=orange gui=nocombine ]]),
             })
         end,
     })
@@ -109,7 +105,7 @@ return packer.startup(function(use)
     -- Bufferline
     use({
         'akinsho/bufferline.nvim',
-        event = 'VimEnter',
+        event = 'BufReadPost',
         config = function()
             require('csj.configs.bufferline')
         end,
@@ -117,11 +113,13 @@ return packer.startup(function(use)
 
     -- Surround
     use({
-        'tpope/vim-surround',
-        event = 'VimEnter',
+        'blackCauldron7/surround.nvim',
+        config = function()
+            require('surround').setup({ mappings_style = 'surround' })
+        end,
     })
 
-    -- Terminal
+    -- Toggleterm
     use({
         'akinsho/toggleterm.nvim',
         keys = {
@@ -238,9 +236,6 @@ return packer.startup(function(use)
             },
         },
     })
-
-    -- Codi
-    use({ 'metakirby5/codi.vim' })
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

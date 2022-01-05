@@ -6,52 +6,12 @@ vim.cmd([[
     augroup end
 ]])
 
--- Straight red underline instead of curly line
-vim.cmd([[
-    augroup _red_underline
-        autocmd!
-        autocmd BufRead * highlight SpellBad guibg=NONE guifg=NONE gui=underline guisp=red
-    augroup end
-]])
-
 -- Highlight on yank
 vim.cmd([[
     augroup _general_settings
         autocmd!
         autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-        autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'iCursor', timeout = 200})
-    augroup end
-
-    augroup _git
-        autocmd!
-        autocmd FileType gitcommit setlocal wrap
-        autocmd FileType gitcommit setlocal spell
-    augroup end
-
-    augroup _markdown
-        autocmd!
-        autocmd FileType markdown setlocal wrap
-        autocmd FileType markdown setlocal spell
-    augroup end
-
-    augroup _auto_resize
-        autocmd!
-        autocmd VimResized * tabdo wincmd =
-    augroup end
-]])
-
-vim.cmd([[
-    augroup _color_mathparen
-        autocmd!
-        autocmd Colorscheme * highlight MatchParen guibg=orange
-    augroup end
-]])
-
--- Jump to the last position when reopening a file instead of typing '. to go to the last mark
-vim.cmd([[
-    augroup _last_position
-        autocmd!
-        autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"zz" | endif
+        autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'iCursor', timeout = 333})
     augroup end
 ]])
 
@@ -63,11 +23,34 @@ vim.cmd([[
     augroup end
 ]])
 
--- Default syntax highlighting for files without extension
+vim.cmd([[
+    augroup _git
+        autocmd!
+        autocmd FileType gitcommit setlocal wrap
+        autocmd FileType gitcommit setlocal spell
+    augroup end
+]])
+
+vim.cmd([[
+    augroup _markdown
+        autocmd!
+        autocmd FileType markdown setlocal wrap
+        autocmd FileType markdown setlocal spell
+    augroup end
+]])
+
+vim.cmd([[
+    augroup _auto_resize
+        autocmd!
+        autocmd VimResized * tabdo wincmd =
+    augroup end
+]])
+
+-- Default settings for files without extension
 vim.cmd([[
     augroup _files_without_extension
         autocmd!
-        autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=markdown | endif
+        autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | setlocal filetype=markdown syntax=markdown | endif
     augroup end
 ]])
 
@@ -88,27 +71,11 @@ vim.cmd([[
     augroup end
 ]])
 
--- -- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
--- vim.cmd([[
---     augroup _highlight_match
---         autocmd!
---         autocmd CursorMoved * exe printf('match iCursor /\V\<%s\>/', escape(expand('<cword>'), '/\'))
---     augroup end
--- ]])
-
 -- Show cursor only in active window
 vim.cmd([[
     augroup _cursor_on_active_window
-        autocmd InsertLeave,WinEnter * set cursorline cursorcolumn
-        autocmd InsertEnter,WinLeave * set nocursorline nocursorcolumn
-    augroup end
-]])
-
--- Colors in visual mode
-vim.cmd([[
-    augroup _colored_visual_mode
-        autocmd!
-        autocmd ColorScheme * highlight Visual guifg=nocombine gui=reverse
+        autocmd InsertLeave,WinEnter * setlocal cursorline cursorcolumn
+        autocmd InsertEnter,WinLeave * setlocal nocursorline nocursorcolumn
     augroup end
 ]])
 
@@ -120,27 +87,30 @@ vim.cmd([[
     augroup end
 ]])
 
--- Make the selected option in completion menus in a solid color
-vim.cmd([[
-    augroup _solid_color_selection
-        autocmd!
-        autocmd ColorScheme * highlight PmenuSel blend=0
-    augroup end
-]])
-
--- Insert cursor in orange. Normal mode cursor in reversed
-vim.cmd([[
-    augroup _orange_cursor_insertmode
-        autocmd!
-        autocmd ColorScheme * highlight iCursor guifg=nocombine guibg=orange
-    augroup end
-]])
-
 -- Disable autocomment when pressing enter
 vim.cmd([[
     augroup _disable_comment
         autocmd!
-        autocmd BufWinEnter * :set formatoptions-=cro
+        autocmd BufWinEnter * set formatoptions-=cro
+    augroup end
+]])
+
+-- Switch to numbers when while on insert mode or cmd mode, and to relative numbers when in normal mode
+vim.cmd([[
+    augroup _number_toggle
+        autocmd!
+        autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != 'i' | set rnu   | endif
+        autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+        autocmd CmdLineEnter * set norelativenumber
+        autocmd CmdLineLeave * set relativenumber
+    augroup end
+]])
+
+-- Show lsp diagnostics in a floating window
+vim.cmd([[
+    augroup _show_lsp_diagnostics
+        autocmd!
+        autocmd CursorHold * lua vim.diagnostic.open_float()
     augroup end
 ]])
 
@@ -152,30 +122,32 @@ vim.cmd([[
     augroup end
 ]])
 
--- Write to all buffers when exit
+-- Skeletons
 vim.cmd([[
-    augroup _config_group
+    augroup _insert_skeleton
         autocmd!
-        autocmd FocusLost * silent! wa!
+        autocmd BufNewFile *.* silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
+    augroup END
+]])
+
+-- Save and load view of the file we are working on
+vim.cmd([[
+    augroup _save_and_load_view
+        autocmd!
+        autocmd BufWritePre * mkview
+        autocmd BufWinEnter * silent! loadview
     augroup end
 ]])
 
--- Switch to numbers when in insert mode, and to relative numbers when in command mode
-vim.cmd([[
-    augroup _number_toggle
-        autocmd!
-        autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != 'i' | set rnu   | endif
-        autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
-    augroup end
-]])
-
--- Show lsp diagnostics
-vim.cmd([[
-    augroup _show_diagnostics
-        autocmd!
-        autocmd CursorHold * lua vim.diagnostic.open_float()
-    augroup end
-]])
+-- Autocommands that I don't use anymore
+-- -- Jump to the last position when reopening a file instead of typing '. to go to the last mark _save_and_load_view
+-- -- fixes this already
+-- vim.cmd([[
+--     augroup _last_position
+--         autocmd!
+--         autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"zz" | endif
+--     augroup end
+-- ]])
 
 -- -- Use null-ls to formate text before writing the buffer to the file
 -- vim.cmd([[
@@ -185,10 +157,10 @@ vim.cmd([[
 --     augroup end
 -- ]])
 
--- Skeletons
-vim.cmd([[
-    augroup _insert_skeleton
-        autocmd!
-        autocmd BufNewFile *.* silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
-    augroup END
-]])
+-- -- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
+-- vim.cmd([[
+--     augroup _highlight_match
+--         autocmd!
+--         autocmd CursorMoved * exe printf('match iCursor /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+--     augroup end
+-- ]])

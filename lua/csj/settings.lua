@@ -12,12 +12,11 @@ local options = {
     undofile = true, -- Persistent undo - undo after you re-open the file
     undolevels = 10000, -- Levels of undoing
     exrc = true, -- Use local .nvimrc or .exrc
-    fileencoding = 'utf-8', -- Enconding used for files
-    foldenable = false, -- Enable folds
-    foldmethod = 'expr', -- Method used for idents
-    foldexpr = 'nvim_treesitter#foldexpr()',
+    foldenable = true, -- Enable folds
+    foldmethod = 'manual', -- Method used for idents
+    foldexpr = 'nvim_treesitter#foldexpr()', -- Use treesitter to define folds, needs to enable expr
     foldcolumn = 'auto', -- Column to display where the folds are
-    foldlevelstart = 99,
+    foldlevelstart = 99, -- Sets 'foldlevel' when starting to edit another buffer in a window
     foldnestmax = 1, -- To only fold outer functions
     hidden = true, -- It keeps buffers open in memory
     history = 100, -- Saved spaces in each table of history
@@ -36,7 +35,7 @@ local options = {
     number = true, -- Display line number on the side
     path = '**', -- Search files recursively
     -- pumblend = 9, -- Transparency for the pop up menu, disabled because it messess up Nerd Font icons
-    pumheight = 20, -- Pop up menu height
+    pumheight = 33, -- Pop up menu height
     redrawtime = 600, -- Time for redrawing the display
     relativenumber = true, -- Display line number relative to the cursor
     ruler = true, -- Show the line and column number of the cursor position
@@ -47,9 +46,9 @@ local options = {
     showbreak = '↪', -- Shows when text is being wrapped
     showmatch = false, -- Show match brace, set to false because :DoMatchParen does enough
     showmode = false, -- Show or hide the mode you are on in the status line
-    scrolloff = 8, -- Cursor does not reach top/bottom
+    scrolloff = 999, -- Cursor does not reach top/bottom
     sidescrolloff = 8, -- Cursor does not reach sides
-    signcolumn = 'number', -- Always show signcolumn
+    signcolumn = 'yes', -- Always show signcolumn
     smartcase = true, -- Smart case
     smartindent = true, -- Smart indentation
     showtabline = 0, -- Show top tab bar
@@ -124,12 +123,11 @@ vim.opt.listchars:append({
     trail = '█',
 })
 
-vim.cmd([[ match errorMsg /\s\+$/ ]]) -- Show trail character in red
-
 vim.opt.fillchars:append({
-    eob = '~',
+    -- eob = '~',
+    eob = ' ',
     diff = '∙',
-    fold = '·',
+    fold = ' ',
     foldclose = '▶',
     foldopen = '▼',
     foldsep = '│',
