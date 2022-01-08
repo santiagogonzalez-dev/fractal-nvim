@@ -19,7 +19,7 @@ vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting_sync()' ]])
 M = {}
 function M.close_or_quit()
     local bufNum = #require('bufferline.utils').get_valid_buffers()
-    if bufNum.normal <= 1 then
+    if bufNum <= 1 then
         local result = vim.api.nvim_exec([[:q]], true)
     else
         local result = vim.api.nvim_exec([[:bd]], true)
