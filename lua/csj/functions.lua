@@ -20,10 +20,9 @@ M = {}
 function M.close_or_quit()
     local bufNum = #require('bufferline.utils').get_valid_buffers()
     if bufNum <= 1 then
-        local result = vim.api.nvim_exec([[:q]], true)
-    else
-        local result = vim.api.nvim_exec([[:bd]], true)
+        local result = vim.cmd([[ :q ]])
     end
+    local result = vim.cmd([[ :bd ]])
 end
 
 return M

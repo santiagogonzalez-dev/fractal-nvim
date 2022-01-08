@@ -55,14 +55,14 @@ local function lsp_highlight_document(client)
 end
 
 -- On attach
-M.on_attach = function(client, bufnr)
+M.on_attach = function(client, _)
     -- tsserver
     if client.name == 'tsserver' then
         client.resolved_capabilities.document_formatting = false
     end
 
     -- Keymaps
-    require('csj.keymaps').lsp_keymaps(bufnr)
+    require('csj.keymaps').lsp_keymaps()
 
     -- Highlighting
     lsp_highlight_document(client)
