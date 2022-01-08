@@ -34,7 +34,7 @@ treesitter_configs.setup({
         enable = true,
         disable = {
             'yaml',
-            -- 'python',
+            'python',
         },
     },
     refactor = {

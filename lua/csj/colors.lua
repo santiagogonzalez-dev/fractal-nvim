@@ -1,8 +1,13 @@
 vim.g.rose_pine_variant = 'base'
 
 vim.cmd([[
-    set background=dark
-    colorscheme rose-pine
+    try
+        set background=dark
+        colorscheme rose-pine
+    catch /^Vim\%((\a\+)\)\=:E185/
+        colorscheme default
+        set background=dark
+    endtry
 ]])
 
 vim.cmd([[

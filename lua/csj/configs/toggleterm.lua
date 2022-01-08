@@ -42,10 +42,4 @@ function Run_file()
 end
 
 -- If you change the mapping you also need to enable it in your packer conf
-vim.api.nvim_buf_set_keymap(
-    vim.api.nvim_get_current_buf(),
-    'n',
-    '<Leader>R',
-    ':w<Cr>:lua Run_file()<Cr>',
-    { noremap = true, silent = true }
-)
+vim.api.nvim_buf_set_keymap(vim.api.nvim_get_current_buf(),'n','<Leader>R',':w<Cr>:lua Run_file()<Cr>',{ noremap = true, silent = true })

@@ -10,8 +10,15 @@ vim.cmd([[
 vim.cmd([[
     augroup _general_settings
         autocmd!
-        autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
         autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'iCursor', timeout = 333})
+    augroup end
+]])
+
+-- Other remaps
+vim.cmd([[
+    augroup _remaps
+        autocmd!
+        autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
     augroup end
 ]])
 
@@ -23,6 +30,7 @@ vim.cmd([[
     augroup end
 ]])
 
+-- Git filetype
 vim.cmd([[
     augroup _git
         autocmd!
@@ -31,6 +39,7 @@ vim.cmd([[
     augroup end
 ]])
 
+-- Markdown filetype
 vim.cmd([[
     augroup _markdown
         autocmd!
@@ -39,6 +48,7 @@ vim.cmd([[
     augroup end
 ]])
 
+-- Autoresize
 vim.cmd([[
     augroup _auto_resize
         autocmd!
@@ -71,13 +81,13 @@ vim.cmd([[
     augroup end
 ]])
 
--- Show cursor only in active window
-vim.cmd([[
-    augroup _cursor_on_active_window
-        autocmd InsertLeave,WinEnter * setlocal cursorline cursorcolumn
-        autocmd InsertEnter,WinLeave * setlocal nocursorline nocursorcolumn
-    augroup end
-]])
+-- -- Show cursor only in active window
+-- vim.cmd([[
+--     augroup _cursor_on_active_window
+--         autocmd InsertLeave,WinEnter * setlocal cursorline cursorcolumn
+--         autocmd InsertEnter,WinLeave * setlocal nocursorline nocursorcolumn
+--     augroup end
+-- ]])
 
 -- Disable delimiter line in certain type of files
 vim.cmd([[

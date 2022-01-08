@@ -90,6 +90,15 @@ return packer.startup(function(use)
         event = 'InsertEnter',
     })
 
+    -- Folds
+    use({
+        'anuvyklack/pretty-fold.nvim',
+        event = 'VimEnter',
+        config = function()
+            require('csj.configs.folds')
+        end,
+    })
+
     -- Hop
     use({
         'phaazon/hop.nvim',
@@ -218,6 +227,9 @@ return packer.startup(function(use)
             require('csj.lsp.null-ls')
         end,
     })
+
+    -- SQL
+    use({ 'nanotee/sqls.nvim' })
 
     -- Telescope
     use({
