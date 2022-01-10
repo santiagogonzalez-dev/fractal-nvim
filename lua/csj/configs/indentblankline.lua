@@ -50,5 +50,3 @@ indent_blankline.setup({
     buftype_exclude = { 'terminal', 'nofile', 'NvimTree' },
     filetype_exclude = { 'help', 'packer', 'NvimTree' },
 })
-
-vim.cmd([[ highlight IndentBlanklineContextChar guifg=orange gui=nocombine ]])

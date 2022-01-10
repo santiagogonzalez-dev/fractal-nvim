@@ -2,9 +2,9 @@ local M = {}
 local set = vim.keymap.set
 local expr = { expr = true }
 local buffer = { buffer = true }
+local silent = { silent = true }
 
 function M.general_keybinds()
-
     -- Modes
     --    normal_mode = "n",
     --    insert_mode = "i",
@@ -48,14 +48,8 @@ function M.general_keybinds()
     -- Insert skeleton
     set('n', '<Leader>sk', ':0read ~/.config/nvim/skeletons/')
 
-    -- Quit
-    set('n', '<Leader>qq', '<Cmd>q<Cr>')
-
     -- Smart quit
-    set('n', '<C-q>', require('csj.functions').close_or_quit)
-
-    -- Close buffer
-    set('n', '<Leader>qb', '<Cmd>bdelete<Cr>')
+    set('n', '<Leader>qq', require('csj.functions').close_or_quit)
 
     -- Quit all buffers
     set('n', '<Leader>Q', '<Cmd>bufdo bdelete<Cr>')
@@ -64,16 +58,16 @@ function M.general_keybinds()
     set('n', '<Leader>w', '<Cmd>w<Cr>')
 
     -- Write to all buffers and quit
-    set('n', '<Leader>x', '<Cmd>wqa<Cr>')
+    set('n', '<Leader>W', '<Cmd>wqa<Cr>')
 
     -- Write buffers as sudo
-    set('n', '<Leader>W', '%!sudo tee > /dev/null %')
+    set('n', '<Leader>x', '%!sudo tee > /dev/null %')
 
     -- Navigate buffers
-    set('n', '<Tab>', ':bnext<Cr>')
-    set('n', '<S-Tab>', ':bprevious<Cr>')
-    set('n', '<S-h>', ':bnext<Cr>')
-    set('n', '<S-l>', ':bprevious<Cr>')
+    set('n', '<Tab>', ':bnext<Cr>', silent)
+    set('n', '<S-Tab>', ':bprevious<Cr>', silent)
+    set('n', '<S-h>', ':bnext<Cr>', silent)
+    set('n', '<S-l>', ':bprevious<Cr>', silent)
 
     -- Window Navigation
     set('n', '<C-h>', '<C-w>h')
@@ -92,8 +86,8 @@ function M.general_keybinds()
     set('n', '<A-k>', ':m .-2<Cr>==')
     set('v', '<A-j>', ":m '>+1<Cr>gv=gv") -- Visual mode
     set('v', '<A-k>', ":m '<-2<Cr>gv=gv")
-    set('i', '<A-j>', "<Esc>:m .+1<Cr>==gi") -- Insert mode
-    set('i', '<A-k>', "<Esc>:m .-2<Cr>==gi")
+    set('i', '<A-j>', '<Esc>:m .+1<Cr>==gi') -- Insert mode
+    set('i', '<A-k>', '<Esc>:m .-2<Cr>==gi')
 
     -- Center commands
     set('n', 'n', 'nzzzv')
@@ -137,10 +131,10 @@ function M.general_keybinds()
 
     -- Packer
     set('n', '<Leader>ps', '<Cmd>PackerSync<Cr>')
-    set('n', '<Leader>pc', '<Cmd>PackerCompile<Cr>')
+    set('n', '<Leader>pc', '<Cmd>PackerCompile profile=true<Cr>')
 
     -- Hop
-    set('n', '<Leader>h', ':HopPattern<Cr>')
+    set('n', '<Leader>H', ':HopPattern<Cr>')
 
     -- Toggle nvim-tree
     set('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>') -- set('n', '<leader>v', ':Lex 30<cr>')
@@ -159,21 +153,31 @@ function M.general_keybinds()
     set('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>')
 
     -- Telescope
-    set('n', '<Leader>t', ':Telescope<Cr>')
-    -- Lists files in your current working directory, respects .gitignore
-    set('n', '<Leader>ff', '<Cmd>lua require"telescope.builtin".find_files(require("telescope.themes").get_dropdown({}))<Cr>')
-    -- Fuzzy search through the output of git ls-files command, respects .gitignore, optionally ignores untracked files
-    set('n', '<Leader>fg', '<Cmd>lua require("telescope.builtin").git_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>')
-    set('n', '<Leader>b', '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>')
+    set('n', '<Leader>t', '<Cmd>Telescope<Cr>')
+    set(
+        'n',
+        '<Leader>ff',
+        '<Cmd>lua require"telescope.builtin".find_files(require("telescope.themes").get_dropdown({}))<Cr>'
+    )
+    set(
+        'n',
+        '<Leader>fg',
+        '<Cmd>lua require("telescope.builtin").git_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>'
+    )
+    set(
+        'n',
+        '<Leader>b',
+        '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>'
+    )
     set('n', '<Leader>p', '<Cmd>lua require("telescope").extensions.projects.projects()<Cr>')
-    set('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>') -- live_grep respects .gitignore
-    set('n', '<Leader>r', '<Cmd>Telescope lsp_references<Cr>')
-    set('n', '<Leader>gb', '<Cmd>Telescope git_branches<Cr>')
+    set('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>')
 end
 
 function M.lsp_keymaps()
+    set('n', '<Leader>lr', '<Cmd>LspRestart<Cr>', buffer)
     set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
     set('n', '<Leader>F', vim.lsp.buf.formatting_sync, buffer)
+    set('n', '<Leader>R', vim.lsp.buf.rename, buffer)
     set('n', 'gD', vim.lsp.buf.declaration, buffer)
     set('n', 'gd', vim.lsp.buf.definition, buffer)
     set('n', 'gl', vim.diagnostic.open_float, buffer)

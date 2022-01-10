@@ -18,9 +18,9 @@ toggleterm.setup({
     shell = vim.o.shell,
     float_opts = {
         border = 'rounded',
-        winblend = 33,
+        -- winblend = 33,
         width = 120,
-        height = 35,
+        -- height = 35,
     },
 })
 
@@ -32,6 +32,7 @@ local files = {
     typescript = 'tsc ' .. exp('%:r') .. ' && node ' .. exp('%:r') .. '.js',
     html = os.getenv('BROWSER') .. ' ' .. exp('%:r') .. '.html',
     haskell = 'ghci ' .. exp('%:r') .. '.hs', -- Start the REPL
+    markdown = 'okular' .. ' ' .. exp('%:r') .. '.md',
 }
 
 function Run_file()

@@ -35,15 +35,17 @@ vim.g.loaded_netrwSettings = false
 vim.g.do_filetype_lua = true -- Enable filetype detection in lua
 
 require('csj.settings')
-require('csj.keymaps').general_keybinds()
+require('packer_compiled')
 require('csj.plugins')
 require('csj.autocmd')
 require('csj.functions')
-require('csj.configs.cmp')
-require('csj.lsp')
 require('csj.colors')
 
 vim.defer_fn(function()
+    require('csj.configs.cmp')
+    require('csj.lsp')
+    require('csj.keymaps').general_keybinds()
+
     vim.o.shadafile = ''
     vim.cmd([[
         rshada!
@@ -55,3 +57,4 @@ vim.defer_fn(function()
         syntax on
     ]])
 end, 0)
+

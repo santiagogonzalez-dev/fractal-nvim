@@ -5,3 +5,4 @@ plugin/packer_compiled.lua
 time
 time.md
 example.py
+lua/packer_compiled.lua

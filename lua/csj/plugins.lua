@@ -29,6 +29,7 @@ end
 
 -- Have packer use a popup window
 packer.init({
+    compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
     display = {
         open_fn = function()
             return require('packer.util').float({ border = 'rounded' })
@@ -36,7 +37,8 @@ packer.init({
     },
 })
 
--- Install your plugins here
+-- NOTE: Telescope, and other plugins marked as opt = true
+-- are being loaded here ./functions.lua at this function M.load_plugins()
 return packer.startup(function(use)
     -- Impatient
     use({
@@ -93,7 +95,7 @@ return packer.startup(function(use)
     -- Folds
     use({
         'anuvyklack/pretty-fold.nvim',
-        event = 'VimEnter',
+        opt = true,
         config = function()
             require('csj.configs.folds')
         end,
@@ -102,7 +104,7 @@ return packer.startup(function(use)
     -- Hop
     use({
         'phaazon/hop.nvim',
-        cmd = 'HopPattern',
+        opt = true,
         config = function()
             require('hop').setup({
                 keys = 'aoeusnthdiqjkzvwmbxlrcgp',
@@ -114,7 +116,7 @@ return packer.startup(function(use)
     -- Bufferline
     use({
         'akinsho/bufferline.nvim',
-        event = 'BufReadPost',
+        opt = true,
         config = function()
             require('csj.configs.bufferline')
         end,
@@ -123,6 +125,7 @@ return packer.startup(function(use)
     -- Surround
     use({
         'blackCauldron7/surround.nvim',
+        opt = true,
         config = function()
             require('surround').setup({ mappings_style = 'surround' })
         end,
@@ -183,7 +186,7 @@ return packer.startup(function(use)
     -- Git Signs
     use({
         'lewis6991/gitsigns.nvim',
-        event = 'VimEnter',
+        opt = true,
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
             require('csj.configs.gitsigns')
@@ -193,8 +196,7 @@ return packer.startup(function(use)
     -- Indent Blankline
     use({
         'lukas-reineke/indent-blankline.nvim',
-        after = 'nvim-treesitter',
-        event = 'VimEnter',
+        opt = true,
         config = function()
             require('csj.configs.indentblankline')
         end,
@@ -229,12 +231,14 @@ return packer.startup(function(use)
     })
 
     -- SQL
-    use({ 'nanotee/sqls.nvim' })
+    use({
+        'nanotee/sqls.nvim',
+        ft = 'sql',
+    })
 
     -- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        event = 'BufRead',
         module = 'telescope',
         cmd = 'Telescope',
         config = function()
@@ -247,6 +251,18 @@ return packer.startup(function(use)
                 run = 'make',
             },
         },
+    })
+
+    -- Startuptime
+    use({
+        'dstein64/vim-startuptime',
+        event = 'BufRead',
+    })
+
+    -- Codi
+    use({
+        'metakirby5/codi.vim',
+        cmd = 'Codi',
     })
 
     if PACKER_BOOTSTRAP then

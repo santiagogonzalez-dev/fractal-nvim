@@ -46,6 +46,8 @@ null_ls.setup({
                 '--skip-string-normalization',
                 '--line-length',
                 '120',
+                '--target-version',
+                'py310',
             },
         }),
         diagnostics.shellcheck.with({

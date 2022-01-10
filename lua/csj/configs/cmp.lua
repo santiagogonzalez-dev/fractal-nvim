@@ -61,7 +61,7 @@ cmp.setup({
         }),
         -- Accept currently selected item. If none selected, `select` first item.
         -- Set `select` to `false` to only confirm explicitly selected items.
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<Cr>'] = cmp.mapping.confirm({ select = true }),
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
@@ -98,19 +98,19 @@ cmp.setup({
             -- vim_item.kind = string.format('%s', kind_icons[vim_item.kind])
             vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
             vim_item.menu = ({
-                nvim_lsp = '[LSP]',
-                nvim_lua = '[NVIM_LUA]',
-                luasnip = '[Snippet]',
-                path = '[Path]',
-                buffer = '[Buffer]',
-                calc = '[Calc]',
+                nvim_lsp = 'LSP',
+                nvim_lua = 'NVIM_LUA',
+                luasnip = 'Snippet',
+                path = 'Path',
+                buffer = 'Buffer',
+                calc = 'Calc',
             })[entry.source.name]
             return vim_item
         end,
     },
     sources = {
         { name = 'nvim_lua' },
-        { name = 'nvim_lsp' },
+        { name = 'nvim_lsp', keyword_lenght = 3 },
         { name = 'luasnip' },
         { name = 'buffer', keyword_lenght = 3 },
         { name = 'path', keyword_lenght = 3 },
@@ -132,7 +132,6 @@ cmp.setup({
 cmp.setup.cmdline('/', {
     sources = {
         { name = 'buffer', Keyword_length = 3 },
-        { name = 'calc' },
     },
 })
 
@@ -140,8 +139,8 @@ cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
         { name = 'nvim_lua' },
         { name = 'nvim_lsp' },
-        { name = 'path' },
-        { name = 'cmdline', keyword_lenght = 5 },
+        { name = 'path', keyword_lenght = 6 },
+        { name = 'cmdline', keyword_lenght = 3 },
         { name = 'calc' },
     }),
 })

@@ -81,13 +81,13 @@ vim.cmd([[
     augroup end
 ]])
 
--- -- Show cursor only in active window
--- vim.cmd([[
---     augroup _cursor_on_active_window
---         autocmd InsertLeave,WinEnter * setlocal cursorline cursorcolumn
---         autocmd InsertEnter,WinLeave * setlocal nocursorline nocursorcolumn
---     augroup end
--- ]])
+-- Show cursor only in active window
+vim.cmd([[
+    augroup _cursor_on_active_window
+        autocmd InsertLeave,WinEnter * setlocal cursorline cursorcolumn
+        autocmd InsertEnter,WinLeave * setlocal nocursorline nocursorcolumn
+    augroup end
+]])
 
 -- Disable delimiter line in certain type of files
 vim.cmd([[
@@ -116,14 +116,6 @@ vim.cmd([[
     augroup end
 ]])
 
--- Show lsp diagnostics in a floating window
-vim.cmd([[
-    augroup _show_lsp_diagnostics
-        autocmd!
-        autocmd CursorHold * lua vim.diagnostic.open_float()
-    augroup end
-]])
-
 -- Hide last run command in the command line after N seconds
 vim.cmd([[
     augroup _cmdline
@@ -136,7 +128,7 @@ vim.cmd([[
 vim.cmd([[
     augroup _insert_skeleton
         autocmd!
-        autocmd BufNewFile *.* silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
+        autocmd BufNewFile * silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
     augroup END
 ]])
 
@@ -148,6 +140,23 @@ vim.cmd([[
         autocmd BufWinEnter * silent! loadview
     augroup end
 ]])
+
+-- Load plugins
+vim.cmd([[
+    augroup _load_plugins
+        autocmd!
+        autocmd VimEnter * lua vim.defer_fn(M.load_plugins, 33)
+    augroup end
+]])
+
+-- -- Show lsp diagnostics in a floating window
+-- vim.cmd([[
+--     augroup _show_lsp_diagnostics
+--         autocmd!
+--         autocmd CursorHold * lua vim.diagnostic.open_float()
+--         autocmd CursorHoldI * lua vim.diagnostic.open_float()
+--     augroup end
+-- ]])
 
 -- Autocommands that I don't use anymore
 -- -- Jump to the last position when reopening a file instead of typing '. to go to the last mark _save_and_load_view
