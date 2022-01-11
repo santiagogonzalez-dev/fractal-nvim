@@ -202,6 +202,14 @@ return packer.startup(function(use)
         end,
     })
 
+    -- lsp_lines.nvim
+    use({
+        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+        config = function()
+            require('lsp_lines').register_lsp_virtual_lines()
+        end,
+    })
+
     -- Completion
     use({
         'L3MON4D3/LuaSnip', -- Snippet engine

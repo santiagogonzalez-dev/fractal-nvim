@@ -152,25 +152,16 @@ function M.general_keybinds()
     -- Cycle through relative number and number
     set('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>')
 
+end
+
+function M.tele_keybinds()
     -- Telescope
-    set('n', '<Leader>t', '<Cmd>Telescope<Cr>')
-    set(
-        'n',
-        '<Leader>ff',
-        '<Cmd>lua require"telescope.builtin".find_files(require("telescope.themes").get_dropdown({}))<Cr>'
-    )
-    set(
-        'n',
-        '<Leader>fg',
-        '<Cmd>lua require("telescope.builtin").git_files(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>'
-    )
-    set(
-        'n',
-        '<Leader>b',
-        '<Cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false }))<Cr>'
-    )
-    set('n', '<Leader>p', '<Cmd>lua require("telescope").extensions.projects.projects()<Cr>')
-    set('n', '<Leader>fd', '<Cmd>Telescope live_grep<Cr>')
+    local telescope = require('csj.configs.telescope')
+    set('n', '<Leader>t', ':Telescope ')
+    set('n', '<Leader>y', '<Cmd>Telescope live_grep<Cr>')
+    set('n', '<Leader>f', telescope.project_files)
+    set('n', '<Leader>b', telescope.buffer_find)
+    set('n', '<Leader>p', telescope.load_project_nvim)
 end
 
 function M.lsp_keymaps()
@@ -182,8 +173,6 @@ function M.lsp_keymaps()
     set('n', 'gd', vim.lsp.buf.definition, buffer)
     set('n', 'gl', vim.diagnostic.open_float, buffer)
     set('n', 'gr', vim.lsp.buf.references, buffer)
-    set('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<Cr>', buffer)
-    set('n', ']d', '<Cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<Cr>', buffer)
 end
 
 return M

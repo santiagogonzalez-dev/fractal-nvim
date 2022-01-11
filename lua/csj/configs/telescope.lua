@@ -1,3 +1,5 @@
+local M = {}
+
 local status_ok, telescope = pcall(require, 'telescope')
 if not status_ok then
     return
@@ -118,7 +120,45 @@ telescope.setup({
             case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
             -- the default case_mode is "smart_case"
         },
+        project = {
+            hidden_files = true, -- default: false
+        },
     },
 })
+
 telescope.load_extension('fzf')
 telescope.load_extension('projects')
+
+-- Themes
+local little_centered_list = require('telescope.themes').get_dropdown({
+    width = 0.5,
+    results_height = 15,
+    previewer = false,
+})
+
+-- Use git_files under git projects, else use find_files
+M.project_files = function()
+    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
+    local ok = pcall(require('telescope.builtin').git_files, opts)
+    if not ok then
+        require('telescope.builtin').find_files(opts)
+    end
+end
+
+M.buffer_find = function()
+    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
+    local ok = pcall(require('telescope.builtin').current_buffer_fuzzy_find, opts)
+    if not ok then
+        return
+    end
+end
+
+M.load_project_nvim = function()
+    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
+    local ok = pcall(require('telescope').extensions.projects.projects, opts)
+    if not ok then
+        return
+    end
+end
+
+return M

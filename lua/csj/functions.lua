@@ -31,6 +31,7 @@ function M.load_plugins()
 
         doautocmd User PluginsLoaded
     ]])
+    require('csj.keymaps').tele_keybinds()
 end
 
 -- Smart quit, if only 1 buffer loaded, quit neovim, if more than 2 quit the focused buffer
