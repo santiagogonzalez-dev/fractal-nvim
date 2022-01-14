@@ -39,7 +39,7 @@ telescope.setup({
         set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
         color_devicons = true,
         use_less = false,
-        winblend = 20,
+        -- winblend = 20,
         path_display = { 'smart' },
         prompt_prefix = ' ',
         selection_caret = ' ',
@@ -133,7 +133,7 @@ telescope.load_extension('projects')
 local little_centered_list = require('telescope.themes').get_dropdown({
     width = 0.5,
     results_height = 15,
-    previewer = false,
+    -- previewer = false,
 })
 
 -- Use git_files under git projects, else use find_files
@@ -153,9 +153,17 @@ M.buffer_find = function()
     end
 end
 
+M.live_grep_find = function()
+    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
+    local ok = pcall(require('telescope.builtin').live_grep, opts)
+    if not ok then
+        return
+    end
+end
+
 M.load_project_nvim = function()
     local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
-    local ok = pcall(require('telescope').extensions.projects.projects, opts)
+    local ok = pcall(telescope.extensions.projects.projects, opts)
     if not ok then
         return
     end

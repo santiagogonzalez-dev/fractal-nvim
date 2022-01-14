@@ -40,12 +40,13 @@ null_ls.setup({
             },
         }),
         formatting.black.with({
+            prefer_local = '.venv/bin',
             extra_args = {
-                '--fast',
+                -- '--fast',
                 '--quiet',
                 '--skip-string-normalization',
                 '--line-length',
-                '120',
+                '88',
                 '--target-version',
                 'py310',
             },
@@ -57,8 +58,9 @@ null_ls.setup({
             -- method = methods.DIAGNOSTICS_ON_SAVE,
         }),
         diagnostics.flake8.with({
-            -- method = methods.DIAGNOSTICS_ON_SAVE,
-            extra_args = { '--max-line-length', '120' },
+            prefer_local = '.venv/bin',
+            method = methods.DIAGNOSTICS_ON_SAVE,
+            extra_args = { '--max-line-length', '88' },
         }),
     },
 })

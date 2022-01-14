@@ -150,7 +150,10 @@ return packer.startup(function(use)
         config = function()
             require('csj.configs.treesitter')
         end,
-        requires = { 'JoosepAlviste/nvim-ts-context-commentstring' },
+        requires = {
+            'JoosepAlviste/nvim-ts-context-commentstring',
+            'p00f/nvim-ts-rainbow',
+        },
     })
 
     -- Nvim-tree
@@ -199,14 +202,6 @@ return packer.startup(function(use)
         opt = true,
         config = function()
             require('csj.configs.indentblankline')
-        end,
-    })
-
-    -- lsp_lines.nvim
-    use({
-        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-        config = function()
-            require('lsp_lines').register_lsp_virtual_lines()
         end,
     })
 

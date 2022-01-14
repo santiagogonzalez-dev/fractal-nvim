@@ -1,20 +1,5 @@
 M = {}
 
--- Switch between all line modes
-vim.cmd([[
-    function! Cycle_numbering() abort
-        if exists('+relativenumber')
-            execute {
-                \ '00': 'set relativenumber     | set number',
-                \ '01': 'set norelativenumber   | set number',
-                \ '10': 'set norelativenumber   | set nonumber',
-                \ '11': 'set norelativenumber   | set number', }[&number . &relativenumber]
-        else
-            set number!<Cr>
-        endif
-    endfunction
-]])
-
 -- Create command to format files using null-ls formatters
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting_sync()' ]])
 
@@ -28,9 +13,9 @@ function M.load_plugins()
         PackerLoad surround.nvim
         PackerLoad pretty-fold.nvim
         PackerLoad bufferline.nvim
-
-        doautocmd User PluginsLoaded
     ]])
+
+    vim.cmd([[ doautocmd User PluginsLoaded ]])
     require('csj.keymaps').tele_keybinds()
 end
 
@@ -41,6 +26,31 @@ function M.close_or_quit()
         vim.cmd([[ :q ]])
     end
     vim.cmd([[ :bd ]])
+end
+
+IskeywordActualState = false
+function M.iskeyword_rotate()
+    if IskeywordActualState == false then
+        vim.opt.iskeyword:append('_')
+        IskeywordActualState = true
+    else
+        vim.opt.iskeyword:remove('_')
+    end
+end
+
+NumberColumnState = 1
+function M.cycle_numbering()
+    local number_column_states = {
+        'set relativenumber     | set nonumber',
+        'set norelativenumber   | set nonumber',
+        'set norelativenumber   | set number',
+        'set relativenumber     | set number',
+    }
+    vim.cmd(number_column_states[NumberColumnState])
+    NumberColumnState = NumberColumnState + 1
+    if NumberColumnState == 5 then
+        NumberColumnState = 1
+    end
 end
 
 return M

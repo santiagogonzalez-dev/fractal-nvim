@@ -39,9 +39,6 @@ function M.general_keybinds()
     set('n', '<Cr>', '<Nop>')
     set('n', '<Bs>', '<Nop>')
 
-    -- Write and reload the file
-    set('n', '<Leader>e', '<Cmd>w<Cr> | <Cmd>source %<Cr>zz')
-
     -- Toggle cursor line and column
     set('n', '<Leader>C', '<Cmd>set cul! cuc!<Cr>')
 
@@ -66,8 +63,8 @@ function M.general_keybinds()
     -- Navigate buffers
     set('n', '<Tab>', ':bnext<Cr>', silent)
     set('n', '<S-Tab>', ':bprevious<Cr>', silent)
-    set('n', '<S-h>', ':bnext<Cr>', silent)
-    set('n', '<S-l>', ':bprevious<Cr>', silent)
+    set('n', '<S-l>', ':bnext<Cr>', silent)
+    set('n', '<S-h>', ':bprevious<Cr>', silent)
 
     -- Window Navigation
     set('n', '<C-h>', '<C-w>h')
@@ -76,10 +73,10 @@ function M.general_keybinds()
     set('n', '<C-l>', '<C-w>l')
 
     -- Resize windows
-    set('n', '<C-Up>', ':resize +2<CR>')
-    set('n', '<C-Down>', ':resize -2<CR>')
-    set('n', '<C-Left>', ':vertical resize +2<CR>')
-    set('n', '<C-Right>', ':vertical resize -2<CR>')
+    set('n', '<C-Up>', ':resize +1<CR>')
+    set('n', '<C-Down>', ':resize -1<CR>')
+    set('n', '<C-Left>', ':vertical resize +1<CR>')
+    set('n', '<C-Right>', ':vertical resize -1<CR>')
 
     -- Move current block of text up and down
     set('n', '<A-j>', ':m .+1<Cr>==') -- Normal mode
@@ -150,17 +147,20 @@ function M.general_keybinds()
     set('n', '<Leader>ghb', '<Cmd>Gitsigns reset_buffer<Cr>') -- Reset buffer hunk
 
     -- Cycle through relative number and number
-    set('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>')
+    -- set('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>')
+    set('n', '<Leader>nt', require('csj.functions').cycle_numbering)
 
+    -- Add or remove _ from iskeyword
+    set('n', '<Leader>_', require('csj.functions').iskeyword_rotate)
 end
 
 function M.tele_keybinds()
     -- Telescope
     local telescope = require('csj.configs.telescope')
     set('n', '<Leader>t', ':Telescope ')
-    set('n', '<Leader>y', '<Cmd>Telescope live_grep<Cr>')
-    set('n', '<Leader>f', telescope.project_files)
+    set('n', '<Leader>T', telescope.project_files)
     set('n', '<Leader>b', telescope.buffer_find)
+    set('n', '<Leader>B', telescope.live_grep_find)
     set('n', '<Leader>p', telescope.load_project_nvim)
 end
 

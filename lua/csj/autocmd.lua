@@ -129,6 +129,7 @@ vim.cmd([[
     augroup _insert_skeleton
         autocmd!
         autocmd BufNewFile * silent! execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")
+        autocmd BufNewFile * silent! execute 'norm Gdd'
     augroup END
 ]])
 
@@ -148,38 +149,3 @@ vim.cmd([[
         autocmd VimEnter * lua vim.defer_fn(M.load_plugins, 33)
     augroup end
 ]])
-
--- -- Show lsp diagnostics in a floating window
--- vim.cmd([[
---     augroup _show_lsp_diagnostics
---         autocmd!
---         autocmd CursorHold * lua vim.diagnostic.open_float()
---         autocmd CursorHoldI * lua vim.diagnostic.open_float()
---     augroup end
--- ]])
-
--- Autocommands that I don't use anymore
--- -- Jump to the last position when reopening a file instead of typing '. to go to the last mark _save_and_load_view
--- -- fixes this already
--- vim.cmd([[
---     augroup _last_position
---         autocmd!
---         autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | execute "normal! g`\"zz" | endif
---     augroup end
--- ]])
-
--- -- Use null-ls to formate text before writing the buffer to the file
--- vim.cmd([[
---     augroup _format_on_exit
---         autocmd!
---         autocmd BufWritePre * lua vim.lsp.buf.formatting()
---     augroup end
--- ]])
-
--- -- Highlight words matching the word under cursor, other colors :so $VIMRUNTIME/syntax/hitest.vim
--- vim.cmd([[
---     augroup _highlight_match
---         autocmd!
---         autocmd CursorMoved * exe printf('match iCursor /\V\<%s\>/', escape(expand('<cword>'), '/\'))
---     augroup end
--- ]])

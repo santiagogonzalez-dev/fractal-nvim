@@ -3,6 +3,8 @@ if not status_ok then
     return
 end
 
+local palette = require('rose-pine.palette')
+
 treesitter_configs.setup({
     -- ensure_installed = 'maintained',
     ensure_installed = {
@@ -65,5 +67,16 @@ treesitter_configs.setup({
             node_decremental = 'gnp',
             scope_incremental = 'gns',
         },
+    },
+    rainbow = {
+        enable = true,
+        colors = {
+            palette.subtle,
+            palette.iris,
+            palette.gold,
+            palette.love,
+            palette.pine,
+        },
+        disable = { 'html' },
     },
 })
