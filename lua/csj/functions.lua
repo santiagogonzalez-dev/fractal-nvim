@@ -57,7 +57,7 @@ end
 
 -- Create missing directories
 function M.create_dir_and_save()
-    os.execute('mkdir -p ' .. vim.fn.expand('%:p:h'))
+    vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
     vim.cmd([[ :w ]])
 end
 
