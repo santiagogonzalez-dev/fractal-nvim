@@ -1,4 +1,5 @@
 vim.g.rose_pine_variant = 'base'
+vim.g.rose_pine_disable_italics = true
 
 vim.cmd([[
     try

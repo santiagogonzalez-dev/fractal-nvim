@@ -1,8 +1,6 @@
 local M = {}
 local set = vim.keymap.set
-local expr = { expr = true }
-local buffer = { buffer = true }
-local silent = { silent = true }
+local expr, buffer, silent = { expr = true }, { buffer = true }, { silent = true }
 
 function M.general_keybinds()
     -- Modes
@@ -52,7 +50,7 @@ function M.general_keybinds()
     set('n', '<Leader>Q', '<Cmd>bufdo bdelete<Cr>')
 
     -- Write buffer
-    set('n', '<Leader>w', '<Cmd>w<Cr>')
+    set('n', '<Leader>w', require('csj.functions').create_dir_and_save)
 
     -- Write to all buffers and quit
     set('n', '<Leader>W', '<Cmd>wqa<Cr>')
@@ -140,11 +138,11 @@ function M.general_keybinds()
     set('n', '<Leader>i', '<Cmd>IndentBlanklineToggle<Cr>')
 
     -- Gitsigns
-    set('n', '<Leader>gj', '<Cmd>Gitsigns next_hunk<Cr>') -- Move to the next hunk
-    set('n', '<Leader>gk', '<Cmd>Gitsigns prev_hunk<Cr>') -- Move to the previous hunk
-    set('n', '<Leader>ghp', '<Cmd>Gitsigns preview_hunk<Cr>') -- Preview hunk
-    set('n', '<Leader>ghr', '<Cmd>Gitsigns reset_hunk<Cr>') -- Reset hunk
-    set('n', '<Leader>ghb', '<Cmd>Gitsigns reset_buffer<Cr>') -- Reset buffer hunk
+    set('n', 'ghj', '<Cmd>Gitsigns next_hunk<Cr>') -- Move to the next hunk
+    set('n', 'ghk', '<Cmd>Gitsigns prev_hunk<Cr>') -- Move to the previous hunk
+    set('n', 'ghp', '<Cmd>Gitsigns preview_hunk<Cr>') -- Preview hunk
+    set('n', 'ghr', '<Cmd>Gitsigns reset_hunk<Cr>') -- Reset hunk
+    set('n', 'ghb', '<Cmd>Gitsigns reset_buffer<Cr>') -- Reset buffer hunk
 
     -- Cycle through relative number and number
     -- set('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>')

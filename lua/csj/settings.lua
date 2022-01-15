@@ -36,7 +36,7 @@ local options = {
     path = '**', -- Search files recursively
     pumblend = 9, -- Transparency for the pop up menu, disabled because it messess up Nerd Font icons
     pumheight = 33, -- Pop up menu height
-    redrawtime = 600, -- Time for redrawing the display
+    redrawtime = 300, -- Time for redrawing the display
     relativenumber = true, -- Display line number relative to the cursor
     ruler = true, -- Show the line and column number of the cursor position
     shell = 'zsh', -- Shell to use for `!`, `:!`, `system()` etc.
@@ -83,6 +83,7 @@ end
 vim.opt.cpoptions:append('nm') -- See :help cpoptions, this are the defaults aABceFs_
 vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
 vim.opt.iskeyword:remove('_') -- A word separated by _ is being separated in multiple ones
+vim.opt.whichwrap:append('<,>,[,],h,l')
 -- See https://github.com/neovim/neovim/pull/16251 for more info on cmdheight=0
 -- vim.opt.lines:append '1' -- Hide command line, currently very buggy
 

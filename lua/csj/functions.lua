@@ -28,6 +28,7 @@ function M.close_or_quit()
     vim.cmd([[ :bd ]])
 end
 
+-- Adds or remove _ from iskeyword
 IskeywordActualState = false
 function M.iskeyword_rotate()
     if IskeywordActualState == false then
@@ -38,6 +39,7 @@ function M.iskeyword_rotate()
     end
 end
 
+-- Cycle through numberline modes
 NumberColumnState = 1
 function M.cycle_numbering()
     local number_column_states = {
@@ -51,6 +53,12 @@ function M.cycle_numbering()
     if NumberColumnState == 5 then
         NumberColumnState = 1
     end
+end
+
+-- Create missing directories
+function M.create_dir_and_save()
+    os.execute('mkdir -p ' .. vim.fn.expand('%:p:h'))
+    vim.cmd([[ :w ]])
 end
 
 return M
