@@ -38,13 +38,16 @@ function M.general_keybinds()
     set('n', '<Bs>', '<Nop>')
 
     -- Toggle cursor line and column
-    set('n', '<Leader>C', '<Cmd>set cul! cuc!<Cr>')
+    set('n', '<Leader>C', '<Cmd>set cursorline! cursorcolumn!<Cr>')
 
     -- Insert skeleton
     set('n', '<Leader>sk', ':0read ~/.config/nvim/skeletons/')
 
+    -- Reload the file manually
+    set('n', '<Leader>e', '<Cmd>edit!<Cr>')
+
     -- Smart quit
-    set('n', '<Leader>qq', require('csj.functions').close_or_quit)
+    set('n', '<Leader>q', require('csj.functions').close_or_quit)
 
     -- Quit all buffers
     set('n', '<Leader>Q', '<Cmd>bufdo bdelete<Cr>')
@@ -53,7 +56,7 @@ function M.general_keybinds()
     set('n', '<Leader>w', require('csj.functions').create_dir_and_save)
 
     -- Write to all buffers and quit
-    set('n', '<Leader>W', '<Cmd>wqa<Cr>')
+    set('n', '<Leader>W', '<Cmd>wqall<Cr>')
 
     -- Write buffers as sudo
     set('n', '<Leader>x', '%!sudo tee > /dev/null %')
@@ -69,6 +72,8 @@ function M.general_keybinds()
     set('n', '<C-j>', '<C-w>j')
     set('n', '<C-k>', '<C-w>k')
     set('n', '<C-l>', '<C-w>l')
+    -- set('n', 'k', 'kzz')
+    -- set('n', 'j', 'jzz')
 
     -- Resize windows
     set('n', '<C-Up>', ':resize +1<CR>')
@@ -152,18 +157,22 @@ function M.general_keybinds()
     set('n', '<Leader>_', require('csj.functions').iskeyword_rotate)
 end
 
+-- Telescope
 function M.tele_keybinds()
-    -- Telescope
     local telescope = require('csj.configs.telescope')
     set('n', '<Leader>t', ':Telescope ')
-    set('n', '<Leader>T', telescope.project_files)
+    set('n', '<Leader>f', telescope.project_files)
     set('n', '<Leader>b', telescope.buffer_find)
+    set('n', '<Leader>bb', telescope.buffer_buffer)
     set('n', '<Leader>B', telescope.live_grep_find)
     set('n', '<Leader>p', telescope.load_project_nvim)
 end
 
+-- LSP
 function M.lsp_keymaps()
     set('n', '<Leader>lr', '<Cmd>LspRestart<Cr>', buffer)
+    set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
+    set('v', '<Leader>ca', vim.lsp.buf.range_code_action, buffer)
     set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
     set('n', '<Leader>F', vim.lsp.buf.formatting_sync, buffer)
     set('n', '<Leader>R', vim.lsp.buf.rename, buffer)

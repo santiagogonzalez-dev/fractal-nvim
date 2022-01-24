@@ -153,6 +153,14 @@ M.buffer_find = function()
     end
 end
 
+M.buffer_buffer = function()
+    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
+    local ok = pcall(require('telescope.builtin').buffers, opts)
+    if not ok then
+        return
+    end
+end
+
 M.live_grep_find = function()
     local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
     local ok = pcall(require('telescope.builtin').live_grep, opts)

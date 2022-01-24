@@ -37,8 +37,6 @@ packer.init({
     },
 })
 
--- NOTE: Telescope, and other plugins marked as opt = true
--- are being loaded here ./functions.lua at this function M.load_plugins()
 return packer.startup(function(use)
     -- Impatient
     use({
@@ -208,16 +206,15 @@ return packer.startup(function(use)
     -- Completion
     use({
         'L3MON4D3/LuaSnip', -- Snippet engine
-        'rafamadriz/friendly-snippets',
+        'rafamadriz/friendly-snippets', -- Additional snippets
         'saadparwaiz1/cmp_luasnip', -- Snippet completions
         'hrsh7th/cmp-buffer', -- Buffer completions
-        'hrsh7th/cmp-calc',
+        'hrsh7th/cmp-calc', -- Calculator as completion
         'hrsh7th/cmp-cmdline', -- cmdline completion
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-path', -- Path completion
         'hrsh7th/nvim-cmp', -- The completion plugin
-        event = 'InsertEnter',
     })
 
     -- LSP
@@ -231,12 +228,6 @@ return packer.startup(function(use)
         config = function()
             require('csj.lsp.null-ls')
         end,
-    })
-
-    -- SQL
-    use({
-        'nanotee/sqls.nvim',
-        ft = 'sql',
     })
 
     -- Telescope
@@ -254,18 +245,6 @@ return packer.startup(function(use)
                 run = 'make',
             },
         },
-    })
-
-    -- Startuptime
-    use({
-        'dstein64/vim-startuptime',
-        event = 'BufRead',
-    })
-
-    -- Codi
-    use({
-        'metakirby5/codi.vim',
-        cmd = 'Codi',
     })
 
     if PACKER_BOOTSTRAP then

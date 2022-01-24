@@ -99,8 +99,9 @@ vim.cmd([[
 
 -- Disable autocomment when pressing enter
 vim.cmd([[
-    augroup _disable_comment
+    augroup _disable_auto_comment
         autocmd!
+        autocmd BufEnter * set formatoptions-=cro
         autocmd BufWinEnter * set formatoptions-=cro
     augroup end
 ]])

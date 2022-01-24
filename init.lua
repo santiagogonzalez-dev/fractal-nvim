@@ -6,55 +6,56 @@ vim.cmd([[
 vim.o.shadafile = 'NONE'
 
 -- Disable default plugins
-vim.g.loaded_2html_plugin = false
-vim.g.loaded_getscript = false
-vim.g.loaded_getscriptPlugin = false
-vim.g.loaded_gzip = false
-vim.g.loaded_logipat = false
-vim.g.loaded_man = false
-vim.g.loaded_remote_plugins = false
-vim.g.loaded_rrhelper = false
-vim.g.loaded_shada_plugin = false
-vim.g.loaded_spec = false
-vim.g.loaded_tar = false
-vim.g.loaded_tarPlugin = false
-vim.g.loaded_tutor_mode_plugin = false
-vim.g.loaded_vimball = false
-vim.g.loaded_vimballPlugin = false
-vim.g.loaded_zip = false
-vim.g.loaded_zipPlugin = false
-vim.g.loaded_perl_provider = false
-vim.g.loaded_python_provider = false
-vim.g.loaded_ruby_provider = false
-vim.g.loaded_netrw = false
-vim.g.loaded_netrwFileHandlers = false
-vim.g.loaded_netrwPlugin = false
-vim.g.loaded_netrwSettings = false
+vim.g.loaded_2html_plugin = 0
+vim.g.loaded_getscript = 0
+vim.g.loaded_getscriptPlugin = 0
+vim.g.loaded_gzip = 0
+vim.g.loaded_logipat = 0
+vim.g.loaded_man = 0
+vim.g.loaded_remote_plugins = 0
+vim.g.loaded_rrhelper = 0
+vim.g.loaded_shada_plugin = 0
+vim.g.loaded_spec = 0
+vim.g.loaded_tar = 0
+vim.g.loaded_tarPlugin = 0
+vim.g.loaded_tutor_mode_plugin = 0
+vim.g.loaded_vimball = 0
+vim.g.loaded_vimballPlugin = 0
+vim.g.loaded_zip = 0
+vim.g.loaded_zipPlugin = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_netrw = 0
+vim.g.loaded_netrwFileHandlers = 0
+vim.g.loaded_netrwPlugin = 0
+vim.g.loaded_netrwSettings = 0
 
 -- Enable opt-in plugins
-vim.g.do_filetype_lua = true -- Enable filetype detection in lua
+vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
 
 require('csj.settings')
-require('packer_compiled')
 require('csj.plugins')
 require('csj.autocmd')
 require('csj.functions')
 require('csj.colors')
+require('packer_compiled')
 
 vim.defer_fn(function()
+    vim.o.shadafile = ''
+
     require('csj.configs.cmp')
     require('csj.lsp')
     require('csj.keymaps').general_keybinds()
 
-    vim.o.shadafile = ''
     vim.cmd([[
+        PackerLoad impatient.nvim
         rshada!
         doautocmd BufRead
         filetype on
         filetype plugin indent on
         doautocmd VimEnter
-        silent! bufdo e
         syntax on
+        silent! bufdo e
     ]])
 end, 0)
-

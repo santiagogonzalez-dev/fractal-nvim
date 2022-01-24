@@ -3,8 +3,6 @@ if not status_ok then
     return
 end
 
-local palette = require('rose-pine.palette')
-
 treesitter_configs.setup({
     -- ensure_installed = 'maintained',
     ensure_installed = {
@@ -36,7 +34,7 @@ treesitter_configs.setup({
         enable = true,
         disable = {
             'yaml',
-            'python',
+            -- 'python',
         },
     },
     refactor = {
@@ -70,13 +68,7 @@ treesitter_configs.setup({
     },
     rainbow = {
         enable = true,
-        colors = {
-            palette.subtle,
-            palette.iris,
-            palette.gold,
-            palette.love,
-            palette.pine,
-        },
+        colors = {},
         disable = { 'html' },
     },
 })

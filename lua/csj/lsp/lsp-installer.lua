@@ -51,5 +51,11 @@ lsp_installer.on_server_ready(function(server)
         opts = vim.tbl_deep_extend('force', sqls_opts, opts)
     end
 
+    -- emmet_ls
+    if server.name == 'emmet_ls' then
+        local emmet_opts = require('csj.lsp.settings.emmet')
+        opts = vim.tbl_deep_extend('force', emmet_opts, opts)
+    end
+
     server:setup(opts)
 end)

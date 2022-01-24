@@ -1,5 +1,6 @@
 local options = {
     autoindent = true, -- Copy indent from current line when starting a new line
+    autoread = true, -- If a file has been changed, reload the file in neovim
     backspace = 'indent,start,eol', -- Make backspace behave like normal again
     clipboard = 'unnamedplus', -- Uses the system clipboard
     cmdheight = 1, -- Space for displaying messages in the command line
@@ -46,7 +47,7 @@ local options = {
     showbreak = '↪', -- Shows when text is being wrapped
     showmatch = false, -- Show match brace, set to false because :DoMatchParen does enough
     showmode = false, -- Show or hide the mode you are on in the status line
-    scrolloff = 999, -- Cursor does not reach top/bottom
+    scrolloff = 8, -- Cursor does not reach top/bottom
     sidescrolloff = 8, -- Cursor does not reach sides
     signcolumn = 'yes', -- Always show signcolumn
     smartcase = true, -- Smart case
@@ -117,9 +118,10 @@ vim.opt.completeopt:append({
 })
 
 vim.opt.listchars:append({
+    -- eol = '↴',
     extends = '◣',
-    precedes = '◢',
     nbsp = '␣',
+    precedes = '◢',
     tab = '-->',
     trail = '█',
 })
