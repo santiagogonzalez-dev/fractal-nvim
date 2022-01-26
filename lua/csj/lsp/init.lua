@@ -12,5 +12,5 @@ lspconfig.zeta_note.setup({
     on_attach = require('csj.lsp.handlers').on_attach,
     capabilities = require('csj.lsp.handlers').capabilities,
     cmd = { 'zeta-note' },
-    root_dir = root_pattern('.git'),
+    root_dir = root_pattern('.git', 'slip_box.db'),
 })

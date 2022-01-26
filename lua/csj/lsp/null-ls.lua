@@ -39,6 +39,12 @@ null_ls.setup({
                 '4',
             },
         }),
+        diagnostics.eslint.with({
+            -- method = methods.DIAGNOSTICS_ON_SAVE,
+        }),
+        diagnostics.shellcheck.with({
+            -- method = methods.DIAGNOSTICS_ON_SAVE,
+        }),
         formatting.black.with({
             prefer_local = '.venv/bin',
             extra_args = {
@@ -51,16 +57,10 @@ null_ls.setup({
                 'py310',
             },
         }),
-        diagnostics.shellcheck.with({
-            -- method = methods.DIAGNOSTICS_ON_SAVE,
-        }),
-        diagnostics.eslint.with({
-            -- method = methods.DIAGNOSTICS_ON_SAVE,
-        }),
         diagnostics.flake8.with({
             prefer_local = '.venv/bin',
-            method = methods.DIAGNOSTICS_ON_SAVE,
             extra_args = { '--max-line-length', '88' },
+            -- method = methods.DIAGNOSTICS_ON_SAVE,
         }),
     },
 })

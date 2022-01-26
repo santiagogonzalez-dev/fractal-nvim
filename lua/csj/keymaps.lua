@@ -49,8 +49,14 @@ function M.general_keybinds()
     -- Smart quit
     set('n', '<Leader>q', require('csj.functions').close_or_quit)
 
-    -- Quit all buffers
+    -- Delete all buffers
     set('n', '<Leader>Q', '<Cmd>bufdo bdelete<Cr>')
+
+    -- Quit all buffers
+    set('n', '<Leader>qq', '<Cmd>quit<Cr>')
+
+    -- Quit all buffers without saving
+    set('n', '<Leader>QQ', '<Cmd>quit!<Cr>')
 
     -- Write buffer
     set('n', '<Leader>w', require('csj.functions').create_dir_and_save)
@@ -72,8 +78,6 @@ function M.general_keybinds()
     set('n', '<C-j>', '<C-w>j')
     set('n', '<C-k>', '<C-w>k')
     set('n', '<C-l>', '<C-w>l')
-    -- set('n', 'k', 'kzz')
-    -- set('n', 'j', 'jzz')
 
     -- Resize windows
     set('n', '<C-Up>', ':resize +1<CR>')
@@ -134,10 +138,13 @@ function M.general_keybinds()
     set('n', '<Leader>pc', '<Cmd>PackerCompile profile=true<Cr>')
 
     -- Hop
-    set('n', '<Leader>H', ':HopPattern<Cr>')
+    set({ 'n', 'v' }, '<Leader>H', require('hop').hint_words)
+
+    -- Treehoper
+    set({ 'n', 'v' }, '<Leader>h', require('tsht').nodes)
 
     -- Toggle nvim-tree
-    set('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>') -- set('n', '<leader>v', ':Lex 30<cr>')
+    set('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>') -- ':Lex 30<cr>'
 
     -- Toggle Indent Blankline
     set('n', '<Leader>i', '<Cmd>IndentBlanklineToggle<Cr>')
@@ -150,7 +157,6 @@ function M.general_keybinds()
     set('n', 'ghb', '<Cmd>Gitsigns reset_buffer<Cr>') -- Reset buffer hunk
 
     -- Cycle through relative number and number
-    -- set('n', '<Leader>nt', '<Cmd>call Cycle_numbering()<Cr>')
     set('n', '<Leader>nt', require('csj.functions').cycle_numbering)
 
     -- Add or remove _ from iskeyword

@@ -118,7 +118,7 @@ vim.opt.completeopt:append({
 })
 
 vim.opt.listchars:append({
-    -- eol = '↴',
+    eol = '↴',
     extends = '◣',
     nbsp = '␣',
     precedes = '◢',

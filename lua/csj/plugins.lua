@@ -105,7 +105,7 @@ return packer.startup(function(use)
         opt = true,
         config = function()
             require('hop').setup({
-                keys = 'aoeusnthdiqjkzvwmbxlrcgp',
+                keys = 'aoeusnthdilrcgfypqzvjwkmxb',
                 term_seq_bias = 0.5,
             })
         end,
@@ -152,6 +152,14 @@ return packer.startup(function(use)
             'JoosepAlviste/nvim-ts-context-commentstring',
             'p00f/nvim-ts-rainbow',
         },
+    })
+
+    -- Treehopper
+    use({
+        'mfussenegger/nvim-ts-hint-textobject',
+        config = function()
+            require('tsht').config.hint_keys = { 'h', 'j', 'f', 'd', 'n', 'v', 's', 'l', 'a' }
+        end,
     })
 
     -- Nvim-tree
