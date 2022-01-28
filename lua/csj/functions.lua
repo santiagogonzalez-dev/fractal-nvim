@@ -8,7 +8,6 @@ function M.load_plugins()
     vim.cmd([[
         PackerLoad gitsigns.nvim
         PackerLoad hop.nvim
-        " PackerLoad telescope.nvim
         PackerLoad surround.nvim
         PackerLoad pretty-fold.nvim
         PackerLoad bufferline.nvim

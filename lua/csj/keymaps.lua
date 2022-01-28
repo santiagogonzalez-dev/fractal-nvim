@@ -108,6 +108,9 @@ function M.general_keybinds()
 
     -- Nvim-tree
     set('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>')
+
+    -- Hop
+    set('n', '<Leader>h', '<Cmd>lua require"hop".hint_words()<Cr>')
 end
 
 -- LSP

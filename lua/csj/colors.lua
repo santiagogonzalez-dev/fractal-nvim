@@ -22,5 +22,7 @@ vim.cmd([[
     highlight CursorColumn guibg=#1f1d2e
     highlight CursorLine guibg=#1f1d2e
     highlight ColorColumn guibg=#26233a
+    highlight CursorLineSign guibg=#1f1d2e
+    highlight CursorLineNr guibg=#1f1d2e
     match errorMsg /\s\+$/ " Show trail character in red
 ]])

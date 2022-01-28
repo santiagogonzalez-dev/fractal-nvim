@@ -214,18 +214,6 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Telescope
-    use({
-        'nvim-telescope/telescope.nvim',
-        opt = true, -- module = 'telescope', cmd = 'Telescope',
-        config = function()
-            require('csj.configs.telescope')
-        end,
-        requires = {
-            { 'nvim-lua/plenary.nvim' },
-        },
-    })
-
     -- Startuptime
     use({ 'dstein64/vim-startuptime' })
 
