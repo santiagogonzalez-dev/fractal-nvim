@@ -39,7 +39,7 @@ telescope.setup({
         set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
         color_devicons = true,
         use_less = false,
-        -- winblend = 20,
+        winblend = 20,
         path_display = { 'smart' },
         prompt_prefix = ' ',
         selection_caret = ' ',
@@ -105,76 +105,13 @@ telescope.setup({
             },
         },
     },
-    pickers = {
-        find_files = {
-            find_files = {
-                find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix', '-H' },
-            },
-        },
-    },
     extensions = {
-        fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
-        },
         project = {
             hidden_files = true, -- default: false
         },
     },
 })
 
-telescope.load_extension('fzf')
 telescope.load_extension('projects')
-
--- Themes
-local little_centered_list = require('telescope.themes').get_dropdown({
-    width = 0.5,
-    results_height = 15,
-    -- previewer = false,
-})
-
--- Use git_files under git projects, else use find_files
-M.project_files = function()
-    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
-    local ok = pcall(require('telescope.builtin').git_files, opts)
-    if not ok then
-        require('telescope.builtin').find_files(opts)
-    end
-end
-
-M.buffer_find = function()
-    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
-    local ok = pcall(require('telescope.builtin').current_buffer_fuzzy_find, opts)
-    if not ok then
-        return
-    end
-end
-
-M.buffer_buffer = function()
-    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
-    local ok = pcall(require('telescope.builtin').buffers, opts)
-    if not ok then
-        return
-    end
-end
-
-M.live_grep_find = function()
-    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
-    local ok = pcall(require('telescope.builtin').live_grep, opts)
-    if not ok then
-        return
-    end
-end
-
-M.load_project_nvim = function()
-    local opts = vim.deepcopy(little_centered_list) -- define here if you want to define something
-    local ok = pcall(telescope.extensions.projects.projects, opts)
-    if not ok then
-        return
-    end
-end
 
 return M

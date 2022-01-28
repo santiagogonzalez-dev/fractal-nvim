@@ -34,12 +34,12 @@ vim.g.loaded_netrwSettings = 0
 -- Enable opt-in plugins
 vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
 
-require('csj.settings')
+require('packer_compiled')
 require('csj.plugins')
 require('csj.autocmd')
+require('csj.settings')
 require('csj.functions')
 require('csj.colors')
-require('packer_compiled')
 
 vim.defer_fn(function()
     vim.o.shadafile = ''

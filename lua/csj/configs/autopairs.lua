@@ -12,7 +12,7 @@ npairs.setup({
     },
     disable_filetype = { 'TelescopePrompt' },
     enable_afterquote = true, -- To use bracket pairs inside quotes
-    enable_check_bracket_line = true, -- Check for closing brace so it will not add a close pair
+    enable_check_bracket_line = false, -- Check for closing brace so it will not add a close pair
     disable_in_macro = false,
     fast_wrap = {
         map = '<C-f>',

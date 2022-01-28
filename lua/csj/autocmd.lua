@@ -3,7 +3,7 @@ vim.cmd([[
     augroup _reload_on_change
         autocmd!
         autocmd FocusGained * :checktime
-    augroup end
+    augroup END
 ]])
 
 -- Highlight on yank
@@ -11,15 +11,15 @@ vim.cmd([[
     augroup _general_settings
         autocmd!
         autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'iCursor', timeout = 333})
-    augroup end
+    augroup END
 ]])
 
 -- Other remaps
 vim.cmd([[
     augroup _remaps
         autocmd!
-        autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-    augroup end
+        autocmd FileType qf,help,man,lspinfo,startuptime nnoremap <silent> <buffer> q :close<CR>
+    augroup END
 ]])
 
 -- Filetype set correctly
@@ -27,7 +27,7 @@ vim.cmd([[
     augroup _filetype_correctly
         autocmd!
         autocmd BufNewFile,BufRead *.conf set filetype=dosini
-    augroup end
+    augroup END
 ]])
 
 -- Git filetype
@@ -36,7 +36,7 @@ vim.cmd([[
         autocmd!
         autocmd FileType gitcommit setlocal wrap
         autocmd FileType gitcommit setlocal spell
-    augroup end
+    augroup END
 ]])
 
 -- Markdown filetype
@@ -45,7 +45,7 @@ vim.cmd([[
         autocmd!
         autocmd FileType markdown setlocal wrap
         autocmd FileType markdown setlocal spell
-    augroup end
+    augroup END
 ]])
 
 -- Autoresize
@@ -53,7 +53,7 @@ vim.cmd([[
     augroup _auto_resize
         autocmd!
         autocmd VimResized * tabdo wincmd =
-    augroup end
+    augroup END
 ]])
 
 -- Default settings for files without extension
@@ -61,7 +61,7 @@ vim.cmd([[
     augroup _files_without_extension
         autocmd!
         autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | setlocal filetype=markdown syntax=markdown | endif
-    augroup end
+    augroup END
 ]])
 
 -- Trim whitespace on save
@@ -69,7 +69,7 @@ vim.cmd([[
     augroup _trim_whitespace
         autocmd!
         autocmd BufWritePre * :%s/\s\+$//e
-    augroup end
+    augroup END
 ]])
 
 -- Indentation override for this type of files
@@ -78,15 +78,15 @@ vim.cmd([[
         autocmd!
         autocmd FileType css,html,scss,xhtml,xml setlocal shiftwidth=2 tabstop=2
         autocmd FileType go setlocal shiftwidth=8 tabstop=8
-    augroup end
+    augroup END
 ]])
 
 -- Show cursor only in active window
 vim.cmd([[
     augroup _cursor_on_active_window
-        autocmd InsertLeave,WinEnter * setlocal cursorline cursorcolumn
-        autocmd InsertEnter,WinLeave * setlocal nocursorline nocursorcolumn
-    augroup end
+        autocmd WinEnter * setlocal cursorline cursorcolumn
+        autocmd WinLeave * setlocal nocursorline nocursorcolumn
+    augroup END
 ]])
 
 -- Disable delimiter line in certain type of files
@@ -94,7 +94,7 @@ vim.cmd([[
     augroup _disable_colorcolumn
         autocmd!
         autocmd FileType conf,dosini,help,html,markdown,text,zsh setlocal colorcolumn=0
-    augroup end
+    augroup END
 ]])
 
 -- Disable autocomment when pressing enter
@@ -103,7 +103,7 @@ vim.cmd([[
         autocmd!
         autocmd BufEnter * set formatoptions-=cro
         autocmd BufWinEnter * set formatoptions-=cro
-    augroup end
+    augroup END
 ]])
 
 -- Switch to numbers when while on insert mode or cmd mode, and to relative numbers when in normal mode
@@ -114,7 +114,7 @@ vim.cmd([[
         autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
         autocmd CmdLineEnter * set norelativenumber
         autocmd CmdLineLeave * set relativenumber
-    augroup end
+    augroup END
 ]])
 
 -- Hide last run command in the command line after N seconds
@@ -122,7 +122,7 @@ vim.cmd([[
     augroup _cmdline
         autocmd!
         autocmd CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 12000)
-    augroup end
+    augroup END
 ]])
 
 -- Skeletons
@@ -140,13 +140,21 @@ vim.cmd([[
         autocmd!
         autocmd BufWritePre * mkview
         autocmd BufWinEnter * silent! loadview
-    augroup end
+    augroup END
 ]])
 
 -- Load plugins
 vim.cmd([[
     augroup _load_plugins
         autocmd!
-        autocmd VimEnter * lua vim.defer_fn(M.load_plugins, 33)
-    augroup end
+        autocmd VimEnter * lua vim.defer_fn(M.load_plugins, 3)
+    augroup END
+]])
+
+-- Create missing directories
+vim.cmd([[
+    augroup _make_dirs
+        autocmd!
+        autocmd BufWritePre * :lua vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
+    augroup END
 ]])

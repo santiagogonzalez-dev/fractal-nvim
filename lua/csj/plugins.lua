@@ -83,13 +83,6 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Autotags, configured on treesitter config file
-    use({
-        'windwp/nvim-ts-autotag',
-        after = 'nvim-treesitter',
-        event = 'InsertEnter',
-    })
-
     -- Folds
     use({
         'anuvyklack/pretty-fold.nvim',
@@ -105,7 +98,7 @@ return packer.startup(function(use)
         opt = true,
         config = function()
             require('hop').setup({
-                keys = 'aoeusnthdilrcgfypqzvjwkmxb',
+                keys = 'aoeusnthdiqjkzvwmbxlrcgp',
                 term_seq_bias = 0.5,
             })
         end,
@@ -154,14 +147,6 @@ return packer.startup(function(use)
         },
     })
 
-    -- Treehopper
-    use({
-        'mfussenegger/nvim-ts-hint-textobject',
-        config = function()
-            require('tsht').config.hint_keys = { 'h', 'j', 'f', 'd', 'n', 'v', 's', 'l', 'a' }
-        end,
-    })
-
     -- Nvim-tree
     use({
         'kyazdani42/nvim-tree.lua',
@@ -202,15 +187,6 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Indent Blankline
-    use({
-        'lukas-reineke/indent-blankline.nvim',
-        opt = true,
-        config = function()
-            require('csj.configs.indentblankline')
-        end,
-    })
-
     -- Completion
     use({
         'L3MON4D3/LuaSnip', -- Snippet engine
@@ -241,19 +217,17 @@ return packer.startup(function(use)
     -- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        module = 'telescope',
-        cmd = 'Telescope',
+        opt = true, -- module = 'telescope', cmd = 'Telescope',
         config = function()
             require('csj.configs.telescope')
         end,
         requires = {
             { 'nvim-lua/plenary.nvim' },
-            {
-                'nvim-telescope/telescope-fzf-native.nvim',
-                run = 'make',
-            },
         },
     })
+
+    -- Startuptime
+    use({ 'dstein64/vim-startuptime' })
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

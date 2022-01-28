@@ -1,3 +1,4 @@
+-- Settings
 local options = {
     autoindent = true, -- Copy indent from current line when starting a new line
     autoread = true, -- If a file has been changed, reload the file in neovim
@@ -5,7 +6,7 @@ local options = {
     clipboard = 'unnamedplus', -- Uses the system clipboard
     cmdheight = 1, -- Space for displaying messages in the command line
     textwidth = 120, -- Delimit text blocks to N columns
-    colorcolumn = '+1', -- Limiter line, + line more than textwidth
+    colorcolumn = '81', -- Limiter line, + line more than textwidth
     conceallevel = 2, -- Show text normally
     confirm = true, -- Confirm dialogs
     cursorcolumn = true, -- Draw line on cursor
@@ -13,12 +14,6 @@ local options = {
     undofile = true, -- Persistent undo - undo after you re-open the file
     undolevels = 10000, -- Levels of undoing
     exrc = true, -- Use local .nvimrc or .exrc
-    foldenable = true, -- Enable folds
-    foldmethod = 'manual', -- Method used for idents
-    foldexpr = 'nvim_treesitter#foldexpr()', -- Use treesitter to define folds, needs to enable expr
-    foldcolumn = 'auto', -- Column to display where the folds are
-    foldlevelstart = 99, -- Sets 'foldlevel' when starting to edit another buffer in a window
-    foldnestmax = 1, -- To only fold outer functions
     hidden = true, -- It keeps buffers open in memory
     history = 100, -- Saved spaces in each table of history
     hlsearch = true, -- Highlighting search
@@ -29,7 +24,6 @@ local options = {
     laststatus = 0, -- Mode of the status bar
     lazyredraw = true, -- Lazy redraw the screen
     diffopt = 'internal,filler,closeoff,foldcolumn:0,hiddenoff',
-    list = true, -- Show invisible characters
     matchtime = 1, -- Time for showing matching brace
     mouse = 'a', -- Mouse options, all enabled
     mousefocus = true, -- Focusing cursor on the window with the keyboard focus
@@ -88,22 +82,25 @@ vim.opt.whichwrap:append('<,>,[,],h,l')
 -- See https://github.com/neovim/neovim/pull/16251 for more info on cmdheight=0
 -- vim.opt.lines:append '1' -- Hide command line, currently very buggy
 
+-- Match pairs
 vim.opt.matchpairs:append({
     '<:>',
     '=:;',
 })
 
+-- Where to search for tags
 vim.opt.tags:append({
     './tags',
     'tags',
 })
 
--- Better cursor for visual mode
+-- Cursor settings
 vim.opt.guicursor:append({
     'i:ver25-iCursor',
     'v:hor50',
 })
 
+-- Session options
 vim.opt.sessionoptions:append({
     'buffers',
     'curdir',
@@ -111,14 +108,17 @@ vim.opt.sessionoptions:append({
     'winsize',
 })
 
+-- Completion menu options
 vim.opt.completeopt:append({
     'menuone',
     'noinsert',
     'noselect',
 })
 
+-- Non visible characters
+vim.opt.list = true -- Show invisible characters
 vim.opt.listchars:append({
-    eol = '↴',
+    -- eol = '↴',
     extends = '◣',
     nbsp = '␣',
     precedes = '◢',
@@ -126,12 +126,18 @@ vim.opt.listchars:append({
     trail = '█',
 })
 
+-- Fold options
+vim.o.foldenable = true -- Enable folds
+vim.o.foldmethod = 'manual' -- Method used for idents
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()' -- Use treesitter to define folds, needs to enable expr
+vim.o.foldcolumn = 'auto' -- Column to display where the folds are
+vim.o.foldlevelstart = 99 -- Sets 'foldlevel' when starting to edit another buffer in a window
+vim.o.foldnestmax = 1 -- To only fold outer functions
 vim.opt.fillchars:append({
-    -- eob = '~',
-    eob = ' ',
+    -- eob = ' ',
     diff = '∙',
     fold = ' ',
-    foldclose = '▶',
+    foldclose = ' ', -- foldclose = '▶',
     foldopen = '▼',
     foldsep = '│',
     vert = '┃',
