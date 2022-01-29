@@ -62,14 +62,14 @@ vim.cmd([[
     augroup END
 ]])
 
--- -- Disable autocomment when pressing enter
--- vim.cmd([[
---     augroup _disable_auto_comment
---         autocmd!
---         autocmd BufEnter * set formatoptions-=cro
---         autocmd BufWinEnter * set formatoptions-=cro
---     augroup END
--- ]])
+-- Disable autocomment when pressing enter
+vim.cmd([[
+    augroup _disable_auto_comment
+        autocmd!
+        autocmd BufEnter * set formatoptions-=cro
+        autocmd BufWinEnter * set formatoptions-=cro
+    augroup END
+]])
 
 -- Switch to numbers when while on insert mode or cmd mode, and to relative numbers when in normal mode
 vim.cmd([[

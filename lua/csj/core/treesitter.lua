@@ -4,21 +4,7 @@ if not status_ok then
 end
 
 treesitter_configs.setup({
-    -- ensure_installed = 'maintained',
-    ensure_installed = {
-        'comment',
-        'css',
-        'html',
-        'java',
-        'javascript',
-        'json',
-        'lua',
-        'markdown',
-        'python',
-        'svelte',
-        'typescript',
-        'vim',
-    },
+    ensure_installed = 'maintained',
     sync_install = false,
     highlight = {
         enable = true,
@@ -68,7 +54,14 @@ treesitter_configs.setup({
     },
     rainbow = {
         enable = true,
-        colors = {},
-        disable = { 'html' },
+        colors = {
+            '#908caa',
+            '#eb6f92',
+            '#f6c177',
+            '#31748f',
+            '#9ccfd8',
+            '#c4a7e7',
+        },
+        extended_mode = true,
     },
 })
