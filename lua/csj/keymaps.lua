@@ -81,7 +81,7 @@ function M.general_keybinds()
     set('n', '<Leader>m', '<Cmd>mkview<Cr>')
 
     -- Paste in word under the cursor without overwriting the yank register
-    set('n', '<Leader>P', [["_diwP]])
+    set('n', '<Leader>p', [["_diwP]])
 
     -- Keep visual selection after shifting code block
     set('x', '<', '<gv')
@@ -103,14 +103,24 @@ function M.general_keybinds()
     set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr)
 
     -- Packer
-    set('n', '<Leader>ps', '<Cmd>PackerSync<Cr>')
-    set('n', '<Leader>pc', '<Cmd>PackerCompile profile=true<Cr>')
+    set('n', '<Leader>s', '<Cmd>PackerSync<Cr>')
+    set('n', '<Leader>c', '<Cmd>PackerCompile profile=true<Cr>')
 
     -- Nvim-tree
     set('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>')
 
     -- Hop
     set('n', '<Leader>h', '<Cmd>lua require"hop".hint_words()<Cr>')
+
+    -- Gitsigns
+    set('n', 'ghr', '<Cmd>Gitsigns reset_hunk<Cr>')
+    set('n', 'ghb', '<Cmd>Gitsigns reset_buffer<Cr>')
+    set('n', 'ghj', '<Cmd>Gitsigns next_hunk<Cr>')
+    set('n', 'ghk', '<Cmd>Gitsigns prev_hunk<Cr>')
+    set('n', 'ghp', '<Cmd>Gitsigns preview_hunk<Cr>')
+
+    -- -- Telescope
+    -- set('n', '<Leader>f', require('csj.configs.telescope').project_files)
 end
 
 -- LSP

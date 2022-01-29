@@ -18,12 +18,11 @@ treesitter_configs.setup({
         'svelte',
         'typescript',
         'vim',
-        'haskell',
     },
     sync_install = false,
     highlight = {
         enable = true,
-        -- aditional_vim_regex_highlighting = true,
+        aditional_vim_regex_highlighting = true,
         disable = { 'latex' },
     },
     context_commentstring = {
@@ -34,11 +33,12 @@ treesitter_configs.setup({
         enable = true,
         disable = {
             'yaml',
-            -- 'python',
+            'lua',
+            'python',
         },
     },
     refactor = {
-        highlight_definitions = { enable = true },
+        highlight_definitions = { enable = false },
         highlight_current_scope = { enable = true },
     },
     autopairs = { enable = true },

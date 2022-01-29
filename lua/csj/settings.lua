@@ -67,8 +67,8 @@ local options = {
     wildmenu = true, -- Enables "enhanced mode" of command-line completion
     winhighlight = 'NormalNC:WinNormalNC',
     wildmode = 'longest:full,full', -- Options for wildmenu
-    winblend = 9, -- Enable transparency in floating windows and menus
-    wrap = false, -- Wrap text
+    winblend = 9, -- Enable transparency in floatng windows and menus
+    wrap = false, -- Wirap text
 }
 
 for k, v in pairs(options) do
@@ -88,7 +88,7 @@ vim.opt.matchpairs:append({
     '=:;',
 })
 
--- Where to search for tags
+-- Search for tags
 vim.opt.tags:append({
     './tags',
     'tags',

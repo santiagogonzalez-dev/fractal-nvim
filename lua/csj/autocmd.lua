@@ -30,24 +30,6 @@ vim.cmd([[
     augroup END
 ]])
 
--- Git filetype
-vim.cmd([[
-    augroup _git
-        autocmd!
-        autocmd FileType gitcommit setlocal wrap
-        autocmd FileType gitcommit setlocal spell
-    augroup END
-]])
-
--- Markdown filetype
-vim.cmd([[
-    augroup _markdown
-        autocmd!
-        autocmd FileType markdown setlocal wrap
-        autocmd FileType markdown setlocal spell
-    augroup END
-]])
-
 -- Autoresize
 vim.cmd([[
     augroup _auto_resize
@@ -72,15 +54,6 @@ vim.cmd([[
     augroup END
 ]])
 
--- Indentation override for this type of files
-vim.cmd([[
-    augroup _indent_filetype
-        autocmd!
-        autocmd FileType css,html,scss,xhtml,xml setlocal shiftwidth=2 tabstop=2
-        autocmd FileType go setlocal shiftwidth=8 tabstop=8
-    augroup END
-]])
-
 -- Show cursor only in active window
 vim.cmd([[
     augroup _cursor_on_active_window
@@ -89,22 +62,14 @@ vim.cmd([[
     augroup END
 ]])
 
--- Disable delimiter line in certain type of files
-vim.cmd([[
-    augroup _disable_colorcolumn
-        autocmd!
-        autocmd FileType conf,dosini,help,html,markdown,text,zsh setlocal colorcolumn=0
-    augroup END
-]])
-
--- Disable autocomment when pressing enter
-vim.cmd([[
-    augroup _disable_auto_comment
-        autocmd!
-        autocmd BufEnter * set formatoptions-=cro
-        autocmd BufWinEnter * set formatoptions-=cro
-    augroup END
-]])
+-- -- Disable autocomment when pressing enter
+-- vim.cmd([[
+--     augroup _disable_auto_comment
+--         autocmd!
+--         autocmd BufEnter * set formatoptions-=cro
+--         autocmd BufWinEnter * set formatoptions-=cro
+--     augroup END
+-- ]])
 
 -- Switch to numbers when while on insert mode or cmd mode, and to relative numbers when in normal mode
 vim.cmd([[
@@ -134,27 +99,18 @@ vim.cmd([[
     augroup END
 ]])
 
+-- Open file at last position
+vim.cmd([[
+    augroup _file_last_position
+        autocmd!
+        autocmd BufWinEnter * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+    augroup END
+]])
+
 -- Save and load view of the file we are working on
 vim.cmd([[
     augroup _save_and_load_view
         autocmd!
-        autocmd BufWritePre * mkview
-        autocmd BufWinEnter * silent! loadview
-    augroup END
-]])
-
--- Load plugins
-vim.cmd([[
-    augroup _load_plugins
-        autocmd!
-        autocmd VimEnter * lua vim.defer_fn(M.load_plugins, 3)
-    augroup END
-]])
-
--- Create missing directories
-vim.cmd([[
-    augroup _make_dirs
-        autocmd!
-        autocmd BufWritePre * :lua vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
+        autocmd BufReadPost * silent! loadview
     augroup END
 ]])

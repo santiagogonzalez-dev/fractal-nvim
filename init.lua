@@ -1,10 +1,3 @@
-vim.cmd([[
-    syntax off
-    filetype off
-    filetype plugin indent off
-]])
-vim.o.shadafile = 'NONE'
-
 -- Disable default plugins
 vim.g.loaded_2html_plugin = 0
 vim.g.loaded_getscript = 0
@@ -31,31 +24,12 @@ vim.g.loaded_netrwFileHandlers = 0
 vim.g.loaded_netrwPlugin = 0
 vim.g.loaded_netrwSettings = 0
 
--- Enable opt-in plugins
-vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
-
 require('packer_compiled')
 require('csj.plugins')
-require('csj.autocmd')
 require('csj.settings')
-require('csj.functions')
 require('csj.colors')
+require('csj.autocmd')
+require('csj.functions')
 
-vim.defer_fn(function()
-    vim.o.shadafile = ''
-
-    require('csj.configs.cmp')
-    require('csj.lsp')
-    require('csj.keymaps').general_keybinds()
-
-    vim.cmd([[
-        PackerLoad impatient.nvim
-        rshada!
-        doautocmd BufRead
-        filetype on
-        filetype plugin indent on
-        doautocmd VimEnter
-        syntax on
-        silent! bufdo e
-    ]])
-end, 0)
+-- Enable opt-in plugins
+vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
