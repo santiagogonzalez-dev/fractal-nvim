@@ -45,5 +45,11 @@ lsp_installer.on_server_ready(function(server)
         opts = vim.tbl_deep_extend('force', emmet_opts, opts)
     end
 
+    -- markdown
+    if server.name == 'zeta_note' then
+        local zeta_opts = require('csj.lsp.settings.zeta')
+        opts = vim.tbl_deep_extend('force', zeta_opts, opts)
+    end
+
     server:setup(opts)
 end)
