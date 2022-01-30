@@ -59,7 +59,7 @@ null_ls.setup({
         }),
         diagnostics.flake8.with({
             prefer_local = '.venv/bin',
-            method = methods.DIAGNOSTICS_ON_SAVE,
+            -- method = methods.DIAGNOSTICS_ON_SAVE,
             extra_args = { '--max-line-length', '88' },
         }),
     },

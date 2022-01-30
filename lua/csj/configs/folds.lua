@@ -29,7 +29,7 @@ folds.setup({
         '@brief%s*', -- (for cpp) Remove '@brief' and all spaces after.
         ':',
     },
-    add_close_pattern = true,
+    add_close_pattern = false,
     matchup_patterns = {
         { '{', '}' },
         { '%(', ')' }, -- % to escape lua pattern char

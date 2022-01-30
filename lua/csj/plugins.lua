@@ -90,16 +90,6 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Bufferline
-    use({
-        'akinsho/bufferline.nvim',
-        opt = true,
-        event = 'VimEnter',
-        config = function()
-            require('csj.core.bufferline')
-        end,
-    })
-
     -- Autopairs
     use({
         'windwp/nvim-autopairs',
@@ -160,12 +150,22 @@ return packer.startup(function(use)
 
     -- Extra Plugins
 
+    -- Bufferline
+    use({
+        'akinsho/bufferline.nvim',
+        opt = true,
+        event = 'VimEnter',
+        config = function()
+            require('csj.configs.bufferline')
+        end,
+    })
+
     -- Folds
     use({
         'anuvyklack/pretty-fold.nvim',
         opt = true,
         config = function()
-            require('csj.core.folds')
+            require('csj.configs.folds')
         end,
     })
 
@@ -212,9 +212,30 @@ return packer.startup(function(use)
     -- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        requires = {
-            { 'nvim-lua/plenary.nvim' },
-        },
+        -- opt = true,
+        requires = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            require('csj.configs.telescope')
+        end,
+    })
+
+    -- Status line
+    use({
+        'nvim-lualine/lualine.nvim',
+        opt = true,
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        config = function()
+            require('csj.configs.lualine')
+        end,
+    })
+
+    -- Colorizer
+    use({
+        'norcalli/nvim-colorizer.lua',
+        event = 'VimEnter',
+        config = function()
+            require('colorizer').setup()
+        end,
     })
 
     -- End Extra Plugins
