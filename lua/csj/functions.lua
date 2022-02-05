@@ -23,7 +23,17 @@ end
 function M.close_or_quit()
     local bufTable = CountBufsByType()
     if bufTable.normal <= 1 then
-        vim.cmd([[ :q ]])
+        vim.ui.select(
+            { 'Quit neovim', 'Delete the buffer' },
+            { prompt = 'What to do?' },
+            function(_, prompt_option)
+                if tonumber(prompt_option) == 1 then
+                    vim.cmd([[ :q ]])
+                else
+                    vim.cmd([[ :bd ]])
+                end
+            end
+        )
     else
         vim.cmd([[ :bd ]])
     end
