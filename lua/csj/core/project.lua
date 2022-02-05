@@ -25,7 +25,19 @@ project.setup({
     detection_methods = { 'pattern' },
 
     ---@usage patterns used to detect root dir, when **"pattern"** is in detection_methods
-    patterns = { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'package.json', 'pom.xml', 'project.clj' },
+    patterns = {
+        '.git',
+        '_darcs',
+        '.hg',
+        '.bzr',
+        '.svn',
+        'Makefile',
+        'package.json',
+        'pom.xml',
+        'project.clj',
+        '.zshrc',
+        'wezterm.lua'
+    },
 
     ---@ Show hidden files in telescope when searching for files in a project
     show_hidden = true,

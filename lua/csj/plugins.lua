@@ -154,7 +154,6 @@ return packer.startup(function(use)
     use({
         'akinsho/bufferline.nvim',
         opt = true,
-        event = 'VimEnter',
         config = function()
             require('csj.configs.bufferline')
         end,
@@ -188,18 +187,6 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Hop
-    use({
-        'phaazon/hop.nvim',
-        opt = true,
-        config = function()
-            require('hop').setup({
-                keys = 'aoeusnthdiqjkzvwmbxlrcgp',
-                term_seq_bias = 0.5,
-            })
-        end,
-    })
-
     -- Surround
     use({
         'blackCauldron7/surround.nvim',
@@ -212,10 +199,12 @@ return packer.startup(function(use)
     -- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        -- opt = true,
+        -- event = 'VimEnter',
+        opt = true,
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
             require('csj.configs.telescope')
+            require('csj.keymaps').telescope_keybinds()
         end,
     })
 
@@ -236,6 +225,12 @@ return packer.startup(function(use)
         config = function()
             require('colorizer').setup()
         end,
+    })
+
+    -- Startup time
+    use({
+        'dstein64/vim-startuptime',
+        event = 'VimEnter',
     })
 
     -- End Extra Plugins

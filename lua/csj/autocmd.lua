@@ -1,11 +1,3 @@
--- Automatically reload file if contents changed
-vim.cmd([[
-    augroup _reload_on_change
-        autocmd!
-        autocmd FocusGained * :checktime
-    augroup END
-]])
-
 -- Highlight on yank
 vim.cmd([[
     augroup _general_settings
@@ -14,7 +6,7 @@ vim.cmd([[
     augroup END
 ]])
 
--- Other remaps
+-- Quit with q in this filetypes
 vim.cmd([[
     augroup _remaps
         autocmd!
@@ -35,14 +27,6 @@ vim.cmd([[
     augroup _auto_resize
         autocmd!
         autocmd VimResized * tabdo wincmd =
-    augroup END
-]])
-
--- Default settings for files without extension
-vim.cmd([[
-    augroup _files_without_extension
-        autocmd!
-        autocmd BufNewFile,BufRead * if expand('%:t') !~ '\.' | setlocal filetype=markdown syntax=markdown | endif
     augroup END
 ]])
 
@@ -103,7 +87,7 @@ vim.cmd([[
 vim.cmd([[
     augroup _file_last_position
         autocmd!
-        autocmd BufWinEnter * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+        autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
     augroup END
 ]])
 
@@ -111,6 +95,14 @@ vim.cmd([[
 vim.cmd([[
     augroup _save_and_load_view
         autocmd!
-        autocmd BufReadPost * silent! loadview
+        autocmd BufWinEnter * silent! loadview
+    augroup END
+]])
+
+-- Create directory
+vim.cmd([[
+    augroup _create_missing_dirs
+        autocmd!
+        autocmd BufWritePre * :lua vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
     augroup END
 ]])

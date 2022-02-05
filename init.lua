@@ -30,6 +30,9 @@ require('csj.settings')
 require('csj.colors')
 require('csj.autocmd')
 require('csj.functions')
+require('csj.keymaps').general_keybinds()
+require('csj.core.cmp')
+require('csj.lsp')
 
 -- Enable opt-in plugins
 vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua

@@ -118,12 +118,15 @@ function M.general_keybinds()
     set('n', 'ghj', '<Cmd>Gitsigns next_hunk<Cr>')
     set('n', 'ghk', '<Cmd>Gitsigns prev_hunk<Cr>')
     set('n', 'ghp', '<Cmd>Gitsigns preview_hunk<Cr>')
+end
 
-    -- Telescope
+-- Telescope
+function M.telescope_keybinds()
     set('n', '<Leader>t', ':Telescope ')
     set('n', '<Leader>b', '<Cmd>Telescope buffer_find<Cr>')
     set('n', '<Leader>bb', '<Cmd>Telescope live_grep<Cr>')
     set('n', '<Leader>f', require('csj.configs.telescope').project_files)
+    set('n', '<Leader>P', '<Cmd>Telescope projects<Cr>')
 end
 
 -- LSP

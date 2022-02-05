@@ -138,7 +138,8 @@ vim.opt.fillchars:append({
     diff = '∙',
     fold = ' ',
     foldclose = ' ', -- foldclose = '▶',
-    foldopen = '▼',
+    -- foldopen = '▼',
+    foldopen = '│',
     foldsep = '│',
     vert = '┃',
 })
