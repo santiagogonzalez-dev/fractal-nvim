@@ -15,13 +15,16 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.cmd([[ packadd packer.nvim ]])
 end
 
--- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd([[
     augroup packer_user_config
         autocmd!
+        " Sync packer when saving plugins.lua
         autocmd BufWritePost plugins.lua source <afile> | PackerSync
+        " Compile each time you enter plugins.lua
+        autocmd BufEnter plugins.lua source <afile> | PackerCompile profile=true
     augroup end
 ]])
+
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, 'packer')
@@ -70,10 +73,11 @@ return packer.startup(function(use)
     -- Comment
     use({
         'numToStr/Comment.nvim',
-        event = 'VimEnter',
-        after = {
-            'nvim-treesitter',
-            'nvim-ts-context-commentstring',
+        keys = {
+            'gcc',
+            'gc',
+            'gcb',
+            'gb',
         },
         config = function()
             require('csj.core.comment')
@@ -128,6 +132,7 @@ return packer.startup(function(use)
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-path', -- Path completion
         'hrsh7th/nvim-cmp', -- The completion plugin
+        event = 'InsertEnter',
     })
 
     -- End Completion
@@ -199,7 +204,6 @@ return packer.startup(function(use)
     -- Telescope
     use({
         'nvim-telescope/telescope.nvim',
-        -- event = 'VimEnter',
         opt = true,
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
@@ -221,7 +225,7 @@ return packer.startup(function(use)
     -- Colorizer
     use({
         'norcalli/nvim-colorizer.lua',
-        event = 'VimEnter',
+        opt = true,
         config = function()
             require('colorizer').setup()
         end,

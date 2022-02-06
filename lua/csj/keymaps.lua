@@ -68,6 +68,7 @@ function M.general_keybinds()
     set('i', '<A-k>', '<Esc>:m .-2<Cr>==gi', silent)
 
     -- Center commands
+    set('n', 'gi', 'gi<Esc>zzi')
     set('n', 'n', 'nzzzv')
     set('n', 'N', 'Nzzzv')
     set('v', 'y', 'myy`y')
@@ -87,6 +88,10 @@ function M.general_keybinds()
     set('x', '<', '<gv')
     set('x', '>', '>gv')
 
+    -- Swap ' with `
+    set('n', "'", '`')
+    set('n', '`', "'")
+
     -- Undo break points
     set('i', ',', ',<C-g>u')
     set('i', '.', '.<C-g>u')
@@ -97,6 +102,9 @@ function M.general_keybinds()
     set('i', '-', '-<C-g>u')
     set('i', '=', '=<C-g>u')
     set('i', '<Cr>', '<Cr><C-g>u')
+
+    -- Insert character or string at the end of the line
+    set('n', '<Leader>.', require('csj.functions').char_at_eol)
 
     -- Better navigation inside wrapped text
     set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr)

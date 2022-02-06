@@ -23,17 +23,15 @@ end
 function M.close_or_quit()
     local bufTable = CountBufsByType()
     if bufTable.normal <= 1 then
-        vim.ui.select(
-            { 'Quit neovim', 'Delete the buffer' },
-            { prompt = 'What to do?' },
-            function(_, prompt_option)
-                if tonumber(prompt_option) == 1 then
-                    vim.cmd([[ :q ]])
-                else
-                    vim.cmd([[ :bd ]])
-                end
+        vim.ui.select({ 'Quit neovim', 'Delete the buffer' }, { prompt = 'What to do?' }, function(_, prompt_option)
+            if tonumber(prompt_option) == 1 then
+                return vim.cmd([[ :q ]])
+            elseif tonumber(prompt_option) == 2 then
+                return vim.cmd([[ :bd ]])
+            else
+                return
             end
-        )
+        end)
     else
         vim.cmd([[ :bd ]])
     end
@@ -50,6 +48,8 @@ function M.load_plugins()
         PackerLoad null-ls.nvim
         PackerLoad lualine.nvim
         PackerLoad telescope.nvim
+        PackerLoad nvim-colorizer.lua
+        PackerLoad nvim-lsp-installer
     ]])
 end
 
@@ -74,14 +74,15 @@ function _G.compare_to_clipboard()
     vim.cmd('diffthis')
 end
 
-return M
+-- Insert character at the end of the line
+function M.char_at_eol()
+    vim.ui.input(
+        { prompt = 'What character do you want to insert at eol? ' },
+        function(prompt_option)
+            vim.cmd(':norm mt`.A' .. prompt_option)
+            vim.cmd([[ :norm 't]])
+        end
+    )
+end
 
--- -- Smart quit, if only 1 buffer loaded, quit neovim, if more than 2 quit the focused buffer
--- -- Using utils fro bufferline
--- function M.close_or_quit()
---     local bufNum = #require('bufferline.utils').get_valid_buffers()
---     if bufNum <= 1 then
---         vim.cmd([[ :q ]])
---     end
---     vim.cmd([[ :bd ]])
--- end
+return M

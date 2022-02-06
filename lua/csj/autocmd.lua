@@ -87,7 +87,7 @@ vim.cmd([[
 vim.cmd([[
     augroup _file_last_position
         autocmd!
-        autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+        autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif
     augroup END
 ]])
 
