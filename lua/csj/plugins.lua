@@ -182,6 +182,7 @@ return packer.startup(function(use)
         opt = true,
         config = function()
             require('csj.configs.nvimtree')
+            require('csj.keymaps').nvimtree_keybinds()
         end,
     })
 
@@ -197,6 +198,12 @@ return packer.startup(function(use)
     use({
         'tpope/vim-surround',
         event = 'InsertEnter',
+    })
+
+    -- Vim repeat
+    use({
+        'tpope/vim-repeat',
+        event = 'InsertLeave',
     })
 
     -- Telescope
