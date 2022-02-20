@@ -19,7 +19,6 @@ treesitter_configs.setup({
         enable = true,
         disable = {
             'yaml',
-            'lua',
             'python',
         },
     },
