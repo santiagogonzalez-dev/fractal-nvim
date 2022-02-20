@@ -15,17 +15,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.cmd([[ packadd packer.nvim ]])
 end
 
-vim.cmd([[
-    augroup packer_user_config
-        autocmd!
-        " Sync packer when saving plugins.lua
-        autocmd BufWritePost plugins.lua source <afile> | PackerSync
-        " Compile each time you enter plugins.lua
-        autocmd BufEnter plugins.lua source <afile> | PackerCompile profile=true
-    augroup end
-]])
-
-
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, 'packer')
 if not status_ok then
@@ -45,6 +34,7 @@ packer.init({
 })
 
 return packer.startup(function(use)
+
     -- Core
 
     -- Impatient
@@ -97,7 +87,6 @@ return packer.startup(function(use)
     -- Autopairs
     use({
         'windwp/nvim-autopairs',
-        after = 'nvim-treesitter',
         event = 'InsertEnter',
         config = function()
             require('csj.core.autopairs')
@@ -139,13 +128,16 @@ return packer.startup(function(use)
 
     -- LSP
 
-    use({ 'neovim/nvim-lspconfig' }) -- Enable LSP
-    use({ 'williamboman/nvim-lsp-installer' }) -- Install language servers
+    use({
+        'neovim/nvim-lspconfig', -- Enable LSP
+        'williamboman/nvim-lsp-installer', -- Install language servers
+        event = 'InsertEnter',
+    })
 
     -- Null-LS
     use({
         'jose-elias-alvarez/null-ls.nvim', -- For formatters and linters
-        opt = true,
+        event = 'InsertEnter',
         config = function()
             require('csj.lsp.null-ls')
         end,
@@ -192,13 +184,18 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Surround
+    -- Vim Fugitive
     use({
-        'blackCauldron7/surround.nvim',
-        opt = true,
-        config = function()
-            require('surround').setup({ mappings_style = 'surround' })
-        end,
+        'tpope/vim-fugitive',
+        cmd = {
+            'Git'
+        },
+    })
+
+    -- Vim Surround
+    use({
+        'tpope/vim-surround',
+        event = 'InsertEnter',
     })
 
     -- Telescope
@@ -232,9 +229,17 @@ return packer.startup(function(use)
     })
 
     -- Startup time
+    use({ 'dstein64/vim-startuptime', })
+
+    -- Toggle term
     use({
-        'dstein64/vim-startuptime',
-        event = 'VimEnter',
+        'akinsho/toggleterm.nvim',
+        keys = {
+            '<C-t>'
+        },
+        config = function()
+            require('csj.configs.toggleterm')
+        end,
     })
 
     -- End Extra Plugins

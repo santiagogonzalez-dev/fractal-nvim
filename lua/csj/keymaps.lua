@@ -1,7 +1,8 @@
 local M = {}
 local set = vim.keymap.set
-local expr, buffer, silent = { expr = true }, { buffer = true }, { silent = true }
+local expr, buffer = { expr = true }, { buffer = true }
 
+-- General keybinds
 function M.general_keybinds()
     -- Modes
     --    normal_mode = "n",
@@ -27,25 +28,26 @@ function M.general_keybinds()
     set('n', '<Leader>e', '<Cmd>edit!<Cr>')
 
     -- Close or Quit
-    set('n', '<Leader>qq', require('csj.functions').close_or_quit)
+    -- set('n', '<Leader>qq', require('csj.functions').close_or_quit)
+    set('n', '<Leader>qq', ':q<Cr>')
 
     -- Delete all buffers
     set('n', '<Leader>q', '<Cmd>bufdo bdelete<Cr>')
 
     -- Write
-    set('n', '<Leader>w', '<Cmd>write<Cr>', silent)
-
-    -- Quit
-    set('n', '<Leader>Q', '<Cmd>quit<Cr>')
+    set('n', '<Leader>w', '<Cmd>wall<Cr>')
 
     -- Write to all buffers and quit
     set('n', '<Leader>W', '<Cmd>wqall<Cr>')
 
+    -- Quit
+    set('n', '<Leader>Q', '<Cmd>quit<Cr>')
+
     -- Navigate buffers
-    set('n', '<Tab>', ':bnext<Cr>', silent)
-    set('n', '<S-Tab>', ':bprevious<Cr>', silent)
-    set('n', '<S-l>', ':bnext<Cr>', silent)
-    set('n', '<S-h>', ':bprevious<Cr>', silent)
+    set('n', '<Tab>', ':bnext<Cr>')
+    set('n', '<S-Tab>', ':bprevious<Cr>')
+    set('n', '<S-l>', ':bnext<Cr>')
+    set('n', '<S-h>', ':bprevious<Cr>')
 
     -- Window Navigation
     set('n', '<C-h>', '<C-w>h')
@@ -54,18 +56,18 @@ function M.general_keybinds()
     set('n', '<C-l>', '<C-w>l')
 
     -- Resize windows
-    set('n', '<C-Up>', ':resize +1<CR>', silent)
-    set('n', '<C-Down>', ':resize -1<CR>', silent)
-    set('n', '<C-Left>', ':vertical resize +1<CR>', silent)
-    set('n', '<C-Right>', ':vertical resize -1<CR>', silent)
+    set('n', '<C-Up>', ':resize +1<CR>')
+    set('n', '<C-Down>', ':resize -1<CR>')
+    set('n', '<C-Left>', ':vertical resize +1<CR>')
+    set('n', '<C-Right>', ':vertical resize -1<CR>')
 
     -- Move current block of text up and down
-    set('n', '<A-j>', ':m .+1<Cr>==', silent) -- Normal mode
-    set('n', '<A-k>', ':m .-2<Cr>==', silent)
-    set('v', '<A-j>', ":m '>+1<Cr>gv=gv", silent) -- Visual mode
-    set('v', '<A-k>', ":m '<-2<Cr>gv=gv", silent)
-    set('i', '<A-j>', '<Esc>:m .+1<Cr>==gi', silent) -- Insert mode
-    set('i', '<A-k>', '<Esc>:m .-2<Cr>==gi', silent)
+    set('n', '<A-j>', ':m .+1<Cr>==') -- Normal mode
+    set('n', '<A-k>', ':m .-2<Cr>==')
+    set('v', '<A-j>', ":m '>+1<Cr>gv=gv") -- Visual mode
+    set('v', '<A-k>', ":m '<-2<Cr>gv=gv")
+    set('i', '<A-j>', '<Esc>:m .+1<Cr>==gi') -- Insert mode
+    set('i', '<A-k>', '<Esc>:m .-2<Cr>==gi')
 
     -- Center commands
     set('n', 'gi', 'gi<Esc>zzi')
@@ -74,6 +76,13 @@ function M.general_keybinds()
     set('v', 'y', 'myy`y')
     set('v', 'Y', 'myY`y')
     set('v', 'J', 'mzJ`z')
+
+    -- Highlight word with #
+    set('n', '#', '#N')
+    set('v', '#', [[y/\V<C-r>=escape(@",'/\')<Cr><Cr>N]])
+
+    -- Go to file even if it doesn't exists
+    set('n', 'gf', ':edit <cfile><cr>')
 
     -- Opposite to J
     set('n', 'K', 'i<Cr><Esc>')
@@ -85,8 +94,8 @@ function M.general_keybinds()
     set('n', '<Leader>p', [["_diwP]])
 
     -- Keep visual selection after shifting code block
-    set('x', '<', '<gv')
-    set('x', '>', '>gv')
+    set({ 'v', 'x' }, '<', '<gv')
+    set({ 'v', 'x' }, '>', '>gv')
 
     -- Swap ' with `
     set('n', "'", '`')
@@ -107,20 +116,22 @@ function M.general_keybinds()
     set('n', '<Leader>.', require('csj.functions').char_at_eol)
 
     -- Better navigation inside wrapped text
-    set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr)
-    set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr)
+    set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", expr)
+    set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", expr)
 
     -- Packer
     set('n', '<Leader>s', '<Cmd>PackerSync<Cr>')
-    set('n', '<Leader>c', '<Cmd>PackerCompile profile=true<Cr>')
+    set('n', '<Leader>c', '<Cmd>PackerCompile profile=true<Cr>', { silent = false })
+end
 
+-- Nvim-tree
+function M.nvimtree_keybinds()
     -- Nvim-tree
     set('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>')
+end
 
-    -- Hop
-    set('n', '<Leader>h', '<Cmd>lua require"hop".hint_words()<Cr>')
-
-    -- Gitsigns
+-- Gitsigns
+function M.gitsigns_keybinds()
     set('n', 'ghr', '<Cmd>Gitsigns reset_hunk<Cr>')
     set('n', 'ghb', '<Cmd>Gitsigns reset_buffer<Cr>')
     set('n', 'ghj', '<Cmd>Gitsigns next_hunk<Cr>')
@@ -131,8 +142,8 @@ end
 -- Telescope
 function M.telescope_keybinds()
     set('n', '<Leader>t', ':Telescope ')
-    set('n', '<Leader>b', '<Cmd>Telescope buffer_find<Cr>')
-    set('n', '<Leader>bb', '<Cmd>Telescope live_grep<Cr>')
+    set('n', '<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<Cr>')
+    set('n', '<Leader>//', '<Cmd>Telescope live_grep<Cr>')
     set('n', '<Leader>f', require('csj.configs.telescope').project_files)
     set('n', '<Leader>P', '<Cmd>Telescope projects<Cr>')
 end
@@ -144,6 +155,7 @@ function M.lsp_keymaps()
     set('v', '<Leader>ca', vim.lsp.buf.range_code_action, buffer)
     set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
     set('n', '<Leader>F', vim.lsp.buf.formatting_sync, buffer)
+    set('v', '<Leader>F', vim.lsp.buf.range_formatting, buffer) -- This doesn't work
     set('n', '<Leader>R', vim.lsp.buf.rename, buffer)
     set('n', 'gD', vim.lsp.buf.declaration, buffer)
     set('n', 'gd', vim.lsp.buf.definition, buffer)

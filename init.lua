@@ -1,3 +1,11 @@
+vim.cmd([[
+    syntax off
+    filetype off
+    filetype plugin indent off
+]])
+
+vim.opt.shadafile = "NONE"
+
 -- Disable default plugins
 vim.g.loaded_2html_plugin = 0
 vim.g.loaded_getscript = 0
@@ -24,15 +32,28 @@ vim.g.loaded_netrwFileHandlers = 0
 vim.g.loaded_netrwPlugin = 0
 vim.g.loaded_netrwSettings = 0
 
-require('packer_compiled')
-require('csj.plugins')
+-- Enable opt-in plugins
+vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
+
 require('csj.settings')
 require('csj.colors')
 require('csj.autocmd')
-require('csj.functions')
 require('csj.keymaps').general_keybinds()
-require('csj.core.cmp')
-require('csj.lsp')
 
--- Enable opt-in plugins
-vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
+vim.defer_fn(function()
+    vim.opt.shadafile = ""
+
+    require('packer_compiled')
+    require('csj.plugins')
+    require('csj.core.cmp')
+    require('csj.lsp')
+    require('csj.functions')
+
+    vim.cmd([[
+        rshada!
+        doautocmd BufRead
+        syntax on
+        filetype on
+        filetype plugin indent on
+    ]])
+end, 0)

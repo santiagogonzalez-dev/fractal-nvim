@@ -84,8 +84,8 @@ nvim_tree.setup({
             custom_only = false,
             list = {},
         },
-        number = true,
-        relativenumber = true,
+        number = false,
+        relativenumber = false,
     },
     trash = {
         cmd = 'trash',

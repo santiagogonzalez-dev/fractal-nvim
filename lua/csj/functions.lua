@@ -1,7 +1,7 @@
 M = {}
 
 -- Create command to format files using null-ls formatters
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting_sync()' ]])
+vim.api.nvim_add_user_command('Format', vim.lsp.buf.formatting_sync, {})
 
 -- Close or quit buffer
 -- If there's more than two buffers open, wipe the working buffer
@@ -22,34 +22,32 @@ end
 
 function M.close_or_quit()
     local bufTable = CountBufsByType()
-    if bufTable.normal <= 1 then
-        vim.ui.select({ 'Quit neovim', 'Delete the buffer' }, { prompt = 'What to do?' }, function(_, prompt_option)
-            if tonumber(prompt_option) == 1 then
-                return vim.cmd([[ :q ]])
-            elseif tonumber(prompt_option) == 2 then
-                return vim.cmd([[ :bd ]])
-            else
-                return
-            end
-        end)
-    else
-        vim.cmd([[ :bd ]])
-    end
+    print('bufTable ->', bufTable)
+    -- if bufTable.normal <= 1 then
+    --     vim.ui.select({ 'Quit neovim', 'Delete the buffer' }, { prompt = 'What to do?' }, function(_, prompt_option)
+    --         if tonumber(prompt_option) == 1 then
+    --             return vim.cmd([[ :q ]])
+    --         elseif tonumber(prompt_option) == 2 then
+    --             return vim.cmd([[ :bw ]])
+    --         else
+    --             return
+    --         end
+    --     end)
+    --     vim.cmd([[ :q ]])
+    -- else
+    --     vim.cmd([[ :bd ]])
+    -- end
 end
 
 -- Defer plugins
 function M.load_plugins()
     vim.cmd([[
-        PackerLoad surround.nvim
         PackerLoad bufferline.nvim
         PackerLoad gitsigns.nvim
+        PackerLoad nvim-colorizer.lua
         PackerLoad nvim-tree.lua
         PackerLoad pretty-fold.nvim
-        PackerLoad null-ls.nvim
-        PackerLoad lualine.nvim
         PackerLoad telescope.nvim
-        PackerLoad nvim-colorizer.lua
-        PackerLoad nvim-lsp-installer
     ]])
 end
 
@@ -74,7 +72,7 @@ function _G.compare_to_clipboard()
     vim.cmd('diffthis')
 end
 
--- Insert character at the end of the line
+-- Insert character at the end of the last edited line
 function M.char_at_eol()
     vim.ui.input(
         { prompt = 'What character do you want to insert at eol? ' },

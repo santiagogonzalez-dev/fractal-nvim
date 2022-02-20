@@ -13,7 +13,8 @@ local options = {
     cursorline = true, -- Draw line on cursor
     undofile = true, -- Persistent undo - undo after you re-open the file
     undolevels = 10000, -- Levels of undoing
-    exrc = true, -- Use local .nvimrc or .exrc
+    exrc = false, -- Use local .nvimrc or .exrc
+    secure = true,
     hidden = true, -- It keeps buffers open in memory
     history = 100, -- Saved spaces in each table of history
     hlsearch = true, -- Highlighting search
@@ -31,7 +32,6 @@ local options = {
     path = '**', -- Search files recursively
     pumblend = 9, -- Transparency for the pop up menu, disabled because it messess up Nerd Font icons
     pumheight = 33, -- Pop up menu height
-    redrawtime = 300, -- Time for redrawing the display
     relativenumber = true, -- Display line number relative to the cursor
     ruler = true, -- Show the line and column number of the cursor position
     shell = 'zsh', -- Shell to use for `!`, `:!`, `system()` etc.
@@ -58,9 +58,10 @@ local options = {
     splitright = true, -- Force vertical splits to go to the right of current window
     swapfile = false, -- It does (not) creates a swapfileWage
     termguicolors = true, -- Enable colors in the terminal
-    timeoutlen = 400, -- Time given for doing a sequence
     title = true, -- Set the window title based on the value of titlestring
-    updatetime = 600, -- Faster completion
+    timeoutlen = 300, -- Time given for doing a sequence
+    redrawtime = 300, -- Time for redrawing the display
+    updatetime = 300, -- Faster completion
     wildcharm = 26, -- Trigger completion in macros
     wildignore = '*.o,*.rej,*.so', -- File patterns to ignore
     wildignorecase = true, -- Ignore case command completion menu
@@ -75,12 +76,14 @@ for k, v in pairs(options) do
     vim.o[k] = v
 end
 
+-- Other settings
 vim.opt.cpoptions:append('nm') -- See :help cpoptions, this are the defaults aABceFs_
 vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
 vim.opt.iskeyword:remove('_') -- A word separated by _ is being separated in multiple ones
 vim.opt.whichwrap:append('<,>,[,],h,l')
 -- See https://github.com/neovim/neovim/pull/16251 for more info on cmdheight=0
 -- vim.opt.lines:append '1' -- Hide command line, currently very buggy
+-- https://github.com/neovim/neovim/pull/17266 for laststatus = 3
 
 -- Match pairs
 vim.opt.matchpairs:append({
@@ -115,6 +118,14 @@ vim.opt.completeopt:append({
     'noselect',
 })
 
+-- Fold options
+vim.o.foldenable = true -- Enable folds
+vim.o.foldmethod = 'manual' -- Method used for idents
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()' -- Use treesitter to define folds, needs to enable expr
+vim.o.foldcolumn = 'auto' -- Column to display where the folds are
+vim.o.foldlevelstart = 99 -- Sets 'foldlevel' when starting to edit another buffer in a window
+vim.o.foldnestmax = 1 -- To only fold outer functions
+
 -- Non visible characters
 vim.opt.list = true -- Show invisible characters
 vim.opt.listchars:append({
@@ -126,20 +137,12 @@ vim.opt.listchars:append({
     trail = '█',
 })
 
--- Fold options
-vim.o.foldenable = true -- Enable folds
-vim.o.foldmethod = 'manual' -- Method used for idents
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()' -- Use treesitter to define folds, needs to enable expr
-vim.o.foldcolumn = 'auto' -- Column to display where the folds are
-vim.o.foldlevelstart = 99 -- Sets 'foldlevel' when starting to edit another buffer in a window
-vim.o.foldnestmax = 1 -- To only fold outer functions
 vim.opt.fillchars:append({
-    -- eob = ' ',
+    eob = ' ',
     diff = '∙',
     fold = ' ',
     foldclose = ' ', -- foldclose = '▶',
-    -- foldopen = '▼',
-    foldopen = '│',
+    foldopen = '│', -- foldopen = '▼',
     foldsep = '│',
     vert = '┃',
 })

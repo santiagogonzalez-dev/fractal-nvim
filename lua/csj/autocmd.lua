@@ -2,7 +2,7 @@
 vim.cmd([[
     augroup _general_settings
         autocmd!
-        autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'iCursor', timeout = 333})
+        autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup = 'Visual'})
     augroup END
 ]])
 
@@ -50,8 +50,7 @@ vim.cmd([[
 vim.cmd([[
     augroup _disable_auto_comment
         autocmd!
-        autocmd BufEnter * set formatoptions-=cro
-        autocmd BufWinEnter * set formatoptions-=cro
+        autocmd BufEnter * setlocal formatoptions-=cro
     augroup END
 ]])
 
@@ -95,14 +94,23 @@ vim.cmd([[
 vim.cmd([[
     augroup _save_and_load_view
         autocmd!
+        autocmd BufWritePre * silent!
         autocmd BufWinEnter * silent! loadview
     augroup END
 ]])
 
--- Create directory
+-- Create missing directories before saving the buffer
 vim.cmd([[
     augroup _create_missing_dirs
         autocmd!
         autocmd BufWritePre * :lua vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
+    augroup END
+]])
+
+-- LSP Diagnostics
+vim.cmd([[
+    augroup _open_diagnostics
+        autocmd!
+        autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
     augroup END
 ]])
