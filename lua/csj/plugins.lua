@@ -172,6 +172,7 @@ return packer.startup(function(use)
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
             require('csj.configs.gitsigns')
+            require('csj.keymaps').gitsigns_keybinds()
         end,
     })
 

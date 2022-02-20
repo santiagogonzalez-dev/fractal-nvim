@@ -44,6 +44,7 @@ function M.load_plugins()
     vim.cmd([[
         PackerLoad bufferline.nvim
         PackerLoad gitsigns.nvim
+        PackerLoad lualine.nvim
         PackerLoad nvim-colorizer.lua
         PackerLoad nvim-tree.lua
         PackerLoad pretty-fold.nvim

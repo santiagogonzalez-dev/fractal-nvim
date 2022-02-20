@@ -126,7 +126,6 @@ end
 
 -- Nvim-tree
 function M.nvimtree_keybinds()
-    -- Nvim-tree
     set('n', '<Leader>v', '<Cmd>NvimTreeToggle<Cr>')
 end
 
@@ -155,7 +154,7 @@ function M.lsp_keymaps()
     set('v', '<Leader>ca', vim.lsp.buf.range_code_action, buffer)
     set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
     set('n', '<Leader>F', vim.lsp.buf.formatting_sync, buffer)
-    set('v', '<Leader>F', vim.lsp.buf.range_formatting, buffer) -- This doesn't work
+    set('v', '<Leader>F', vim.lsp.buf.range_formatting, buffer)
     set('n', '<Leader>R', vim.lsp.buf.rename, buffer)
     set('n', 'gD', vim.lsp.buf.declaration, buffer)
     set('n', 'gd', vim.lsp.buf.definition, buffer)
