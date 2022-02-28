@@ -22,7 +22,7 @@ if not status_ok then
 end
 
 packer.init({
-    -- packer_compiled.lua path
+    -- Path for packer_compiled.lua
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
 
     -- Have packer use a popup window
@@ -34,7 +34,6 @@ packer.init({
 })
 
 return packer.startup(function(use)
-
     -- Core
 
     -- Impatient
@@ -52,7 +51,10 @@ return packer.startup(function(use)
     use({ 'nvim-lua/plenary.nvim' })
 
     -- Icons
-    use({ 'kyazdani42/nvim-web-devicons' })
+    use({
+        'kyazdani42/nvim-web-devicons',
+        after = 'nvim-tree.lua',
+    })
 
     -- Colorscheme
     use({
@@ -77,7 +79,7 @@ return packer.startup(function(use)
     -- Project
     use({
         'ahmedkhalf/project.nvim',
-        event = 'VimEnter',
+        event = 'BufEnter',
         config = function()
             vim.g.nvim_tree_respect_buf_cwd = 1
             require('csj.core.project')
@@ -97,13 +99,13 @@ return packer.startup(function(use)
     use({
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        config = function()
-            require('csj.core.treesitter')
-        end,
         requires = {
             'JoosepAlviste/nvim-ts-context-commentstring',
             'p00f/nvim-ts-rainbow',
         },
+        config = function()
+            require('csj.core.treesitter')
+        end,
     })
 
     -- End Core
@@ -127,22 +129,11 @@ return packer.startup(function(use)
     -- End Completion
 
     -- LSP
-
     use({
         'neovim/nvim-lspconfig', -- Enable LSP
         'williamboman/nvim-lsp-installer', -- Install language servers
-        event = 'InsertEnter',
+        'jose-elias-alvarez/null-ls.nvim', -- Formatters and linters
     })
-
-    -- Null-LS
-    use({
-        'jose-elias-alvarez/null-ls.nvim', -- For formatters and linters
-        event = 'InsertEnter',
-        config = function()
-            require('csj.lsp.null-ls')
-        end,
-    })
-
     -- End LSP
 
     -- Extra Plugins
@@ -156,12 +147,14 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Folds
+    -- Toggle term
     use({
-        'anuvyklack/pretty-fold.nvim',
-        opt = true,
+        'akinsho/toggleterm.nvim',
+        keys = {
+            '<C-t>',
+        },
         config = function()
-            require('csj.configs.folds')
+            require('csj.configs.toggleterm')
         end,
     })
 
@@ -189,21 +182,19 @@ return packer.startup(function(use)
     -- Vim Fugitive
     use({
         'tpope/vim-fugitive',
-        cmd = {
-            'Git'
-        },
+        cmd = 'Git',
     })
 
     -- Vim Surround
     use({
         'tpope/vim-surround',
-        event = 'InsertEnter',
+        event = 'BufEnter',
     })
 
     -- Vim repeat
     use({
         'tpope/vim-repeat',
-        event = 'InsertLeave',
+        event = 'BufEnter',
     })
 
     -- Telescope
@@ -217,11 +208,20 @@ return packer.startup(function(use)
         end,
     })
 
+    -- Indent Blankline
+    use({
+        'lukas-reineke/indent-blankline.nvim',
+        opt = true,
+        config = function()
+            require('csj.configs.indentblankline')
+        end,
+    })
+
     -- Status line
     use({
         'nvim-lualine/lualine.nvim',
         opt = true,
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        requires = { 'kyazdani42/nvim-web-devicons' },
         config = function()
             require('csj.configs.lualine')
         end,
@@ -236,18 +236,11 @@ return packer.startup(function(use)
         end,
     })
 
-    -- Startup time
-    use({ 'dstein64/vim-startuptime', })
-
-    -- Toggle term
+    -- Vim Hexokinase
     use({
-        'akinsho/toggleterm.nvim',
-        keys = {
-            '<C-t>'
-        },
-        config = function()
-            require('csj.configs.toggleterm')
-        end,
+        'RRethy/vim-hexokinase',
+        opt = true,
+        run = 'cd /home/st/.local/share/nvim/site/pack/packer/opt/vim-hexokinase && make hexokinase',
     })
 
     -- End Extra Plugins

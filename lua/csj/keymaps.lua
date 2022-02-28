@@ -28,20 +28,19 @@ function M.general_keybinds()
     set('n', '<Leader>e', '<Cmd>edit!<Cr>')
 
     -- Close or Quit
-    -- set('n', '<Leader>qq', require('csj.functions').close_or_quit)
-    set('n', '<Leader>qq', ':q<Cr>')
-
-    -- Delete all buffers
-    set('n', '<Leader>q', '<Cmd>bufdo bdelete<Cr>')
+    set('n', '<M-c>', require('csj.functions').close_or_quit)
 
     -- Write
-    set('n', '<Leader>w', '<Cmd>wall<Cr>')
+    set('n', '<Leader>w', '<Cmd>up<Cr>')
 
     -- Write to all buffers and quit
     set('n', '<Leader>W', '<Cmd>wqall<Cr>')
 
     -- Quit
     set('n', '<Leader>Q', '<Cmd>quit<Cr>')
+
+    -- Delete all buffers
+    set('n', '<Leader>q', '<Cmd>bufdo bdelete<Cr>')
 
     -- Navigate buffers
     set('n', '<Tab>', ':bnext<Cr>')
@@ -81,8 +80,14 @@ function M.general_keybinds()
     set('n', '#', '#N')
     set('v', '#', [[y/\V<C-r>=escape(@",'/\')<Cr><Cr>N]])
 
-    -- Go to file even if it doesn't exists
-    set('n', 'gf', ':edit <cfile><cr>')
+    -- Moving inside Neovim
+    set({ 'n', 'v' }, 'g.', '`.') -- Go to the last place you modified
+    set('n', 'go', '<C-o>') -- Go to previous place
+    set('n', 'gO', '<C-i>') -- Go to next place
+    set('n', 'gp', '<C-^>') -- Go to previous buffer
+    set('n', 'gn', ':bnext<cr>') -- Go to next buffer
+    set('n', 'gm', '%') -- Go to the matching paren
+    set('n', 'gf', ':edit <cfile><cr>') -- Go to file even if it doesn't exists
 
     -- Opposite to J
     set('n', 'K', 'i<Cr><Esc>')

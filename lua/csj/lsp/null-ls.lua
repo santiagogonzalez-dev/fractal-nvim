@@ -12,7 +12,7 @@ null_ls.setup({
     debug = false,
     sources = {
         code_actions.gitsigns,
-        -- formatting.stylua,
+        formatting.stylua,
         formatting.prettier.with({
             prefer_local = 'node_modules/.bin',
             command = 'prettier',
