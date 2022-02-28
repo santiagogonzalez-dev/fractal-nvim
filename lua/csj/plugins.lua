@@ -134,6 +134,14 @@ return packer.startup(function(use)
         'williamboman/nvim-lsp-installer', -- Install language servers
         'jose-elias-alvarez/null-ls.nvim', -- Formatters and linters
     })
+
+    use({
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require('trouble').setup()
+        end,
+    })
     -- End LSP
 
     -- Extra Plugins
@@ -169,6 +177,12 @@ return packer.startup(function(use)
         end,
     })
 
+    -- Vim Fugitive
+    use({
+        'tpope/vim-fugitive',
+        after = 'gitsigns.nvim',
+    })
+
     -- Nvim-tree
     use({
         'kyazdani42/nvim-tree.lua',
@@ -177,12 +191,6 @@ return packer.startup(function(use)
             require('csj.configs.nvimtree')
             require('csj.keymaps').nvimtree_keybinds()
         end,
-    })
-
-    -- Vim Fugitive
-    use({
-        'tpope/vim-fugitive',
-        cmd = 'Git',
     })
 
     -- Vim Surround

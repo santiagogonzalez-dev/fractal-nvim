@@ -1,101 +1,80 @@
-vim.api.nvim_create_autocmd({
-    event = 'TextYankPost',
-    pattern = '*',
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight on yank',
     callback = function()
         vim.highlight.on_yank({ higroup = 'Visual' })
     end,
-    desc = 'Highlight on yank',
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'FileType',
-    pattern = 'qf,help,man,lspinfo,startuptime',
+vim.api.nvim_create_autocmd('FileType', {
+    desc = 'Quit with q in this filetypes',
+    pattern = 'qf,help,man,lspinfo,startuptime,Trouble',
     callback = function()
         vim.keymap.set('n', 'q', '<Cmd>close<Cr>')
     end,
-    desc = 'Quit with q in this filetypes',
 })
 
-vim.api.nvim_create_autocmd({
-    event = { 'BufNewFile', 'BufRead' },
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+    desc = 'Filetype set correctly',
     pattern = '*.conf',
     callback = function()
         vim.opt.filetype = 'dosini'
     end,
-    desc = 'Filetype set correctly',
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'VimResized',
-    pattern = '*',
-    command = 'tabdo wincmd =',
+vim.api.nvim_create_autocmd('VimResized', {
     desc = 'Autoresize, ensures splits are equal width when resizing vim',
+    command = 'tabdo wincmd =',
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'BufWritePre',
-    pattern = '*',
-    command = [[:%s/\s\+$//e]],
+vim.api.nvim_create_autocmd('BufWritePre', {
     desc = 'Trim whitespace on save',
+    command = [[:%s/\s\+$//e]],
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'WinEnter',
-    pattern = '*',
+vim.api.nvim_create_autocmd('WinEnter', {
+    desc = 'Show cursor only in active window',
     command = 'setlocal cursorline cursorcolumn',
-    desc = 'Show cursor only in active window'
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'WinLeave',
-    pattern = '*',
+vim.api.nvim_create_autocmd('WinLeave', {
+    desc = 'Show cursor only in active window',
     command = 'setlocal nocursorline nocursorcolumn',
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'BufEnter',
-    pattern = '*',
-    callback = function()
-        vim.opt.formatoptions:remove({ 'o' })
-    end,
+vim.api.nvim_create_autocmd('BufEnter', {
     desc = 'Remove continuation of comments when creating a new line via `o`',
+    callback = function()
+        vim.opt.formatoptions:remove( 'o' )
+    end,
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'CmdLineLeave',
+vim.api.nvim_create_autocmd('CmdLineLeave', {
+    desc = 'Hide last run command in the command line after N seconds',
     pattern = ':',
     callback = function()
         vim.defer_fn(function()
             vim.cmd('echo ""')
         end, 12000)
     end,
-    desc = 'Hide last run command in the command line after N seconds',
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'BufReadPost',
-    pattern = '*',
-    command = [[if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif]],
+vim.api.nvim_create_autocmd('BufReadPost', {
     desc = 'Open file at the last position it was edited earlier',
+    command = [[if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif]],
 })
 
-vim.api.nvim_create_autocmd({
-    event = 'BufWritePre',
-    pattern = '*',
-    once = true,
+vim.api.nvim_create_autocmd('BufWritePre', {
+    desc = 'Create missing directories before saving the buffer',
     callback = function()
         vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
     end,
-    desc = 'Create missing directories before saving the buffer',
 })
 
-vim.api.nvim_create_autocmd({
-    event = { 'CursorHold', 'CursorHoldI' },
-    pattern = '*',
+vim.api.nvim_create_autocmd( { 'CursorHold', 'CursorHoldI' }, {
+    desc = 'LSP Diagnostics',
     callback = function()
         vim.diagnostic.open_float(nil, { focus = false })
     end,
-    desc = 'LSP Diagnostics',
 })
 
 -- Skeletons

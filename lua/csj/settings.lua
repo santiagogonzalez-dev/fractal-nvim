@@ -79,8 +79,7 @@ end
 
 -- Other settings
 vim.opt.cpoptions:append('nm') -- See :help cpoptions, this are the defaults aABceFs_
--- vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
-vim.opt.shortmess:append('c') -- Shorten file messages to avoid hit-enter prompts
+vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
 vim.opt.iskeyword:remove('_') -- A word separated by _ is being separated in multiple ones
 vim.opt.whichwrap:append('<,>,[,],h,l')
 -- See https://github.com/neovim/neovim/pull/16251 for more info on cmdheight=0

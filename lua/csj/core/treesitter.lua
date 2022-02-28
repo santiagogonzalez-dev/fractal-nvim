@@ -51,13 +51,13 @@ treesitter_configs.setup({
     rainbow = {
         enable = true,
         colors = {
-            '#eb6f92',
-            '#f6c177',
-            '#ebbcba',
             '#31748f',
-            '#9ccfd8',
-            '#c4a7e7',
             '#908caa',
+            '#c4a7e7',
+            '#f6c177',
+            '#9ccfd8',
+            '#eb6f92',
+            '#ebbcba',
         },
         extended_mode = true,
     },

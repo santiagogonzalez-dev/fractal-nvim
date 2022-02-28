@@ -1,6 +1,6 @@
 local M = {}
+local expr = { expr = true }
 local set = vim.keymap.set
-local expr, buffer = { expr = true }, { buffer = true }
 
 -- General keybinds
 function M.general_keybinds()
@@ -30,17 +30,17 @@ function M.general_keybinds()
     -- Close or Quit
     set('n', '<M-c>', require('csj.functions').close_or_quit)
 
-    -- Write
+    -- Write/Update
     set('n', '<Leader>w', '<Cmd>up<Cr>')
 
     -- Write to all buffers and quit
     set('n', '<Leader>W', '<Cmd>wqall<Cr>')
 
     -- Quit
-    set('n', '<Leader>Q', '<Cmd>quit<Cr>')
+    set('n', '<Leader>q', '<Cmd>quit<Cr>')
 
     -- Delete all buffers
-    set('n', '<Leader>q', '<Cmd>bufdo bdelete<Cr>')
+    set('n', '<Leader>Q', '<Cmd>bufdo bdelete<Cr>')
 
     -- Navigate buffers
     set('n', '<Tab>', ':bnext<Cr>')
@@ -94,6 +94,8 @@ function M.general_keybinds()
 
     -- Make view
     set('n', '<Leader>m', '<Cmd>mkview<Cr>')
+
+    set('n', '<Esc><Esc>', '<cmd>nohlsearch<cr>')
 
     -- Paste in word under the cursor without overwriting the yank register
     set('n', '<Leader>p', [["_diwP]])
@@ -154,17 +156,20 @@ end
 
 -- LSP
 function M.lsp_keymaps()
-    set('n', '<Leader>lr', '<Cmd>LspRestart<Cr>', buffer)
-    set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
-    set('v', '<Leader>ca', vim.lsp.buf.range_code_action, buffer)
-    set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
-    set('n', '<Leader>F', vim.lsp.buf.formatting_sync, buffer)
-    set('v', '<Leader>F', vim.lsp.buf.range_formatting, buffer)
-    set('n', '<Leader>R', vim.lsp.buf.rename, buffer)
-    set('n', 'gD', vim.lsp.buf.declaration, buffer)
-    set('n', 'gd', vim.lsp.buf.definition, buffer)
-    set('n', 'gl', vim.diagnostic.open_float, buffer)
-    set('n', 'gr', vim.lsp.buf.references, buffer)
+    local setb = function(mode, keys, keybind)
+        vim.keymap.set(mode, keys, keybind, { buffer = true })
+    end
+
+    setb({ 'n', 'v', 'x' }, '<Leader>lr', '<Cmd>LspRestart<Cr>')
+    setb('n', '<Leader>ca', vim.lsp.buf.code_action)
+    setb({ 'v', 'x' }, '<Leader>ca', vim.lsp.buf.range_code_action)
+    setb({ 'v', 'x' }, '<Leader>F', vim.lsp.buf.range_formatting)
+    setb('n', '<Leader>F', vim.lsp.buf.formatting_sync)
+    setb('n', '<Leader>R', vim.lsp.buf.rename)
+    setb('n', 'gD', vim.lsp.buf.declaration)
+    setb('n', 'gf', vim.lsp.buf.definition)
+    setb('n', 'gl', vim.diagnostic.open_float)
+    setb('n', 'gr', vim.lsp.buf.references)
 end
 
 return M

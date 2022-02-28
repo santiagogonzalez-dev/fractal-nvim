@@ -50,6 +50,7 @@ cmp.setup({
             luasnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
+
     mapping = {
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-3), { 'i', 'c' }),
         ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(3), { 'i', 'c' }),
@@ -91,6 +92,7 @@ cmp.setup({
             's',
         }),
     },
+
     formatting = {
         fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item)
@@ -108,21 +110,25 @@ cmp.setup({
             return vim_item
         end,
     },
+
     sources = {
-        { name = 'nvim_lua' },
+        { name = 'nvim_lua', keyword_lenght = 3 },
         { name = 'nvim_lsp', keyword_lenght = 3 },
-        { name = 'luasnip' },
+        { name = 'luasnip', keyword_lenght = 3 },
         { name = 'buffer', keyword_lenght = 3 },
         { name = 'path', keyword_lenght = 3 },
         { name = 'calc' },
     },
+
     confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
     },
+
     documentation = {
         border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
+
     experimental = {
         ghost_text = true,
         native_menu = false,

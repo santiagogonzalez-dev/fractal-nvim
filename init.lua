@@ -48,8 +48,7 @@ require('csj.keymaps').general_keybinds() -- General keybinds
 vim.defer_fn(function()
     vim.opt.shadafile = ''
 
-    -- Functions
-    require('csj.functions')
+    require('csj.functions') -- Functions
 
     -- Plugins
     require('packer_compiled')
