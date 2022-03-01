@@ -48,31 +48,6 @@ function M.close_or_quit()
    end
 end
 
--- Load plugins
-function M.load_plugins()
-   vim.cmd([[
-      PackerLoad bufferline.nvim
-      PackerLoad gitsigns.nvim
-      " PackerLoad lualine.nvim
-      PackerLoad nvim-tree.lua
-      PackerLoad telescope.nvim
-      PackerLoad indent-blankline.nvim
-
-      " Colors
-      PackerLoad nvim-colorizer.lua
-      PackerLoad vim-hexokinase
-      HexokinaseTurnOn
-      ColorizerToggle
-    ]])
-end
-
--- Defer plugins
-vim.api.nvim_create_autocmd('VimEnter', {
-   callback = function()
-      vim.defer_fn(M.load_plugins, 6)
-   end,
-})
-
 -- Compare the buffer to the contents of the clipboard
 function _G.compare_to_clipboard()
    vim.cmd('vsplit')

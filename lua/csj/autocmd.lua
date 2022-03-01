@@ -41,12 +41,12 @@ vim.api.nvim_create_autocmd('WinLeave', {
    command = 'setlocal nocursorline nocursorcolumn',
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-   desc = 'Remove continuation of comments when creating a new line via `o`',
-   callback = function()
-      vim.opt.formatoptions:remove('o')
-   end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--    desc = 'Remove continuation of comments when creating a new line via `o`',
+--    callback = function()
+--       vim.opt.formatoptions:remove('o')
+--    end,
+-- })
 
 vim.api.nvim_create_autocmd('CmdLineLeave', {
    desc = 'Hide last run command in the command line after N seconds',
