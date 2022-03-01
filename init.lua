@@ -89,7 +89,8 @@ function M.load_settings()
       ColorizerToggle
    ]])
 
-   -- General settings
+   -- General settings:
+   -- I'm pulling this at the end so that it doesn't get override by other settings/plugins
    require('csj.settings')
 end
 

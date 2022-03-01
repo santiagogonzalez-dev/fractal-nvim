@@ -96,7 +96,9 @@ function M.general_keybinds()
    -- Make view
    set('n', '<Leader>m', '<Cmd>mkview<Cr>')
 
-   set('n', '<Esc><Esc>', '<cmd>nohlsearch<cr>')
+   -- Disable highlight
+   set('n', '<Leader><Leader>', '<cmd>nohlsearch<cr>')
+   -- set('n', '<Esc><Esc>', '<cmd>nohlsearch<cr>')
 
    -- Paste in word under the cursor without overwriting the yank register
    set('n', '<Leader>p', [["_diwP]])
