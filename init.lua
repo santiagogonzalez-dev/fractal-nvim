@@ -4,37 +4,37 @@ vim.cmd([[
     filetype plugin indent off
 ]])
 
-vim.opt.shadafile = "NONE"
+vim.opt.shadafile = 'NONE'
 
 -- Disable default plugins
 local disabled_built_ins = {
-    '2html_plugin',
-    'getscript',
-    'getscriptPlugin',
-    'gzip',
-    'logipat',
-    'man',
-    'netrw',
-    'netrwFileHandlers',
-    'netrwPlugin',
-    'netrwSettings',
-    'perl_provider',
-    'python_provider',
-    'remote_plugins',
-    'rrhelper',
-    'ruby_provider',
-    'shada_plugin',
-    'spec',
-    'tar',
-    'tarPlugin',
-    'vimball',
-    'vimballPlugin',
-    'zip',
-    'zipPlugin',
+   '2html_plugin',
+   'getscript',
+   'getscriptPlugin',
+   'gzip',
+   'logipat',
+   'man',
+   'netrw',
+   'netrwFileHandlers',
+   'netrwPlugin',
+   'netrwSettings',
+   'perl_provider',
+   'python_provider',
+   'remote_plugins',
+   'rrhelper',
+   'ruby_provider',
+   'shada_plugin',
+   'spec',
+   'tar',
+   'tarPlugin',
+   'vimball',
+   'vimballPlugin',
+   'zip',
+   'zipPlugin',
 }
 
 for plugin in pairs(disabled_built_ins) do
-    vim.g['loaded_' .. plugin] = 0
+   vim.g['loaded_' .. plugin] = 0
 end
 
 -- Enable opt-in plugins
@@ -46,20 +46,20 @@ require('csj.autocmd') -- Autocommands
 require('csj.keymaps').general_keybinds() -- General keybinds
 
 vim.defer_fn(function()
-    vim.opt.shadafile = ''
+   vim.opt.shadafile = ''
 
-    require('csj.functions') -- Functions
+   require('csj.functions') -- Functions
 
-    -- Plugins
-    require('packer_compiled')
-    require('csj.plugins')
-    require('csj.core.cmp')
+   -- Plugins
+   require('packer_compiled')
+   require('csj.plugins')
+   require('csj.core.cmp')
 
-    -- LSP
-    require('csj.lsp')
-    require('csj.lsp.null-ls')
+   -- LSP
+   require('csj.lsp')
+   require('csj.lsp.null-ls')
 
-    vim.cmd([[
+   vim.cmd([[
         rshada!
         doautocmd BufRead
         syntax on
