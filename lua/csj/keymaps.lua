@@ -133,7 +133,7 @@ function M.general_keybinds()
    set('n', '<Leader>c', '<Cmd>PackerCompile profile=true<Cr>')
 
    -- Cursor On Node
-   set('n', '^^', require('csj.functions').cursor_on_node)
+   set('n', '<Leader>^', require('csj.functions').cursor_on_node)
 end
 
 -- Nvim-tree

@@ -70,12 +70,12 @@ end
 local cursor_mode = true
 function M.cursor_on_node()
    if cursor_mode == true then
-      vim.keymap.set('n', 'j', 'j^')
-      vim.keymap.set('n', 'k', 'k^')
+      vim.keymap.set('n', 'j', '+')
+      vim.keymap.set('n', 'k', '-')
       cursor_mode = false
    elseif cursor_mode == false then
-      vim.keymap.set('n', 'j', 'j')
-      vim.keymap.set('n', 'k', 'k')
+      vim.keymap.del('n', 'j')
+      vim.keymap.del('n', 'k')
       cursor_mode = true
    end
 end
