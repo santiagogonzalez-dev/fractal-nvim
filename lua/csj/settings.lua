@@ -88,8 +88,10 @@ vim.opt.iskeyword:remove('_') -- A word separated by _ is being separated in mul
 -- Formatoptions
 vim.opt.formatoptions:append('ct')
 vim.opt.formatoptions:remove('o')
+
 vim.api.nvim_create_autocmd('BufEnter', {
    desc = 'Load formatoptions options in all buffers',
+   group = '_session_opts',
    callback = function()
       vim.opt.formatoptions:append('ct')
       vim.opt.formatoptions:remove('o')
