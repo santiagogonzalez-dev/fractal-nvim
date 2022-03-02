@@ -34,8 +34,6 @@ packer.init({
 })
 
 return packer.startup(function(use)
-   -- Core
-
    -- Impatient
    use({
       'lewis6991/impatient.nvim',
@@ -98,6 +96,7 @@ return packer.startup(function(use)
    -- Treesitter
    use({
       'nvim-treesitter/nvim-treesitter',
+      opt = true,
       run = ':TSUpdate',
       requires = {
          'JoosepAlviste/nvim-ts-context-commentstring',
@@ -108,10 +107,7 @@ return packer.startup(function(use)
       end,
    })
 
-   -- End Core
-
-   -- Completion
-
+   -- Completion and snippets
    use({
       'L3MON4D3/LuaSnip', -- Snippet engine
       'rafamadriz/friendly-snippets', -- Additional snippets
@@ -126,8 +122,6 @@ return packer.startup(function(use)
       event = 'InsertEnter',
    })
 
-   -- End Completion
-
    -- LSP
    use({
       'neovim/nvim-lspconfig', -- Enable LSP
@@ -135,6 +129,7 @@ return packer.startup(function(use)
       'jose-elias-alvarez/null-ls.nvim', -- Formatters and linters
    })
 
+   -- Diagnostics
    use({
       'folke/trouble.nvim',
       requires = 'kyazdani42/nvim-web-devicons',
@@ -142,9 +137,6 @@ return packer.startup(function(use)
          require('trouble').setup()
       end,
    })
-   -- End LSP
-
-   -- Extra Plugins
 
    -- Bufferline
    use({
@@ -194,16 +186,10 @@ return packer.startup(function(use)
    })
 
    -- Vim Surround
-   use({
-      'tpope/vim-surround',
-      event = 'BufEnter',
-   })
+   use({ 'tpope/vim-surround' })
 
    -- Vim repeat
-   use({
-      'tpope/vim-repeat',
-      event = 'BufEnter',
-   })
+   use({ 'tpope/vim-repeat' })
 
    -- Telescope
    use({
@@ -250,8 +236,6 @@ return packer.startup(function(use)
       opt = true,
       run = 'cd /home/st/.local/share/nvim/site/pack/packer/opt/vim-hexokinase && make hexokinase',
    })
-
-   -- End Extra Plugins
 
    if PACKER_BOOTSTRAP then
       require('packer').sync()

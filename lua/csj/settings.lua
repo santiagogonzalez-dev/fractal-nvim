@@ -5,7 +5,7 @@ local options = {
    autoindent = true, -- Copy indent from current line when starting a new line
    autoread = true, -- If a file has been changed, reload the file in neovim
    backspace = 'indent,start,eol', -- Make backspace behave like normal again
-   clipboard = 'unnamedplus', -- Uses the system clipboard
+   clipboard = 'unnamed', -- Uses the system clipboard
    cmdheight = 1, -- Space for displaying messages in the command line
    textwidth = 120, -- Delimit text blocks to N columns
    colorcolumn = '81', -- Limiter line, + line more than textwidth
@@ -61,16 +61,16 @@ local options = {
    swapfile = false, -- It does (not) creates a swapfileWage
    termguicolors = true, -- Enable colors in the terminal
    title = true, -- Set the window title based on the value of titlestring
-   timeoutlen = 300, -- Time given for doing a sequence
-   redrawtime = 300, -- Time for redrawing the display
-   updatetime = 150, -- Faster completion
-   -- wildcharm = 26, -- Trigger completion in macros
-   -- wildignore = '*.o,*.rej,*.so', -- File patterns to ignore
-   -- wildignorecase = true, -- Ignore case command completion menu
-   -- wildmenu = true, -- Enables 'enhanced mode' of command-line completion
-   -- winhighlight = 'NormalNC:WinNormalNC',
-   -- wildmode = 'longest:full,full', -- Options for wildmenu
-   -- winblend = 9, -- Enable transparency in floating windows and menus
+   timeoutlen = 333, -- Time given for doing a sequence
+   redrawtime = 333, -- Time for redrawing the display
+   updatetime = 234, -- Faster completion
+   wildcharm = 26, -- Trigger completion in macros
+   wildignore = '*.o,*.rej,*.so', -- File patterns to ignore
+   wildignorecase = true, -- Ignore case command completion menu
+   wildmenu = true, -- Enables 'enhanced mode' of command-line completion
+   winhighlight = 'NormalNC:WinNormalNC',
+   wildmode = 'longest:full,full', -- Options for wildmenu
+   winblend = 9, -- Enable transparency in floating windows and menus
    wrap = false, -- Wrap text
    breakindent = true, -- Every wrapped line will continue visually indented (same amount of
 }
@@ -96,17 +96,17 @@ vim.opt.matchpairs:append({
    '=:;',
 })
 
+-- -- Folds
+-- vim.wo.foldmethod = 'expr'
+-- vim.wo.foldcolumn = '1'
+-- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.opt.foldtext = [[substitute(getline(v:foldstart),'\\\\t',repeat('\\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
+
 -- Search for tags
-vim.opt.tags:append({
-   './tags',
-   'tags',
-})
+vim.opt.tags:append({ './tags', 'tags' })
 
 -- Cursor settings for GUIs
-vim.opt.guicursor:append({
-   'i:ver25-iCursor',
-   'v:hor50', -- Shows underscore like cursor in visual mode
-})
+vim.opt.guicursor:append({ 'v:hor50' })
 
 -- Completion menu options
 vim.opt.completeopt:append({ 'menuone', 'noinsert', 'noselect' })

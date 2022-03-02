@@ -1,6 +1,6 @@
 vim.cmd([[
    if exists('g:no_vim_conceal') || !has('conceal') || &enc != 'utf-8'
-      finish
+   finish
    endif
 
    " comparators
@@ -12,11 +12,13 @@ vim.cmd([[
    syntax match pyOperator " / " conceal cchar=÷
    syntax match pyOperator " \* " conceal cchar=×
    syntax match pyOperator "\<\%(math\.\)\?sqrt\>" conceal cchar=√
+   syntax match pyOperator "\<\%(math\.\)\?prod\>" conceal cchar=∏
    syntax match pyOperator "\( \|\)\*\*\( \|\)2\>" conceal cchar=²
    syntax match pyOperator "\( \|\)\*\*\( \|\)3\>" conceal cchar=³
    syntax match pyKeyword "\<\%(math\.\)\?pi\>" conceal cchar=π
 
    " keywords
+   syntax keyword pyOperator product conceal cchar=∏
    syntax keyword pyOperator sum conceal cchar=∑
    syntax keyword pyStatement lambda conceal cchar=λ
 
@@ -25,5 +27,5 @@ vim.cmd([[
    hi link pyKeyword Keyword
    hi! link Conceal Operator
 
-   setlocal conceallevel=1
+   setlocal conceallevel=2
 ]])

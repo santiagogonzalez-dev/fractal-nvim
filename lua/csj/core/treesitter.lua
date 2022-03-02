@@ -4,7 +4,17 @@ if not status_ok then
 end
 
 treesitter_configs.setup({
-   ensure_installed = 'maintained',
+   -- ensure_installed = 'maintained',
+   ensure_installed = {
+      'lua',
+      'html',
+      'css',
+      'vim',
+      'markdown',
+      'javascript',
+      'typescript',
+      'tsx',
+   },
    sync_install = false,
    highlight = {
       enable = true,

@@ -32,17 +32,15 @@ function M.close_or_quit()
    end
 
    if CountBufsByType().normal <= 1 then
-      vim.ui.select({ 'Quit neovim', 'Delete the buffer' }, { prompt = '' },
-         function(_, prompt_option)
-            if tonumber(prompt_option) == 1 then
-               return vim.cmd([[ :q ]])
-            elseif tonumber(prompt_option) == 2 then
-               return vim.cmd([[ :bd ]])
-            else
-               return
-            end
+      vim.ui.select({ 'Quit neovim', 'Delete the buffer' }, { prompt = '' }, function(_, prompt_option)
+         if tonumber(prompt_option) == 1 then
+            return vim.cmd([[ :q ]])
+         elseif tonumber(prompt_option) == 2 then
+            return vim.cmd([[ :bd ]])
+         else
+            return
          end
-      )
+      end)
    else
       vim.cmd([[ :bd ]])
    end
@@ -62,12 +60,10 @@ end
 
 -- Insert character at the end of the last edited line
 function M.char_at_eol()
-   vim.ui.input({ prompt = 'What character do you want to insert at eol? ' },
-      function(prompt_option)
-         vim.cmd(':norm mt`.A' .. prompt_option)
-         vim.cmd([[ :norm 't]])
-      end
-   )
+   vim.ui.input({ prompt = 'What character do you want to insert at eol? ' }, function(prompt_option)
+      vim.cmd(':norm mt`.A' .. prompt_option)
+      vim.cmd([[ :norm 't]])
+   end)
 end
 
 return M

@@ -37,9 +37,6 @@ for plugin in pairs(disabled_built_ins) do
    vim.g['loaded_' .. plugin] = 0
 end
 
--- Enable opt-in plugins
-vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
-
 -- Color settings, load first so that it looks pretty while all other settings get loaded
 require('csj.colors')
 
@@ -64,13 +61,16 @@ vim.defer_fn(function()
    require('csj.lsp')
    require('csj.lsp.null-ls')
 
+   -- Enable opt-in plugins
+   vim.g.do_filetype_lua = 1 -- Enable filetype detection in lua
+
    vim.cmd([[
         rshada!
         doautocmd BufRead
         syntax on
         filetype on
         filetype plugin indent on
-    ]])
+   ]])
 end, 0)
 
 -- Deferred configs
@@ -82,6 +82,7 @@ function M.load_settings()
       PackerLoad nvim-tree.lua
       PackerLoad telescope.nvim
       PackerLoad indent-blankline.nvim
+      PackerLoad nvim-treesitter
 
       PackerLoad nvim-colorizer.lua
       PackerLoad vim-hexokinase

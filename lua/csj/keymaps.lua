@@ -131,7 +131,7 @@ function M.general_keybinds()
 
    -- Packer
    set('n', '<Leader>s', '<Cmd>PackerSync<Cr>')
-   set('n', '<Leader>c', '<Cmd>PackerCompile profile=true<Cr>', { silent = false })
+   set('n', '<Leader>c', '<Cmd>PackerCompile profile=true<Cr>')
 end
 
 -- Nvim-tree
