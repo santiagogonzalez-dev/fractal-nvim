@@ -35,8 +35,10 @@ null_ls.setup({
             '--no-semi',
             '--single-quote',
             '--jsx-single-quote',
-            '--tab-width',
-            '4',
+            -- '--tab-width',
+            -- '4',
+            '--print-width',
+            '80',
          },
       }),
       formatting.black.with({

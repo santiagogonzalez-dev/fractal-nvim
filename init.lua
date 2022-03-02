@@ -14,10 +14,6 @@ local disabled_built_ins = {
    'gzip',
    'logipat',
    'man',
-   'netrw',
-   'netrwFileHandlers',
-   'netrwPlugin',
-   'netrwSettings',
    'perl_provider',
    'python_provider',
    'remote_plugins',
@@ -83,7 +79,6 @@ function M.load_settings()
       PackerLoad telescope.nvim
       PackerLoad indent-blankline.nvim
       PackerLoad nvim-treesitter
-
       PackerLoad nvim-colorizer.lua
       PackerLoad vim-hexokinase
       HexokinaseTurnOn

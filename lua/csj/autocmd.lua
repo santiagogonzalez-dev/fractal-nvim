@@ -90,20 +90,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
    end,
 })
 
--- Skeletons
-vim.api.nvim_create_augroup('_insert_skeleton', {})
+-- -- Skeletons
+-- vim.api.nvim_create_augroup('_insert_skeleton', {})
 
-vim.api.nvim_create_autocmd('BufNewFile', {
-   desc = 'Insert skeletons on empty files',
-   group = '_insert_skeleton',
-   command = [[execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")]],
-})
+-- vim.api.nvim_create_autocmd('BufNewFile', {
+--    desc = 'Insert skeletons on empty files',
+--    group = '_insert_skeleton',
+--    command = [[execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")]],
+-- })
 
-vim.api.nvim_create_autocmd('BufNewFile', {
-   desc = 'Insert skeletons on empty files',
-   group = '_insert_skeleton',
-   command = [[execute 'norm Gdd']],
-})
+-- vim.api.nvim_create_autocmd('BufNewFile', {
+--    desc = 'Insert skeletons on empty files',
+--    group = '_insert_skeleton',
+--    command = [[execute 'norm Gdd']],
+-- })
 
 -- Switch to numbers when while on insert mode or cmd mode, and to relative numbers when in normal mode
 vim.api.nvim_create_augroup('_switch_cursorcolumn', {})

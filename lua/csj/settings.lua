@@ -1,6 +1,4 @@
 -- Settings
-local tab_lenght = 3
-
 local options = {
    autoindent = true, -- Copy indent from current line when starting a new line
    autoread = true, -- If a file has been changed, reload the file in neovim
@@ -33,37 +31,34 @@ local options = {
    path = '**', -- Search files recursively
    pumblend = 9, -- Transparency for the pop up menu, disabled because it messess up Nerd Font icons
    pumheight = 6, -- Pop up menu height
-   redrawtime = 333, -- Time for redrawing the display
    relativenumber = true, -- Display line number relative to the cursor
    ruler = true, -- Show the line and column number of the cursor position
-   scrolloff = 8, -- Cursor does not reach top/bottom
    secure = true, -- Self-explanatory
    shell = 'zsh', -- Shell to use for `!`, `:!`, `system()` etc.
    shiftround = true, -- Round indent to multiple of "shiftwidth"
-   shiftwidth = tab_lenght, -- Size of a > or < when indenting
    showbreak = '↪', -- Shows when text is being wrapped
    showmatch = false, -- Show match brace, set to false because :DoMatchParen does enough
    showmode = false, -- Show or hide the mode you are on in the status line
    showtabline = 0, -- Show top tab bar
-   sidescrolloff = 8, -- Cursor does not reach sides
+   scrolloff = 999, -- Cursor does not reach top/bottom
+   sidescrolloff = 9, -- Cursor does not reach sides
    signcolumn = 'yes', -- Always show signcolumn
    smartcase = true, -- Smart case
    smartindent = true, -- Smart indentation
    smarttab = true, -- Smart indentation
-   softtabstop = -1, -- Tab length, if negative shiftwidth value is used
    spelllang = 'en,cjk', -- Spell check: English - PascalCase and camelCase
    spelloptions = 'camel', -- Options for spell checking
    splitbelow = true, -- Force splits to go below current window
    splitright = true, -- Force vertical splits to go to the right of current window
    swapfile = false, -- It does (not) creates a swapfileWage
-   tabstop = tab_lenght, -- Tab length
    termguicolors = true, -- Enable colors in the terminal
    textwidth = 120, -- Delimit text blocks to N columns
-   timeoutlen = 333, -- Time given for doing a sequence
    title = true, -- Set the window title based on the value of titlestring
    undofile = true, -- Persistent undo - undo after you re-open the file
    undolevels = 10000, -- Levels of undoing
-   updatetime = 234, -- Faster completion
+   updatetime = 150, -- Faster completion
+   timeoutlen = 150, -- Time given for doing a sequence
+   redrawtime = 100, -- Time for redrawing the display
    virtualedit = 'all', -- Be able to put the cursor where there's not actual text
    whichwrap = '<,>,[,],h,l,b,s', -- Keys that can make you jump lines if you reach wrap
    wildcharm = 26, -- Trigger completion in macros
@@ -74,6 +69,8 @@ local options = {
    winblend = 9, -- Enable transparency in floating windows and menus
    winhighlight = 'NormalNC:WinNormalNC',
    wrap = false, -- Wrap text
+   regexpengine = 2, -- NFA engine
+   selection = 'exclusive', -- Don't include \n at the eol in v-mode
 }
 
 for k, v in pairs(options) do
@@ -84,6 +81,7 @@ end
 vim.opt.cpoptions:append('nm') -- See :help cpoptions, this are the defaults aABceFs_
 vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
 vim.opt.iskeyword:remove('_') -- A word separated by _ is being separated in multiple ones
+-- vim.opt.statusline = ' %f %M %= %l:%c ʕᵔᴥᵔʔ '
 
 -- Formatoptions
 vim.opt.formatoptions:append('ct')
