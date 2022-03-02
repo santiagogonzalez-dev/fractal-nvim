@@ -97,8 +97,7 @@ function M.general_keybinds()
    set('n', '<Leader>m', '<Cmd>mkview<Cr>')
 
    -- Disable highlight
-   set('n', '<Leader><Leader>', '<cmd>nohlsearch<cr>')
-   -- set('n', '<Esc><Esc>', '<cmd>nohlsearch<cr>')
+   set('n', '<C-l>', '<cmd>nohlsearch<cr>')
 
    -- Paste in word under the cursor without overwriting the yank register
    set('n', '<Leader>p', [["_diwP]])
@@ -132,6 +131,9 @@ function M.general_keybinds()
    -- Packer
    set('n', '<Leader>s', '<Cmd>PackerSync<Cr>')
    set('n', '<Leader>c', '<Cmd>PackerCompile profile=true<Cr>')
+
+   -- Cursor On Node
+   set('n', '^^', require('csj.functions').cursor_on_node)
 end
 
 -- Nvim-tree
