@@ -31,22 +31,18 @@ vim.api.nvim_create_autocmd('BufWritePre', {
    command = [[:%s/\s\+$//e]],
 })
 
+vim.api.nvim_create_augroup('_cursor_active_window', {})
 vim.api.nvim_create_autocmd('WinEnter', {
    desc = 'Show cursor only in active window',
+   group = '_cursor_active_window',
    command = 'setlocal cursorline cursorcolumn',
 })
 
 vim.api.nvim_create_autocmd('WinLeave', {
    desc = 'Show cursor only in active window',
+   group = '_cursor_active_window',
    command = 'setlocal nocursorline nocursorcolumn',
 })
-
--- vim.api.nvim_create_autocmd('BufEnter', {
---    desc = 'Remove continuation of comments when creating a new line via `o`',
---    callback = function()
---       vim.opt.formatoptions:remove('o')
---    end,
--- })
 
 vim.api.nvim_create_autocmd('CmdLineLeave', {
    desc = 'Hide last run command in the command line after N seconds',
@@ -54,7 +50,7 @@ vim.api.nvim_create_autocmd('CmdLineLeave', {
    callback = function()
       vim.defer_fn(function()
          vim.cmd('echo ""')
-      end, 12000)
+      end, 1000)
    end,
 })
 
