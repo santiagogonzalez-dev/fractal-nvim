@@ -77,7 +77,6 @@ return packer.startup(function(use)
    -- Project
    use({
       'ahmedkhalf/project.nvim',
-      event = 'BufEnter',
       config = function()
          vim.g.nvim_tree_respect_buf_cwd = 1
          require('csj.core.project')
