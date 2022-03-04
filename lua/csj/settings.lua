@@ -70,7 +70,7 @@ local options = {
    winhighlight = 'NormalNC:WinNormalNC',
    wrap = false, -- Wrap text
    regexpengine = 2, -- NFA engine
-   selection = 'exclusive', -- Don't include \n at the eol in v-mode
+   selection = 'inclusive', -- Don't include \n at the eol in v-mode
 }
 
 for k, v in pairs(options) do

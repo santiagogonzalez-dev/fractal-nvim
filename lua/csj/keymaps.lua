@@ -81,6 +81,9 @@ function M.general_keybinds()
    set('n', '#', '#N')
    set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]])
 
+   -- Make $ behave as spected in visual modes
+   set({ 'v', 'n' }, '$', 'g_')
+
    -- Moving inside Neovim
    set({ 'n', 'v' }, 'g.', '`.') -- Go to the last place you modified
    set('n', 'go', '<C-o>') -- Go to previous place
@@ -162,23 +165,37 @@ function M.telescope_keybinds()
    set('n', '<Leader>t', ':Telescope ')
    set('n', '<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>')
    set('n', '<Leader>//', '<Cmd>Telescope live_grep<CR>')
-   set('n', '<Leader>f', require('csj.configs.telescope').project_files)
    set('n', '<Leader>P', '<Cmd>Telescope projects<CR>')
+   set('n', '<Leader>f', require('csj.configs.telescope').project_files)
+   -- set('n', '<Leader>b', require('csj.configs.telescope').do_not_close_this_buffer)
 end
 
 -- LSP
 function M.lsp_keymaps()
+   -- Stop the LS
    set({ 'n', 'v', 'x' }, '<Leader>ls', function()
       vim.lsp.stop_client(vim.lsp.get_active_clients())
    end, buffer)
+
+   -- Code actions
    set({ 'v', 'x' }, '<Leader>ca', vim.lsp.buf.range_code_action, buffer)
-   set({ 'v', 'x' }, '<Leader>F', vim.lsp.buf.range_formatting, buffer)
-   set('n', '<Leader>F', vim.lsp.buf.formatting_sync, buffer)
    set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
-   set('n', '<Leader>R', vim.lsp.buf.rename, buffer)
-   set('n', 'gD', vim.lsp.buf.declaration, buffer)
-   set('n', 'gf', vim.lsp.buf.definition, buffer)
+
+   -- Formatting
+   set({ 'v', 'x' }, '<Leader>F', vim.lsp.buf.range_formatting, buffer)
+   set('n', '<Leader>F', vim.lsp.buf.formatting, buffer)
+
+   -- Rename
+   set('n', '<Leader>r', vim.lsp.buf.rename, buffer)
+
+   -- Definitions
+   set('n', 'gd', vim.lsp.buf.definition, buffer)
+
+   -- Open diagnostics in a floating window
    set('n', 'gl', vim.diagnostic.open_float, buffer)
+
+   -- Others
+   set('n', 'gD', vim.lsp.buf.declaration, buffer)
    set('n', 'gr', vim.lsp.buf.references, buffer)
 end
 

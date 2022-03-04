@@ -85,6 +85,10 @@ function M.load_settings()
       ColorizerToggle
    ]])
 
+   -- local is_git = vim.cmd([[ :r!git rev-parse --is-inside-work-tree ]])
+
+   -- if is_git == 'true' then
+
    -- General settings:
    -- I'm pulling this at the end so that it doesn't get override by other settings/plugins
    require('csj.settings')

@@ -51,24 +51,24 @@ vim.api.nvim_create_autocmd('BufWritePre', {
    end,
 })
 
-vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-   desc = 'LSP Diagnostics',
-   group = '_session_opts',
-   callback = function()
-      vim.diagnostic.open_float(nil, { focus = false })
-   end,
-})
+-- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+--    desc = 'LSP Diagnostics',
+--    group = '_session_opts',
+--    callback = function()
+--       vim.diagnostic.open_float(nil, { focus = false })
+--    end,
+-- })
 
-vim.api.nvim_create_autocmd('CmdLineLeave', {
-   desc = 'Hide last run command in the command line after N seconds',
-   group = '_session_opts',
-   pattern = ':',
-   callback = function()
-      vim.defer_fn(function()
-         vim.cmd('echo ""')
-      end, 1000)
-   end,
-})
+-- vim.api.nvim_create_autocmd('CmdLineLeave', {
+--    desc = 'Hide last run command in the command line after N seconds',
+--    group = '_session_opts',
+--    pattern = ':',
+--    callback = function()
+--       vim.defer_fn(function()
+--          vim.cmd('echo ""')
+--       end, 1000)
+--    end,
+-- })
 
 vim.api.nvim_create_autocmd('VimResized', {
    desc = 'Autoresize, ensures splits are equal width when resizing vim',
@@ -120,14 +120,22 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave'
    command = 'if &nu | set nornu | endif',
 })
 
-vim.api.nvim_create_autocmd({ 'CmdLineEnter' }, {
+vim.api.nvim_create_autocmd('CmdLineEnter', {
    desc = 'Switch the cursorline mode based on context',
    group = '_switch_cursorcolumn',
    command = 'set norelativenumber',
 })
 
-vim.api.nvim_create_autocmd({ 'CmdLineLeave' }, {
+vim.api.nvim_create_autocmd('CmdLineLeave', {
    desc = 'Switch the cursorline mode based on context',
    group = '_switch_cursorcolumn',
    command = 'set norelativenumber',
 })
+
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+--    desc = 'Format on save',
+--    group = '_session_opts',
+--    callback = function()
+--       vim.lsp.buf.formatting_sync(nil, 1000)
+--    end,
+-- })
