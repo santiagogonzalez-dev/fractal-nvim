@@ -45,30 +45,12 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 vim.api.nvim_create_autocmd('BufWritePre', {
    desc = 'Create missing directories before saving the buffer',
+   once = true,
    group = '_session_opts',
    callback = function()
       vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
    end,
 })
-
--- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
---    desc = 'LSP Diagnostics',
---    group = '_session_opts',
---    callback = function()
---       vim.diagnostic.open_float(nil, { focus = false })
---    end,
--- })
-
--- vim.api.nvim_create_autocmd('CmdLineLeave', {
---    desc = 'Hide last run command in the command line after N seconds',
---    group = '_session_opts',
---    pattern = ':',
---    callback = function()
---       vim.defer_fn(function()
---          vim.cmd('echo ""')
---       end, 1000)
---    end,
--- })
 
 vim.api.nvim_create_autocmd('VimResized', {
    desc = 'Autoresize, ensures splits are equal width when resizing vim',
@@ -86,27 +68,23 @@ vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = '_session_opts',
    callback = function()
-      vim.highlight.on_yank({ higroup = 'Visual' })
+      vim.highlight.on_yank { higroup = 'Visual' }
    end,
 })
 
--- -- Skeletons
--- vim.api.nvim_create_augroup('_insert_skeleton', {})
-
--- vim.api.nvim_create_autocmd('BufNewFile', {
---    desc = 'Insert skeletons on empty files',
---    group = '_insert_skeleton',
---    command = [[execute '0r ~/.config/nvim/skeletons/skeleton.'.expand("<afile>:e")]],
--- })
-
--- vim.api.nvim_create_autocmd('BufNewFile', {
---    desc = 'Insert skeletons on empty files',
---    group = '_insert_skeleton',
---    command = [[execute 'norm Gdd']],
--- })
-
--- Switch to numbers when while on insert mode or cmd mode, and to relative numbers when in normal mode
+-- Number column actions
 vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
+
+vim.api.nvim_create_autocmd('CursorMoved', {
+   desc = 'Enable relativenumber after 3 seconds',
+   group = '_switch_cursorcolumn',
+   once = true,
+   callback = function()
+      vim.defer_fn(function()
+         vim.opt.relativenumber = true
+      end, 3000)
+   end,
+})
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
    desc = 'Switch the cursorline mode based on context',
@@ -131,11 +109,3 @@ vim.api.nvim_create_autocmd('CmdLineLeave', {
    group = '_switch_cursorcolumn',
    command = 'set norelativenumber',
 })
-
--- vim.api.nvim_create_autocmd('BufWritePre', {
---    desc = 'Format on save',
---    group = '_session_opts',
---    callback = function()
---       vim.lsp.buf.formatting_sync(nil, 1000)
---    end,
--- })

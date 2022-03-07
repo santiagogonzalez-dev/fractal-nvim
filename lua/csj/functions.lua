@@ -4,8 +4,6 @@ M = {}
 vim.api.nvim_add_user_command('Format', vim.lsp.buf.formatting_sync, {})
 
 -- Close or quit buffer
--- If there's more than two buffers open, wipe the working buffer
--- If there's only one buffer close neovim
 function M.close_or_quit()
    local CountBufsByType = function(loaded_only)
       loaded_only = (loaded_only == nil and true or loaded_only)
@@ -62,22 +60,21 @@ end
 function M.char_at_eol()
    vim.ui.input({ prompt = 'What character do you want to insert at eol? ' }, function(prompt_option)
       vim.cmd(':norm mt`.A' .. prompt_option)
-      vim.cmd([[ :norm 't]])
+      vim.cmd([[ :norm 't ]])
    end)
 end
 
--- Cursor On Node
-local cursor_mode = true
-function M.cursor_on_node()
-   if cursor_mode == true then
-      vim.keymap.set('n', 'j', '+')
-      vim.keymap.set('n', 'k', '-')
-      cursor_mode = false
-   elseif cursor_mode == false then
-      vim.keymap.del('n', 'j')
-      vim.keymap.del('n', 'k')
-      cursor_mode = true
-   end
+-- Format only if the buffer has unsaved changes
+function M.format_if_updating()
+   local format_on_write = vim.api.nvim_create_autocmd('BufWritePre', {
+      desc = 'Format on save',
+      group = '_session_opts',
+      callback = function()
+         vim.lsp.buf.formatting_sync()
+      end,
+   })
+   vim.cmd([[ :update ]])
+   vim.api.nvim_del_autocmd(format_on_write)
 end
 
 return M

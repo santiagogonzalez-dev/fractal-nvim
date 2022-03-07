@@ -26,22 +26,22 @@ function M.general_keybinds()
    set('n', '<Leader>sk', ':0read ~/.config/nvim/skeletons/')
 
    -- Reload the file manually
-   set('n', '<Leader>e', '<Cmd>edit!<CR>')
+   set('n', '<Leader>e', '<CMD>edit!<CR>')
 
    -- Close or Quit
    set('n', '<M-c>', require('csj.functions').close_or_quit)
 
    -- Write/Update
-   set('n', '<Leader>w', '<Cmd>up<CR>')
+   set('n', '<Leader>w', '<CMD>up<CR>')
 
    -- Write to all buffers and quit
-   set('n', '<Leader>W', '<Cmd>wqall<CR>')
+   set('n', '<Leader>W', '<CMD>wqall<CR>')
 
    -- Quit
-   set('n', '<Leader>q', '<Cmd>quit<CR>')
+   set('n', '<Leader>q', '<CMD>quit<CR>')
 
    -- Delete all buffers
-   set('n', '<Leader>Q', '<Cmd>bufdo bdelete<CR>')
+   set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>')
 
    -- Navigate buffers
    set('n', '<Tab>', ':bnext<CR>')
@@ -66,11 +66,11 @@ function M.general_keybinds()
    set('n', '<A-k>', ':m .-2<CR>==')
    set('v', '<A-j>', ":m '>+1<CR>gv=gv") -- Visual mode
    set('v', '<A-k>', ":m '<-2<CR>gv=gv")
-   set('i', '<A-j>', '<Esc>:m .+1<CR>==gi') -- Insert mode
-   set('i', '<A-k>', '<Esc>:m .-2<CR>==gi')
+   set('i', '<A-j>', '<ESC>:m .+1<CR>==gi') -- Insert mode
+   set('i', '<A-k>', '<ESC>:m .-2<CR>==gi')
 
    -- Center commands
-   set('n', 'gi', 'gi<Esc>zzi')
+   set('n', 'gi', 'gi<ESC>zzi')
    set('n', 'n', 'nzzzv')
    set('n', 'N', 'Nzzzv')
    set('v', 'y', 'myy`y')
@@ -94,10 +94,10 @@ function M.general_keybinds()
    set('n', 'gf', ':edit <cfile><cr>') -- Go to file even if it doesn't exists
 
    -- Opposite to J, give a utility to K
-   set('n', 'K', 'i<CR><Esc>')
+   set('n', 'K', 'i<CR><ESC>')
 
    -- Make view
-   set('n', '<Leader>m', '<Cmd>mkview<CR>')
+   set('n', '<Leader>m', '<CMD>mkview<CR>')
 
    -- Disable highlight
    set('n', '<C-n>', '<cmd>nohlsearch<cr>')
@@ -111,7 +111,6 @@ function M.general_keybinds()
 
    -- Swap ' with `
    set('n', "'", '`')
-   set('n', '`', "'")
 
    -- Undo break points
    set('i', ',', ',<C-g>u')
@@ -132,42 +131,34 @@ function M.general_keybinds()
    set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", expr)
 
    -- Packer
-   set('n', '<Leader>ps', '<Cmd>PackerSync<CR>')
-   set('n', '<Leader>pc', '<Cmd>PackerCompile profile=true<CR>')
-
-   -- Cursor On Node
-   set('n', '<Leader>^', require('csj.functions').cursor_on_node)
+   set('n', '<Leader>ps', '<CMD>PackerSync<CR>')
+   set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>')
 
    -- Source lua file
-   -- TODO add more functionality to this keybind
    set('n', '<Leader>s', ':luafile %<CR>')
-
-   -- NetRW
-   set('n', '<Leader>v', ':Ex<CR>')
 end
 
 -- Nvim-tree
 function M.nvimtree_keybinds()
-   set('n', '<Leader>v', '<Cmd>NvimTreeToggle<CR>')
+   set('n', '<Leader>v', '<CMD>NvimTreeToggle<CR>')
 end
 
 -- Gitsigns
-function M.gitsigns_keybinds()
-   set('n', 'ghr', '<Cmd>Gitsigns reset_hunk<CR>')
-   set('n', 'ghb', '<Cmd>Gitsigns reset_buffer<CR>')
-   set('n', 'ghj', '<Cmd>Gitsigns next_hunk<CR>')
-   set('n', 'ghk', '<Cmd>Gitsigns prev_hunk<CR>')
-   set('n', 'ghp', '<Cmd>Gitsigns preview_hunk<CR>')
+function M.gitsigns_keybinds(gitsigns)
+   set('n', 'ghr', gitsigns.reset_hunk)
+   set('n', 'ghb', gitsigns.reset_buffer)
+   set('n', 'ghj', gitsigns.next_hunk)
+   set('n', 'ghk', gitsigns.prev_hunk)
+   set('n', 'ghp', gitsigns.preview_hunk)
 end
 
 -- Telescope
 function M.telescope_keybinds()
    set('n', '<Leader>t', ':Telescope ')
-   set('n', '<Leader>/', '<Cmd>Telescope current_buffer_fuzzy_find<CR>')
-   set('n', '<Leader>//', '<Cmd>Telescope live_grep<CR>')
-   set('n', '<Leader>P', '<Cmd>Telescope projects<CR>')
+   set('n', '<Leader>/', '<CMD>Telescope current_buffer_fuzzy_find<CR>')
+   set('n', '<Leader>//', '<CMD>Telescope live_grep<CR>')
+   set('n', '<Leader>P', '<CMD>Telescope projects<CR>')
    set('n', '<Leader>f', require('csj.configs.telescope').project_files)
-   -- set('n', '<Leader>b', require('csj.configs.telescope').do_not_close_this_buffer)
 end
 
 -- LSP
@@ -182,8 +173,8 @@ function M.lsp_keymaps()
    set('n', '<Leader>ca', vim.lsp.buf.code_action, buffer)
 
    -- Formatting
-   set({ 'v', 'x' }, '<Leader>F', vim.lsp.buf.range_formatting, buffer)
-   set('n', '<Leader>F', vim.lsp.buf.formatting, buffer)
+   set({ 'v', 'x' }, '<Leader><Leader>f', vim.lsp.buf.range_formatting, buffer)
+   set('n', '<Leader><Leader>f', vim.lsp.buf.formatting, buffer)
 
    -- Rename
    set('n', '<Leader>r', vim.lsp.buf.rename, buffer)

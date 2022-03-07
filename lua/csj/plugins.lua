@@ -3,14 +3,14 @@
 -- Automatically install packer
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-   PACKER_BOOTSTRAP = vim.fn.system({
+   PACKER_BOOTSTRAP = vim.fn.system {
       'git',
       'clone',
       '--depth',
       '1',
       'https://github.com/wbthomason/packer.nvim',
       install_path,
-   })
+   }
    print('Installing packer close and reopen Neovim...')
    vim.cmd([[ packadd packer.nvim ]])
 end
@@ -21,48 +21,52 @@ if not status_ok then
    return
 end
 
-packer.init({
+packer.init {
    -- Path for packer_compiled.lua
    compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
 
    -- Have packer use a popup window
    display = {
       open_fn = function()
-         return require('packer.util').float({ border = 'rounded' })
+         return require('packer.util').float { border = 'rounded' }
       end,
    },
-})
+}
 
 return packer.startup(function(use)
    -- Impatient
-   use({
+   use {
       'lewis6991/impatient.nvim',
       config = function()
          require('csj.core.impatient')
       end,
-   })
+   }
 
    -- Packer
-   use({ 'wbthomason/packer.nvim' })
+   use { 'wbthomason/packer.nvim' }
 
    -- Plenary
-   use({ 'nvim-lua/plenary.nvim' })
+   use {
+      'nvim-lua/plenary.nvim',
+      module = 'plenary',
+   }
 
    -- Icons
-   use({
+   use {
       'kyazdani42/nvim-web-devicons',
       after = 'nvim-tree.lua',
-   })
+   }
 
    -- Colorscheme
-   use({
+   use {
       'rose-pine/neovim',
       as = 'rose-pine',
-   })
+   }
 
    -- Comment
-   use({
+   use {
       'numToStr/Comment.nvim',
+      module = 'comment',
       keys = {
          'gcc',
          'gc',
@@ -72,30 +76,29 @@ return packer.startup(function(use)
       config = function()
          require('csj.core.comment')
       end,
-   })
+   }
 
    -- Project
-   use({
+   use {
       'ahmedkhalf/project.nvim',
       config = function()
          vim.g.nvim_tree_respect_buf_cwd = 1
          require('csj.core.project')
       end,
-   })
+   }
 
    -- Autopairs
-   use({
+   use {
       'windwp/nvim-autopairs',
       event = 'InsertEnter',
       config = function()
          require('csj.core.autopairs')
       end,
-   })
+   }
 
    -- Treesitter
-   use({
+   use {
       'nvim-treesitter/nvim-treesitter',
-      opt = true,
       run = ':TSUpdate',
       requires = {
          'JoosepAlviste/nvim-ts-context-commentstring',
@@ -104,10 +107,10 @@ return packer.startup(function(use)
       config = function()
          require('csj.core.treesitter')
       end,
-   })
+   }
 
    -- Completion and snippets
-   use({
+   use {
       'L3MON4D3/LuaSnip', -- Snippet engine
       'rafamadriz/friendly-snippets', -- Additional snippets
       'saadparwaiz1/cmp_luasnip', -- Snippet completions
@@ -118,36 +121,40 @@ return packer.startup(function(use)
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path', -- Path completion
       'hrsh7th/nvim-cmp', -- The completion plugin
-      event = 'InsertEnter',
-   })
+   }
 
    -- LSP
-   use({
+   use {
       'neovim/nvim-lspconfig', -- Enable LSP
       'williamboman/nvim-lsp-installer', -- Install language servers
-      'jose-elias-alvarez/null-ls.nvim', -- Formatters and linters
-   })
+   }
+
+   -- Null-LS for formatters and linters
+   use {
+      'jose-elias-alvarez/null-ls.nvim',
+   }
 
    -- Diagnostics
-   use({
+   use {
       'folke/trouble.nvim',
+      keys = 'Trouble',
       requires = 'kyazdani42/nvim-web-devicons',
       config = function()
          require('trouble').setup()
       end,
-   })
+   }
 
    -- Bufferline
-   use({
+   use {
       'akinsho/bufferline.nvim',
       opt = true,
       config = function()
          require('csj.configs.bufferline')
       end,
-   })
+   }
 
    -- Toggle term
-   use({
+   use {
       'akinsho/toggleterm.nvim',
       keys = {
          '<C-t>',
@@ -155,86 +162,92 @@ return packer.startup(function(use)
       config = function()
          require('csj.configs.toggleterm')
       end,
-   })
+   }
 
    -- Git Signs
-   use({
+   use {
       'lewis6991/gitsigns.nvim',
       opt = true,
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
-         require('csj.configs.gitsigns')
-         require('csj.keymaps').gitsigns_keybinds()
+         local gitsigns = require('csj.configs.gitsigns').setup()
+         require('csj.keymaps').gitsigns_keybinds(gitsigns)
       end,
-   })
+   }
 
    -- Vim Fugitive
-   use({
+   use {
       'tpope/vim-fugitive',
       after = 'gitsigns.nvim',
-   })
+   }
 
    -- Nvim-tree
-   use({
+   use {
       'kyazdani42/nvim-tree.lua',
       opt = true,
       config = function()
          require('csj.configs.nvimtree')
          require('csj.keymaps').nvimtree_keybinds()
       end,
-   })
+   }
 
    -- Vim Surround
-   use({ 'tpope/vim-surround' })
+   use { 'tpope/vim-surround' }
 
    -- Vim repeat
-   use({ 'tpope/vim-repeat' })
+   use { 'tpope/vim-repeat' }
 
    -- Telescope
-   use({
+   use {
       'nvim-telescope/telescope.nvim',
-      opt = true,
+      module = 'telescope',
+      keys = {
+         '<Leader>t',
+         '<Leader>/',
+         '<Leader>//',
+         '<Leader>P',
+         '<Leader>f',
+      },
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
-         require('csj.configs.telescope')
          require('csj.keymaps').telescope_keybinds()
+         require('csj.configs.telescope').setup()
       end,
-   })
+   }
 
    -- Indent Blankline
-   use({
+   use {
       'lukas-reineke/indent-blankline.nvim',
       opt = true,
       config = function()
          require('csj.configs.indentblankline')
       end,
-   })
-
-   -- Status line
-   use({
-      'nvim-lualine/lualine.nvim',
-      opt = true,
-      requires = { 'kyazdani42/nvim-web-devicons' },
-      config = function()
-         require('csj.configs.lualine')
-      end,
-   })
+   }
 
    -- Colorizer
-   use({
+   use {
       'norcalli/nvim-colorizer.lua',
       opt = true,
       config = function()
          require('colorizer').setup()
       end,
-   })
+   }
 
    -- Vim Hexokinase
-   use({
+   use {
       'RRethy/vim-hexokinase',
       opt = true,
       run = 'cd /home/st/.local/share/nvim/site/pack/packer/opt/vim-hexokinase && make hexokinase',
-   })
+   }
+
+   use {
+      'jaxbot/semantic-highlight.vim',
+      config = function ()
+         vim.cmd([[
+            let s:semanticGUIColors = [ '#eb6f92', '#f6c177', '#ebbcba', '#31748f', '#9ccfd8', '#c4a7e7', ]
+         ]])
+      end,
+   }
 
    if PACKER_BOOTSTRAP then
       require('packer').sync()

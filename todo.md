@@ -8,3 +8,6 @@
 - Set up folds, with or without the help of a plugin
 - If the file is under a git directory load certain plugins
 - Don't open an empty buffer at startup
+- See https://github.com/neovim/neovim/pull/16251 for more info on cmdheight=0
+- vim.opt.lines:append '1' -- Hide command line, currently very buggy
+- https://github.com/neovim/neovim/pull/17266 for laststatus = 3

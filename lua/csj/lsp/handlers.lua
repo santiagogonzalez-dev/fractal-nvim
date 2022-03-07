@@ -40,17 +40,20 @@ end
 -- Highlight words matching the word under cursor
 local function lsp_highlight_document(client)
    if client.resolved_capabilities.document_highlight then
-      vim.api.nvim_exec([[
+      vim.api.nvim_exec(
+         [[
             augroup lsp_document_highlight
                 autocmd! * <buffer>
                 autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
                 autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
             augroup END
-      ]], false)
+      ]],
+         false
+      )
 
-      vim.cmd([[ highlight LspReferenceText guifg=nocombine gui=reverse ]])
-      vim.cmd([[ highlight LspReferenceRead guifg=nocombine gui=reverse ]])
-      vim.cmd([[ highlight LspReferenceWrite guifg=nocombine gui=reverse ]])
+      vim.api.nvim_set_hl(0, 'LspReferenceText', { nocombine = true, reverse = true })
+      vim.api.nvim_set_hl(0, 'LspReferenceRead', { nocombine = true, reverse = true })
+      vim.api.nvim_set_hl(0, 'LspReferenceWrite', { nocombine = true, reverse = true })
    end
 end
 

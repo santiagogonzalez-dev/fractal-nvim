@@ -19,7 +19,7 @@ npairs.setup({
       chars = { '{', '[', '(', '"', "'" },
       pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], '%s+', ''),
       offset = -1, -- Offset from pattern match, with -1 you can insert before the comma
-      keys = 'aoeusnthdiqjkzvwmbxlrcgp', -- Because I use dvorak BTW
+      keys = 'aosenuth', -- Because I use dvorak BTW
       check_comma = true,
       highlight = 'Search',
       highlight_grey = 'Comment',
