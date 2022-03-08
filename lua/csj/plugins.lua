@@ -38,41 +38,20 @@ return packer.startup(function(use)
    use {
       'lewis6991/impatient.nvim',
       config = function()
-         require('csj.core.impatient')
+         require('impatient').enable_profile()
       end,
    }
 
-   -- Packer
-   use { 'wbthomason/packer.nvim' }
-
-   -- Plenary
-   use {
-      'nvim-lua/plenary.nvim',
-      module = 'plenary',
-   }
-
-   -- Icons
-   use {
-      'kyazdani42/nvim-web-devicons',
-      after = 'nvim-tree.lua',
-   }
-
-   -- Colorscheme
-   use {
-      'rose-pine/neovim',
-      as = 'rose-pine',
-   }
+   use { 'wbthomason/packer.nvim' } -- Packer
+   use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
+   use { 'kyazdani42/nvim-web-devicons', after = 'nvim-tree.lua' } -- Icons
+   use { 'rose-pine/neovim', as = 'rose-pine' } -- Colorscheme
 
    -- Comment
    use {
       'numToStr/Comment.nvim',
       module = 'comment',
-      keys = {
-         'gcc',
-         'gc',
-         'gcb',
-         'gb',
-      },
+      keys = { 'gcc', 'gc', 'gcb', 'gb' },
       config = function()
          require('csj.core.comment')
       end,
@@ -99,6 +78,7 @@ return packer.startup(function(use)
    -- Treesitter
    use {
       'nvim-treesitter/nvim-treesitter',
+      opt = true,
       run = ':TSUpdate',
       requires = {
          'JoosepAlviste/nvim-ts-context-commentstring',
@@ -130,19 +110,7 @@ return packer.startup(function(use)
    }
 
    -- Null-LS for formatters and linters
-   use {
-      'jose-elias-alvarez/null-ls.nvim',
-   }
-
-   -- Diagnostics
-   use {
-      'folke/trouble.nvim',
-      keys = 'Trouble',
-      requires = 'kyazdani42/nvim-web-devicons',
-      config = function()
-         require('trouble').setup()
-      end,
-   }
+   use { 'jose-elias-alvarez/null-ls.nvim' }
 
    -- Bufferline
    use {
@@ -175,11 +143,9 @@ return packer.startup(function(use)
       end,
    }
 
-   -- Vim Fugitive
-   use {
-      'tpope/vim-fugitive',
-      after = 'gitsigns.nvim',
-   }
+   use { 'tpope/vim-fugitive', after = 'gitsigns.nvim' } -- Fugitive
+   use { 'tpope/vim-surround' } -- Surround
+   use { 'tpope/vim-repeat' } -- Repeat
 
    -- Nvim-tree
    use {
@@ -190,12 +156,6 @@ return packer.startup(function(use)
          require('csj.keymaps').nvimtree_keybinds()
       end,
    }
-
-   -- Vim Surround
-   use { 'tpope/vim-surround' }
-
-   -- Vim repeat
-   use { 'tpope/vim-repeat' }
 
    -- Telescope
    use {
@@ -208,7 +168,7 @@ return packer.startup(function(use)
          '<Leader>P',
          '<Leader>f',
       },
-      requires = { 'nvim-lua/plenary.nvim' },
+      requires = 'nvim-lua/plenary.nvim',
       config = function()
          require('csj.keymaps').telescope_keybinds()
          require('csj.configs.telescope').setup()
@@ -242,7 +202,8 @@ return packer.startup(function(use)
 
    use {
       'jaxbot/semantic-highlight.vim',
-      config = function ()
+      disable = true,
+      config = function()
          vim.cmd([[
             let s:semanticGUIColors = [ '#eb6f92', '#f6c177', '#ebbcba', '#31748f', '#9ccfd8', '#c4a7e7', ]
          ]])

@@ -39,7 +39,6 @@ local options = {
    winblend = 9,
    redrawtime = 300, -- Time for redrawing the display
    ruler = true, -- Ruler
-   rulerformat = '%40(%= %M %f %)', -- Ruler format
    scrolloff = 999, -- Cursor does not reach top/bottom
    secure = true, -- Self-explanatory
    selection = 'inclusive', -- Don't include \n at the eol in v-mode
@@ -83,18 +82,20 @@ vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
 vim.opt.path:append('**') -- Search files recursively
 
 -- Formatoptions
-local formatopts = function()
+local buffer_opts = function()
    vim.opt.formatoptions:append('ct')
    vim.opt.formatoptions:remove('o')
+   vim.cmd([[syntax match doublequotes '\"' conceal]])
+   vim.cmd([[syntax match singlequotes '\'' conceal]])
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
-   desc = 'Load formatoptions options in all buffers',
+   desc = 'Load some options in all buffers',
    group = '_session_opts',
-   callback = formatopts,
+   callback = buffer_opts,
 })
 
-formatopts()
+buffer_opts()
 
 -- Non visible characters
 vim.opt.list = true

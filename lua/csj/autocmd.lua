@@ -6,7 +6,7 @@ vim.api.nvim_create_autocmd('FileType', {
    group = '_filetype_options',
    pattern = 'qf,help,man,lspinfo,startuptime,Trouble',
    callback = function()
-      vim.keymap.set('n', 'q', '<Cmd>close<Cr>')
+      vim.keymap.set('n', 'q', '<CMD>close<CR>')
    end,
 })
 
@@ -43,6 +43,20 @@ vim.api.nvim_create_autocmd('BufReadPost', {
    command = [[if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"zz" | endif]],
 })
 
+vim.api.nvim_create_autocmd('FileChangedShellPost', {
+   desc = 'Actions when the file is changed outside of Neovim',
+   group = '_session_opts',
+   callback = function()
+      vim.notify('The file has been changed, reloading the buffer', vim.log.levels.WARN)
+   end,
+})
+
+vim.api.nvim_create_autocmd({ 'FocusGained', 'CursorHold' }, {
+   desc = 'Actions when the file is changed outside of Neovim',
+   group = '_session_opts',
+   command = [[if getcmdwintype() == '' | checktime | endif]],
+})
+
 vim.api.nvim_create_autocmd('BufWritePre', {
    desc = 'Create missing directories before saving the buffer',
    once = true,
@@ -73,11 +87,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Number column actions
-vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
+local _switch_cursorcolumn = vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
+local _first_load = vim.api.nvim_create_augroup('_first_load', { clear = true })
 
 vim.api.nvim_create_autocmd('CursorMoved', {
    desc = 'Enable relativenumber after 3 seconds',
-   group = '_switch_cursorcolumn',
+   group = _first_load,
    once = true,
    callback = function()
       vim.defer_fn(function()
@@ -88,24 +103,28 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
    desc = 'Switch the cursorline mode based on context',
-   group = '_switch_cursorcolumn',
-   command = "if &nu && mode() != 'i' | set rnu   | endif",
+   group = _switch_cursorcolumn,
+   command = "if &nu && mode() != 'i' | set rnu | endif",
 })
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
    desc = 'Switch the cursorline mode based on context',
-   group = '_switch_cursorcolumn',
+   group = _switch_cursorcolumn,
    command = 'if &nu | set nornu | endif',
 })
 
 vim.api.nvim_create_autocmd('CmdLineEnter', {
    desc = 'Switch the cursorline mode based on context',
-   group = '_switch_cursorcolumn',
-   command = 'set norelativenumber',
+   group = _switch_cursorcolumn,
+   callback = function()
+      vim.opt.relativenumber = false
+   end,
 })
 
 vim.api.nvim_create_autocmd('CmdLineLeave', {
    desc = 'Switch the cursorline mode based on context',
-   group = '_switch_cursorcolumn',
-   command = 'set norelativenumber',
+   group = _switch_cursorcolumn,
+   callback = function()
+      vim.opt.relativenumber = true
+   end,
 })

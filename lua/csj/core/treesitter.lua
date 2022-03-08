@@ -23,14 +23,11 @@ treesitter_configs.setup({
    },
    context_commentstring = {
       enable = true,
-      enable_autocmd = false,
+      enable_autocmd = true,
    },
    indent = {
       enable = true,
-      disable = {
-         'yaml',
-         'python',
-      },
+      disable = { 'yaml', 'python' },
    },
    autopairs = { enable = true },
    autotag = {
@@ -60,6 +57,7 @@ treesitter_configs.setup({
    },
    rainbow = {
       enable = true,
+      extended_mode = true,
       colors = {
          '#31748f',
          '#908caa',
@@ -69,6 +67,5 @@ treesitter_configs.setup({
          '#eb6f92',
          '#ebbcba',
       },
-      extended_mode = true,
    },
 })
