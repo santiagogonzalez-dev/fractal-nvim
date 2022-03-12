@@ -5,9 +5,9 @@ vim.api.nvim_add_user_command('Format', vim.lsp.buf.formatting_sync, {})
 
 -- Close or quit buffer
 function M.close_or_quit()
-    local CountBufsByType = function(loaded_only)
+    local count_bufs_by_type = function(loaded_only)
         loaded_only = (loaded_only == nil and true or loaded_only)
-        Count = {
+        local count = {
             normal = 0,
             acwrite = 0,
             help = 0,
@@ -21,15 +21,15 @@ function M.close_or_quit()
         BufTypes = vim.api.nvim_list_bufs()
         for _, bufname in pairs(BufTypes) do
             if not loaded_only or vim.api.nvim_buf_is_loaded(bufname) then
-                BufType = vim.api.nvim_buf_get_option(bufname, 'buftype')
-                BufType = BufType ~= '' and BufType or 'normal'
-                Count[BufType] = Count[BufType] + 1
+                local buf_type = vim.api.nvim_buf_get_option(bufname, 'buftype')
+                buf_type = buf_type ~= '' and buf_type or 'normal'
+                count[buf_type] = count[buf_type] + 1
             end
         end
-        return Count
+        return count
     end
 
-    if CountBufsByType().normal <= 1 then
+    if count_bufs_by_type().normal <= 1 then
         vim.ui.select({ 'Quit neovim', 'Delete the buffer' }, { prompt = '' }, function(_, prompt_option)
             if tonumber(prompt_option) == 1 then
                 return vim.cmd([[ :q ]])
@@ -64,17 +64,15 @@ function M.char_at_eol()
     end)
 end
 
--- Format only if the buffer has unsaved changes
-function M.format_if_updating()
-    local format_on_write = vim.api.nvim_create_autocmd('BufWritePre', {
-        desc = 'Format on save',
-        group = '_session_opts',
-        callback = function()
-            vim.lsp.buf.formatting_sync()
-        end,
-    })
-    vim.cmd([[ :update ]])
-    vim.api.nvim_del_autocmd(format_on_write)
+JumpToBuf = 0
+function M.jump_between_two_buffers()
+    if JumpToBuf == 0 then
+        vim.cmd([[:bprevious]])
+        JumpToBuf = 1
+    elseif JumpToBuf == 1 then
+        vim.cmd([[:bnext]])
+        JumpToBuf = 0
+    end
 end
 
 return M

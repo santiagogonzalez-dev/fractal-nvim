@@ -28,7 +28,7 @@ if not status_ok then
 end
 
 nvim_tree.setup {
-    disable_netrw = true,
+    disable_netrw = false,
     hijack_netrw = true,
     open_on_setup = true,
     auto_close = true,

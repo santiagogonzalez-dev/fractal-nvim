@@ -19,23 +19,34 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
     end,
 })
 
--- Cursor only on active window
-vim.api.nvim_create_augroup('_cursor_active_window', {})
+-- Actions on active/inactive window
+vim.api.nvim_create_augroup('_focused_behaviour', {})
 
 vim.api.nvim_create_autocmd('WinEnter', {
     desc = 'Show cursor only in active window',
-    group = '_cursor_active_window',
+    group = '_focused_behaviour',
     command = 'setlocal cursorline cursorcolumn',
 })
 
 vim.api.nvim_create_autocmd('WinLeave', {
     desc = 'Show cursor only in active window',
-    group = '_cursor_active_window',
+    group = '_focused_behaviour',
     command = 'setlocal nocursorline nocursorcolumn',
 })
 
+vim.api.nvim_create_autocmd('WinEnter', {
+    desc = 'Dim background of non focused windows',
+    group = '_focused_behaviour',
+    callback = function ()
+        -- vim.api.nvim_set_hl(0, 'ActiveWindow', { bg = '#17252c'})
+        vim.api.nvim_set_hl(0, 'InactiveWindow', { bg = '#1f1d2e'})
+        vim.wo.winhighlight='Normal:ActiveWindow,NormalNC:InactiveWindow'
+    end
+})
+
+
 -- Session managment
-vim.api.nvim_create_augroup('_session_opts', {})
+vim.api.nvim_create_augroup('_session_opts', { clear = false })
 
 vim.api.nvim_create_autocmd('BufReadPost', {
     desc = 'Open file at the last position it was edited earlier',

@@ -20,7 +20,7 @@ function M.general_keybinds()
     -- Avoid moving the cursor with space, enter or backspace in normal mode
     set('n', '<SPACE>', '<Nop>')
     set('n', '<CR>', '<Nop>')
-    set('n', '<Bs>', '<Nop>')
+    set('n', '<BS>', '<Nop>')
 
     -- Reload the file manually
     set('n', '<Leader>e', '<CMD>edit!<CR>')
@@ -40,8 +40,18 @@ function M.general_keybinds()
     -- Delete all buffers
     set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>')
 
+    -- Moving inside Neovim
+    set({ 'n', 'v' }, 'g.', '`.') -- Go to the last place you modified
+    set('n', 'go', '<C-o>') -- Go to previous place
+    set('n', 'gO', '<C-i>') -- Go to next place
+    set('n', 'gp', '<C-^>') -- Go to previous buffer
+    set('n', 'gn', ':bnext<cr>') -- Go to next buffer
+    set('n', 'gm', '%') -- Go to the matching paren
+    set('n', 'gf', ':edit <cfile><CR>') -- Go to file even if it doesn't exists
+
     -- Navigate buffers
     set('n', '<Tab>', ':bnext<CR>')
+    -- set({ 'n', 'i' }, '<C-a>', require('csj.functions').jump_between_two_buffers)
     set('n', '<S-Tab>', ':bprevious<CR>')
     set('n', '<S-l>', ':bnext<CR>')
     set('n', '<S-h>', ':bprevious<CR>')
@@ -81,23 +91,11 @@ function M.general_keybinds()
     -- Make $ behave as spected in visual modes
     set({ 'v', 'n' }, '$', 'g_')
 
-    -- Moving inside Neovim
-    set({ 'n', 'v' }, 'g.', '`.') -- Go to the last place you modified
-    set('n', 'go', '<C-o>') -- Go to previous place
-    set('n', 'gO', '<C-i>') -- Go to next place
-    set('n', 'gp', '<C-^>') -- Go to previous buffer
-    set('n', 'gn', ':bnext<cr>') -- Go to next buffer
-    set('n', 'gm', '%') -- Go to the matching paren
-    set('n', 'gf', ':edit <cfile><cr>') -- Go to file even if it doesn't exists
-
     -- Opposite to J, give a utility to K
     set('n', 'K', 'i<CR><ESC>')
 
-    -- Make view
-    set('n', '<Leader>m', '<CMD>mkview<CR>')
-
     -- Disable highlight
-    set('n', '<C-n>', '<cmd>nohlsearch<cr>')
+    set('n', '<C-n>', '<CMD>nohlsearch<CR>')
 
     -- Paste in word under the cursor without overwriting the yank register
     set('n', '<Leader>p', [["_diwP]])
@@ -133,6 +131,12 @@ function M.general_keybinds()
 
     -- Source lua file
     set('n', '<Leader>s', ':luafile %<CR>')
+
+    -- I'm very lazy
+    set('n', '<Leader>sty', function ()
+        vim.cmd([[:%s/className='/className={styles./g]])
+        vim.cmd([[:%s/'>/}>/g]])
+    end)
 end
 
 -- Nvim-tree
@@ -150,7 +154,6 @@ M.gitsigns_keybinds = function(gitsigns)
 end
 
 -- Telescope
--- TODO M.telescope_keybinds = function()
 M.telescope_keybinds = function()
     set('n', '<Leader>t', ':Telescope ')
     set('n', '<Leader>/', '<CMD>Telescope current_buffer_fuzzy_find<CR>')

@@ -1,5 +1,8 @@
 pcall(require, 'impatient') -- Load impatient
 
+pcall(require, 'filetype') -- Load filetype.nvim (not filetype.lua)
+
+vim.g.did_load_filetypes = 1 -- Disable filetype detection in vimscript
 vim.cmd([[
     syntax off
     filetype off
@@ -43,7 +46,6 @@ require('csj.colors') -- Color settings
 require('csj.autocmd') -- Autocommands
 require('csj.functions') -- Functions
 require('csj.keymaps').general_keybinds() -- General keybinds
-vim.g.do_filetype_lua = 1 -- FileType detection in lua
 
 vim.defer_fn(function()
     vim.opt.shadafile = ''

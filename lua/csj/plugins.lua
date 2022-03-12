@@ -137,6 +137,14 @@ return packer.startup(function(use)
         end,
     }
 
+    -- Notifications
+    use {
+        'simrat39/desktop-notify.nvim',
+        config = function()
+            require('desktop-notify').override_vim_notify()
+        end,
+    }
+
     -- Git Signs
     use {
         'lewis6991/gitsigns.nvim',
@@ -148,8 +156,10 @@ return packer.startup(function(use)
         end,
     }
 
-    use { 'tpope/vim-surround' } -- Surround
-    use { 'tpope/vim-repeat' } -- Repeat
+    use('nathom/filetype.nvim') -- Filetype detection in lua
+    use('tpope/vim-surround') -- Surround
+    use('tpope/vim-repeat') -- Repeat
+    use('tweekmonster/startuptime.vim') -- Startuptime
 
     -- Nvim-tree
     use {

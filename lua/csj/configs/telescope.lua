@@ -26,7 +26,7 @@ local clean_dropdown = require('telescope.themes').get_dropdown {
     previewer = false,
 }
 
-M.project_files = function()
+function M.project_files()
     local opts = vim.deepcopy(clean_dropdown)
     local ok = pcall(require('telescope.builtin').git_files, opts)
     if not ok then
