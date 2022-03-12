@@ -2,7 +2,8 @@ pcall(require, 'impatient') -- Load impatient
 
 pcall(require, 'filetype') -- Load filetype.nvim (not filetype.lua)
 
-vim.g.did_load_filetypes = 1 -- Disable filetype detection in vimscript
+vim.g.did_load_filetypes = 0 -- Disable filetype.vim
+vim.g.do_filetype_lua = 1 -- Enable filetype.lua
 vim.cmd([[
     syntax off
     filetype off

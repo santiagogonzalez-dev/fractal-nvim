@@ -156,7 +156,6 @@ return packer.startup(function(use)
         end,
     }
 
-    use('nathom/filetype.nvim') -- Filetype detection in lua
     use('tpope/vim-surround') -- Surround
     use('tpope/vim-repeat') -- Repeat
     use('tweekmonster/startuptime.vim') -- Startuptime
