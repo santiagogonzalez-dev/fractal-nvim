@@ -44,6 +44,19 @@ local kind_icons = {
     Module = ' ',
 }
 
+-- Add some colors
+vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { strikethrough = true, fg = '#808080' })
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bold = true, fg = '#d7827e' })
+vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { bold = true, fg = '#d7827e' })
+vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { fg = '#9ccfd8' })
+vim.api.nvim_set_hl(0, 'CmpItemKindInterface', { fg = '#9ccfd8' })
+vim.api.nvim_set_hl(0, 'CmpItemKindText', { fg = '#9ccfd8' })
+vim.api.nvim_set_hl(0, 'CmpItemKindFunction', { fg = '#c4a7e7' })
+vim.api.nvim_set_hl(0, 'CmpItemKindMethod', { fg = '#c4a7e7' })
+vim.api.nvim_set_hl(0, 'CmpItemKindKeyword', { fg = '#c4a7e7' })
+vim.api.nvim_set_hl(0, 'CmpItemKindProperty', { fg = '#e0def4' })
+vim.api.nvim_set_hl(0, 'CmpItemKindUnit', { fg = '#e0def4' })
+
 cmp.setup {
     snippet = {
         expand = function(args)

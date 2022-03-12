@@ -19,7 +19,6 @@ vim.cmd([[ highlight PmenuSel blend=0 ]]) -- Make selected option in popup menu 
 vim.cmd([[ match errorMsg /\s\+$/ ]]) -- Show trail character in red
 
 -- :so $VIMRUNTIME/syntax/hitest.vim
--- vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = 'orange', bg = '#2a283e' })
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = 'orange', bg = '#21202e' })
 vim.api.nvim_set_hl(0, 'LineNr', { bold = true, fg = '#44415a' })
 vim.api.nvim_set_hl(0, 'Comment', { italic = true, bold = true, fg = '#44415a' })
@@ -29,3 +28,5 @@ vim.api.nvim_set_hl(0, 'Search', { fg = 'orange', bg = 'purple' })
 vim.api.nvim_set_hl(0, 'ColorColumn', { bg = '#2a283e' })
 vim.api.nvim_set_hl(0, 'Number', { fg = 'orange' })
 vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#393552' })
+vim.api.nvim_set_hl(0, 'DiagnosticHeader', { fg = '#2cb27f', bold = true })
+vim.api.nvim_set_hl(0, 'TSVariable', { fg = '#908caa' })
