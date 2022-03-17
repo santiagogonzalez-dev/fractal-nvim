@@ -1,16 +1,9 @@
 pcall(require, 'impatient') -- Load impatient
 
-pcall(require, 'filetype') -- Load filetype.nvim (not filetype.lua)
-
 vim.g.did_load_filetypes = 0 -- Disable filetype.vim
 vim.g.do_filetype_lua = 1 -- Enable filetype.lua
-vim.cmd([[
-    syntax off
-    filetype off
-    filetype plugin indent off
-]])
-vim.opt.shadafile = 'NONE'
 
+-- Disable builtin plugins
 local plugins_list = {
     '2html_plugin',
     'getscript',
@@ -43,39 +36,24 @@ for plugin in pairs(plugins_list) do
     vim.g['loaded_' .. plugin] = 1
 end
 
-require('csj.colors') -- Color settings
-require('csj.autocmd') -- Autocommands
-require('csj.functions') -- Functions
-require('csj.keymaps').general_keybinds() -- General keybinds
+require('csj.core.colors') -- Color settings
+require('csj.core.autocmd') -- Autocommands
+require('csj.core.functions') -- Functions
+require('csj.core.keymaps').general_keybinds() -- General keybinds
+require('csj.plugins') -- Plugins
 
-vim.defer_fn(function()
-    vim.opt.shadafile = ''
-    vim.cmd([[
-        rshada!
-        syntax on
-        filetype on
-        filetype plugin indent on
-    ]])
-    require('csj.plugins') -- Plugins
-    require('packer_compiled') -- Compiled file for packer
-    require('csj.core.cmp') -- CMP
-    require('csj.lsp') -- Language Server Protocol
-end, 0)
-
--- Deferred configs
 function M.load_settings()
     vim.cmd([[
-        PackerLoad bufferline.nvim
         PackerLoad gitsigns.nvim
         PackerLoad nvim-treesitter
+        PackerLoad nvim-treehopper
         PackerLoad indent-blankline.nvim
         PackerLoad nvim-colorizer.lua
         PackerLoad vim-hexokinase
         HexokinaseTurnOn
         ColorizerToggle
     ]])
-
-    require('csj.settings') -- General settings
+    require('csj.core.settings') -- General settings
 end
 
 -- Deferred loading of configs

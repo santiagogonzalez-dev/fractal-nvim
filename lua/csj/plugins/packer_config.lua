@@ -42,9 +42,12 @@ return packer.startup(function(use)
         end,
     }
 
-    use { 'wbthomason/packer.nvim' } -- Packer
+    use('wbthomason/packer.nvim') -- Packer
     use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
     use { 'kyazdani42/nvim-web-devicons', after = 'nvim-tree.lua' } -- Icons
+    use('tpope/vim-surround') -- Surround
+    use('tpope/vim-repeat') -- Repeat
+    use('tweekmonster/startuptime.vim') -- Startuptime
 
     -- Colorscheme, Rosé Pine
     use {
@@ -58,7 +61,7 @@ return packer.startup(function(use)
         module = 'comment',
         keys = { 'gcc', 'gc', 'gcb', 'gb' },
         config = function()
-            require('csj.core.comment')
+            require('csj.plugins.configs.comment')
         end,
     }
 
@@ -67,7 +70,7 @@ return packer.startup(function(use)
         'ahmedkhalf/project.nvim',
         config = function()
             vim.g.nvim_tree_respect_buf_cwd = 1
-            require('csj.core.project')
+            require('csj.plugins.configs.project')
         end,
     }
 
@@ -76,7 +79,7 @@ return packer.startup(function(use)
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
         config = function()
-            require('csj.core.autopairs')
+            require('csj.plugins.configs.autopairs')
         end,
     }
 
@@ -90,7 +93,17 @@ return packer.startup(function(use)
             'p00f/nvim-ts-rainbow',
         },
         config = function()
-            require('csj.core.treesitter')
+            require('csj.plugins.configs.treesitter')
+        end,
+    }
+
+    -- Treehopper
+    use {
+        'mfussenegger/nvim-treehopper',
+        opt = true,
+        config = function()
+            require('tsht').config.hint_keys = { 'a', 'o', 'e', 'u', 'i', 'd', 'h', 't', 'n', 's' }
+            require('csj.core.keymaps').treehopper_keybinds()
         end,
     }
 
@@ -120,20 +133,18 @@ return packer.startup(function(use)
     -- Bufferline
     use {
         'akinsho/bufferline.nvim',
-        opt = true,
         config = function()
-            require('csj.configs.bufferline')
+            require('csj.plugins.configs.bufferline')
         end,
     }
 
     -- Toggle term
     use {
         'akinsho/toggleterm.nvim',
-        keys = {
-            '<C-t>',
-        },
+        module = 'toggleterm',
+        keys = { '<C-t>' },
         config = function()
-            require('csj.configs.toggleterm')
+            require('csj.plugins.configs.toggleterm')
         end,
     }
 
@@ -151,21 +162,17 @@ return packer.startup(function(use)
         opt = true,
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
-            local gitsigns = require('csj.configs.gitsigns').setup()
-            require('csj.keymaps').gitsigns_keybinds(gitsigns)
+            local gitsigns = require('csj.plugins.configs.gitsigns').setup()
+            require('csj.core.keymaps').gitsigns_keybinds(gitsigns)
         end,
     }
-
-    use('tpope/vim-surround') -- Surround
-    use('tpope/vim-repeat') -- Repeat
-    use('tweekmonster/startuptime.vim') -- Startuptime
 
     -- Nvim-tree
     use {
         'kyazdani42/nvim-tree.lua',
         config = function()
-            require('csj.configs.nvimtree')
-            require('csj.keymaps').nvimtree_keybinds()
+            require('csj.plugins.configs.nvimtree')
+            require('csj.core.keymaps').nvimtree_keybinds()
         end,
     }
 
@@ -173,17 +180,15 @@ return packer.startup(function(use)
     use {
         'nvim-telescope/telescope.nvim',
         module = 'telescope',
-        keys = {
-            '<Leader>t',
-            '<Leader>/',
-            '<Leader>//',
-            '<Leader>P',
-            '<Leader>f',
+        keys = { 't/', 't//', 'tf', 'tp', 'tt' },
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'ahmedkhalf/project.nvim',
+            'nvim-telescope/telescope-ui-select.nvim',
         },
-        requires = 'nvim-lua/plenary.nvim',
         config = function()
-            require('csj.keymaps').telescope_keybinds()
-            require('csj.configs.telescope').setup()
+            require('csj.core.keymaps').telescope_keybinds()
+            require('csj.plugins.configs.telescope').setup()
         end,
     }
 
@@ -192,7 +197,7 @@ return packer.startup(function(use)
         'lukas-reineke/indent-blankline.nvim',
         opt = true,
         config = function()
-            require('csj.configs.indentblankline')
+            require('csj.plugins.configs.indentblankline')
         end,
     }
 
@@ -212,13 +217,18 @@ return packer.startup(function(use)
         run = 'cd /home/st/.local/share/nvim/site/pack/packer/opt/vim-hexokinase && make hexokinase',
     }
 
+    -- Semantic Highlight
     use {
         'jaxbot/semantic-highlight.vim',
-        disable = true,
         config = function()
             vim.cmd([[
-            let s:semanticGUIColors = [ '#eb6f92', '#f6c177', '#ebbcba', '#31748f', '#9ccfd8', '#c4a7e7', ]
-         ]])
+                " let s:semanticGUIColors = [ '#eb6f92', '#f6c177', '#ebbcba', '#31748f', '#9ccfd8', '#c4a7e7', ]
+                let s:semanticGUIColors = [ '#eb6f92', '#f6c177', '#ea9a97', '#3e8fb0', '#9ccfd8', '#c4a7e7', ]
+            ]])
+            vim.keymap.set('n', '<Leader><Leader>', function()
+                vim.cmd([[TSBufToggle highlight]])
+                vim.cmd([[SemanticHighlightToggle]])
+            end)
         end,
     }
 

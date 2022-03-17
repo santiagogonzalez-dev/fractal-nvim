@@ -12,6 +12,11 @@ null_ls.setup {
     debug = false,
     sources = {
         code_actions.gitsigns,
+        code_actions.eslint,
+        code_actions.shellcheck,
+        diagnostics.shellcheck,
+        diagnostics.eslint,
+
         formatting.stylua,
         formatting.prettier.with {
             prefer_local = 'node_modules/.bin',
@@ -27,9 +32,11 @@ null_ls.setup {
                 'less',
                 'html',
                 'json',
+                'jsonc',
                 'yaml',
                 'markdown',
                 'graphql',
+                'handlebars',
             },
             extra_args = {
                 '--no-semi',
@@ -41,6 +48,7 @@ null_ls.setup {
                 '80',
             },
         },
+
         formatting.black.with {
             prefer_local = '.venv/bin',
             extra_args = {
@@ -52,12 +60,6 @@ null_ls.setup {
                 '--target-version',
                 'py310',
             },
-        },
-        diagnostics.shellcheck.with {
-            -- method = methods.DIAGNOSTICS_ON_SAVE,
-        },
-        diagnostics.eslint.with {
-            -- method = methods.DIAGNOSTICS_ON_SAVE,
         },
         diagnostics.flake8.with {
             prefer_local = '.venv/bin',

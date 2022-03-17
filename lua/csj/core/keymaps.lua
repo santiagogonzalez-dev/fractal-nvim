@@ -1,5 +1,4 @@
 local M = {}
-local expr = { expr = true }
 local buffer = { buffer = true }
 local set = vim.keymap.set -- For everything
 
@@ -18,18 +17,18 @@ function M.general_keybinds()
     vim.g.maplocalleader = ' '
 
     -- Avoid moving the cursor with space, enter or backspace in normal mode
-    set('n', '<SPACE>', '<Nop>')
+    set('n', '<Space>', '<Nop>')
     set('n', '<CR>', '<Nop>')
     set('n', '<BS>', '<Nop>')
 
     -- Reload the file manually
-    set('n', '<Leader>e', '<CMD>edit!<CR>')
+    set('n', '<Leader>e', '<CMD>edit<CR>')
 
     -- Close or Quit
-    set('n', '<M-c>', require('csj.functions').close_or_quit)
+    set('n', '<A-c>', require('csj.core.functions').close_or_quit)
 
     -- Write/Update
-    set('n', '<Leader>w', '<CMD>up<CR>')
+    set('n', '<Leader>w', '<CMD>w<CR>')
 
     -- Write to all buffers and quit
     set('n', '<Leader>W', '<CMD>wqall<CR>')
@@ -51,7 +50,6 @@ function M.general_keybinds()
 
     -- Navigate buffers
     set('n', '<Tab>', ':bnext<CR>')
-    -- set({ 'n', 'i' }, '<C-a>', require('csj.functions').jump_between_two_buffers)
     set('n', '<S-Tab>', ':bprevious<CR>')
     set('n', '<S-l>', ':bnext<CR>')
     set('n', '<S-h>', ':bprevious<CR>')
@@ -119,11 +117,11 @@ function M.general_keybinds()
     set('i', '<CR>', '<CR><C-g>u')
 
     -- Insert character or string at the end of the line
-    set('n', '<Leader>.', require('csj.functions').char_at_eol)
+    set('n', '<Leader>.', require('csj.core.functions').char_at_eol)
 
     -- Better navigation inside wrapped text
-    set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", expr)
-    set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", expr)
+    set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+    set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
     -- Packer
     set('n', '<Leader>ps', '<CMD>PackerSync<CR>')
@@ -131,17 +129,16 @@ function M.general_keybinds()
 
     -- Source lua file
     set('n', '<Leader>s', ':luafile %<CR>')
-
-    -- I'm very lazy
-    set('n', '<Leader>sty', function ()
-        vim.cmd([[:%s/className='/className={styles./g]])
-        vim.cmd([[:%s/'>/}>/g]])
-    end)
 end
 
 -- Nvim-tree
 M.nvimtree_keybinds = function()
     set('n', '<Leader>v', '<CMD>NvimTreeToggle<CR>')
+end
+
+M.treehopper_keybinds = function()
+    set('o', 'm', ':<C-U>lua require("tsht").nodes()<CR>')
+    set('v', 'm', ':lua require("tsht").nodes()<CR>')
 end
 
 -- Gitsigns
@@ -155,11 +152,11 @@ end
 
 -- Telescope
 M.telescope_keybinds = function()
-    set('n', '<Leader>t', ':Telescope ')
-    set('n', '<Leader>/', '<CMD>Telescope current_buffer_fuzzy_find<CR>')
-    set('n', '<Leader>//', '<CMD>Telescope live_grep<CR>')
-    set('n', '<Leader>P', '<CMD>Telescope projects<CR>')
-    set('n', '<Leader>f', require('csj.configs.telescope').project_files)
+    set('n', 'tt', '<CMD>Telescope<CR>')
+    set('n', 't/', '<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>')
+    set('n', 't//', '<CMD>Telescope live_grep theme=dropdown<CR>')
+    set('n', 'tp', '<CMD>Telescope projects<CR>')
+    set('n', 'tf', require('csj.core.telescope').project_files)
 end
 
 -- LSP

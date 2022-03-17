@@ -4,6 +4,7 @@ local status_ok, telescope = pcall(require, 'telescope')
 if not status_ok then
     return
 end
+
 local previewers = require('telescope.previewers')
 
 local new_maker = function(filepath, bufnr, opts)
@@ -22,9 +23,8 @@ local new_maker = function(filepath, bufnr, opts)
     end)
 end
 
-local clean_dropdown = require('telescope.themes').get_dropdown {
-    previewer = false,
-}
+-- Dropdown Theme
+local clean_dropdown = require('telescope.themes').get_dropdown { previewer = false }
 
 function M.project_files()
     local opts = vim.deepcopy(clean_dropdown)
@@ -62,9 +62,16 @@ M.setup = function()
             sorting_strategy = 'ascending',
             winblend = 9,
         },
+
+        extensions = {
+            ['ui-select'] = {
+                clean_dropdown
+            }
+        },
     }
 
     telescope.load_extension('projects')
+    telescope.load_extension('ui-select')
 
     return telescope
 end

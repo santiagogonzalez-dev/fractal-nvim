@@ -7,8 +7,8 @@ local options = {
     backspace = 'indent,start,eol', -- Make backspace behave like normal again
     clipboard = 'unnamedplus', -- Uses the system clipboard
     cmdheight = 1, -- Space for displaying messages in the command line
-    colorcolumn = '+1', -- Limiter line, + line more than textwidth
     textwidth = 80, -- Delimit text blocks to N columns
+    -- colorcolumn = '+1', -- Limiter line, + line more than textwidth
     conceallevel = 2, -- Show concealed text when the cursor is not on top
     confirm = true, -- Confirm dialogs
     cursorcolumn = true, -- Draw line on cursor
@@ -26,17 +26,18 @@ local options = {
     hidden = true, -- It keeps buffers open in memory
     history = 100, -- Saved spaces in each table of history
     hlsearch = true, -- Highlighting search
-    ignorecase = false, -- Ignore case
+    ignorecase = true, -- Ignore case
     inccommand = 'split', -- Shows just like nosplit, but partially off-screen
     incsearch = true, -- Incremental search
     joinspaces = true, -- Join commands like 'gq' insert two spaces on punctuation
-    laststatus = 0, -- Mode of the status bar
+    laststatus = 3, -- Mode of the status bar
     lazyredraw = true, -- Lazy redraw the screen
     mouse = 'a', -- Mouse options, all enabled
     mousefocus = true, -- Focusing cursor on the window with the keyboard focus
     number = true, -- Display line number on the side
-    pumblend = 9, -- Transparency for the pop up menu, disabled because it messess up Nerd Font icons
-    winblend = 9, -- Transparency for windows
+    pumheight = 6, -- Amount of lines shown in completion menus
+    pumblend = 19, -- Transparency for the pop up menu
+    winblend = 19, -- Transparency for windows
     redrawtime = 300, -- Time for redrawing the display
     ruler = true, -- Ruler
     scrolloff = 999, -- Cursor does not reach top/bottom
@@ -59,29 +60,21 @@ local options = {
     updatetime = 300, -- Faster completion
     virtualedit = 'all', -- Be able to put the cursor where there's not actual text
     whichwrap = '<,>,[,],h,l,b,s', -- Keys that can make you jump lines if you reach wrap
-    -- wildcharm = 26, -- Trigger completion in macros
-    -- wildignore = '*.o,*.rej,*.so', -- File patterns to ignore
-    -- wildignorecase = true, -- Ignore case command completion menu
-    -- wildmenu = true, -- Enables 'enhanced mode' of command-line completion
-    -- wildmode = 'longest:full,full', -- Options for wildmenu
     wrap = false, -- Wrap text
+    winhighlight = 'Normal:ActiveWindow,NormalNC:InactiveWindow', -- Window local highlights
+    foldcolumn = 'auto:3', -- Folds column
+    foldtext = 'v:lua.require("csj.core.functions").foldtext_expression()',
 }
 
 for k, v in pairs(options) do
     vim.opt[k] = v
 end
 
-vim.opt.completeopt:append { 'menuone', 'noinsert', 'noselect' } -- Completion menu options
-vim.opt.guicursor:append('v:hor50') -- Cursor settings for GUIs
-vim.opt.iskeyword:remove { '_', '-' } -- A word separated by _ is being separated in multiple ones
-vim.opt.matchpairs:append { '<:>', '=:;' } -- Match pairs
-vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
-vim.opt.path:append('**') -- Search files recursively
-
--- Buffer options
+-- Buffer settings
 local buffer_opts = function()
     vim.opt.formatoptions:append('ct')
     vim.opt.formatoptions:remove('o')
+    vim.opt.iskeyword:remove { '_', '-' } -- A word separated by _ is being separated in multiple ones
     -- Watchout, there's a non-visible character at cchar=
     -- vim.cmd([[syntax match singlequotes '\'' conceal cchar= ]])
     -- vim.cmd([[syntax match doublequotes '\"' conceal cchar= ]])
@@ -97,20 +90,39 @@ vim.api.nvim_create_autocmd('BufEnter', {
 
 buffer_opts()
 
+-- Other settings
+vim.opt.completeopt:append { 'menuone', 'noinsert', 'noselect' } -- Completion menu options
+vim.opt.guicursor:append('v:hor50') -- Cursor settings for GUIs
+vim.opt.matchpairs:append { '<:>', '=:;' } -- Match pairs
+vim.opt.shortmess:append('IFawsc') -- Less and shorter messages in command line
+vim.opt.path:append('**') -- Search files recursively
+
 -- Non visible characters
 vim.opt.list = true
 
 vim.opt.listchars:append {
-    extends = '◣',
-    nbsp = '␣',
-    precedes = '◢',
+    -- eol = '↴',
+    -- extends = '◣',
+    -- nbsp = '␣',
+    -- precedes = '◢',
     tab = '-->',
     trail = '█',
-    -- eol = '↴',
 }
 
 vim.opt.fillchars = {
-    eob = ' ',
+    eob = ' ', -- Don't show the ~ at the eof
+    fold = ' ', -- Filling foldtext
+    foldclose = 'ᐅ',
+    foldopen = '▎', -- '▼'
+    foldsep = '▎', -- '▼'
+    -- vert = ' ', -- Don't use a separator in splits
+    vert = '║',
+    horiz = '═',
+    horizup = '╩',
+    horizdown = '╦',
+    vertleft = '╣',
+    vertright = '╠',
+    verthoriz = '╬',
 }
 
 -- To appropriately highlight codefences

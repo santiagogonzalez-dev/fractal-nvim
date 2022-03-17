@@ -20,30 +20,19 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 })
 
 -- Actions on active/inactive window
-vim.api.nvim_create_augroup('_focused_behaviour', {})
+vim.api.nvim_create_augroup('_focused_window_behaviour', {})
 
 vim.api.nvim_create_autocmd('WinEnter', {
     desc = 'Show cursor only in active window',
-    group = '_focused_behaviour',
+    group = '_focused_window_behaviour',
     command = 'setlocal cursorline cursorcolumn',
 })
 
 vim.api.nvim_create_autocmd('WinLeave', {
     desc = 'Show cursor only in active window',
-    group = '_focused_behaviour',
+    group = '_focused_window_behaviour',
     command = 'setlocal nocursorline nocursorcolumn',
 })
-
-vim.api.nvim_create_autocmd('WinEnter', {
-    desc = 'Dim background of non focused windows',
-    group = '_focused_behaviour',
-    callback = function ()
-        -- vim.api.nvim_set_hl(0, 'ActiveWindow', { bg = '#17252c'})
-        vim.api.nvim_set_hl(0, 'InactiveWindow', { bg = '#1f1d2e'})
-        vim.wo.winhighlight='Normal:ActiveWindow,NormalNC:InactiveWindow'
-    end
-})
-
 
 -- Session managment
 vim.api.nvim_create_augroup('_session_opts', { clear = false })
@@ -58,7 +47,7 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
     desc = 'Actions when the file is changed outside of Neovim',
     group = '_session_opts',
     callback = function()
-        vim.notify('The file has been changed, reloading the buffer', vim.log.levels.WARN)
+        vim.notify('File changed, reloading the buffer', vim.log.levels.WARN)
     end,
 })
 
@@ -96,12 +85,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Number column actions
-local _switch_cursorcolumn = vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
-local _first_load = vim.api.nvim_create_augroup('_first_load', { clear = true })
+vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
+vim.api.nvim_create_augroup('_first_load', { clear = true })
 
 vim.api.nvim_create_autocmd('CursorMoved', {
     desc = 'Enable relativenumber after 3 seconds',
-    group = _first_load,
+    group = '_first_load',
+    pattern = '*.*',
     once = true,
     callback = function()
         vim.defer_fn(function()
@@ -112,19 +102,19 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
     desc = 'Switch the cursorline mode based on context',
-    group = _switch_cursorcolumn,
+    group = '_switch_cursorcolumn',
     command = "if &nu && mode() != 'i' | set rnu | endif",
 })
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
     desc = 'Switch the cursorline mode based on context',
-    group = _switch_cursorcolumn,
+    group = '_switch_cursorcolumn',
     command = 'if &nu | set nornu | endif',
 })
 
 vim.api.nvim_create_autocmd('CmdLineEnter', {
     desc = 'Switch the cursorline mode based on context',
-    group = _switch_cursorcolumn,
+    group = '_switch_cursorcolumn',
     callback = function()
         vim.opt.relativenumber = false
     end,
@@ -133,8 +123,24 @@ vim.api.nvim_create_autocmd('CmdLineEnter', {
 vim.api.nvim_create_autocmd('CmdLineLeave', {
     desc = 'Switch the cursorline mode based on context',
     buffer = 0,
-    group = _switch_cursorcolumn,
+    group = '_switch_cursorcolumn',
     callback = function()
         vim.opt.relativenumber = true
     end,
+})
+
+vim.api.nvim_create_augroup('_save_session', { clear = true })
+
+vim.api.nvim_create_autocmd({ 'BufWinLeave', 'BufLeave' }, {
+    desc = 'Save the view of the buffer',
+    pattern = '*.*',
+    group = '_save_session',
+    command = 'mkview',
+})
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+    desc = 'Load the view of the buffer',
+    pattern = '*.*',
+    group = '_save_session',
+    command = 'silent! loadview',
 })

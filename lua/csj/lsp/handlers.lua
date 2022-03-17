@@ -80,7 +80,7 @@ M.on_attach = function(client, _)
         client.resolved_capabilities.document_range_formatting = false
     end
 
-    require('csj.keymaps').lsp_keymaps() -- Keymaps
+    require('csj.core.keymaps').lsp_keymaps() -- Keymaps
     lsp_highlight_document(client) -- Highlighting
 end
 
