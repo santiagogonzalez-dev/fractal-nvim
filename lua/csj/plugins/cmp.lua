@@ -110,26 +110,25 @@ cmp.setup {
         fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item)
             -- vim_item.kind = string.format('%s', kind_icons[vim_item.kind])
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+            -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+            vim_item.kind = string.format('%s', kind_icons[vim_item.kind]) -- This concatonates the icons with the name of the item kind
             vim_item.menu = ({
+                luasnip = 'Snippet',
                 nvim_lsp = 'LSP',
                 nvim_lua = 'NVIM_LUA',
-                luasnip = 'Snippet',
                 path = 'Path',
                 buffer = 'Buffer',
-                calc = 'Calc',
             })[entry.source.name]
             return vim_item
         end,
     },
 
     sources = {
+        { name = 'luasnip', keyword_lenght = 3 },
         { name = 'nvim_lua', keyword_lenght = 3 },
         { name = 'nvim_lsp', keyword_lenght = 3 },
-        { name = 'luasnip', keyword_lenght = 3 },
         { name = 'buffer', keyword_lenght = 3 },
         { name = 'path', keyword_lenght = 3 },
-        { name = 'calc' },
     },
 
     confirm_opts = {
@@ -154,6 +153,5 @@ cmp.setup.cmdline(':', {
         { name = 'nvim_lsp' },
         { name = 'path', keyword_lenght = 6 },
         { name = 'cmdline', keyword_lenght = 3 },
-        { name = 'calc' },
     },
 })
