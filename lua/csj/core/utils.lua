@@ -1,7 +1,7 @@
-M = {}
+local utils = {}
 
 -- Folds text
-function M.foldtext_expression()
+function utils.foldtext_expression()
   -- Match the characters at the start of the line
   local function starts_with(string_to_search, pattern_to_match)
     return string.sub(string_to_search, 1, string.len(pattern_to_match)) == pattern_to_match
@@ -30,7 +30,7 @@ function M.foldtext_expression()
 end
 
 -- Close or quit buffer
-M.close_or_quit = function()
+function utils.close_or_quit()
   local count_bufs_by_type = function(loaded_only)
     loaded_only = (loaded_only == nil and true or loaded_only)
     local count = {
@@ -70,7 +70,7 @@ end
 
 -- Toggle diagnostics
 vim.g.diagnostics_active = true
-M.toggle_diagnostics = function()
+utils.toggle_diagnostics = function()
   if vim.g.diagnostics_active then
     vim.g.diagnostics_active = false
     vim.diagnostic.hide()
@@ -79,7 +79,6 @@ M.toggle_diagnostics = function()
     vim.g.diagnostics_active = true
     vim.cmd([[exe "normal ii\<Esc>x"]])
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = true,
       signs = true,
       underline = true,
       update_in_insert = false,
@@ -88,7 +87,7 @@ M.toggle_diagnostics = function()
 end
 
 -- Rename
-M.rename = function()
+function utils.rename()
   local function post(rename_old)
     vim.cmd('stopinsert!')
     local new = vim.api.nvim_get_current_line()
@@ -122,30 +121,83 @@ M.rename = function()
 end
 
 -- Yanked text
-M.get_yanked_text = function()
+function utils.get_yanked_text()
   return print(vim.fn.getreg('"'))
 end
 
--- Swap booleans
-function M.swap_bool()
-  local actual_word = vim.fn.expand('<cword>')
-  local suspected_line = vim.api.nvim_get_current_line()
-
-  if actual_word:match('true') then
-    local fixed_line = suspected_line:gsub('true', 'false')
-    return vim.api.nvim_set_current_line(fixed_line)
-  elseif actual_word:match('false') then
-    local fixed_line = suspected_line:gsub('false', 'true')
-    return vim.api.nvim_set_current_line(fixed_line)
-  elseif actual_word:match('True') then
-    local fixed_line = suspected_line:gsub('True', 'False')
-    return vim.api.nvim_set_current_line(fixed_line)
-  elseif actual_word:match('False') then
-    local fixed_line = suspected_line:gsub('False', 'True')
-    return vim.api.nvim_set_current_line(fixed_line)
-  else
-    vim.cmd(':norm <C-a>')
-  end
+-- Conditional for width of the terminal
+function utils.hide_at_vp()
+  return vim.opt.columns:get() > 90
 end
 
-return M
+-- Highlights
+function utils.set_hl(mode, table)
+  return vim.api.nvim_set_hl(0, mode, table)
+end
+
+-- Utilities to save and restore session
+function utils.restore_sessions()
+  vim.opt.shadafile = ''
+  vim.cmd('rshada!')
+
+  vim.api.nvim_create_augroup('_save_sessions', { clear = true })
+  vim.api.nvim_create_autocmd('BufReadPost', {
+    desc = 'Open file at the last position it was edited earlier',
+    group = '_save_sessions',
+    callback = function()
+      if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
+        if not vim.tbl_contains({ 'gitcommit', 'help', 'packer', 'toggleterm' }, vim.bo.ft) then
+          -- Check if mark `"` is inside the current file (can be false if at end of file and stuff got deleted outside
+          -- neovim) if it is go to it
+          -- TODO use lua in here
+          vim.cmd([[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
+          -- Get cursor position
+          local cursor = vim.api.nvim_win_get_cursor(0)
+          -- If there are folds under the cursor open them
+          if vim.fn.foldclosed(cursor[1]) ~= -1 then
+            vim.cmd('silent normal! zO')
+          end
+        end
+      end
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('BufWinLeave', {
+    desc = 'Save the view of the buffer',
+    group = '_save_sessions',
+    callback = function()
+      return vim.cmd('silent! mkview')
+    end,
+  })
+
+  vim.api.nvim_create_autocmd('BufWinEnter', {
+    desc = 'Load the view of the buffer',
+    group = '_save_sessions',
+    callback = function()
+      return vim.cmd('silent! loadview')
+    end,
+  })
+end
+
+-- -- Git project or not
+-- -- TODO finish this
+-- function utils.inside_git_project()
+--   local val = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
+--   if val:match('true') then
+--     return true
+--   else
+--     return false
+--   end
+-- end
+
+-- vim.api.nvim_create_augroup('project_git', {})
+-- vim.api.nvim_create_autocmd({ 'VimEnter', 'DirChanged' }, {
+--   group = 'project_git',
+--   callback = function ()
+--     if utils.inside_git_project() then
+--       vim.api.nvim_exec_autocmd()
+--     end
+--   end,
+-- })
+
+return utils

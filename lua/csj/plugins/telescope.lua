@@ -7,9 +7,9 @@ end
 
 local previewers = require('telescope.previewers')
 
+-- Ignore big files
 local new_maker = function(filepath, bufnr, opts)
   opts = opts or {}
-
   filepath = vim.fn.expand(filepath)
   vim.loop.fs_stat(filepath, function(_, stat)
     if not stat then
@@ -23,8 +23,8 @@ local new_maker = function(filepath, bufnr, opts)
   end)
 end
 
--- Dropdown Theme
-local clean_dropdown = require('telescope.themes').get_dropdown { previewer = false }
+-- Themes
+local clean_dropdown = require('telescope.themes').get_dropdown { previewer = false } -- Dropdown Theme
 
 function M.project_files()
   local opts = vim.deepcopy(clean_dropdown)
@@ -58,24 +58,18 @@ M.setup = function()
       entry_prefix = '  ',
       selection_strategy = 'reset',
       initial_mode = 'insert',
-      buffer_previewer_maker = new_maker, -- Ignore big files
+      buffer_previewer_maker = new_maker,
       sorting_strategy = 'ascending',
       winblend = 9,
     },
 
     extensions = {
-      ['ui-select'] = {
-        clean_dropdown,
-      },
-      ['file_browser'] = {
-        clean_dropdown,
-      },
+      ['ui-select'] = { clean_dropdown },
     },
   }
 
   telescope.load_extension('projects')
   telescope.load_extension('ui-select')
-  telescope.load_extension('file_browser')
 
   return telescope
 end

@@ -39,13 +39,16 @@ M.setup = function()
     vim.lsp.handlers.hover,
     { focusable = false, border = 'rounded' }
   )
-  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    { border = 'rounded ' }
+  )
 end
 
 -- Highlight words matching the word under cursor
 local function lsp_highlight_document(client)
   if client.resolved_capabilities.document_highlight then
-    local highlight = vim.api.nvim_create_augroup('lsp_document_highlight', {})
+    local highlight = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
 
     vim.api.nvim_create_autocmd('CursorHold', {
       buffer = 0,
@@ -59,30 +62,17 @@ local function lsp_highlight_document(client)
       callback = vim.lsp.buf.clear_references,
     })
 
+    local set_hl = require('csj.core.utils').set_hl
     local opts = { nocombine = true, reverse = true }
-    local set_hl = vim.api.nvim_set_hl
-    set_hl(0, 'LspReferenceText', opts)
-    set_hl(0, 'LspReferenceRead', opts)
-    set_hl(0, 'LspReferenceWrite', opts)
+    set_hl('LspReferenceText', opts)
+    set_hl('LspReferenceRead', opts)
+    set_hl('LspReferenceWrite', opts)
   end
 end
 
 -- On attach
 M.on_attach = function(client, _)
-  -- tsserver
-  if client.name == 'tsserver' then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-  end
-
-  -- html
-  if client.name == 'html' then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-  end
-
-  -- json
-  if client.name == 'jsonls' then
+  if client.name == 'tsserver' or client.name == 'html' or client.name == 'jdt.ls' then
     client.resolved_capabilities.document_formatting = false
     client.resolved_capabilities.document_range_formatting = false
   end

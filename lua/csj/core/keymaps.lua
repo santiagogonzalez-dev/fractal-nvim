@@ -21,22 +21,15 @@ M.general_keybinds = function()
   end
 
   -- Make di<motions> behave as it should
-  local places = { 'af', 'if', 'ac', 'ic', 'p', '"', "'", '{', '}', '(', ')', '[', ']' }
+  local places = { 'p', '"', "'", '{', '}', '(', ')', '[', ']' }
   for _, p in pairs(places) do
     set('n', 'di' .. p, 'mzdi' .. p .. '`z')
   end
 
-  -- Makeview, write and quit
-  set('n', '<Leader>w', function()
-    vim.cmd('mkview')
-    vim.cmd('wqall')
-  end)
-
-  set('n', '<A-c>', function()
-    return require('csj.core.utils').close_or_quit() -- Close or Quit
-  end)
   set('n', '<Leader>u', '<CMD>update<CR>') -- Update
-  set('n', '<Leader>e', '<CMD>edit<CR>') -- Reload the file manually
+  set('n', '<Leader>w', '<CMD>wqall<CR>') -- Write and Quit
+  set('n', '<A-c>', require('csj.core.utils').close_or_quit) -- Close or Quit
+  set('n', '<Leader>e', '<CMD>edit<CR>') -- Reload file manually
   set('n', '<Leader>q', '<CMD>quit<CR>') -- Quit
   set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>') -- Delete all buffers
   set({ 'v', 'n' }, '$', 'g_') -- Make $ behave as spected in visual modes
@@ -48,15 +41,16 @@ M.general_keybinds = function()
   set('n', 'cg*', '*Ncgn') -- Global find-and-replace
   set('n', '<Tab>', ':bnext<CR>') -- Tab to next buffer
   set('n', '<S-Tab>', ':bprevious<CR>') -- Shift-Tab to previous buffer
-  set({ 'n', 'v', 'x' }, '<F16>', 'zf') -- Create folds with F16
   set('n', '<Leader>ps', '<CMD>PackerSync<CR>') -- PackerSync
   set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>') -- PackerCompile
+  set('n', '<Leader>n', ':Lexplore! 30<CR>', { silent = true }) -- NetRW
+  set({ 'n', 'v', 'x' }, '<F16>', 'zmzo<ESC>') -- Keep only one fold open
 
   -- Window Navigation
-  set('n', '<C-h>', '<C-w>h')
-  set('n', '<C-j>', '<C-w>j')
-  set('n', '<C-k>', '<C-w>k')
-  set('n', '<C-l>', '<C-w>l')
+  set('n', '<Leader>wh', '<C-w>h')
+  set('n', '<Leader>wj', '<C-w>j')
+  set('n', '<Leader>wk', '<C-w>k')
+  set('n', '<Leader>wl', '<C-w>l')
 
   -- Resize windows
   set('n', '<C-Up>', ':resize +1<CR>')
@@ -78,9 +72,9 @@ M.general_keybinds = function()
   set('n', 'N', 'Nzzzv')
   set('n', 'J', 'mzJ`zzv')
   set('n', '.', '.zzzv')
-  set('n', 'zc', 'zczz')
 
-  set('n', '#', '#Nzzzv')
+  -- Better #
+  set('n', '#', '#Nzv')
   set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]])
 
   -- Keep visual selection after shifting code block
@@ -107,7 +101,6 @@ M.telescope_keybinds = function()
   set('n', 't/', '<CMD>Telescope live_grep theme=dropdown<CR>')
   set('n', 't//', '<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>')
   set('n', 'tf', require('csj.plugins.telescope').project_files)
-  set('n', 'tff', '<CMD>Telescope file_browser<CR>')
   set('n', 'tp', '<CMD>Telescope projects<CR>')
   set('n', 'tt', '<CMD>Telescope<CR>')
 end
@@ -124,88 +117,22 @@ M.lsp_keymaps = function()
   set('n', '<Leader>ca', vim.lsp.buf.code_action)
 
   -- Formatting
-  set({ 'v', 'x' }, '<Leader><Leader>f', vim.lsp.buf.range_formatting)
+  set({ 'v', 'x' }, '<Leader><Leader>f', function()
+    return vim.lsp.buf.range_formatting
+  end)
   set('n', '<Leader><Leader>f', vim.lsp.buf.formatting)
   cmdline('Format', vim.lsp.buf.formatting_sync, {})
 
-  -- Diagnostics
-  set('n', 'dia', vim.diagnostic.setqflist)
-  set('n', 'gl', vim.diagnostic.open_float, { buffer = true })
-  set('n', '<Leader>td', function()
-    return require('csj.core.utils').toggle_diagnostics()
-  end)
-
-  -- Rename
-  set('n', 'r', function()
-    return require('csj.core.utils').rename()
-  end)
-
+  set('n', '<Leader>d', vim.diagnostic.setqflist) -- Show all diagnostics
+  set('n', 'gll', vim.diagnostic.open_float) -- Open in float window
+  set('n', 'gl', vim.lsp.buf.hover) -- Open in float window
+  set('n', '<Leader>dj', vim.diagnostic.goto_next) -- Go to next diagnostic
+  set('n', '<Leader>dk', vim.diagnostic.goto_prev) -- Go to previous diagnostic
+  set('n', '<Leader>td', require('csj.core.utils').toggle_diagnostics) -- Toggel diagnostics
+  set('n', 'r', require('csj.core.utils').rename) -- Rename
   set('n', 'gd', vim.lsp.buf.definition) -- Definitions
   set('n', 'gD', vim.lsp.buf.declaration) -- Declaration
-  -- set('n', 'gr', vim.lsp.buf.references, { buffer = true }) -- References
-end
-
--- Treesitter
-M.treesitter_keybinds = function()
-  return require('nvim-treesitter.configs').setup {
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = 'gnn', -- Start the selection by nodes
-        node_incremental = 'gnn', -- Increment to the node with higher order
-        node_decremental = 'gnp', -- Decrement to the node with lower order
-        scope_incremental = 'gns', -- Select the entire group  of nodes including the braces
-      },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true, -- Automatically jump forward to textobj
-        keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ['af'] = '@function.outer', -- Include the function keyword/s
-          ['if'] = '@function.inner', -- Select just the insides of the function
-          ['ac'] = '@class.outer', -- Include the class keyword
-          ['ic'] = '@class.inner', -- Select just the insides of the keyword
-        },
-      },
-      swap = {
-        enable = false, -- Disabled for now, it's not that useful
-        swap_next = { ['<Leader>a'] = '@parameter.inner' }, -- Move paramaters around
-        swap_previous = { ['<Leader>A'] = '@parameter.inner' }, -- Move paramaters around
-      },
-      move = {
-        enable = true,
-        set_jumps = true, -- Whether to set jumps in the jumplist
-        -- First [ means previous, first ] means next
-        -- m is for function, M for function end
-        goto_previous_start = {
-          ['[m'] = '@function.outer', -- Move to the previous or actual node or function(not just keywords)
-          ['[['] = '@class.outer', -- Move to the previous or actual class keyword
-        },
-        goto_next_start = {
-          [']m'] = '@function.outer', -- Move to the function keyword
-          [']]'] = '@class.outer', -- Move to the class keyword
-        },
-        goto_next_end = {
-          [']M'] = '@function.outer', -- Move to the end of the function
-          [']['] = '@class.outer', -- Move to the end of the class
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
-        },
-      },
-      lsp_interop = {
-        enable = true,
-        border = 'rounded',
-        peek_definition_code = {
-          ['gdf'] = '@function.outer',
-          ['gdF'] = '@class.outer',
-        },
-      },
-    },
-  }
+  -- set('n', 'gr', vim.lsp.buf.references) -- References
 end
 
 return M

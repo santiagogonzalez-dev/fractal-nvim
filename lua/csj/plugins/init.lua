@@ -41,17 +41,11 @@ return packer.startup(function(use)
     end,
   }
 
-  use('wbthomason/packer.nvim') -- Packer
   use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
+  use { 'metakirby5/codi.vim', cmd = 'Codi' } -- Codi
+  use('wbthomason/packer.nvim') -- Packer
   use('tpope/vim-surround') -- Surround
   use('tpope/vim-repeat') -- Repeat
-  use { 'https://github.com/metakirby5/codi.vim', cmd = 'Codi' } -- Codi
-
-  -- Startuptime
-  use {
-    'tweekmonster/startuptime.vim',
-    key = 'StartupTime',
-  }
 
   -- Project
   use {
@@ -79,6 +73,14 @@ return packer.startup(function(use)
   use {
     'rose-pine/neovim',
     as = 'rose-pine',
+    opt = true,
+    config = function()
+      require('rose-pine').setup {
+        -- dark_variant = 'main',
+        dark_variant = 'moon',
+        disable_italics = false,
+      }
+    end,
   }
 
   -- Comment
@@ -158,31 +160,58 @@ return packer.startup(function(use)
     },
     config = function()
       require('csj.plugins.treesitter')
-      require('csj.core.keymaps').treesitter_keybinds()
     end,
   }
 
   -- Completion and snippets
   use {
-    'L3MON4D3/LuaSnip', -- Snippet engine
-    'rafamadriz/friendly-snippets', -- Additional snippets
-    'saadparwaiz1/cmp_luasnip', -- Snippet completion
-    'hrsh7th/cmp-buffer', -- Buffer completion
-    'hrsh7th/cmp-cmdline', -- Cmdline completion
-    'hrsh7th/cmp-nvim-lsp', -- LSP completion
-    'hrsh7th/cmp-nvim-lua', -- LSP completion for Lua
-    'hrsh7th/cmp-path', -- Path completion
     'hrsh7th/nvim-cmp', -- The completion plugin
+    opt = true,
+    requires = {
+      'hrsh7th/cmp-buffer', -- Buffer completion
+      'hrsh7th/cmp-cmdline', -- Cmdline completion
+      'hrsh7th/cmp-nvim-lsp', -- LSP completion
+      'hrsh7th/cmp-nvim-lua', -- LSP completion for Lua
+      'hrsh7th/cmp-path', -- Path completion
+    },
+    config = function()
+      require('csj.plugins.cmp')
+    end,
+  }
+
+  use {
+    'L3MON4D3/LuaSnip', -- Snippet engine
+    after = 'nvim-cmp',
+    requires = {
+      'rafamadriz/friendly-snippets', -- Additional snippets
+      'saadparwaiz1/cmp_luasnip', -- Snippet completion
+    },
   }
 
   -- LSP
   use {
-    'neovim/nvim-lspconfig', -- Enable LSP
-    'williamboman/nvim-lsp-installer', -- Install language servers
+    'neovim/nvim-lspconfig',
+    opt = true,
+    requires = {
+      -- Neovim Language Server Installer
+      {
+        'williamboman/nvim-lsp-installer',
+        config = function()
+          require('csj.lsp.lsp-installer')
+        end,
+      },
+      -- Null-LS
+      {
+        'jose-elias-alvarez/null-ls.nvim',
+        config = function()
+          require('csj.lsp.null-ls')
+        end,
+      },
+    },
+    config = function()
+      require('csj.lsp')
+    end,
   }
-
-  -- Null-LS for formatters and linters
-  use { 'jose-elias-alvarez/null-ls.nvim' }
 
   -- Lualine
   use {
@@ -253,10 +282,11 @@ return packer.startup(function(use)
         show_current_context_start = false,
         show_end_of_line = true,
         show_trailing_blankline_indent = false,
-        char = '',
+        -- char = '',
         max_indent_increase = 1,
       }
-      vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { fg = '#393552' })
+      vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#393552' })
+      -- vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { fg = '#393552' })
       vim.cmd('IndentBlanklineRefresh')
     end,
   }

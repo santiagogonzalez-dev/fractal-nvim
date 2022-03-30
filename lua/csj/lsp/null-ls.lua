@@ -6,7 +6,7 @@ end
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
--- local methods = null_ls.methods
+local methods = null_ls.methods
 
 null_ls.setup {
   debug = false,
@@ -61,7 +61,7 @@ null_ls.setup {
     },
     diagnostics.flake8.with {
       prefer_local = '.venv/bin',
-      -- method = methods.DIAGNOSTICS_ON_SAVE,
+      method = methods.DIAGNOSTICS_ON_SAVE,
       extra_args = { '--max-line-length', '88' },
     },
   },
