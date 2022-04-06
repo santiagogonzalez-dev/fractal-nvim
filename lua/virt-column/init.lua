@@ -5,8 +5,10 @@ ffi.cdef('int curwin_col_off(void);')
 
 local M = {
   config = {
+    -- char = '⌇',
     -- char = '┃',
-    char = '▎',
+    -- char = '▎',
+    char = '│',
     virtcolumn = '',
   },
   buffer_config = {},
@@ -26,14 +28,19 @@ M.setup = function(config)
   vim.cmd('highlight default link VirtColumn Whitespace')
   vim.cmd('highlight clear ColorColumn')
 
-  vim.api.nvim_create_augroup('VirtColumnAutogroup', { clear = true })
+  local virtcolumn = vim.api.nvim_create_augroup('VirtColumnAutogroup', { clear = true })
   vim.api.nvim_create_autocmd({
     'TextChanged',
     'TextChangedI',
     'BufWinEnter',
-  }, { command = 'VirtColumnRefresh' })
-  vim.api.nvim_create_autocmd('OptionSet', { pattern = 'colorcolumn', command = 'VirtColumnRefresh' })
-  vim.api.nvim_create_autocmd('OptionSet', { pattern = 'relativenumber', command = 'VirtColumnRefresh' })
+  }, { group = virtcolumn, command = 'VirtColumnRefresh' })
+  -- vim.api.nvim_create_autocmd(
+  --   'OptionSet',
+  --   { pattern = {
+  --     'colorcolumn',
+  --     'relativenumber',
+  --   }, command = 'VirtColumnRefresh' }
+  -- )
 end
 
 M.setup_buffer = function(config)
@@ -95,6 +102,9 @@ M.refresh = function()
   end
 end
 
-M.setup()
+vim.api.nvim_set_hl(0, 'Whitespace', {
+  --[[ fg = '#44415a', ]]
+  fg = '#1f1d2e', --[[ fg = 'white', ]] --[[ fg = '#575279' ]]
+})
 
 return M

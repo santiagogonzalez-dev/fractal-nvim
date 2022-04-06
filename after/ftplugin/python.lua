@@ -2,7 +2,7 @@ local tab_lenght = 4
 vim.opt.tabstop = tab_lenght
 vim.opt.shiftwidth = tab_lenght
 vim.opt.colorcolumn = '89'
-vim.opt.textwidth = 100
+vim.opt.textwidth = 87
 vim.g.python3_host_prog = 'python'
 
 -- Toggle fstrings in python
@@ -41,4 +41,4 @@ local toggle_fstring = function()
 end
 
 -- Toggle fstring keymap
-vim.keymap.set('n', 'F', toggle_fstring)
+vim.keymap.set('n', '<A-f>', toggle_fstring)

@@ -64,20 +64,17 @@ return packer.startup(function(use)
   -- Icons
   use {
     'kyazdani42/nvim-web-devicons',
-    after = {
-      'lualine.nvim',
-    },
   }
 
   -- Colorscheme, Rosé Pine
   use {
     'rose-pine/neovim',
     as = 'rose-pine',
-    opt = true,
+    -- opt = true,
     config = function()
       require('rose-pine').setup {
-        -- dark_variant = 'main',
-        dark_variant = 'moon',
+        dark_variant = 'main',
+        -- dark_variant = 'moon',
         disable_italics = false,
       }
     end,
@@ -213,24 +210,6 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Lualine
-  use {
-    'nvim-lualine/lualine.nvim',
-    after = 'nvim-treesitter',
-    requires = {
-      {
-        'SmiteshP/nvim-gps',
-        after = 'lualine.nvim',
-        config = function()
-          require('nvim-gps').setup()
-        end,
-      },
-    },
-    config = function()
-      require('csj.plugins.lualine')
-    end,
-  }
-
   -- Toggle term
   use {
     'akinsho/toggleterm.nvim',
@@ -247,8 +226,7 @@ return packer.startup(function(use)
     opt = true,
     requires = 'nvim-lua/plenary.nvim',
     config = function()
-      local gitsigns = require('csj.plugins.gitsigns').setup()
-      require('csj.core.keymaps').gitsigns_keybinds(gitsigns)
+      require('csj.plugins.gitsigns')
     end,
   }
 
@@ -267,27 +245,7 @@ return packer.startup(function(use)
       },
     },
     config = function()
-      require('csj.plugins.telescope').setup()
-      require('csj.core.keymaps').telescope_keybinds()
-    end,
-  }
-
-  -- Indent Blankline
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    opt = true,
-    config = function()
-      require('indent_blankline').setup {
-        show_current_context = true,
-        show_current_context_start = false,
-        show_end_of_line = true,
-        show_trailing_blankline_indent = false,
-        -- char = '',
-        max_indent_increase = 1,
-      }
-      vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#393552' })
-      -- vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { fg = '#393552' })
-      vim.cmd('IndentBlanklineRefresh')
+      require('csj.plugins.telescope')
     end,
   }
 

@@ -45,18 +45,12 @@ local kind_icons = {
 }
 
 -- Add some colors
-local set_hl = require("csj.core.utils").set_hl
+local set_hl = require('csj.core.utils').set_hl
 set_hl('CmpItemAbbrDeprecated', { strikethrough = true, fg = '#808080' })
-set_hl('CmpItemAbbrMatch', { bold = true, fg = '#d7827e' })
-set_hl('CmpItemAbbrMatchFuzzy', { bold = true, fg = '#d7827e' })
-set_hl('CmpItemKindVariable', { fg = '#9ccfd8' })
-set_hl('CmpItemKindInterface', { fg = '#9ccfd8' })
-set_hl('CmpItemKindText', { fg = '#9ccfd8' })
-set_hl('CmpItemKindFunction', { fg = '#c4a7e7' })
-set_hl('CmpItemKindMethod', { fg = '#c4a7e7' })
-set_hl('CmpItemKindKeyword', { fg = '#c4a7e7' })
-set_hl('CmpItemKindProperty', { fg = '#e0def4' })
-set_hl('CmpItemKindUnit', { fg = '#e0def4' })
+set_hl({ 'CmpItemAbbrMatch', 'CmpItemAbbrMatchFuzzy' }, { bold = true, fg = '#d7827e' })
+set_hl({ 'CmpItemKindVariable', 'CmpItemKindInterface', 'CmpItemKindText' }, { fg = '#9ccfd8' })
+set_hl({ 'CmpItemKindFunction', 'CmpItemKindMethod', 'CmpItemKindKeyword' }, { fg = '#c4a7e7' })
+set_hl({ 'CmpItemKindProperty', 'CmpItemKindUnit' }, { fg = '#e0def4' })
 
 cmp.setup {
   snippet = {

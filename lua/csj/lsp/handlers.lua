@@ -63,10 +63,8 @@ local function lsp_highlight_document(client)
     })
 
     local set_hl = require('csj.core.utils').set_hl
-    local opts = { nocombine = true, reverse = true }
-    set_hl('LspReferenceText', opts)
-    set_hl('LspReferenceRead', opts)
-    set_hl('LspReferenceWrite', opts)
+    local opts = { standout = true }
+    set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, opts)
   end
 end
 
@@ -77,7 +75,7 @@ M.on_attach = function(client, _)
     client.resolved_capabilities.document_range_formatting = false
   end
 
-  require('csj.core.keymaps').lsp_keymaps() -- Keymaps
+  require('csj.core.keymaps.lsp_keybinds') -- Keymaps
   lsp_highlight_document(client) -- Highlighting
 end
 

@@ -22,3 +22,4 @@
 - If for example we press tS, and there's no S on that line(we can check this if
 the cursor is at the same position), we move it to the line belowe and try to
 change it there
+- Make foldtext recognize class names, imports, function names

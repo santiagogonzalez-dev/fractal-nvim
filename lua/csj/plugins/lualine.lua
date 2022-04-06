@@ -16,10 +16,6 @@ local nvim_gps = function()
   end
 end
 
-local hide_in_width = function()
-  return vim.fn.winwidth(0) > 90
-end
-
 local progress = function()
   local current_line = vim.fn.line('.')
   local total_lines = vim.fn.line('$')

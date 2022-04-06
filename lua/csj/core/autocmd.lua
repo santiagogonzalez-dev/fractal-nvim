@@ -1,6 +1,26 @@
 -- Session managment
 vim.api.nvim_create_augroup('_session_opts', { clear = false })
 
+vim.api.nvim_create_autocmd('WinNew', {
+  group = '_session_opts',
+  callback = function()
+    vim.opt.laststatus = 3
+  end,
+})
+
+vim.api.nvim_create_autocmd('WinLeave', {
+  group = '_session_opts',
+  callback = function()
+    vim.opt.laststatus = 0
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = '_session_opts',
+  pattern = { 'help', 'dockfile', 'zsh', 'sh', 'netrw', 'dosini' },
+  command = 'syntax on',
+})
+
 vim.api.nvim_create_autocmd('FocusGained', {
   desc = 'Check if any file has changed when Vim is focused',
   group = '_session_opts',
@@ -50,13 +70,31 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd('WinEnter', {
+  desc = 'Show cursor only in active window',
+  group = '_session_opts',
+  callback = function()
+    vim.opt_local.cursorline = true
+    vim.opt_local.cursorcolumn = true
+  end,
+})
+
+vim.api.nvim_create_autocmd('WinLeave', {
+  desc = 'Show cursor only in active window',
+  group = '_session_opts',
+  callback = function()
+    vim.opt_local.cursorline = false
+    vim.opt_local.cursorcolumn = false
+  end,
+})
+
 -- First load
 vim.api.nvim_create_augroup('_first_load', { clear = true })
 
 -- Cursor column actions
 vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
 
-vim.api.nvim_create_autocmd('CursorMoved', {
+vim.api.nvim_create_autocmd('UIEnter', {
   desc = 'Enable relativenumber after 2 seconds',
   group = '_first_load',
   once = true,
@@ -67,24 +105,24 @@ vim.api.nvim_create_autocmd('CursorMoved', {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+vim.api.nvim_create_autocmd({ 'FocusGained', 'InsertLeave', 'CmdLineLeave' }, {
   desc = 'Switch the cursorline mode based on context',
   group = '_switch_cursorcolumn',
-  callback =function ()
+  callback = function()
     if vim.opt.number:get() and vim.fn.mode() ~= 'i' then
       vim.opt.relativenumber = true
     end
-  end
+  end,
 })
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
   desc = 'Switch the cursorline mode based on context',
   group = '_switch_cursorcolumn',
-  callback=function ()
+  callback = function()
     if vim.opt.number:get() then
       vim.opt.relativenumber = false
     end
-  end
+  end,
 })
 
 vim.api.nvim_create_autocmd('CmdLineEnter', {

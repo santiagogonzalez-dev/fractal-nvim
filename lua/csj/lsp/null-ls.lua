@@ -50,7 +50,7 @@ null_ls.setup {
     formatting.black.with {
       prefer_local = '.venv/bin',
       extra_args = {
-        -- '--fast',
+        '--fast',
         '--quiet',
         -- '--skip-string-normalization',
         -- '--line-length',
@@ -61,7 +61,7 @@ null_ls.setup {
     },
     diagnostics.flake8.with {
       prefer_local = '.venv/bin',
-      method = methods.DIAGNOSTICS_ON_SAVE,
+      -- method = methods.DIAGNOSTICS_ON_SAVE,
       extra_args = { '--max-line-length', '88' },
     },
   },

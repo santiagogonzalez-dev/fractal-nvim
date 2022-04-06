@@ -5,7 +5,7 @@ vim.g.netrw_sizestyle = 'H' -- Human-readable files sizes
 vim.g.netrw_liststyle = 3 -- Tree view
 vim.g.netrw_hide = 0 -- Show hidden files
 vim.g.netrw_preview = 1 -- Preview files in a vertical split window
-vim.g.netrw_browsex_viewer='setsid xdg-open' --  'open'
+vim.g.netrw_browsex_viewer = 'setsid xdg-open' --  'open'
 
 -- Patterns for hiding files, e.g. node_modules
 -- NOTE: this works by reading '.gitignore' file

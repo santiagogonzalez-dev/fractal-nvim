@@ -20,8 +20,15 @@ function utils.foldtext_expression()
   end
 
   local start_line = function()
+    -- imports for most languages
     if starts_with(vim.trim(vim.fn.getline(vim.v.foldstart)), 'import') then
       return 'imports'
+      -- class in python
+    elseif starts_with(vim.trim(vim.fn.getline(vim.v.foldstart)), 'class ') then
+      return vim.fn.getline(vim.v.foldstart):gsub('class ', '')
+      -- functions in python
+    elseif starts_with(vim.trim(vim.fn.getline(vim.v.foldstart)), 'def ') then
+      return vim.fn.getline(vim.v.foldstart):gsub('def ', '')
     else
       return vim.fn.getline(vim.v.foldstart):gsub('\t', ('\t'):rep(vim.o.tabstop))
     end
@@ -132,11 +139,17 @@ end
 
 -- Highlights
 function utils.set_hl(mode, table)
-  return vim.api.nvim_set_hl(0, mode, table)
+  if type(mode) == 'table' then
+    for _, groups in pairs(mode) do
+      vim.api.nvim_set_hl(0, groups, table)
+    end
+  else
+    vim.api.nvim_set_hl(0, mode, table)
+  end
 end
 
--- Utilities to save and restore session
-function utils.restore_sessions()
+-- Function to setup the initial load and maintain some settings between buffers
+function utils.setup_session(optional_settings)
   vim.opt.shadafile = ''
   vim.cmd('rshada!')
 
@@ -151,10 +164,8 @@ function utils.restore_sessions()
           -- neovim) if it is go to it
           -- TODO use lua in here
           vim.cmd([[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
-          -- Get cursor position
-          local cursor = vim.api.nvim_win_get_cursor(0)
-          -- If there are folds under the cursor open them
-          if vim.fn.foldclosed(cursor[1]) ~= -1 then
+          local cursor = vim.api.nvim_win_get_cursor(0) -- Get cursor position
+          if vim.fn.foldclosed(cursor[1]) ~= -1 then -- If there are folds under the cursor open them
             vim.cmd('silent normal! zO')
           end
         end
@@ -175,6 +186,26 @@ function utils.restore_sessions()
     group = '_save_sessions',
     callback = function()
       return vim.cmd('silent! loadview')
+    end,
+  })
+
+  -- Deferred load
+  local function load_settings()
+    vim.api.nvim_create_autocmd('BufWinEnter', {
+      group = '_save_sessions',
+      desc = 'Persistent configs for all buffers',
+      callback = function()
+        optional_settings()
+      end,
+    })
+    optional_settings()
+  end
+
+  vim.api.nvim_create_autocmd('UIEnter', {
+    group = '_first_load',
+    once = true,
+    callback = function()
+      return vim.defer_fn(load_settings, 60)
     end,
   })
 end
