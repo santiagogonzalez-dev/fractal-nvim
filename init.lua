@@ -16,6 +16,7 @@ async_load = vim.loop.new_async(vim.schedule_wrap(function()
     PackerLoad project.nvim
     PackerLoad vim-hexokinase
     PackerLoad telescope.nvim
+    PackerLoad indent-blankline.nvim
     PackerLoad nvim-lspconfig
     PackerLoad nvim-cmp
   ]])

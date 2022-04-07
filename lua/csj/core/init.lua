@@ -3,7 +3,7 @@ require('csj.core.netrw')
 require('csj.core.autocmd')
 require('csj.colors')
 require('virt-column').setup() -- Moded version of Lukas Reineke's virt-column.nvim
-require('csj.core.indentscope').setup() -- From https://github.com/echasnovski/mini.nvim#miniindentscope
+-- require('csj.core.indentscope').setup() -- From https://github.com/echasnovski/mini.nvim#miniindentscope
 require('csj.core.jump').setup() -- From https://github.com/echasnovski/mini.nvim#minijump
 require('csj.core.utils').setup_session(function()
   return _G.all_buffers_settings()

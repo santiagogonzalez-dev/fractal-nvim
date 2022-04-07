@@ -61,11 +61,6 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Icons
-  use {
-    'kyazdani42/nvim-web-devicons',
-  }
-
   -- Colorscheme, Rosé Pine
   use {
     'rose-pine/neovim',
@@ -246,6 +241,27 @@ return packer.startup(function(use)
     },
     config = function()
       require('csj.plugins.telescope')
+    end,
+  }
+
+  -- Indent Blankline
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    opt = true,
+    config = function()
+      require('indent_blankline').setup {
+        show_current_context = true,
+        show_current_context_start = false,
+        show_end_of_line = true,
+        show_trailing_blankline_indent = false,
+        -- char = '',
+        -- char = '▎',
+        space_char_blankline = ' ',
+        max_indent_increase = 1,
+      }
+      vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#393552' })
+      -- vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { fg = '#393552' })
+      vim.cmd('IndentBlanklineRefresh')
     end,
   }
 
