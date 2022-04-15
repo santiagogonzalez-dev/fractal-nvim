@@ -3,7 +3,6 @@ require('csj.core.netrw')
 require('csj.core.folds')
 require('csj.core.bettertf')
 require('csj.core.keymaps')
--- require('csj.core.virt-column') -- Moded version of Lukas Reineke's virt-column.nvim
 
 -- Cursor settings
 vim.opt.guicursor:append('v:hor50')

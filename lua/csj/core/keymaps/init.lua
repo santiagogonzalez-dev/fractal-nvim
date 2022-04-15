@@ -54,7 +54,7 @@ set('n', '<Leader>ps', '<CMD>PackerSync<CR>') -- PackerSync
 set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>') -- PackerCompile
 set('n', '<Leader>n', ':silent! Lexplore!<CR>') -- NetRW
 set('n', '<Leader>st', ':!tail -n3 time.md<CR>')
-set({ 'n', 'v', 'x' }, '<F16>', 'zmzo<ESC>') -- Keep only one fold open
+set({ 'n', 'v', 'x' }, '', 'zmzo<ESC>') -- Keep only one fold open using special key on my keyboard
 
 -- Resize windows
 set('n', '<C-Up>', ':resize +1<CR>')
