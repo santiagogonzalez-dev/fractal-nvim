@@ -1,7 +1,4 @@
-local utils = require('virt-column.utils')
-local ffi = require('ffi')
-
-ffi.cdef('int curwin_col_off(void);')
+require('ffi').cdef('int curwin_col_off(void);')
 
 local M = {
   config = {
@@ -14,33 +11,51 @@ local M = {
   buffer_config = {},
 }
 
+-- Utils
+M.concat_table = function(t1, t2)
+  for _, v in ipairs(t2) do
+    t1[#t1 + 1] = v
+  end
+  return t1
+end
+
+-- Commands
+M.refreshing = function(bang)
+  if bang then
+    local win = vim.api.nvim_get_current_win()
+    vim.cmd('noautocmd windo lua require("virt-column").refresh()')
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_set_current_win(win)
+      vim.cmd('lua require("virt-column").refresh()')
+
+    end
+  else
+    vim.cmd('lua require("virt-column").refresh()')
+  end
+end
+
 M.clear_buf = function(bufnr)
   if M.namespace then
     vim.api.nvim_buf_clear_namespace(bufnr, M.namespace, 0, -1)
   end
 end
 
-M.setup = function(config)
-  M.config = vim.tbl_deep_extend('force', M.config, config or {})
+M.setup = function()
   M.namespace = vim.api.nvim_create_namespace('virt-column')
 
-  vim.cmd('command! -bang VirtColumnRefresh lua require("virt-column.commands").refresh("<bang>" == "!")')
-  vim.cmd('highlight default link VirtColumn Whitespace')
-  vim.cmd('highlight clear ColorColumn')
+  vim.api.nvim_create_user_command('VirtColumnRefresh', function()
+    return M.refreshing('<bang>' == '!')
+  end, { bang = true })
+  vim.api.nvim_set_hl(0, 'VirtColumn', { link = 'Whitespace' })
+  vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#1f1d2e' })
+  vim.api.nvim_set_hl(0, 'ColorColumn', {})
 
-  local virtcolumn = vim.api.nvim_create_augroup('VirtColumnAutogroup', { clear = true })
+  vim.api.nvim_create_augroup('VirtColumnAutogroup', { clear = true })
   vim.api.nvim_create_autocmd({
     'TextChanged',
     'TextChangedI',
     'BufWinEnter',
-  }, { group = virtcolumn, command = 'VirtColumnRefresh' })
-  -- vim.api.nvim_create_autocmd(
-  --   'OptionSet',
-  --   { pattern = {
-  --     'colorcolumn',
-  --     'relativenumber',
-  --   }, command = 'VirtColumnRefresh' }
-  -- )
+  }, { group = 'VirtColumnAutogroup', command = 'VirtColumnRefresh' })
 end
 
 M.setup_buffer = function(config)
@@ -58,9 +73,9 @@ M.refresh = function()
   local config = vim.tbl_deep_extend('force', M.config, M.buffer_config[bufnr] or {})
   local winnr = vim.api.nvim_get_current_win()
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-  local width = vim.api.nvim_win_get_width(winnr) - ffi.C.curwin_col_off()
+  local width = vim.api.nvim_win_get_width(winnr) - require('ffi').C.curwin_col_off()
   local textwidth = vim.opt.textwidth:get()
-  local colorcolumn = utils.concat_table(vim.opt.colorcolumn:get(), vim.split(config.virtcolumn, ','))
+  local colorcolumn = M.concat_table.concat_table(vim.opt.colorcolumn:get(), vim.split(config.virtcolumn, ','))
 
   for i, c in ipairs(colorcolumn) do
     if vim.startswith(c, '+') then
@@ -101,11 +116,6 @@ M.refresh = function()
     end
   end
 end
-
-vim.api.nvim_set_hl(0, 'Whitespace', {
-  --[[ fg = '#44415a', ]]
-  fg = '#1f1d2e', --[[ fg = 'white', ]] --[[ fg = '#575279' ]]
-})
 
 M.setup()
 

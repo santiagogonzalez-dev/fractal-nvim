@@ -31,7 +31,6 @@ async_load:send()
 
 require('csj.colors') -- Highlight groups modifications
 require('csj.core') -- Core
-require('virt-column') -- Moded version of Lukas Reineke's virt-column.nvim
 
 -- Setup the session and load other settings
 require('csj.core.utils').setup_session(function()
