@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd('WinLeave', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = '_session_opts',
-  pattern = { 'help', 'dockfile', 'zsh', 'sh', 'netrw', 'dosini' },
+  pattern = { 'checkhealth', 'dockfile', 'dosini', 'help', 'netrw', 'sh', 'zsh' },
   command = 'syntax on',
 })
 
@@ -70,29 +70,26 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd('WinEnter', {
-  desc = 'Show cursor only in active window',
-  group = '_session_opts',
-  callback = function()
-    vim.opt_local.cursorline = true
-    vim.opt_local.cursorcolumn = true
-  end,
-})
+-- vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
+--   desc = 'Show cursor only in active window',
+--   group = '_session_opts',
+--   callback = function()
+--     vim.opt_local.cursorline = true
+--     vim.opt_local.cursorcolumn = true
+--   end,
+-- })
 
-vim.api.nvim_create_autocmd('WinLeave', {
-  desc = 'Show cursor only in active window',
-  group = '_session_opts',
-  callback = function()
-    vim.opt_local.cursorline = false
-    vim.opt_local.cursorcolumn = false
-  end,
-})
+-- vim.api.nvim_create_autocmd('WinLeave', {
+--   desc = 'Show cursor only in active window',
+--   group = '_session_opts',
+--   callback = function()
+--     vim.opt_local.cursorline = false
+--     vim.opt_local.cursorcolumn = false
+--   end,
+-- })
 
 -- First load
 vim.api.nvim_create_augroup('_first_load', { clear = true })
-
--- Cursor column actions
-vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
 
 vim.api.nvim_create_autocmd('UIEnter', {
   desc = 'Enable relativenumber after 2 seconds',
@@ -104,6 +101,24 @@ vim.api.nvim_create_autocmd('UIEnter', {
     end, 2000)
   end,
 })
+
+vim.api.nvim_create_autocmd('UIEnter', {
+  desc = 'Print the output of flag --startuptime startuptime_nvim.md',
+  group = '_first_load',
+  pattern = 'init.lua',
+  once = true,
+  callback = function()
+    if vim.fn.filereadable('startuptime_nvim.md') == 1 then
+      return vim.defer_fn(function()
+        vim.cmd(':!tail -n3 startuptime_nvim.md')
+        vim.fn.delete('startuptime_nvim.md')
+      end, 2000)
+    end
+  end,
+})
+
+-- Cursor column actions
+vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
 
 vim.api.nvim_create_autocmd({ 'FocusGained', 'InsertLeave', 'CmdLineLeave' }, {
   desc = 'Switch the cursorline mode based on context',

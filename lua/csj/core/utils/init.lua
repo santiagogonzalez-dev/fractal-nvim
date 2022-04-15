@@ -1,41 +1,5 @@
 local utils = {}
 
--- Folds text
-function utils.foldtext_expression()
-  -- Match the characters at the start of the line
-  local function starts_with(string_to_search, pattern_to_match)
-    return string.sub(string_to_search, 1, string.len(pattern_to_match)) == pattern_to_match
-  end
-
-  local fold_end = function()
-    local fe = vim.trim(vim.fn.getline(vim.v.foldend))
-    local fae = vim.trim(vim.fn.getline(vim.v.foldend - 1))
-    if starts_with(fae, 'return') then
-      return ('  ' .. fae)
-    elseif starts_with(fe, 'return') then
-      return ('  ' .. fe)
-    else
-      return ''
-    end
-  end
-
-  local start_line = function()
-    -- imports for most languages
-    if starts_with(vim.trim(vim.fn.getline(vim.v.foldstart)), 'import') then
-      return 'imports'
-      -- class in python
-    elseif starts_with(vim.trim(vim.fn.getline(vim.v.foldstart)), 'class ') then
-      return vim.fn.getline(vim.v.foldstart):gsub('class ', '')
-      -- functions in python
-    elseif starts_with(vim.trim(vim.fn.getline(vim.v.foldstart)), 'def ') then
-      return vim.fn.getline(vim.v.foldstart):gsub('def ', '')
-    else
-      return vim.fn.getline(vim.v.foldstart):gsub('\t', ('\t'):rep(vim.o.tabstop))
-    end
-  end
-  return start_line() .. fold_end()
-end
-
 -- Close or quit buffer
 function utils.close_or_quit()
   local count_bufs_by_type = function(loaded_only)
@@ -208,6 +172,17 @@ function utils.setup_session(optional_settings)
       return vim.defer_fn(load_settings, 60)
     end,
   })
+end
+
+-- Don't open floating windows if there's already one open
+function utils.not_interfere_on_float(conditional_function)
+  for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.api.nvim_win_get_config(winid).zindex then
+      vim.notify('There is a floating window open already', vim.log.levels.WARN)
+      return
+    end
+  end
+  return conditional_function()
 end
 
 -- -- Git project or not

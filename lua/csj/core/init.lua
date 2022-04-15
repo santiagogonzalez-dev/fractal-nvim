@@ -1,13 +1,8 @@
-require('csj.core.keymaps')
-require('csj.core.netrw')
 require('csj.core.autocmd')
-require('csj.colors')
-require('virt-column').setup() -- Moded version of Lukas Reineke's virt-column.nvim
--- require('csj.core.indentscope').setup() -- From https://github.com/echasnovski/mini.nvim#miniindentscope
-require('csj.core.jump').setup() -- From https://github.com/echasnovski/mini.nvim#minijump
-require('csj.core.utils').setup_session(function()
-  return _G.all_buffers_settings()
-end)
+require('csj.core.netrw')
+require('csj.core.folds')
+require('csj.core.bettertf')
+require('csj.core.keymaps')
 
 -- Cursor settings
 vim.opt.guicursor:append('v:hor50')
@@ -22,13 +17,8 @@ local opts = {
   clipboard = 'unnamedplus', -- Clipboard mode
   conceallevel = 2, -- Show concealed text when the cursor is not on top
   confirm = true, -- Confirm dialogs
-  cursorcolumn = true,
-  cursorline = true,
   diffopt = 'foldcolumn:0,hiddenoff,vertical',
   expandtab = true, -- Convert tabs to spaces
-  foldcolumn = 'auto:3', -- Folds column
-  foldmethod = 'manual',
-  foldtext = 'v:lua.require("csj.core.utils").foldtext_expression()',
   grepprg = 'rg --hidden --no-heading --vimgrep', -- Grep command
   ignorecase = true, -- Ignore case
   inccommand = 'split', -- Shows just like nosplit, but partially off-screen
@@ -102,21 +92,14 @@ end
 -- Settings for non-visible characters
 vim.opt.list = true
 
+vim.opt.fillchars:append { eob = ' ' } -- Don't show the ~ at the eof
 vim.opt.listchars:append {
-  -- eol           = '↴',
+  -- eol = '↴',
   extends = '◣',
   nbsp = '␣',
   precedes = '◢',
   tab = '-->',
   trail = '█',
-}
-
-vim.opt.fillchars = {
-  eob = ' ', -- Don't show the ~ at the eof
-  fold = ' ', -- Filling foldtext
-  foldclose = 'ᐉ',
-  foldopen = '▎',
-  foldsep = '▎',
 }
 
 local function window_separator(separators)
@@ -158,20 +141,20 @@ vim.g.did_load_filetypes = 0 -- Disable filetype.vim
 vim.g.do_filetype_lua = 1 -- Enable filetype.lua
 
 -- Disable builtins
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_getscript = 1
-vim.g.loaded_getscriptPlugin = 1
-vim.g.loaded_gzip = 1
-vim.g.loaded_logipat = 1
-vim.g.loaded_man = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchParen = 1
-vim.g.loaded_perl_provider = 1
-vim.g.loaded_rrhelper = 1
-vim.g.loaded_spec = 1
-vim.g.loaded_tar = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_vimball = 1
-vim.g.loaded_vimballPlugin = 1
-vim.g.loaded_zip = 1
-vim.g.loaded_zipPlugin = 1
+vim.g.loaded_2html_plugin = 0
+vim.g.loaded_getscript = 0
+vim.g.loaded_getscriptPlugin = 0
+vim.g.loaded_gzip = 0
+vim.g.loaded_logipat = 0
+vim.g.loaded_man = 0
+vim.g.loaded_matchit = 0
+vim.g.loaded_matchParen = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_rrhelper = 0
+vim.g.loaded_spec = 0
+vim.g.loaded_tar = 0
+vim.g.loaded_tarPlugin = 0
+vim.g.loaded_vimball = 0
+vim.g.loaded_vimballPlugin = 0
+vim.g.loaded_zip = 0
+vim.g.loaded_zipPlugin = 0

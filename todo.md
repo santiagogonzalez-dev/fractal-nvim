@@ -23,3 +23,4 @@
 the cursor is at the same position), we move it to the line belowe and try to
 change it there
 - Make foldtext recognize class names, imports, function names
+- Comment folds and other motions for them

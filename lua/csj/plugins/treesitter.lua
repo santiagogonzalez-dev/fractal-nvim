@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 treesitter.setup {
-  -- ensure_installed = 'maintained',
+  -- ensure_installed = 'all',
   ensure_installed = {
     'css',
     'haskell',
@@ -30,7 +30,7 @@ treesitter.setup {
   },
   indent = {
     enable = true,
-    disable = { 'yaml' },
+    disable = { 'yaml', 'python' },
   },
   autopairs = { enable = true },
   autotag = {

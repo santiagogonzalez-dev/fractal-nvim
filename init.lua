@@ -1,5 +1,6 @@
 pcall(require, 'impatient')
 vim.opt.shadafile = 'NONE'
+vim.cmd('syntax off')
 
 -- Async execution
 local async_load
@@ -10,20 +11,29 @@ async_load = vim.loop.new_async(vim.schedule_wrap(function()
     require('csj.plugins.packer_compiled')
   end
 
-  vim.cmd([[
-    PackerLoad nvim-treesitter
-    PackerLoad gitsigns.nvim
-    PackerLoad project.nvim
-    PackerLoad vim-hexokinase
-    PackerLoad telescope.nvim
-    PackerLoad indent-blankline.nvim
-    PackerLoad nvim-lspconfig
-    PackerLoad nvim-cmp
-  ]])
+  for _, plugins in ipairs {
+    'nvim-treesitter',
+    'gitsigns.nvim',
+    'project.nvim',
+    'vim-hexokinase',
+    'telescope-ui-select.nvim',
+    'telescope.nvim',
+    'indent-blankline.nvim',
+    'nvim-lspconfig',
+    'nvim-cmp',
+  } do
+    vim.cmd('PackerLoad ' .. plugins)
+  end
 
   return async_load:close()
 end))
 async_load:send()
 
--- Core
-require('csj.core')
+require('csj.colors') -- Highlight groups modifications
+require('csj.core') -- Core
+require('virt-column') -- Moded version of Lukas Reineke's virt-column.nvim
+
+-- Setup the session and load other settings
+require('csj.core.utils').setup_session(function()
+  return _G.all_buffers_settings()
+end)

@@ -6,7 +6,6 @@ vim.g.maplocalleader = ' '
 
 -- Make dead keys
 local dead_keys = {
-  'ZZ',
   '<Space>',
   '<CR>',
   '<BS>',
@@ -45,13 +44,16 @@ set('n', '<Leader>p', [["_diwP]]) -- Paste in word under the cursor without over
 set('n', "'", '`') -- Swap ' with `
 set('n', '<Leader>s', ':luafile %<CR>') -- Source lua file
 set('n', 'cg*', '*Ncgn') -- Global find-and-replace
-set('n', '<C-n>', ':bnext<CR>', { silent = true }) -- Tab to next buffer
-set('n', '<C-p>', ':bprevious<CR>', { silent = true }) -- Shift-Tab to previous buffer
+set('n', '<C-n>', ':bnext<CR>', { silent = true }) -- Switch to next buffer
+set('n', '<C-p>', ':bprevious<CR>', { silent = true }) -- Switch to prev buffer
 set('n', '<Tab>', 'za') -- Toggle folds
 set('n', '<S-Tab>', 'zm') -- Close all folds
+set('n', 'zo', '<CMD>silent! foldopen<CR>') -- Silence this keybind
+set('n', 'zc', '<CMD>silent! foldclose<CR>') -- Silence this keybind
 set('n', '<Leader>ps', '<CMD>PackerSync<CR>') -- PackerSync
 set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>') -- PackerCompile
-set('n', '<Leader>n', ':Lexplore! 30<CR>', { silent = true }) -- NetRW
+set('n', '<Leader>n', ':silent! Lexplore!<CR>') -- NetRW
+set('n', '<Leader>st', ':!tail -n3 time.md<CR>')
 set({ 'n', 'v', 'x' }, '<F16>', 'zmzo<ESC>') -- Keep only one fold open
 
 -- Resize windows

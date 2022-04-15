@@ -1,9 +1,10 @@
 local tab_lenght = 4
 vim.opt.tabstop = tab_lenght
 vim.opt.shiftwidth = tab_lenght
-vim.opt.colorcolumn = '89'
+vim.opt.colorcolumn = '80,88'
 vim.opt.textwidth = 87
 vim.g.python3_host_prog = 'python'
+vim.g.python_highlight_all = 1
 
 -- Toggle fstrings in python
 local ts_utils = require('nvim-treesitter.ts_utils')

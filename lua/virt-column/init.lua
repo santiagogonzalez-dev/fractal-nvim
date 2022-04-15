@@ -6,9 +6,9 @@ ffi.cdef('int curwin_col_off(void);')
 local M = {
   config = {
     -- char = '⌇',
-    -- char = '┃',
+    char = '┃',
+    -- char = '│',
     -- char = '▎',
-    char = '│',
     virtcolumn = '',
   },
   buffer_config = {},
@@ -106,5 +106,7 @@ vim.api.nvim_set_hl(0, 'Whitespace', {
   --[[ fg = '#44415a', ]]
   fg = '#1f1d2e', --[[ fg = 'white', ]] --[[ fg = '#575279' ]]
 })
+
+M.setup()
 
 return M

@@ -37,7 +37,7 @@ M.setup = function()
   vim.diagnostic.config(config)
   vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
     vim.lsp.handlers.hover,
-    { focusable = false, border = 'rounded' }
+    { focusable = true, border = 'rounded' }
   )
   vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
@@ -50,10 +50,14 @@ local function lsp_highlight_document(client)
   if client.resolved_capabilities.document_highlight then
     local highlight = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
 
-    vim.api.nvim_create_autocmd('CursorHold', {
+    vim.api.nvim_create_autocmd('CursorMoved', {
       buffer = 0,
       group = highlight,
-      callback = vim.lsp.buf.document_highlight,
+      callback = function()
+        vim.defer_fn(function()
+          vim.lsp.buf.document_highlight()
+        end, 150)
+      end,
     })
 
     vim.api.nvim_create_autocmd('CursorMoved', {
@@ -63,17 +67,14 @@ local function lsp_highlight_document(client)
     })
 
     local set_hl = require('csj.core.utils').set_hl
-    local opts = { standout = true }
-    set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, opts)
+    set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, { link = 'PounceAccept' })
   end
 end
 
 -- On attach
 M.on_attach = function(client, _)
-  if client.name == 'tsserver' or client.name == 'html' or client.name == 'jdt.ls' then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-  end
+  client.resolved_capabilities.document_formatting = false
+  client.resolved_capabilities.document_range_formatting = false
 
   require('csj.core.keymaps.lsp_keybinds') -- Keymaps
   lsp_highlight_document(client) -- Highlighting

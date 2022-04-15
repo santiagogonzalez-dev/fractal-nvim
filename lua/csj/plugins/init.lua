@@ -46,6 +46,18 @@ return packer.startup(function(use)
   use('wbthomason/packer.nvim') -- Packer
   use('tpope/vim-surround') -- Surround
   use('tpope/vim-repeat') -- Repeat
+  use('kyazdani42/nvim-web-devicons')
+  use('rainbowhxch/beacon.nvim')
+
+  -- Accelerated jk
+  use {
+    'rainbowhxch/accelerated-jk.nvim',
+    keys = { 'j', 'k' },
+    config = function()
+      vim.keymap.set('n', 'j', '<Plug>(accelerated_jk_gj)')
+      vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_gk)')
+    end,
+  }
 
   -- Project
   use {
@@ -61,16 +73,15 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Colorscheme, Rosé Pine
+  -- Colorscheme
   use {
     'rose-pine/neovim',
     as = 'rose-pine',
-    -- opt = true,
     config = function()
       require('rose-pine').setup {
         dark_variant = 'main',
         -- dark_variant = 'moon',
-        disable_italics = false,
+        disable_italics = true,
       }
     end,
   }
@@ -231,13 +242,12 @@ return packer.startup(function(use)
     module = 'telescope',
     opt = true,
     requires = {
-      'nvim-lua/plenary.nvim',
-      'ahmedkhalf/project.nvim',
       {
         'nvim-telescope/telescope-ui-select.nvim',
-        'nvim-telescope/telescope-file-browser.nvim',
-        after = 'telescope.nvim',
+        opt = true,
       },
+      'nvim-lua/plenary.nvim',
+      'ahmedkhalf/project.nvim',
     },
     config = function()
       require('csj.plugins.telescope')
@@ -261,7 +271,6 @@ return packer.startup(function(use)
       }
       vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#393552' })
       -- vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { fg = '#393552' })
-      vim.cmd('IndentBlanklineRefresh')
     end,
   }
 
