@@ -67,7 +67,7 @@ local function lsp_highlight_document(client)
     })
 
     local set_hl = require('csj.core.utils').set_hl
-    set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, { link = 'PounceAccept' })
+    set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, { link = 'PounceAcceptBest' })
   end
 end
 

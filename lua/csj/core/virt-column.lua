@@ -23,13 +23,13 @@ end
 M.command_refresh = function(bang)
   if bang then
     local win = vim.api.nvim_get_current_win()
-    vim.cmd('noautocmd windo lua require("virt-column").refresh()')
+    vim.cmd('noautocmd windo lua require("csj.core.virt-column").refresh()')
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_set_current_win(win)
-      vim.cmd('lua require("virt-column").refresh()')
+      vim.cmd('lua require("csj.core.virt-column").refresh()')
     end
   else
-    vim.cmd('lua require("virt-column").refresh()')
+    vim.cmd('lua require("csj.core.virt-column").refresh()')
   end
 end
 

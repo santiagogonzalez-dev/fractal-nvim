@@ -1,8 +1,9 @@
-require('csj.core.autocmd')
 require('csj.core.netrw')
 require('csj.core.folds')
 require('csj.core.bettertf')
 require('csj.core.keymaps')
+require('csj.core.autocmd')
+require('csj.core.virt-column') -- Moded version of Lukas Reineke's virt-column.nvim
 
 -- Cursor settings
 vim.opt.guicursor:append('v:hor50')
@@ -74,8 +75,9 @@ end
 vim.opt.path:append('**') -- Search files recursively
 vim.opt.statusline = '%t %M %= %l·%c'
 
-vim.cmd('autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif')
-vim.cmd('autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif')
+vim.api.nvim_create_autocmd({ 'UIEnter', 'UILeave' }, {
+  command = 'if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif'
+})
 
 -- Ensure this settings persist in all buffers
 function _G.all_buffers_settings()

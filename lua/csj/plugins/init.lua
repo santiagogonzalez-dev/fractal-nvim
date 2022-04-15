@@ -47,7 +47,18 @@ return packer.startup(function(use)
   use('tpope/vim-surround') -- Surround
   use('tpope/vim-repeat') -- Repeat
   use('kyazdani42/nvim-web-devicons')
-  use('rainbowhxch/beacon.nvim')
+
+  -- Beacon
+  use {
+    'rainbowhxch/beacon.nvim',
+    config = function()
+      require('beacon').setup {
+        enable = true,
+        minimal_jump = 5,
+        focus_gained = true,
+      }
+    end,
+  }
 
   -- Accelerated jk
   use {
@@ -81,7 +92,7 @@ return packer.startup(function(use)
       require('rose-pine').setup {
         dark_variant = 'main',
         -- dark_variant = 'moon',
-        disable_italics = true,
+        disable_italics = false,
       }
     end,
   }
