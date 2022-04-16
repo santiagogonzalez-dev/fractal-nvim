@@ -52,11 +52,7 @@ return packer.startup(function(use)
   use {
     'rainbowhxch/beacon.nvim',
     config = function()
-      require('beacon').setup {
-        enable = true,
-        minimal_jump = 5,
-        focus_gained = true,
-      }
+      require('beacon').setup()
     end,
   }
 

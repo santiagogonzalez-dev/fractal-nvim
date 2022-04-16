@@ -15,12 +15,6 @@ vim.api.nvim_create_autocmd('WinLeave', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  group = '_session_opts',
-  pattern = { 'checkhealth', 'dockfile', 'dosini', 'help', 'netrw', 'sh', 'zsh' },
-  command = 'syntax on',
-})
-
 vim.api.nvim_create_autocmd('FocusGained', {
   desc = 'Check if any file has changed when Vim is focused',
   group = '_session_opts',

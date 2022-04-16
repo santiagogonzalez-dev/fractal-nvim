@@ -1,6 +1,5 @@
 pcall(require, 'impatient')
 vim.opt.shadafile = 'NONE'
-vim.cmd('syntax off')
 
 -- Async execution
 local async_load
