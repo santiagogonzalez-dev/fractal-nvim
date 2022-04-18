@@ -3,7 +3,7 @@ local cmdline = vim.api.nvim_create_user_command
 
 -- Stop the LS
 set({ 'n', 'v', 'x' }, '<Leader>ls', function()
-  return vim.lsp.stop_client(vim.lsp.get_active_clients())
+    return vim.lsp.stop_client(vim.lsp.get_active_clients())
 end)
 
 -- Code actions
@@ -18,11 +18,11 @@ cmdline('Format', vim.lsp.buf.formatting_sync, {})
 set('n', '<Leader>d', vim.diagnostic.setqflist) -- Show all diagnostics
 
 set('n', 'gll', function()
-  return require('csj.core.utils').not_interfere_on_float(vim.diagnostic.open_float)
+    return require('csj.core.utils').not_interfere_on_float(vim.diagnostic.open_float)
 end)
 
 set('n', 'gl', function()
-  return require('csj.core.utils').not_interfere_on_float(vim.lsp.buf.hover)
+    return require('csj.core.utils').not_interfere_on_float(vim.lsp.buf.hover)
 end)
 
 set('n', '<Leader>dj', vim.diagnostic.goto_next) -- Go to next diagnostic
