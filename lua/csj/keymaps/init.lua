@@ -74,6 +74,7 @@ vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>') -- Pack
 vim.keymap.set('n', '<Leader>n', ':silent! Lexplore!<CR>') -- NetRW
 vim.keymap.set('n', '<Leader>st', ':!tail -n3 time.md<CR>')
 vim.keymap.set({ 'n', 'v', 'x' }, '', 'zmzo<ESC>') -- Keep only one fold open using special key on my keyboard
+vim.keymap.set('n', 'gvp', [['`[' . strpart(getregtype(), 0, 1) . '`]']], { expr = true }) -- Highlight latest changes to the code
 
 -- Resize windows
 vim.keymap.set('n', '<C-Up>', ':resize +1<CR>')

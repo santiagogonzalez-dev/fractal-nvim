@@ -16,11 +16,10 @@
 - Change the keybinding for the terminal of <C-t> in toggle term
 - And maybe use the integrated terminal
 - Learn how to use quickfix lists
-- Make a command that highligths the pasted text, like gv, but gvp
 - Set up skeletons
 - Make user autocommands to load plugins at once instead of calling one by one
 - If for example we press tS, and there's no S on that line(we can check this if
-the cursor is at the same position), we move it to the line belowe and try to
+the cursor is at the same position), we move it to the line below and try to
 change it there
 - Make foldtext recognize class names, imports, function names
 - Comment folds and other motions for them

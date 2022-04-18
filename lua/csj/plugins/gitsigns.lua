@@ -31,12 +31,8 @@ gitsigns.setup {
     },
     attach_to_untracked = true,
     current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-    current_line_blame_opts = {
-        virt_text = false,
-    },
-    current_line_blame_formatter_opts = {
-        relative_time = true,
-    },
+    current_line_blame_opts = { virt_text = false },
+    current_line_blame_formatter_opts = { relative_time = true },
     sign_priority = 6,
     update_debounce = 300,
     status_formatter = nil, -- Use default
@@ -49,9 +45,7 @@ gitsigns.setup {
         row = 0,
         col = 1,
     },
-    yadm = {
-        enable = false,
-    },
+    yadm = { enable = false },
     on_attach = function(bufnr)
         -- local gs = package.loaded.gitsigns
 
