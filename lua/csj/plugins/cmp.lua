@@ -45,7 +45,7 @@ local kind_icons = {
 }
 
 -- Add some colors
-local set_hl = require('csj.core.utils').set_hl
+local set_hl = require('csj.utils').set_hl
 set_hl('CmpItemAbbrDeprecated', { strikethrough = true, fg = '#808080' })
 set_hl({ 'CmpItemAbbrMatch', 'CmpItemAbbrMatchFuzzy' }, { bold = true, fg = '#d7827e' })
 set_hl({ 'CmpItemKindVariable', 'CmpItemKindInterface', 'CmpItemKindText' }, { fg = '#9ccfd8' })

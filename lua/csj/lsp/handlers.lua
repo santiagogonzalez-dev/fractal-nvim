@@ -66,7 +66,7 @@ local function lsp_highlight_document(client)
             callback = vim.lsp.buf.clear_references,
         })
 
-        local set_hl = require('csj.core.utils').set_hl
+        local set_hl = require('csj.utils').set_hl
         set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, { link = 'PounceAcceptBest' })
     end
 end

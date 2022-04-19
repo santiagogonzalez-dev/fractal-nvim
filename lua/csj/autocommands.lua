@@ -1,20 +1,6 @@
 -- Session managment
 vim.api.nvim_create_augroup('_session_opts', { clear = false })
 
-vim.api.nvim_create_autocmd('WinNew', {
-    group = '_session_opts',
-    callback = function()
-        vim.opt.laststatus = 3
-    end,
-})
-
-vim.api.nvim_create_autocmd('WinLeave', {
-    group = '_session_opts',
-    callback = function()
-        vim.opt.laststatus = 0
-    end,
-})
-
 vim.api.nvim_create_autocmd('FocusGained', {
     desc = 'Check if any file has changed when Vim is focused',
     group = '_session_opts',

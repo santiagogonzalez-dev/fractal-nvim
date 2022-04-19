@@ -1,4 +1,4 @@
-local folds = {}
+ local folds = {}
 
 -- Folds text
 function folds.foldtext_expression()
@@ -43,9 +43,20 @@ vim.opt.foldmethod = 'manual'
 
 vim.opt.fillchars:append {
     fold = ' ', -- Filling foldtext
-    foldclose = 'ᐉ',
-    foldopen = '▎',
-    foldsep = '▎',
+    -- foldsep = '🮍',
 }
+
+require('csj.utils').append_by_random(vim.opt.fillchars, {
+    {
+        foldclose = '▾',
+        foldopen = '▴',
+        foldsep = '│',
+    },
+    {
+        foldclose = 'ᐉ',
+        foldopen = '▎',
+        foldsep = '▎',
+    },
+})
 
 return folds

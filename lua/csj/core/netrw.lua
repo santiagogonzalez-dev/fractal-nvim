@@ -1,4 +1,4 @@
-vim.g.netrw_banner = 0 -- Toggle the banner
+ vim.g.netrw_banner = 0 -- Toggle the banner
 vim.g.netrw_keepdir = 0 -- Keep the current directory and the browsing directory synced.
 vim.g.netrw_sort_sequence = [[\/]$,*]] -- Show directories first (sorting)
 vim.g.netrw_sizestyle = 'H' -- Human-readable files sizes

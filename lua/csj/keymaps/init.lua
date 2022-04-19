@@ -4,13 +4,14 @@ vim.g.maplocalleader = ' '
 
 -- Make dead keys
 local dead_keys = {
-    '<Space>',
-    '<CR>',
     '<BS>',
+    '<CR>',
+    '<Down>',
     '<Left>',
     '<Right>',
+    '<Space>',
     '<Up>',
-    '<Down>',
+    'q:', -- Disable EX mode
 }
 
 for _, almost in ipairs(dead_keys) do
@@ -52,7 +53,7 @@ end
 
 vim.keymap.set('n', '<Leader>u', '<CMD>update<CR>') -- Update
 vim.keymap.set('n', '<Leader>w', '<CMD>wqall<CR>') -- Write and Quit
-vim.keymap.set('n', '<A-c>', require('csj.core.utils').close_or_quit) -- Close or Quit
+vim.keymap.set('n', '<A-c>', require('csj.utils').close_or_quit) -- Close or Quit
 vim.keymap.set('n', '<Leader>e', '<CMD>edit<CR>') -- Reload file manually
 vim.keymap.set('n', '<Leader>q', '<CMD>quit<CR>') -- Quit
 vim.keymap.set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>') -- Delete all buffers
@@ -95,7 +96,6 @@ vim.keymap.set('n', 'gi', 'gi<ESC>zzv')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 vim.keymap.set('n', 'J', 'mzJ`zzv')
-vim.keymap.set('n', '.', '.zzzv')
 
 -- Better #
 vim.keymap.set('n', '#', '*Nzv')

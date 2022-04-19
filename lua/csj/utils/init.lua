@@ -114,13 +114,13 @@ end
 
 -- Function to setup the initial load and maintain some settings between buffers
 function utils.setup_session()
-    vim.opt.shadafile = ''
-    vim.cmd('rshada!')
-    vim.opt.runtimepath = RuntimePath
-    vim.cmd([[
-        runtime! plugin/**/*.vim
-        runtime! plugin/**/*.lua
-    ]])
+    -- vim.opt.shadafile = ''
+    -- vim.cmd('rshada!')
+    -- vim.opt.runtimepath = _G.rtp
+    -- vim.cmd([[
+    --     runtime! plugin/**/*.vim
+    --     runtime! plugin/**/*.lua
+    -- ]])
 
     vim.api.nvim_create_augroup('_save_sessions', { clear = true })
     vim.api.nvim_create_autocmd('BufReadPost', {
@@ -168,6 +168,20 @@ function utils.not_interfere_on_float(conditional_function)
         end
     end
     return conditional_function()
+end
+
+-- Get the lenght of a table
+function utils.table_lenght(T)
+    local count = 0
+    for _ in pairs(T) do
+        count = count + 1
+    end
+    return count
+end
+
+-- Random set of items
+function utils.append_by_random(option, T)
+    return option:append(T[math.random(1, utils.table_lenght(T))])
 end
 
 -- -- Git project or not

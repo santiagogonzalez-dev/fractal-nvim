@@ -51,6 +51,7 @@ return packer.startup(function(use)
     -- Beacon
     use {
         'rainbowhxch/beacon.nvim',
+        after = 'accelerated-jk.nvim',
         config = function()
             require('beacon').setup()
         end,

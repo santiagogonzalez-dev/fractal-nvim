@@ -17,7 +17,7 @@ local opts = {
     ignorecase = true, -- Ignore case
     inccommand = 'split', -- Shows just like nosplit, but partially off-screen
     joinspaces = true, -- Commands like gq or J insert two spaces on punctuation
-    laststatus = 0, -- Mode of the status bar
+    laststatus = 3, -- Mode of the status bar
     cmdheight = 0,
     lazyredraw = true, -- Lazy redraw the screen
     matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
@@ -68,9 +68,18 @@ end
 vim.opt.path:append('**') -- Search files recursively
 vim.opt.statusline = '%t %M %= %l·%c'
 
-vim.api.nvim_create_autocmd({ 'UIEnter', 'UILeave' }, {
-    command = 'if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif',
-})
+if vim.env.TERM == 'xterm-kitty' then
+    vim.api.nvim_create_augroup('kitty', { clear = true })
+    vim.api.nvim_create_autocmd('UIEnter', {
+        callback = function()
+            if vim.api.nvim_eval('v:event.chan') == 0 then
+                vim.fn['chansend'](vim.api.nvim_eval('v:stderr'), '\x1b[>1u')
+                vim.fn['chansend'](vim.api.nvim_eval('v:stderr'), '\x1b[<1u')
+            end
+        end,
+        group = 'kitty',
+    })
+end
 
 -- Ensure this settings persist in all buffers
 function _G.all_buffers_settings()
@@ -87,41 +96,49 @@ end
 -- Settings for non-visible characters
 vim.opt.list = true
 
-vim.opt.fillchars:append { eob = ' ' } -- Don't show the ~ at the eof
+vim.opt.fillchars:append {
+    eob = ' ', -- Don't show the ~ at the eof
+    msgsep = '🮑',
+}
+
+require('csj.utils').append_by_random(vim.opt.fillchars, {
+    {
+        horiz = '━',
+        horizup = '┻',
+        horizdown = '┳',
+        vert = '┃',
+        vertleft = '┫',
+        vertright = '┣',
+        verthoriz = '╋',
+    },
+    {
+        horiz = '─',
+        horizup = '┴',
+        horizdown = '┬',
+        vert = '│',
+        vertleft = '┤',
+        vertright = '├',
+        verthoriz = '┼',
+    },
+    {
+        horiz = ' ',
+        horizup = ' ',
+        horizdown = ' ',
+        vert = ' ',
+        vertleft = ' ',
+        vertright = ' ',
+        verthoriz = ' ',
+    },
+})
+
 vim.opt.listchars:append {
-    -- eol = '↴',
+    eol = '↴',
     extends = '◣',
     nbsp = '␣',
     precedes = '◢',
     tab = '-->',
     trail = '█',
 }
-
-local function window_separator(separators)
-    if separators then
-        vim.opt.fillchars:append {
-            horiz = '━',
-            horizup = '┻',
-            horizdown = '┳',
-            vert = '┃',
-            vertleft = '┫',
-            vertright = '┣',
-            verthoriz = '╋',
-        }
-    else
-        vim.opt.fillchars:append {
-            horiz = ' ',
-            horizup = ' ',
-            horizdown = ' ',
-            vert = ' ',
-            vertleft = ' ',
-            vertright = ' ',
-            verthoriz = ' ',
-        }
-    end
-end
-
-window_separator(false)
 
 -- To appropriately highlight codefences
 vim.g.markdown_fenced_languages = {
@@ -156,3 +173,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         vim.highlight.on_yank { higroup = 'Visual', timeout = 300 }
     end,
 })
+
+require('csj.core.folds')
+require('csj.core.netrw')
+require('csj.core.bettertf')
+require('csj.core.virt-column') -- Moded version of Lukas Reineke's virt-column.nvim

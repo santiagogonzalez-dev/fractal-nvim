@@ -1,4 +1,4 @@
-local set_hl = require('csj.core.utils').set_hl
+local set_hl = require('csj.utils').set_hl
 
 require('ffi').cdef('int curwin_col_off(void);')
 
