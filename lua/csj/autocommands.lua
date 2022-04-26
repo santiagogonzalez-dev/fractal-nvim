@@ -1,15 +1,17 @@
+local utils = require('csj.utils')
+
 -- Session managment
-vim.api.nvim_create_augroup('_session_opts', { clear = false })
+local session_opts = vim.api.nvim_create_augroup('session_opts', { clear = false })
 
 vim.api.nvim_create_autocmd('FocusGained', {
     desc = 'Check if any file has changed when Vim is focused',
-    group = '_session_opts',
+    group = session_opts,
     command = 'silent! checktime',
 })
 
 vim.api.nvim_create_autocmd('FileChangedShellPost', {
     desc = 'Actions when the file is changed outside of Neovim',
-    group = '_session_opts',
+    group = session_opts,
     callback = function()
         vim.notify('File changed, reloading the buffer', vim.log.levels.WARN)
     end,
@@ -18,18 +20,18 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
     desc = 'Create missing directories before saving the buffer',
     once = true,
-    group = '_session_opts',
+    group = session_opts,
     callback = function()
         return vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
     end,
 })
 
 -- First load
-vim.api.nvim_create_augroup('_first_load', { clear = true })
+local first_load = vim.api.nvim_create_augroup('first_load', { clear = true })
 
 vim.api.nvim_create_autocmd('UIEnter', {
     desc = 'Enable relativenumber after 2 seconds',
-    group = '_first_load',
+    group = first_load,
     once = true,
     callback = function()
         return vim.defer_fn(function()
@@ -40,25 +42,20 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
 vim.api.nvim_create_autocmd('UIEnter', {
     desc = 'Print the output of flag --startuptime startuptime_nvim.md',
-    group = '_first_load',
+    group = first_load,
     pattern = 'init.lua',
     once = true,
-    callback = function()
-        if vim.fn.filereadable('startuptime_nvim.md') == 1 then
-            return vim.defer_fn(function()
-                vim.cmd(':!tail -n3 startuptime_nvim.md')
-                vim.fn.delete('startuptime_nvim.md')
-            end, 2000)
-        end
-    end,
+    callback = utils.wrap(vim.defer_fn, function()
+        return vim.fn.filereadable('startuptime_nvim.md') == 1 and vim.cmd(':!tail -n3 startuptime_nvim.md') and vim.fn.delete('startuptime_nvim.md')
+    end, 1000),
 })
 
 -- Cursor column actions
-vim.api.nvim_create_augroup('_switch_cursorcolumn', {})
+local switch_cursorcolumn = vim.api.nvim_create_augroup('switch_cursorcolumn', {})
 
 vim.api.nvim_create_autocmd({ 'FocusGained', 'InsertLeave', 'CmdLineLeave' }, {
     desc = 'Switch the cursorline mode based on context',
-    group = '_switch_cursorcolumn',
+    group = switch_cursorcolumn,
     callback = function()
         if vim.opt.number:get() and vim.fn.mode() ~= 'i' then
             vim.opt.relativenumber = true
@@ -68,7 +65,7 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'InsertLeave', 'CmdLineLeave' }, {
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
     desc = 'Switch the cursorline mode based on context',
-    group = '_switch_cursorcolumn',
+    group = switch_cursorcolumn,
     callback = function()
         if vim.opt.number:get() then
             vim.opt.relativenumber = false
@@ -78,7 +75,7 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave'
 
 vim.api.nvim_create_autocmd('CmdLineEnter', {
     desc = 'Switch the cursorline mode based on context',
-    group = '_switch_cursorcolumn',
+    group = switch_cursorcolumn,
     callback = function()
         vim.opt.relativenumber = false
     end,
@@ -87,29 +84,27 @@ vim.api.nvim_create_autocmd('CmdLineEnter', {
 vim.api.nvim_create_autocmd('CmdLineLeave', {
     desc = 'Switch the cursorline mode based on context',
     buffer = 0,
-    group = '_switch_cursorcolumn',
+    group = switch_cursorcolumn,
     callback = function()
         vim.opt.relativenumber = true
     end,
 })
 
 -- Globals
-vim.api.nvim_create_augroup('buffer_settings', { clear = true })
+local buffer_settings = vim.api.nvim_create_augroup('buffer_settings', { clear = true })
 
 vim.api.nvim_create_autocmd('FileType', {
     desc = 'Quit with q in this filetypes',
-    group = 'buffer_settings',
+    group = buffer_settings,
     pattern = 'netrw,qf,help,man,lspinfo,startuptime',
     callback = function()
         vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 })
     end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-    desc = 'Filetype set correctly',
-    group = 'buffer_settings',
-    pattern = '*.conf',
-    callback = function()
-        vim.opt.filetype = 'dosini'
-    end,
+-- Conditionals
+local conditionals = vim.api.nvim_create_augroup('conditionals', {})
+vim.api.nvim_create_autocmd('DirChanged', {
+    group = conditionals,
+    callback = utils.wrap(vim.schedule_wrap, utils.is_git()),
 })

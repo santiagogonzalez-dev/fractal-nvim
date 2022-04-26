@@ -1,19 +1,54 @@
 local M = {}
+local utils = require('csj.utils')
 
--- Setup
+local lsp_settings = vim.api.nvim_create_augroup('_lsp_settings', {})
+
+function M.goto_definition(split_cmd)
+    local handler = function(_, result, ctx)
+        if result == nil or vim.tbl_isempty(result) then
+            local _ = vim.lsp.log.info() and vim.lsp.log.info(ctx.method, 'No location found')
+            return nil
+        end
+
+        if split_cmd then
+            vim.cmd(split_cmd) -- 'split' or 'vsplit'
+        end
+
+        if vim.tbl_islist(result) then
+            vim.lsp.util.jump_to_location(result[1])
+
+            if #result > 1 then
+                vim.lsp.util.set_qflist(vim.lsp.util.locations_to_items(result))
+                vim.api.nvim_command('copen')
+                vim.api.nvim_command('wincmd p')
+            end
+        else
+            vim.lsp.util.jump_to_location(result)
+        end
+    end
+
+    return handler
+end
+
 M.setup = function()
+    -- Setup
+    utils.set_hl('DiagnosticLineNrError', { bg = '#51202A', fg = '#FF0000', bold = true })
+    utils.set_hl('DiagnosticLineNrWarn', { bg = '#51412A', fg = '#FFA500', bold = true })
+    utils.set_hl('DiagnosticLineNrInfo', { bg = '#1E535D', fg = '#00FFFF', bold = true })
+    utils.set_hl('DiagnosticLineNrHint', { bg = '#1E205D', fg = '#0000FF', bold = true })
+
     local signs = {
-        { name = 'DiagnosticSignError', text = '' },
-        { name = 'DiagnosticSignWarn', text = '' },
-        { name = 'DiagnosticSignHint', text = '' },
-        { name = 'DiagnosticSignInfo', text = '' },
+        { name = 'DiagnosticSignError', text = ' ', numhl = 'DiagnosticLineNrError', texthl = 'DiagnosticSignError' },
+        { name = 'DiagnosticSignWarn', text = ' ', numhl = 'DiagnosticLineNrWarn', texthl = 'DiagnosticSignWarn' },
+        { name = 'DiagnosticSignHint', text = ' ', numhl = 'DiagnosticLineNrInfo', texthl = 'DiagnosticSignInfo' },
+        { name = 'DiagnosticSignInfo', text = ' ', numhl = 'DiagnosticLineNrHint', texthl = 'DiagnosticSignHint' },
     }
 
     for _, sign in ipairs(signs) do
-        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
+        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.numhl })
     end
 
-    local config = {
+    vim.diagnostic.config {
         virtual_text = false, -- Toggle virtual text
         signs = { active = signs }, -- Show signs
         update_in_insert = false,
@@ -23,46 +58,31 @@ M.setup = function()
             focusable = true,
             border = 'rounded',
             style = 'minimal',
+            source = 'if_many',
             format = function(diagnostic)
-                return string.format(
-                    '%s (%s) [%s]',
-                    diagnostic.message,
-                    diagnostic.source,
-                    diagnostic.code or diagnostic.user_data.lsp.code
-                )
+                return string.format('%s (%s) [%s]', diagnostic.message, diagnostic.source, diagnostic.code or diagnostic.user_data.lsp.code)
             end,
         },
     }
 
-    vim.diagnostic.config(config)
-    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { focusable = true, border = 'rounded' }
-    )
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-        vim.lsp.handlers.signature_help,
-        { border = 'rounded ' }
-    )
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { focusable = true, border = 'rounded' })
+    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded ' })
+
+    vim.lsp.handlers['textDocument/definition'] = M.goto_definition('vsplit') -- TODO open split only on keybinding
 end
 
--- Highlight words matching the word under cursor
-local function lsp_highlight_document(client)
+function M.lsp_highlight_document(client)
+    -- Highlight words matching the word under cursor
     if client.resolved_capabilities.document_highlight then
-        local highlight = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
-
-        vim.api.nvim_create_autocmd('CursorHold', {
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = 0,
-            group = highlight,
-            callback = function()
-                vim.defer_fn(function()
-                    vim.lsp.buf.document_highlight()
-                end, 150)
-            end,
+            group = lsp_settings,
+            callback = vim.lsp.buf.document_highlight,
         })
 
-        vim.api.nvim_create_autocmd('CursorMoved', {
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
             buffer = 0,
-            group = highlight,
+            group = lsp_settings,
             callback = vim.lsp.buf.clear_references,
         })
 
@@ -71,13 +91,15 @@ local function lsp_highlight_document(client)
     end
 end
 
--- On attach
-M.on_attach = function(client, _)
+function M.on_attach(client, _)
+    -- On attach
+
+    -- Do not let language servers format code
     client.resolved_capabilities.document_formatting = false
     client.resolved_capabilities.document_range_formatting = false
 
     require('csj.keymaps.lsp_keybinds') -- Keymaps
-    lsp_highlight_document(client) -- Highlighting
+    M.lsp_highlight_document(client) -- Highlighting
 end
 
 -- Capabilities
@@ -118,101 +140,88 @@ capabilities.textDocument.codeAction = {
     },
 }
 
-local indentation_regex = vim.regex([[^\s\+]])
-
 local highlight_groups = {
-    [vim.diagnostic.severity.ERROR] = 'DiagnosticVirtualTextError',
-    [vim.diagnostic.severity.WARN] = 'DiagnosticVirtualTextWarn',
-    [vim.diagnostic.severity.INFO] = 'DiagnosticVirtualTextInfo',
-    [vim.diagnostic.severity.HINT] = 'DiagnosticVirtualTextHint',
+    [vim.diagnostic.severity.ERROR] = 'DiagnosticError',
+    [vim.diagnostic.severity.WARN] = 'DiagnosticWarn',
+    [vim.diagnostic.severity.INFO] = 'DiagnosticInfo',
+    [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
 }
 
--- @param bufnr integer
--- @param lnum integer
-local function get_indentation_for_line(bufnr, lnum)
-    local lines = vim.api.nvim_buf_get_lines(bufnr, lnum, lnum + 1, false)
+function M.print_diagnostics(opts, bufnr, line_nr)
+    bufnr = bufnr or 0
+    line_nr = line_nr or (vim.api.nvim_win_get_cursor(0)[1] - 1)
+    opts = opts or { ['lnum'] = line_nr }
 
-    -- The line does not exist when a buffer is empty, though there may be
-    -- additional situations. Fall back gracefully whenever this happens.
-    if not vim.tbl_isempty(lines) then
-        local istart, iend = indentation_regex:match_str(lines[1])
+    local namespace = vim.api.nvim_create_namespace('trld')
+    local ns = vim.diagnostic.get_namespace(namespace)
 
-        if istart ~= nil then
-            -- XXX: The docs say `tabstop` should be respected, but this doesn't seem
-            -- to be happening (check this on go files).
-            return string.sub(lines[1], istart, iend)
+    local line_diagnostics = vim.diagnostic.get(bufnr, opts)
+
+    if vim.tbl_isempty(line_diagnostics) then
+        if ns.user_data.diags then
+            vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
         end
+        return
     end
 
-    return ''
+    if ns.user_data.last_line_nr == line_nr and ns.user_data.diags then
+        return
+    end
+
+    ns.user_data.diags = true
+    ns.user_data.last_line_nr = line_nr
+
+    local win_info = vim.fn.getwininfo(vim.fn.win_getid())[1]
+
+    for i, diagnostic in ipairs(line_diagnostics) do
+        local diag_lines = {}
+
+        for line in diagnostic.message:gmatch('[^\n]+') do
+            table.insert(diag_lines, line)
+        end
+        for j, dline in ipairs(diag_lines) do
+            local x = (win_info.topline - 3) + (i + j)
+            if win_info.botline <= x - 1 then
+                return
+            end
+            vim.api.nvim_buf_set_extmark(bufnr, namespace, x, 0, {
+                virt_text = { { dline, highlight_groups[diagnostic.severity] } },
+                virt_text_pos = 'right_align',
+                virt_lines_above = true,
+            })
+        end
+    end
 end
 
--- Registers a wrapper-handler to render lsp lines.
--- This should usually only be called once, during initialisation.
-M.register_lsp_virtual_lines = function()
-    -- TODO: When a diagnostic changes for the current line, the cursor is not shifted properly.
-    -- TODO: On LSP restart (e.g.: diagnostics cleared), errors don't go away.
-
-    vim.diagnostic.handlers.virtual_lines = {
-        show = function(namespace, bufnr, diagnostics, opts)
-            vim.validate {
-                namespace = { namespace, 'n' },
-                bufnr = { bufnr, 'n' },
-                diagnostics = {
-                    diagnostics,
-                    vim.tbl_islist,
-                    'a list of diagnostics',
-                },
-                opts = { opts, 't', true },
-            }
-
-            local ns = vim.diagnostic.get_namespace(namespace)
-            if not ns.user_data.virt_lines_ns then
-                ns.user_data.virt_lines_ns = vim.api.nvim_create_namespace('')
-            end
-            local virt_lines_ns = ns.user_data.virt_lines_ns
-
-            vim.api.nvim_buf_clear_namespace(bufnr, virt_lines_ns, 0, -1)
-
-            local prefix = opts.virtual_lines.prefix or '▼'
-
-            for id, diagnostic in ipairs(diagnostics) do
-                local virt_lines = {}
-                local lprefix = prefix
-                local indentation = get_indentation_for_line(bufnr, diagnostic.lnum)
-
-                -- Some diagnostics have multiple lines. Split those into multiple
-                -- virtual lines, but only show the prefix for the first one.
-                for diag_line in diagnostic.message:gmatch('([^\n]+)') do
-                    table.insert(virt_lines, {
-                        {
-                            indentation,
-                            '',
-                        },
-                        {
-                            string.format('%s %s', lprefix, diag_line),
-                            highlight_groups[diagnostic.severity],
-                        },
-                    })
-                    lprefix = ' '
-                end
-
-                vim.api.nvim_buf_set_extmark(bufnr, virt_lines_ns, diagnostic.lnum, 0, {
-                    id = id,
-                    virt_lines = virt_lines,
-                    virt_lines_above = true,
-                })
-            end
-        end,
-        hide = function(namespace, bufnr)
-            local ns = vim.diagnostic.get_namespace(namespace)
-            if ns.user_data.virt_lines_ns then
-                vim.api.nvim_buf_clear_namespace(bufnr, ns.user_data.virt_lines_ns, 0, -1)
-            end
-        end,
-    }
+function M.hide_diagnostics(bufnr)
+    bufnr = bufnr or 0
+    local namespace = vim.api.nvim_get_namespaces()['trld']
+    if namespace == nil then
+        return
+    end
+    local ns = vim.diagnostic.get_namespace(namespace)
+    if ns.user_data.diags then
+        vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
+    end
+    ns.user_data.diags = false
 end
 
-M.register_lsp_virtual_lines()
+function M.setup_diagnostics()
+    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+        desc = 'Print the lsp diagnostics at the top right of the screen',
+        group = lsp_settings,
+        callback = function()
+            return M.print_diagnostics()
+        end,
+    })
+
+    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+        desc = 'Clean the lsp messages from the top right of the screen',
+        group = lsp_settings,
+        callback = function()
+            return M.hide_diagnostics()
+        end,
+    })
+end
 
 return M

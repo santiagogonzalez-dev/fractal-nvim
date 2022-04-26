@@ -52,7 +52,10 @@ M.setup = function(config)
     set_hl('ColorColumn', {})
 
     vim.api.nvim_create_augroup('_virt-column', {})
-    vim.api.nvim_create_autocmd('CursorHold', { group = '_virt-column', command = 'VirtColumnRefresh' })
+    vim.api.nvim_create_autocmd(
+        { 'TextChanged', 'CompleteChanged', 'CursorMovedI', 'CursorHold' },
+        { group = '_virt-column', command = 'VirtColumnRefresh' }
+    )
 end
 
 M.setup_buffer = function(config)

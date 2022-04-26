@@ -21,9 +21,9 @@ set_hl('InactiveWindow', { bg = '#15131e' }) -- 1f1d2e 15131e
 set_hl({ 'LineNr', 'FoldColumn', 'StatusLine' }, { fg = '#44415a' })
 set_hl('Folded', { fg = '#575279' })
 set_hl('Comment', { italic = true, fg = '#575279' })
+set_hl('CursorLineNr', { bg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
+set_hl('NonText', { fg = '#44415a' })
+
 
 set_hl('TSVariable', { fg = '#908caa' })
 set_hl('TSFuncBuiltin', { fg = '#3e8fb0' })
-
-local identicalcursorline = vim.api.nvim_get_hl_by_name('CursorColumn', true)
-set_hl('CursorLineNr', { bg = identicalcursorline.background })

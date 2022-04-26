@@ -1,23 +1,11 @@
+local utils = require('csj.utils')
 local status_ok, treesitter = pcall(require, 'nvim-treesitter.configs')
 if not status_ok then
     return
 end
 
 treesitter.setup {
-    -- ensure_installed = 'all',
-    ensure_installed = {
-        'css',
-        'haskell',
-        'html',
-        'java',
-        'javascript',
-        'lua',
-        'markdown',
-        'python',
-        'tsx',
-        'typescript',
-        'vim',
-    },
+    ensure_installed = 'all',
     sync_install = false,
     highlight = {
         enable = true,

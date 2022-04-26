@@ -1,7 +1,7 @@
 local utils = {}
 
--- Close or quit buffer
 function utils.close_or_quit()
+    -- Close or quit buffer
     local count_bufs_by_type = function(loaded_only)
         loaded_only = (loaded_only == nil and true or loaded_only)
         local count = {
@@ -13,8 +13,6 @@ function utils.close_or_quit()
             quickfix = 0,
             terminal = 0,
             prompt = 0,
-            Trouble = 0,
-            NvimTree = 0,
         }
         for _, bufname in pairs(vim.api.nvim_list_bufs()) do
             if not loaded_only or vim.api.nvim_buf_is_loaded(bufname) then
@@ -39,15 +37,14 @@ function utils.close_or_quit()
     end
 end
 
--- Toggle diagnostics
-vim.g.diagnostics_active = true
-utils.toggle_diagnostics = function()
-    if vim.g.diagnostics_active then
-        vim.g.diagnostics_active = false
+function utils.toggle_diagnostics()
+    -- Toggle diagnostics
+    if not vim.g.diagnostics_active then
+        vim.g.diagnostics_active = not vim.g.diagnostics_active
         vim.diagnostic.hide()
         vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
     else
-        vim.g.diagnostics_active = true
+        vim.g.diagnostics_active = not vim.g.diagnostics_active
         vim.cmd([[exe "normal ii\<Esc>x"]])
         vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
             signs = true,
@@ -57,8 +54,8 @@ utils.toggle_diagnostics = function()
     end
 end
 
--- Rename
 function utils.rename()
+    -- Rename
     local function post(rename_old)
         vim.cmd('stopinsert!')
         local new = vim.api.nvim_get_current_line()
@@ -91,18 +88,18 @@ function utils.rename()
     end, { buffer = created_buffer })
 end
 
--- Yanked text
 function utils.get_yanked_text()
+    -- Yanked text
     return print(vim.fn.getreg('"'))
 end
 
--- Conditional for width of the terminal
-function utils.hide_at_vp()
+function utils.hide_at_term_width()
+    -- Conditional for width of the terminal
     return vim.opt.columns:get() > 90
 end
 
--- Highlights
 function utils.set_hl(mode, table)
+    -- Highlights
     if type(mode) == 'table' then
         for _, groups in pairs(mode) do
             vim.api.nvim_set_hl(0, groups, table)
@@ -112,20 +109,12 @@ function utils.set_hl(mode, table)
     end
 end
 
--- Function to setup the initial load and maintain some settings between buffers
 function utils.setup_session()
-    -- vim.opt.shadafile = ''
-    -- vim.cmd('rshada!')
-    -- vim.opt.runtimepath = _G.rtp
-    -- vim.cmd([[
-    --     runtime! plugin/**/*.vim
-    --     runtime! plugin/**/*.lua
-    -- ]])
-
-    vim.api.nvim_create_augroup('_save_sessions', { clear = true })
-    vim.api.nvim_create_autocmd('BufReadPost', {
+    -- Function to setup the initial load and maintain some settings between buffers
+    local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
+    vim.api.nvim_create_autocmd('UIEnter', {
         desc = 'Open file at the last position it was edited earlier',
-        group = '_save_sessions',
+        group = save_sessions,
         callback = function()
             if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
                 if not vim.tbl_contains({ 'gitcommit', 'help', 'packer', 'toggleterm' }, vim.bo.ft) then
@@ -144,7 +133,7 @@ function utils.setup_session()
 
     vim.api.nvim_create_autocmd('BufWinLeave', {
         desc = 'Save the view of the buffer',
-        group = '_save_sessions',
+        group = save_sessions,
         callback = function()
             return vim.cmd('silent! mkview')
         end,
@@ -152,26 +141,26 @@ function utils.setup_session()
 
     vim.api.nvim_create_autocmd('BufWinEnter', {
         desc = 'Load the view of the buffer',
-        group = '_save_sessions',
+        group = save_sessions,
         callback = function()
             return vim.cmd('silent! loadview')
         end,
     })
 end
 
--- Don't open floating windows if there's already one open
-function utils.not_interfere_on_float(conditional_function)
+function utils.not_interfere_on_float()
+    -- Do not open floating windows if there's already one open
     for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
         if vim.api.nvim_win_get_config(winid).zindex then
             vim.notify('There is a floating window open already', vim.log.levels.WARN)
-            return
+            return false
         end
     end
-    return conditional_function()
+    return true
 end
 
--- Get the lenght of a table
 function utils.table_lenght(T)
+    -- Get the lenght of a table
     local count = 0
     for _ in pairs(T) do
         count = count + 1
@@ -179,30 +168,191 @@ function utils.table_lenght(T)
     return count
 end
 
--- Random set of items
 function utils.append_by_random(option, T)
+    -- Random set of items
     return option:append(T[math.random(1, utils.table_lenght(T))])
 end
 
--- -- Git project or not
--- -- TODO finish this
--- function utils.inside_git_project()
---   local val = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
---   if val:match('true') then
---     return true
---   else
---     return false
---   end
+function utils.wrap(function_pointer, ...)
+    -- Wrapper for functions, it works like pcall
+    -- Varargs can't be used as an upvalue, so store them
+    -- in this table first.
+    local params = { ... }
+
+    return function()
+        return function_pointer(unpack(params))
+    end
+end
+
+function utils.is_empty(str)
+    return str == '' or str == nil
+end
+
+function utils.is_bigger_than(filepath, size_in_kilobytes)
+    -- Fail if filepath is bigger than the provided size in kilobytes
+    vim.loop.fs_stat(filepath, function(_, stat)
+        if not stat then
+            return
+        end
+        if stat.size > size_in_kilobytes then
+            return
+        else
+            return true
+        end
+    end)
+end
+
+function utils.is_git()
+    local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
+    if is_git:match('true') then
+        return vim.cmd('doautocmd User IsGit')
+    else
+        return
+    end
+end
+
+function utils.h_motion()
+    local cursor_position = vim.api.nvim_win_get_cursor(0)
+
+    vim.cmd('normal ^')
+    local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
+
+    if cursor_position[2] <= first_non_blank_char[2] then
+        return vim.cmd('normal 0')
+    else
+        vim.api.nvim_win_set_cursor(0, cursor_position)
+        return vim.cmd('normal! h')
+    end
+end
+
+function utils.l_motion()
+    local cursor_position = vim.api.nvim_win_get_cursor(0)
+
+    vim.cmd('normal ^')
+    local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
+
+    if cursor_position[2] < first_non_blank_char[2] then
+        return vim.cmd('normal ^')
+    else
+        vim.api.nvim_win_set_cursor(0, cursor_position)
+        return vim.cmd('normal! l')
+    end
+end
+
+function utils.better_eol()
+    -- Better eol
+    local show_eol_nm = vim.api.nvim_create_namespace('show_eol')
+    local function show_eol()
+        local line_num = vim.api.nvim_win_get_cursor(0)[1] - 1
+
+        local opts_virtualtext = {
+            id = 1,
+            -- virt_text = { { '↴', 'LineNr' } },
+            -- virt_text = { { '⏎', 'LineNr' } },
+            virt_text = { { '', 'LineNr' } },
+            virt_text_pos = 'eol',
+        }
+
+        vim.g.show_eol_mark = vim.api.nvim_buf_set_extmark(vim.fn.bufnr('%'), show_eol_nm, line_num, 0, opts_virtualtext)
+    end
+
+    show_eol()
+
+    return vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+        desc = 'Show the eol of the current line the cursor is on',
+        group = 'session_opts',
+        callback = show_eol,
+    })
+end
+
+-- local show_gi_nm = vim.api.nvim_create_namespace('show_gi_mark')
+
+-- local function show_gi_and_jump()
+--     if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
+--         if vim.tbl_contains({ 'gitcommit', 'help', 'packer', 'toggleterm' }, vim.bo.ft) then
+--             return
+--         end
+
+--         local cursor_pos = vim.api.nvim_win_get_cursor(0) -- Get actual position
+
+--         -- gi or `.
+--         local ok_gi, _ = pcall(vim.cmd, 'normal `.')
+--         if ok_gi then
+--             Mark_gi = vim.api.nvim_win_get_cursor(0) -- Get the position of gi
+--         else
+--             return
+--         end
+
+--         vim.api.nvim_win_set_cursor(0, cursor_pos) -- Restore position
+
+--         local line_num_gi = Mark_gi[1] - 1
+
+--         vim.api.nvim_set_hl(0, 'ShowgiContents', { fg = '#c4a7e7' })
+--         -- vim.api.nvim_set_hl(0, 'ShowgiBorders', { fg = '#44415a' })
+--         -- vim.api.nvim_set_hl(0, 'ShowgiContents', { bg = '#44415a', fg = '#191724' })
+--         local opts_gi = {
+--             end_line = 0,
+--             id = 1,
+--             -- virt_text = { { '', 'ShowgiBorders' }, { ' `.', 'ShowgiContents' }, { '', 'ShowgiBorders' } },
+--             virt_text = { { ' `.', 'ShowgiContents' } },
+--             virt_text_pos = 'eol',
+--         }
+
+--         vim.g.show_gi_mark = vim.api.nvim_buf_set_extmark(vim.fn.bufnr('%'), show_gi_nm, line_num_gi, 0, opts_gi)
+--     end
 -- end
 
--- vim.api.nvim_create_augroup('project_git', {})
--- vim.api.nvim_create_autocmd({ 'VimEnter', 'DirChanged' }, {
---   group = 'project_git',
---   callback = function ()
---     if utils.inside_git_project() then
---       vim.api.nvim_exec_autocmd()
---     end
---   end,
+-- vim.api.nvim_create_autocmd('InsertLeave', {
+--     group = 'session_opts',
+--     callback = show_gi_and_jump,
 -- })
+
+-- vim.api.nvim_create_autocmd('BufModifiedSet', {
+--     group = 'session_opts',
+--     callback = function()
+--         if vim.api.nvim_get_mode().mode == 'n' then
+--             show_gi_and_jump()
+--         else
+--             return
+--         end
+--     end,
+-- })
+
+-- vim.api.nvim_create_autocmd('InsertEnter', {
+--     callback = function()
+--         vim.api.nvim_buf_del_extmark(0, show_gi_nm, vim.g.show_gi_mark)
+--     end,
+-- })
+
+-- show_gi_and_jump()
+
+-- local show_gi_nm = vim.api.nvim_create_namespace('show_gi_mark')
+
+local function show_gi_mark(mode)
+    if mode then
+        local cursor_pos = vim.api.nvim_win_get_cursor(0) -- Get actual position
+
+        local ok_gi, _ = pcall(vim.cmd, 'normal `.')
+        if ok_gi then
+            Mark_gi = vim.api.nvim_win_get_cursor(0) -- Get the position of gi
+        else
+            return
+        end
+
+        vim.api.nvim_win_set_cursor(0, cursor_pos) -- Restore position
+        vim.fn.sign_define('show_gi_mark', { text = '', texthl = 'Question' })
+        vim.fn.sign_place(Mark_gi[1], '', 'show_gi_mark', vim.fn.expand('%:p'), { lnum = Mark_gi[1] })
+    else
+        -- vim.fn.sign_unplace
+        return
+    end
+end
+-- vim.keymap.set('n', '<Leader><Leader>', show_gi_mark)
+
+vim.api.nvim_create_autocmd('InsertLeave', {
+    callback = function()
+        return show_gi_mark(false) and show_gi_mark(true) -- toehute
+    end,
+})
 
 return utils

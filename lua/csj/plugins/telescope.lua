@@ -1,26 +1,11 @@
-local set = vim.keymap.set
+local utils = require('csj.utils')
 local status_ok, telescope = pcall(require, 'telescope')
 if not status_ok then
     return
 end
 
 local previewers = require('telescope.previewers')
-
--- Ignore big files
-local new_maker = function(filepath, bufnr, opts)
-    opts = opts or {}
-    filepath = vim.fn.expand(filepath)
-    vim.loop.fs_stat(filepath, function(_, stat)
-        if not stat then
-            return
-        end
-        if stat.size > 100000 then
-            return
-        else
-            previewers.buffer_previewer_maker(filepath, bufnr, opts)
-        end
-    end)
-end
+local previewers_utils = require('telescope.previewers.utils')
 
 -- Themes
 local clean_dropdown = require('telescope.themes').get_dropdown { previewer = false } -- Dropdown Theme
@@ -29,7 +14,7 @@ local function project_files()
     local opts = vim.deepcopy(clean_dropdown)
     local ok = pcall(require('telescope.builtin').git_files, opts)
     if not ok then
-        require('telescope.builtin').find_files(opts)
+        return require('telescope.builtin').find_files(opts)
     end
 end
 
@@ -56,7 +41,32 @@ telescope.setup {
         entry_prefix = '  ',
         selection_strategy = 'reset',
         initial_mode = 'insert',
-        buffer_previewer_maker = new_maker,
+        -- buffer_previewer_maker = function(filepath, bufnr, opts)
+        --     -- Do not preview binaries
+        --     filepath = vim.fn.expand(filepath)
+        --     require('plenary.job'):new {
+        --         command = 'file',
+        --         args = { '--mime-type', '-b', filepath },
+        --         on_exit = function(j)
+        --             local mime_type = vim.split(j:result()[1], '/')[1]
+        --             if mime_type == 'text' then
+        --                 previewers.buffer_previewer_maker(filepath, bufnr, opts)
+        --             else
+        --                 -- maybe we want to write something to the buffer here
+        --                 vim.schedule(function()
+        --                     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { 'BINARY' })
+        --                 end)
+        --             end
+        --         end,
+        --     }
+        -- end,
+        preview = {
+            filesize_hook = function(filepath, bufnr, opts)
+                -- If the file is very big only print the head of the it
+                local cmd = { 'head', '-c', 1000000, filepath }
+                previewers_utils.job_maker(cmd, bufnr, opts)
+            end,
+        },
         sorting_strategy = 'ascending',
         winblend = 9,
     },
@@ -69,9 +79,9 @@ telescope.setup {
 telescope.load_extension('projects')
 telescope.load_extension('ui-select')
 
-set('n', 'gr', '<CMD>Telescope lsp_references theme=dropdown<CR>')
-set('n', 't/', '<CMD>Telescope live_grep theme=dropdown<CR>')
-set('n', 't//', '<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>')
-set('n', 'tf', project_files)
-set('n', 'tp', '<CMD>Telescope projects<CR>')
-set('n', 'tt', '<CMD>Telescope<CR>')
+vim.keymap.set('n', 'gr', '<CMD>Telescope lsp_references theme=dropdown<CR>')
+vim.keymap.set('n', 't/', '<CMD>Telescope live_grep theme=dropdown<CR>')
+vim.keymap.set('n', 't//', '<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>')
+vim.keymap.set('n', 'tf', project_files)
+vim.keymap.set('n', 'tp', '<CMD>Telescope projects<CR>')
+vim.keymap.set('n', 'tt', '<CMD>Telescope<CR>')

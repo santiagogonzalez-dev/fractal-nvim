@@ -237,7 +237,7 @@ return packer.startup(function(use)
     -- Git Signs
     use {
         'lewis6991/gitsigns.nvim',
-        opt = true,
+        event = 'User IsGit',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
             require('csj.plugins.gitsigns')

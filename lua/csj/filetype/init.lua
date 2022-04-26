@@ -1,3 +1,4 @@
+-- FTPlugin casero TODO(santigo-zero): Redo this, use filetype.lua properly
 local M = {}
 
 function M.filetype_settings()
@@ -28,7 +29,16 @@ end
 M.filetype_settings()
 
 vim.api.nvim_create_autocmd('BufEnter', {
-    command = 'lua require("csj.filetype").filetype_settings()'
+    command = 'lua require("csj.filetype").filetype_settings()',
+})
+
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+    desc = 'Filetype set correctly',
+    group = 'buffer_settings',
+    pattern = '*.conf',
+    callback = function()
+        vim.opt.filetype = 'dosini'
+    end,
 })
 
 return M

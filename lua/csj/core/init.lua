@@ -1,3 +1,5 @@
+local utils = require('csj.utils')
+
 -- Cursor settings
 vim.opt.guicursor:append('v:hor50')
 vim.opt.guicursor:append('i-ci-ve:ver25')
@@ -49,7 +51,7 @@ local opts = {
     synmaxcol = 160, -- Column limit for syntax highlight
     tabstop = tab_lenght, -- Tab length
     textwidth = 80, -- Delimit text blocks to N columns
-    timeoutlen = 300, -- Time given for doing a sequence
+    timeoutlen = 600, -- Time given for doing a sequence
     title = true, -- Set the window title based on the value of titlestring
     undofile = true, -- Persistent undo - undo after you re-open the file
     undolevels = 6000, -- Levels of undoing
@@ -66,20 +68,6 @@ for k, v in pairs(opts) do
 end
 
 vim.opt.path:append('**') -- Search files recursively
-vim.opt.statusline = '%t %M %= %l·%c'
-
-if vim.env.TERM == 'xterm-kitty' then
-    vim.api.nvim_create_augroup('kitty', { clear = true })
-    vim.api.nvim_create_autocmd('UIEnter', {
-        callback = function()
-            if vim.api.nvim_eval('v:event.chan') == 0 then
-                vim.fn['chansend'](vim.api.nvim_eval('v:stderr'), '\x1b[>1u')
-                vim.fn['chansend'](vim.api.nvim_eval('v:stderr'), '\x1b[<1u')
-            end
-        end,
-        group = 'kitty',
-    })
-end
 
 -- Ensure this settings persist in all buffers
 function _G.all_buffers_settings()
@@ -93,6 +81,12 @@ function _G.all_buffers_settings()
     vim.cmd([[syntax match hidechars '\]\]' conceal]])
 end
 
+vim.api.nvim_create_autocmd('BufEnter', {
+    group = 'session_opts',
+    callback = _G.all_buffers_settings,
+})
+_G.all_buffers_settings()
+
 -- Settings for non-visible characters
 vim.opt.list = true
 
@@ -101,7 +95,7 @@ vim.opt.fillchars:append {
     msgsep = '🮑',
 }
 
-require('csj.utils').append_by_random(vim.opt.fillchars, {
+utils.append_by_random(vim.opt.fillchars, {
     {
         horiz = '━',
         horizup = '┻',
@@ -132,13 +126,17 @@ require('csj.utils').append_by_random(vim.opt.fillchars, {
 })
 
 vim.opt.listchars:append {
-    eol = '↴',
+    -- eol = '↴',
+    -- eol = '⏎',
+    -- eol = '',
     extends = '◣',
     nbsp = '␣',
     precedes = '◢',
     tab = '-->',
     trail = '█',
 }
+
+utils.better_eol()
 
 -- To appropriately highlight codefences
 vim.g.markdown_fenced_languages = {
@@ -150,31 +148,31 @@ vim.g.markdown_fenced_languages = {
 
 vim.api.nvim_create_autocmd('BufWritePre', {
     desc = 'Trim whitespace on save',
-    group = '_session_opts',
+    group = 'session_opts',
     callback = function()
         if not vim.o.binary and vim.o.filetype ~= 'diff' then
             local current_view = vim.fn.winsaveview()
             vim.cmd([[keeppatterns %s/\s\+$//e]])
-            vim.fn.winrestview(current_view)
+            return vim.fn.winrestview(current_view)
         end
     end,
 })
 
 vim.api.nvim_create_autocmd('VimResized', {
     desc = 'Autoresize, ensures splits are equal width when resizing vim',
-    group = '_session_opts',
+    group = 'session_opts',
     command = 'tabdo wincmd =',
 })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight on yank',
-    group = '_session_opts',
+    group = 'session_opts',
     callback = function()
-        vim.highlight.on_yank { higroup = 'Visual', timeout = 300 }
+        vim.highlight.on_yank { higroup = 'LineNr', timeout = 600 }
     end,
 })
 
 require('csj.core.folds')
-require('csj.core.netrw')
 require('csj.core.bettertf')
 require('csj.core.virt-column') -- Moded version of Lukas Reineke's virt-column.nvim
+require('csj.core.statusline')
