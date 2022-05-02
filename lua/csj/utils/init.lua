@@ -65,6 +65,7 @@ function utils.rename()
         end)
         vim.notify(rename_old .. '  ' .. new)
     end
+
     local rename_old = vim.fn.expand('<cword>')
     local created_buffer = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_open_win(created_buffer, true, {
@@ -112,30 +113,25 @@ end
 function utils.setup_session()
     -- Function to setup the initial load and maintain some settings between buffers
     local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
-    vim.api.nvim_create_autocmd('UIEnter', {
-        desc = 'Open file at the last position it was edited earlier',
+
+    vim.api.nvim_create_autocmd('BufReadPost', {
+        desc = 'Correctly restore the cursor position',
         group = save_sessions,
         callback = function()
-            if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
-                if not vim.tbl_contains({ 'gitcommit', 'help', 'packer', 'toggleterm' }, vim.bo.ft) then
-                    -- Check if mark `"` is inside the current file (can be false if at end of file and stuff got deleted outside
-                    -- neovim) if it is go to it
-                    -- TODO use lua in here
-                    vim.cmd([[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
-                    local cursor = vim.api.nvim_win_get_cursor(0) -- Get cursor position
-                    if vim.fn.foldclosed(cursor[1]) ~= -1 then -- If there are folds under the cursor open them
-                        vim.cmd('silent normal! zO')
-                    end
+            if vim.tbl_contains({ 'TelescopePrompt', 'gitcommit', 'gitdiff', 'netrw' }, vim.bo.filetype) then
+                return
+            end
+
+            local markpos = vim.api.nvim_buf_get_mark(0, '"') -- Get position of last saved edit
+            local line = markpos[1]
+            local col = markpos[2]
+            -- If the cursor line position is less than 1, but not bigger than the lines of the buffer then
+            if (line > 1) and (line <= vim.api.nvim_buf_line_count(0)) then
+                vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
+                if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
+                    vim.cmd('silent normal! zo') -- To open it
                 end
             end
-        end,
-    })
-
-    vim.api.nvim_create_autocmd('BufWinLeave', {
-        desc = 'Save the view of the buffer',
-        group = save_sessions,
-        callback = function()
-            return vim.cmd('silent! mkview')
         end,
     })
 
@@ -144,6 +140,14 @@ function utils.setup_session()
         group = save_sessions,
         callback = function()
             return vim.cmd('silent! loadview')
+        end,
+    })
+
+    vim.api.nvim_create_autocmd('BufWinLeave', {
+        desc = 'Save the view of the buffer',
+        group = save_sessions,
+        callback = function()
+            return vim.cmd('silent! mkview')
         end,
     })
 end
@@ -243,20 +247,33 @@ function utils.better_eol()
     -- Better eol
     local show_eol_nm = vim.api.nvim_create_namespace('show_eol')
     local function show_eol()
-        local line_num = vim.api.nvim_win_get_cursor(0)[1] - 1
+        if vim.tbl_contains({ 'TelescopePrompt', 'gitcommit', 'gitdiff', 'netrw', 'help' }, vim.bo.filetype) then
+            vim.api.nvim_buf_del_extmark(0, show_eol_nm, 1)
+            return
+        end
 
-        local opts_virtualtext = {
+        local cursor_position = vim.api.nvim_win_get_cursor(0)
+        local line_num = cursor_position[1] - 1
+        local dolar_pos = #vim.api.nvim_get_current_line()
+
+        local get_hl = vim.api.nvim_get_hl_by_name
+        if vim.api.nvim_get_option_value('cursorline', {}) then
+            utils.set_hl('BetterEOL', { fg = get_hl('NonText', true).foreground, bg = get_hl('CursorLine', true).background })
+        else
+            utils.set_hl('BetterEOL', { fg = get_hl('NonText', true).foreground, bg = get_hl('Normal', true).background })
+        end
+
+        local opts = {
             id = 1,
-            -- virt_text = { { '↴', 'LineNr' } },
-            -- virt_text = { { '⏎', 'LineNr' } },
-            virt_text = { { '', 'LineNr' } },
+            virt_text = { { ' ' .. dolar_pos .. ' ', 'BetterEOL' } },
             virt_text_pos = 'eol',
+            virt_text_win_col = dolar_pos,
         }
 
-        vim.g.show_eol_mark = vim.api.nvim_buf_set_extmark(vim.fn.bufnr('%'), show_eol_nm, line_num, 0, opts_virtualtext)
+        return vim.api.nvim_buf_set_extmark(vim.fn.bufnr('%'), show_eol_nm, line_num, 0, opts)
     end
 
-    show_eol()
+    show_eol() -- Run the function the first line that we call better_eol() but without autocmds
 
     return vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
         desc = 'Show the eol of the current line the cursor is on',
@@ -265,94 +282,59 @@ function utils.better_eol()
     })
 end
 
--- local show_gi_nm = vim.api.nvim_create_namespace('show_gi_mark')
+-- TODO(santigo-zero): Am I going to use this?
+-- function utils.show_dot_mark_on_gutter()
+--     local dot_mark_ns = vim.api.nvim_create_namespace('dot_mark_ns')
+--     function utils.show_dot()
+--         local mark_pos = vim.api.nvim_buf_get_mark(0, '.') -- Get the position of the . mark
 
--- local function show_gi_and_jump()
---     if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
---         if vim.tbl_contains({ 'gitcommit', 'help', 'packer', 'toggleterm' }, vim.bo.ft) then
---             return
---         end
-
---         local cursor_pos = vim.api.nvim_win_get_cursor(0) -- Get actual position
-
---         -- gi or `.
---         local ok_gi, _ = pcall(vim.cmd, 'normal `.')
---         if ok_gi then
---             Mark_gi = vim.api.nvim_win_get_cursor(0) -- Get the position of gi
---         else
---             return
---         end
-
---         vim.api.nvim_win_set_cursor(0, cursor_pos) -- Restore position
-
---         local line_num_gi = Mark_gi[1] - 1
-
---         vim.api.nvim_set_hl(0, 'ShowgiContents', { fg = '#c4a7e7' })
---         -- vim.api.nvim_set_hl(0, 'ShowgiBorders', { fg = '#44415a' })
---         -- vim.api.nvim_set_hl(0, 'ShowgiContents', { bg = '#44415a', fg = '#191724' })
---         local opts_gi = {
---             end_line = 0,
---             id = 1,
---             -- virt_text = { { '', 'ShowgiBorders' }, { ' `.', 'ShowgiContents' }, { '', 'ShowgiBorders' } },
---             virt_text = { { ' `.', 'ShowgiContents' } },
---             virt_text_pos = 'eol',
---         }
-
---         vim.g.show_gi_mark = vim.api.nvim_buf_set_extmark(vim.fn.bufnr('%'), show_gi_nm, line_num_gi, 0, opts_gi)
+--         local get_hl = vim.api.nvim_get_hl_by_name
+--         utils.set_hl('ShowDotMarkOnGutter', { fg = get_hl('CursorLineNr', true).foreground, bg = get_hl('Normal', true).background })
+--         vim.g.dot_mark_extmark = vim.api.nvim_buf_set_extmark(0, dot_mark_ns, mark_pos[1] - 1, 0, { sign_text = ' ', sign_hl_group = 'ShowDotMarkOnGutter' })
+--         return vim.g.dot_mark_extmark
 --     end
--- end
 
--- vim.api.nvim_create_autocmd('InsertLeave', {
---     group = 'session_opts',
---     callback = show_gi_and_jump,
--- })
-
--- vim.api.nvim_create_autocmd('BufModifiedSet', {
---     group = 'session_opts',
---     callback = function()
---         if vim.api.nvim_get_mode().mode == 'n' then
---             show_gi_and_jump()
---         else
---             return
+--     function utils.remove_dot()
+--         if vim.g.dot_mark_extmark then
+--             return pcall(vim.api.nvim_buf_del_extmark, 0, dot_mark_ns, vim.g.dot_mark_extmark)
 --         end
---     end,
--- })
+--     end
 
--- vim.api.nvim_create_autocmd('InsertEnter', {
---     callback = function()
---         vim.api.nvim_buf_del_extmark(0, show_gi_nm, vim.g.show_gi_mark)
---     end,
--- })
+--     local dot_mark_group = vim.api.nvim_create_augroup('dot_mark_group', {})
+--     vim.api.nvim_create_autocmd('InsertLeave', {
+--         group = dot_mark_group,
+--         callback = function()
+--             utils.remove_dot()
+--             return utils.show_dot()
+--         end,
+--     })
 
--- show_gi_and_jump()
+--     vim.api.nvim_create_autocmd('InsertEnter', {
+--         group = dot_mark_group,
+--         callback = function()
+--             return utils.remove_dot()
+--         end,
+--     })
 
--- local show_gi_nm = vim.api.nvim_create_namespace('show_gi_mark')
+--     vim.api.nvim_create_autocmd('CursorHold', {
+--         group = dot_mark_group,
+--         once = true,
+--         callback = function()
+--             utils.remove_dot()
+--             return utils.show_dot()
+--         end,
+--     })
 
-local function show_gi_mark(mode)
-    if mode then
-        local cursor_pos = vim.api.nvim_win_get_cursor(0) -- Get actual position
-
-        local ok_gi, _ = pcall(vim.cmd, 'normal `.')
-        if ok_gi then
-            Mark_gi = vim.api.nvim_win_get_cursor(0) -- Get the position of gi
-        else
-            return
-        end
-
-        vim.api.nvim_win_set_cursor(0, cursor_pos) -- Restore position
-        vim.fn.sign_define('show_gi_mark', { text = '', texthl = 'Question' })
-        vim.fn.sign_place(Mark_gi[1], '', 'show_gi_mark', vim.fn.expand('%:p'), { lnum = Mark_gi[1] })
-    else
-        -- vim.fn.sign_unplace
-        return
-    end
-end
--- vim.keymap.set('n', '<Leader><Leader>', show_gi_mark)
-
-vim.api.nvim_create_autocmd('InsertLeave', {
-    callback = function()
-        return show_gi_mark(false) and show_gi_mark(true) -- toehute
-    end,
-})
+--     vim.api.nvim_create_autocmd('BufModifiedSet', {
+--         group = dot_mark_group,
+--         callback = function()
+--             -- We check the mode because BufModifiedSet gets triggered on insert and we don't want that
+--             if vim.api.nvim_get_mode().mode == 'n' then
+--                 utils.remove_dot()
+--                 return utils.show_dot()
+--             end
+--         end,
+--     })
+-- end
 
 return utils

@@ -94,6 +94,13 @@ return packer.startup(function(use)
         end,
     }
 
+    use('rebelot/kanagawa.nvim')
+    use {
+        'catppuccin/nvim',
+        as = 'catppuccin',
+    }
+    use { 'folke/tokyonight.nvim' }
+
     -- Comment
     use {
         'numToStr/Comment.nvim',
@@ -163,7 +170,32 @@ return packer.startup(function(use)
         run = ':TSUpdate',
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'p00f/nvim-ts-rainbow',
+            -- 'p00f/nvim-ts-rainbow',
+            {
+                'nvim-treesitter/playground',
+                config = function()
+                    require('nvim-treesitter.configs').setup {
+                        playground = {
+                            enable = true,
+                            disable = {},
+                            updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+                            persist_queries = false, -- Whether the query persists across vim sessions
+                            keybindings = {
+                                toggle_query_editor = 'o',
+                                toggle_hl_groups = 'i',
+                                toggle_injected_languages = 't',
+                                toggle_anonymous_nodes = 'a',
+                                toggle_language_display = 'I',
+                                focus_language = 'f',
+                                unfocus_language = 'F',
+                                update = 'R',
+                                goto_node = '<cr>',
+                                show_help = '?',
+                            },
+                        },
+                    }
+                end,
+            },
             {
                 'JoosepAlviste/nvim-ts-context-commentstring',
                 after = 'Comment.nvim',
@@ -211,13 +243,13 @@ return packer.startup(function(use)
                     require('csj.lsp.lsp-installer')
                 end,
             },
-            -- Null-LS
-            {
-                'jose-elias-alvarez/null-ls.nvim',
-                config = function()
-                    require('csj.lsp.null-ls')
-                end,
-            },
+            -- -- Null-LS
+            -- {
+            --     'jose-elias-alvarez/null-ls.nvim',
+            --     config = function()
+            --         require('csj.lsp.null-ls')
+            --     end,
+            -- },
         },
         config = function()
             require('csj.lsp')
@@ -278,7 +310,7 @@ return packer.startup(function(use)
                 max_indent_increase = 1,
             }
             vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#393552' })
-            -- vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { fg = '#393552' })
+            vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { fg = '#393552' })
         end,
     }
 
@@ -291,6 +323,8 @@ return packer.startup(function(use)
             vim.cmd('HexokinaseTurnOn')
         end,
     }
+
+    use('norcalli/nvim-colorizer.lua')
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

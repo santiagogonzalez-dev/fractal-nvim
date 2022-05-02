@@ -102,6 +102,26 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
+vim.api.nvim_create_autocmd('OptionSet', {
+    pattern = 'cursorcolumn',
+    callback=function ()
+        vim.api.nvim_create_autocmd('WinEnter', {
+            group = buffer_settings,
+            callback=function ()
+                vim.opt.cursorline = true
+                vim.opt.cursorcolumn = true
+            end
+        })
+        vim.api.nvim_create_autocmd('WinLeave', {
+            group = buffer_settings,
+            callback=function ()
+                vim.opt.cursorline = false
+                vim.opt.cursorcolumn = false
+            end
+        })
+    end
+})
+
 -- Conditionals
 local conditionals = vim.api.nvim_create_augroup('conditionals', {})
 vim.api.nvim_create_autocmd('DirChanged', {

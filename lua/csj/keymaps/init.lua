@@ -1,41 +1,18 @@
-local utils = require('csj.utils')
-
 -- Make dead keys
-local dead_keys = {
-    '<Space>',
-    '<BS>',
-    '<CR>',
-    '<Down>',
-    '<Left>',
-    '<Right>',
-    '<Up>',
-    'q:', -- Disable EX mode
-}
-
+local dead_keys = { '<Space>', '<BS>', '<CR>', '<Down>', '<Left>', '<Right>', '<Up>', 'q:' }
 for _, almost in ipairs(dead_keys) do
     vim.keymap.set({ 'n', 'v', 'x' }, almost, '<Nop>')
+end
+
+-- Undo break points
+local break_points = { ',', '.', '!', '?', '<Space>', '_', '-', '=', '<CR>' }
+for _, b in pairs(break_points) do
+    vim.keymap.set('i', b, b .. '<C-g>u')
 end
 
 -- Remap space as leader key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
--- Undo break points
-local break_points = {
-    ',',
-    '.',
-    '!',
-    '?',
-    '<Space>',
-    '_',
-    '-',
-    '=',
-    '<CR>',
-}
-
-for _, b in pairs(break_points) do
-    vim.keymap.set('i', b, b .. '<C-g>u')
-end
 
 vim.keymap.set('n', '<Leader>u', '<CMD>update<CR>', { desc = 'Update the file' })
 vim.keymap.set('n', '<Leader>E', '<CMD>edit<CR>', { desc = 'Reload file manually' })
@@ -52,20 +29,14 @@ vim.keymap.set('n', '<Leader>s', ':luafile %<CR>', { desc = 'Source lua file' })
 vim.keymap.set('n', 'cg*', '*Ncgn', { desc = 'Find and replace next match of the word under cursor' })
 vim.keymap.set('n', '<C-n>', ':bnext<CR>', { silent = true, desc = 'Switch to next buffer' })
 vim.keymap.set('n', '<C-p>', ':bprevious<CR>', { silent = true, desc = 'Switch to prev buffer' })
-vim.keymap.set('n', '<Tab>', 'za', { desc = 'Toggle folds' })
-vim.keymap.set('n', '<S-Tab>', 'zm', { desc = 'Close all folds' })
 vim.keymap.set('n', 'zo', '<CMD>silent! foldopen<CR>', { desc = 'Silence this keybind' })
 vim.keymap.set('n', 'zc', '<CMD>silent! foldclose<CR>', { desc = 'Silence this keybind' })
 vim.keymap.set('n', '<Leader>ps', '<CMD>PackerSync<CR>', { desc = 'PackerSync' })
 vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>', { desc = 'PackerCompile' })
-vim.keymap.set({ 'n', 'v', 'x' }, '', 'zmzo<ESC>', { desc = 'Keep only one fold open using special key on my keyboard' })
 vim.keymap.set('n', 'gvp', [['`[' . strpart(getregtype(), 0, 1) . '`]']], { expr = true })
 vim.keymap.set({ 'n', 'x', 'o' }, 'n', '"Nn"[v:searchforward]', { expr = true, desc = 'n is always next' })
 vim.keymap.set({ 'n', 'x', 'o' }, 'N', '"nN"[v:searchforward]', { expr = true, desc = 'N is always previous' })
 vim.keymap.set('n', '^^', '0', { desc = 'Better ^' })
-
-vim.keymap.set('n', '<C-h>', utils.h_motion, { desc = 'Alternative behaviour to h' })
-vim.keymap.set('n', '<C-l>', utils.l_motion, { desc = 'Alternative behaviour to l' })
 
 vim.keymap.set('n', '<Leader>e', ':silent! Lexplore!<CR>', { desc = 'Open NetRW' })
 vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { desc = 'Open NetRW in the directory of the current buffer' })
@@ -80,9 +51,24 @@ vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move current block of tex
 vim.keymap.set({ 'v', 'x' }, '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move current block of text up and down' }) -- Visual mode
 vim.keymap.set({ 'v', 'x' }, '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move current block of text up and down' })
 
+vim.keymap.set('n', '<Tab>', 'za', { desc = 'Toggle folds' })
+vim.keymap.set('n', '<S-Tab>', 'zm', { desc = 'Close all folds' })
+vim.keymap.set({ 'n', 'v', 'x' }, '<F16>', 'zmzo<ESC>', { desc = 'Keep only one fold open using special key on my keyboard' })
+
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Center commands' }) -- toehuteu
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Center commands' })
 vim.keymap.set('n', 'J', 'mzJ`zzv', { desc = 'Center commands' })
+
+-- TODO(santigo-zero): ci( and ci) will work normally, and  c( and c) should work line wise, fix this
+-- The same goes for di( and di) and d( and d)
+-- vim.keymap.set('n', 'c)', 'ci)', { desc = 'c} does the same and I prefer using it'})
+-- vim.keymap.set('n', 'c(', 'ci(', { desc = 'c{ does the same and I prefer using it'})
+
+-- -- TODO find better mappings, and create a function for + and -
+-- vim.keymap.set('n', '<S-l>', utils.l_motion, { desc = 'Alternative behaviour to l' })
+-- vim.keymap.set('n', '<S-h>', utils.h_motion, { desc = 'Alternative behaviour to h' })
+vim.keymap.set('n', '<Leader>j', '+')
+vim.keymap.set('n', '<Leader>k', '-')
 
 vim.keymap.set('n', '#', '*Nzv', { desc = 'Better #' })
 vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], { desc = 'Better #' })

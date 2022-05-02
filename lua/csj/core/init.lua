@@ -9,6 +9,8 @@ vim.opt.guicursor:append('r-cr-o:hor20')
 local tab_lenght = 4
 
 local opts = {
+    cursorline = true,
+    cursorcolumn = true,
     breakindent = true, -- Every wrapped line will continue visually indented
     clipboard = 'unnamedplus', -- Clipboard mode
     conceallevel = 2, -- Show concealed text when the cursor is not on top
@@ -19,8 +21,8 @@ local opts = {
     ignorecase = true, -- Ignore case
     inccommand = 'split', -- Shows just like nosplit, but partially off-screen
     joinspaces = true, -- Commands like gq or J insert two spaces on punctuation
-    laststatus = 3, -- Mode of the status bar
-    cmdheight = 0,
+    laststatus = 0, -- Mode of the status bar
+    cmdheight = 1,
     lazyredraw = true, -- Lazy redraw the screen
     matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
     mouse = 'ar', -- Mouse options, all enabled
@@ -51,7 +53,7 @@ local opts = {
     synmaxcol = 160, -- Column limit for syntax highlight
     tabstop = tab_lenght, -- Tab length
     textwidth = 80, -- Delimit text blocks to N columns
-    timeoutlen = 600, -- Time given for doing a sequence
+    timeoutlen = 300, -- Time given for doing a sequence
     title = true, -- Set the window title based on the value of titlestring
     undofile = true, -- Persistent undo - undo after you re-open the file
     undolevels = 6000, -- Levels of undoing
@@ -168,11 +170,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight on yank',
     group = 'session_opts',
     callback = function()
-        vim.highlight.on_yank { higroup = 'LineNr', timeout = 600 }
+        pcall(vim.highlight.on_yank, { higroup = 'LineNr', timeout = 600 })
     end,
 })
 
 require('csj.core.folds')
-require('csj.core.bettertf')
-require('csj.core.virt-column') -- Moded version of Lukas Reineke's virt-column.nvim
-require('csj.core.statusline')
+require('csj.core.bettertf') -- TODO, refactor this
+require('csj.core.virt-column') -- TODO, this pretty much works as spected - Moded version of Lukas Reineke's virt-column.nvim
+require('csj.core.statusline') -- TODO laststatus 3
+-- TODO fix formatoptions not getting applied, and add filetype exclution
+-- create a function that can paste and understand hex colors so that I don't  have to delete and add # and quotes etc etc

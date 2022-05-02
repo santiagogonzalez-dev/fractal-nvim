@@ -1,13 +1,13 @@
-local set_hl = require('csj.utils').set_hl
+local utils = require("csj.utils")
 
 require('ffi').cdef('int curwin_col_off(void);')
 
 local M = {
     config = {
         -- char = '⌇',
-        char = '┃',
+        -- char = '┃',
         -- char = '▎',
-        -- char = '│',
+        char = '│',
         virtcolumn = '',
     },
     buffer_config = {},
@@ -47,9 +47,9 @@ M.setup = function(config)
         return M.command_refresh('<bang>' == '!')
     end, { bang = true })
 
-    set_hl('VirtColumn', { link = 'Whitespace' })
-    set_hl('Whitespace', { fg = '#1f1d2e' })
-    set_hl('ColorColumn', {})
+    local get_hl = vim.api.nvim_get_hl_by_name
+    utils.set_hl('VirtColumn', { fg = get_hl('CursorLine', true).background, bg = get_hl('Normal', true).background })
+    utils.set_hl('ColorColumn', {})
 
     vim.api.nvim_create_augroup('_virt-column', {})
     vim.api.nvim_create_autocmd(

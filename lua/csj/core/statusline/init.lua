@@ -28,14 +28,14 @@ local statusline = {}
 --     return string.format(' %s ', modes[current_mode]):upper()
 -- end
 
-local function filepath()
-    local fpath = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')
-    if fpath == '' or fpath == '.' then
-        return ' '
-    end
+-- local function filepath()
+--     local fpath = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')
+--     if fpath == '' or fpath == '.' then
+--         return ' '
+--     end
 
-    return string.format(' %%<%s/', fpath)
-end
+--     return string.format(' %%<%s/', fpath)
+-- end
 
 local vcs = function()
     local git_info = vim.b.gitsigns_status_dict
