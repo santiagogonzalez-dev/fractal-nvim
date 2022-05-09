@@ -1,5 +1,20 @@
 local statusline = {}
 
+vim.api.nvim_create_autocmd('WinEnter', {
+    group = 'session_opts',
+    callback=function ()
+        vim.opt.laststatus = 3
+    end
+})
+
+vim.api.nvim_create_autocmd('WinLeave', {
+    group = 'session_opts',
+    callback=function ()
+        vim.opt.laststatus = 0
+    end
+})
+
+
 -- local modes = {
 --     ['n'] = 'NORMAL',
 --     ['no'] = 'NORMAL',
