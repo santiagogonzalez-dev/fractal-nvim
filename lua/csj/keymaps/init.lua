@@ -38,8 +38,8 @@ vim.keymap.set({ 'n', 'x', 'o' }, 'n', '"Nn"[v:searchforward]', { expr = true, d
 vim.keymap.set({ 'n', 'x', 'o' }, 'N', '"nN"[v:searchforward]', { expr = true, desc = 'N is always previous' })
 vim.keymap.set('n', '^^', '0', { desc = 'Better ^' })
 
-vim.keymap.set('n', '<Leader>e', ':silent! Lexplore!<CR>', { desc = 'Open NetRW' })
-vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { desc = 'Open NetRW in the directory of the current buffer' })
+vim.keymap.set('n', '<Leader>e', ':silent! Lexplore!<CR>', { silent = true, desc = 'Open NetRW' })
+vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { silent = true, desc = 'Open NetRW in the directory of the current buffer' })
 
 vim.keymap.set('n', '<C-Up>', ':resize +1<CR>', { desc = 'Resize windows' })
 vim.keymap.set('n', '<C-Down>', ':resize -1<CR>', { desc = 'Resize windows' })

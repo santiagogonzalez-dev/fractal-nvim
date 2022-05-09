@@ -8,60 +8,53 @@ end
 vim.opt.termguicolors = true
 vim.g.colors_name = 'csjcolors'
 
-vim.cmd(':ColorizerToggle')
-vim.api.nvim_create_autocmd('CursorMoved', {
-    command = ':ColorizerReloadAllBuffers',
-})
-
-vim.fn.matchadd('IncSearch', '\\s\\+$') -- Show trail spaces(whitespaces), IncSearch is used to not create another hl group
+vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 
 -- Color palette
 local p = {
-    accent = '#FA9336',
+    -- Background
+    bg = '#1a1724',
+    bg2 = '#211f2c',
 
-    bg = '#191724', -- Base background
-    bg_as_fg = '#191724',
-    bg_reg = '#1f1d2e',
-    bg_high = '#26233a',
+    -- Foreground
+    fg = '#aeacc0',
+    fg2 = '#c1bfd5',
+    fg_dim = '#3d3a56',
+    fg_dim2 = '#534f79', -- Used for comments, foldtext and identation/whitespaces spaces
 
-    fg = '#6e6a86', -- Base foreground
-    fg_reg = '#908caa',
-    fg_high = '#c1bfd5', -- My plasma theme uses the same text color -- fg_300 = '#e0def4',
+    -- Red
+    red = '#eb6f92', -- Used in errors and diagnostics too
 
-    dm = '#3d3b51',
-    dm_blue = '#575279',
-    dm_grey_blue = '#708090',
-    dm_steel = '#B1B6B7',
+    -- Pink
+    pink = '#FF99C9', -- Used in strings
 
-    -- blues
-    blue = '#5485d3',
-    blue_alt = '#326285',
-    blue_td = '#A093C7', -- tonned down
-    blue_light = '#A4B9EF',
+    -- Orange
+    orange = '#FA9336', -- Give accent to things that need attention
 
-    -- purples
-    purple = '#B57EDC',
+    -- Yellow
+    yellow = '#f6c177', -- Used in warnings and diagnostics too
 
-    -- yellows
-    yellow = '#F1B642',
-    yellow_march = '#F1D48A',
+    -- Green
+    green = '#339899',
 
-    -- pinky = '#BB9AF7',
+    -- LightBlue
+    light_blue = '#73CEF4',
+    light_blue2 = '#B4E6F8',
 
-    -- Diagnostics
-    -- error = '#C9646E',
-    -- error = '#B31942',
-    error = '#eb6f92',
-    error_bg = '#3C2636',
+    -- Blue
+    blue_alt = '#7AA2F7',
+    teal = '#28728F',
 
-    warn = '#f6c177',
-    warn_bg = '#3E3332',
+    -- Purple
+    purple = '#BB9AF7', -- Used for information, some things that need to be highlighted
+    purple_td = '#9d86b9', -- Used in info and diagnostics too
 
-    hint = '#2EA18C',
-    hint_bg = '#1D2E35',
-
-    info = '#9d86b9',
-    info_bg = '#2F2A3D',
+    -- Background colors for colors
+    -- TODO(santigo-zero): Outdated colors
+    red_bg = '#3C2636', -- bg for red
+    yellow_bg = '#3E3332', -- bg for yellow
+    purple_td_bg = '#2F2A3D', -- bg for purple
+    green_bg = '#1D2E35', -- bg for green
 }
 
 local h = function(...)
@@ -69,131 +62,138 @@ local h = function(...)
 end
 
 -- Interface
-h('CursorColumn', { bg = p.bg_high })
-h('CursorLine', { bg = p.bg_high })
-h('CursorLineNr', { bg = p.bg_high, fg = p.fg_high })
-
-h('WarningMsg', { fg = p.warn })
-h('ErrorMsg', { fg = p.error })
-h('MsgArea', { fg = p.fg_high })
-h('IncSearch', { bg = p.accent, fg = p.bg_as_fg })
-h('LineNr', { bg = p.bg, fg = p.fg })
-h('FoldColumn', { bg = p.bg, fg = p.dm })
-h('Folded', { bg = p.bg_reg, fg = p.dm_blue })
-h('ColorColumn', { bg = p.bg_reg })
-h('MatchParen', { bg = p.accent, fg = p.bg_as_fg })
-h('NonText', { fg = p.dm })
-h('Normal', { bg = p.bg, fg = p.fg })
-
-h('Pmenu', { bg = p.bg_reg, fg = p.fg_reg })
-h('PmenuSbar', { bg = p.bg_high })
-h('PmenuSel', { bg = p.bg_high, fg = p.text })
-h('PmenuThumb', { bg = p.fg })
-
-h('Question', { fg = p.fg_reg })
-h('Search', { bg = p.accent, fg = p.bg_as_fg })
-h('IncSearch', { fg = p.accent, bg = p.bg })
-h('SignColumn', { bg = p.bg })
-h('StatusLine', { bg = p.bg_reg, fg = p.fg })
-h('Title', { fg = p.fg_high })
-h('VertSplit', { fg = p.bg_reg })
-h('Visual', { bg = p.bg_high, reverse = true })
-h('WinSeperator', { link = 'VertSplit' })
+h('CursorColumn', { bg = p.bg2 }) -- The column of the crosshair of the cursor
+h('CursorLine', { bg = p.bg2 }) -- The line of the crosshair of the cursor
+h('CursorLineNr', { bg = p.bg2, fg = p.fg2 }) -- Current position of the cursor but in the gutter
+h('Cursor', { bg = p.fg2, fg = p.bg }) -- This doesn't seem to do anything
+h('lCursor', { bg = p.fg2, fg = p.bg }) -- This doesn't seem to do anything
+h('WarningMsg', { fg = p.yellow }) -- Warning messages
+h('ErrorMsg', { link = 'Error' }) -- Error messages on the command line
+h('MsgArea', { fg = p.fg }) -- Area for messages and cmdline, / and :
+h('ModeMsg', { fg = p.fg }) -- The 'showmode' message (e.g., '-- INSERT --') uses this
+h('LineNr', { bg = p.bg, fg = p.fg_dim2 }) -- The gutter, where relativenumbers and numbers show
+h('FoldColumn', { bg = p.bg, fg = p.fg_dim }) -- Column to the right of the gutter, shows folds present
+h('Folded', { bg = '#1b1924', fg = p.fg_dim2 }) -- Line that shows foldtext, TODO: Do we want folds to be just like comments?
+h('ColorColumn', {}) -- Column that shows limit of characters
+h('Conceal', {}) -- Replacement hl group for concealed characters
+h('MatchParen', { bg = p.orange, fg = p.bg }) -- The character under the cursor or just before it, if it is a paired bracket, and its match
+h('NonText', { fg = p.fg_dim }) -- Used in showbreak, listchars and virtualtext
+h('Whitespace', { bg = p.bg, fg = p.fg_dim2 }) -- Whitespaces
+h('Normal', { bg = p.bg, fg = p.fg }) -- Normal text
+h('NormalFloat', { bg = p.bg, fg = p.fg }) -- Normal text in floating windows
+h('InactiveWindow', { bg = p.bg2, fg = p.fg }) -- Check why this works and NormalNC doesn't
+h('NormalNC', { bg = p.bg2, fg = p.fg }) -- Normal text in non-current windows
+h('EndOfBuffer', { bg = p.bg, fg = p.fg }) -- Where ~ appear
+h('Question', { fg = p.fg }) -- hit-enter prompts and yes/no questions
+h('IncSearch', { fg = p.fg2, bold = true }) -- Current search pattern when searching with /
+h('CurSearch', { link = 'IncSearch' }) -- Current search match under the cursor
+h('Search', { bg = p.orange, fg = p.fg_dim }) -- Last search pattern
+h('Substitute', { fg = p.orange, bold = true, underline = true }) -- :substitute or :s///gc replacement text highlighting
+h('SignColumn', { bg = p.bg }) -- Where linting and errors popup
+h('StatusLine', { bg = p.bg, fg = p.fg }) -- The statusline
+h('StatusLineNC', { bg = p.bg, fg = p.fg }) -- The non-current statusline
+h('Title', { fg = p.fg }) -- Titles for output from ':set all', ':autocmd' etc.
+h('Visual', { reverse = true }) -- Visual mode uses this
+h('VisualNOS', { reverse = true }) -- When vim is not owning the selection
+h('VertSplit', { fg = p.fg_dim }) -- The column separating vertically split windows
+h('WinSeperator', { fg = p.fg_dim }) -- The line separating split windows
+h('Ignore', {})
+h('Bold', { bold = true })
+h('Italic', { italic = true })
+h('Underline', { underline = true })
+-- h('Pmenu', { bg = p.bg_reg, fg = p.fg_reg })
+-- h('PmenuSbar', { bg = p.bg_high })
+-- h('PmenuSel', { bg = p.bg_high, fg = p.text })
+-- h('PmenuThumb', { bg = p.fg })
 
 -- Syntax
-h('Boolean', { fg = p.fg_reg })
-h('Character', { fg = p.fg })
-h('Comment', { fg = p.dm_blue, italic = true })
-h('Conditional', { fg = p.fg })
-h('Constant', { fg = p.fg_reg })
-h('Debug', { fg = p.fg })
-h('Define', { fg = p.fg })
-h('Delimiter', { fg = p.fg })
-h('Directory', { fg = p.fg_reg })
-h('Error', { fg = p.error })
-h('Exception', { fg = p.fg })
-h('Float', { fg = p.fg })
-h('Function', { fg = p.blue })
-h('Identifier', { fg = p.fg_reg })
-h('Include', { fg = p.fg })
-h('Include', { fg = p.fg_reg })
-h('Keyword', { fg = p.p_grey_blue })
-h('Label', { fg = p.fg_reg })
-h('Macro', { fg = p.fg })
-h('Number', { fg = p.fg_reg })
-h('Operator', { fg = p.fg })
-h('PreCondit', { fg = p.fg_reg })
-h('PreProc', { fg = p.fg_reg })
-h('Repeat', { fg = p.fg })
-h('Special', { fg = p.fg_high })
-h('SpecialChar', { fg = p.fg })
-h('SpecialComment', { fg = p.fg })
-h('SpecialKey', { fg = p.fg_high })
-h('Statement', { fg = p.fg })
-h('StorageClass', { fg = p.fg })
-h('String', { fg = p.fg })
-h('Structure', { fg = p.fg })
-h('Tag', { fg = p.fg_high })
-h('Todo', { fg = p.info })
-h('Type', { fg = p.fg })
-h('Typedef', { fg = p.fg })
+h('Character', { fg = p.fg2 }) -- A character constant: 'c', '\n'
+h('Boolean', { fg = p.yellow, italic = true }) -- true-false True-False If not setup it uses Constant fg colors
+h('Comment', { fg = p.fg_dim2, italic = true })
+h('Constant', { fg = p.red }) -- NOTE: to self, this changes the name in -> TODO(santigo-zero):
+h('String', { fg = p.pink })
+h('Number', { fg = p.red })
+h('Float', { fg = p.red })
+h('Keyword', { fg = p.purple_td }) -- Like function, or local
+h('Conditional', { fg = p.purple_td }) -- if, then, else, endif, switch, etc.
+h('Repeat', { fg = p.purple_td }) -- for, while
+-- h('Debug', { fg = p.fg })
+-- h('Define', { fg = p.fg })
+h('Delimiter', { fg = p.fg2 }) -- . and ,
+-- h('Directory', { fg = p.fg_reg })
+-- h('Exception', { fg = p.fg })
+h('Error', { bg = p.red_bg, fg = p.red }) -- Errors
+h('Function', { fg = p.blue_alt, italic = true }) -- The name of the function, my_func(), not the keyword
+-- h('Identifier', { fg = p.fg_reg })
+h('Include', { fg = p.fg2 }) -- from ... import ...
+-- h('Label', { fg = p.fg_reg })
+-- h('Macro', { fg = p.fg })
+-- h('Operator', { fg = p.fg })
+-- h('PreCondit', { fg = p.fg_reg })
+-- h('PreProc', { fg = p.fg_reg })
+-- h('Special', { fg = p.fg_high })
+-- h('SpecialChar', { fg = p.fg })
+-- h('SpecialComment', { fg = p.fg })
+-- h('SpecialKey', { fg = p.fg_high })
+-- h('Statement', { fg = p.fg })
+-- h('StorageClass', { fg = p.fg })
+-- h('Structure', { fg = p.fg })
+-- h('Tag', { fg = p.fg_high })
+h('Todo', { fg = p.purple, bold = true }) -- INUPPERCASE: FIXME / TODO(santigo-zero):
+h('Type', { fg = p.purple }) -- The name of a class, not the class keyword
+-- h('Typedef', { fg = p.fg })
+h('Statement', { fg = p.fg }) -- The = and ==
 
 -- Treesitter syntax
 h('TSBoolean', { link = 'Boolean' })
+h('TSCharacter', { link = 'Character' })
 h('TSConstant', { link = 'Constant' })
-h('TSField', { fg = p.fg_reg })
+h('TSConstBuiltin', { fg = p.red })
+h('TSComment', { link = 'Comment' })
+h('TSField', { fg = p.light_blue }) -- Elements of a table or api in vim.api and ui in vim.ui, or bold in bold = true
 h('TSInclude', { link = 'Include' })
-h('TSFunction', { link = 'Function' })
-
-h('TSKeyword', { link = 'Keyword' })
-h('TSKeywordFunction', { link = 'Keyword' })
-h('TSConditional', { link = 'Keyword' })
-h('TSFuncBuiltin', { link = 'Keyword' })
-h('TSRepeat', { link = 'Keyword' })
-
-h('TSLabel', { link = 'Label' })
-h('TSMethod', { fg = p.fg_reg })
-h('TSNote', { fg = p.accent })
+h('TSFunction', { link = 'Function' }) -- The name of the function, my_func(), not the keyword
+-- h('TSKeyword', { link = 'Keyword' })
+h('TSKeywordReturn', { fg = p.purple_td, bold = true }) -- The return keyword
+h('TSKeywordFunction', { link = 'Keyword' }) -- The function or def keyword
+h('TSConditional', { link = 'Conditional' }) -- If, then, else, endif, switch, case, etc.
+h('TSRepeat', { link = 'Repeat' }) -- for, while
+h('TSFuncBuiltin', { link = 'Keyword' }) -- Try use a purple color in here
+h('TSVariableBuiltin', { fg = p.purple })
+-- h('TSLabel', { link = 'Label' })
+-- h('TSMethod', { fg = p.fg_reg })
+-- h('TSNote', { fg = p.accent })
 h('TSNumber', { link = 'Number' })
-h('TSParameter', { fg = p.yellow_march })
-h('TSProperty', { link = 'TSField' })
-
+h('TSParameter', { fg = p.purple })
+-- h('TSProperty', { link = 'TSField' })
 h('TSPunctBracket', { fg = p.fg })
-h('TSConstructor', { fg = p.fg_reg })
-
+h('TSConstructor', { fg = p.yellow })
 h('TSPunctDelimiter', { link = 'Delimiter' })
 h('TSPunctSpecial', { link = 'Special' })
 h('TSString', { link = 'String' })
-h('TSStringEscape', { link = 'String' })
-h('TSTag', { link = 'Tag' })
+h('TSFuncMacro', { link = 'String' })
+h('TSStringSpecial', { link = 'String' })
+h('TSStringEscape', { link = p.green })
+-- h('TSTag', { link = 'Tag' })
 h('TSTagDelimiter', { link = 'Delimiter' })
 h('TSTitle', { link = 'Title' })
-h('TSType', { link = 'Type' })
-h('TSURI', { link = 'String' })
-
-h('TSVariable', { fg = p.dm_grey_blue })
-h('TSVariableBuiltin', { link = 'TSVariable' })
-
-h('TSWarning', { link = 'Todo' }) -- I use the info group instead of warn group
+h('TSType', { link = 'Type' }) -- The name of a class, not the class keyword
+h('TSURI', { link = 'String' }) -- Links
+h('TSVariable', { fg = p.purple_td })
+-- h('TSWarning', { link = 'Todo' }) -- Is this actually a treesitter hl group?
+h('TSKeywordOperator', { fg = p.purple })
 
 -- Diagnostics
-h('DiagnosticError', { fg = p.error, bg = p.error_bg })
-h('DiagnosticHint', { fg = p.hint, bg = p.hint_bg })
-h('DiagnosticInfo', { fg = p.info, bg = p.info_bg })
-h('DiagnosticWarn', { fg = p.warn, bg = p.warn_bg })
-h('DiagnosticUnderlineError', { undercurl = true, sp = p.error })
-h('DiagnosticUnderlineHint', { undercurl = true, sp = p.hint })
-h('DiagnosticUnderlineInfo', { undercurl = true, sp = p.info })
-h('DiagnosticUnderlineWarn', { undercurl = true, sp = p.warn })
-
--- LSP
-h('PounceAcceptBest', { bg = p.warn_bg, fg = p.warn })
-
--- Plugins
-h('GitSignsChange', { fg = p.info })
-h('GitSignsAdd', { fg = p.hint })
-h('GitSignsDelete', { fg = p.error })
-
--- TODO(santigo-zero):
--- The paramater shouldn't be the same color as variables, check that
--- and maybe use some orange color
+-- LspCodeLens LspCodeLensSeparator
+h('LspDocumentHighlight', { bg = p.yellow_bg, fg = p.yellow })
+h('DiagnosticError', { bg = p.red_bg, fg = p.red })
+h('DiagnosticHint', { bg = p.green_bg, fg = p.green })
+h('DiagnosticInfo', { bg = p.purple_td_bg, fg = p.purple_td })
+h('DiagnosticWarn', { bg = p.yellow_bg, fg = p.yellow })
+h('DiagnosticUnderlineError', { undercurl = true, sp = p.red })
+h('DiagnosticUnderlineHint', { undercurl = true, sp = p.green })
+h('DiagnosticUnderlineInfo', { undercurl = true, sp = p.purple_td })
+h('DiagnosticUnderlineWarn', { undercurl = true, sp = p.yellow })
+h('GitSignsChange', { fg = p.purple_td }) -- Don't set up a background for GitSigns
+h('GitSignsAdd', { fg = p.green })
+h('GitSignsDelete', { fg = p.red })

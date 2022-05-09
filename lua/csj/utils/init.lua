@@ -4,7 +4,7 @@ function utils.close_or_quit()
     -- Close or quit buffer
     local count_bufs_by_type = function(loaded_only)
         loaded_only = (loaded_only == nil and true or loaded_only)
-        local count = {
+        local COUNT = {
             normal = 0,
             acwrite = 0,
             help = 0,
@@ -18,10 +18,10 @@ function utils.close_or_quit()
             if not loaded_only or vim.api.nvim_buf_is_loaded(bufname) then
                 local buf_type = vim.api.nvim_buf_get_option(bufname, 'buftype')
                 buf_type = buf_type ~= '' and buf_type or 'normal'
-                count[buf_type] = count[buf_type] + 1
+                COUNT[buf_type] = COUNT[buf_type] + 1
             end
         end
-        return count
+        return COUNT
     end
 
     if count_bufs_by_type().normal <= 1 then

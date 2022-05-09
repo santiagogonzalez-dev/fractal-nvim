@@ -95,11 +95,13 @@ return packer.startup(function(use)
     }
 
     use('rebelot/kanagawa.nvim')
+    use('cocopon/iceberg.vim')
     use {
         'catppuccin/nvim',
         as = 'catppuccin',
     }
     use { 'folke/tokyonight.nvim' }
+    use('Domeee/mosel.nvim')
 
     -- Comment
     use {
@@ -282,10 +284,10 @@ return packer.startup(function(use)
         module = 'telescope',
         opt = true,
         requires = {
-            {
-                'nvim-telescope/telescope-ui-select.nvim',
-                opt = true,
-            },
+            -- {
+            --     'nvim-telescope/telescope-ui-select.nvim',
+            --     opt = true,
+            -- },
             'nvim-lua/plenary.nvim',
             'ahmedkhalf/project.nvim',
         },
@@ -314,17 +316,16 @@ return packer.startup(function(use)
         end,
     }
 
-    -- Vim Hexokinase
     use {
-        'RRethy/vim-hexokinase',
-        opt = true,
-        run = 'cd /home/st/.local/share/nvim/site/pack/packer/opt/vim-hexokinase && make hexokinase',
+        'norcalli/nvim-colorizer.lua',
         config = function()
-            vim.cmd('HexokinaseTurnOn')
+            vim.cmd(':ColorizerToggle')
+            vim.api.nvim_create_autocmd('CursorHold', { command = ':ColorizerReloadAllBuffers' })
+            vim.api.nvim_create_autocmd('BufRead', {
+                command = 'ColorizerAttachToBuffer',
+            })
         end,
     }
-
-    use('norcalli/nvim-colorizer.lua')
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

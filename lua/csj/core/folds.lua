@@ -1,5 +1,5 @@
 local folds = {}
-local utils = require('csj.utils')
+-- local utils = require('csj.utils')
 
 -- Text for fold line
 function folds.foldtext_expression()
@@ -36,66 +36,58 @@ function folds.foldtext_expression()
     return start_line() .. fold_end()
 end
 
--- -- Fold the entire block including the function and comments and variables below and above the function
--- -- TODO(santigo-zero): Planned to use this feature, override zfip with this
--- --      Also instead of returning when no there's no function maybe do a zfip
--- --      Also create a global function since I couldn't get foldexpr to work
--- function folds.fold_block()
---     local ok_ts, ts = pcall(require, 'vim.treesitter')
---     local ok_get_parser, parser = pcall(ts.get_parser, 0, vim.bo.filetype)
---     if not ok_ts or not ok_get_parser or not parser then
---         vim.cmd('normal zfip') -- If treesitter or the parser aren't installed use zfip
---         return
---     end
+function folds.fold_this_block()
+    local ok_ts, ts = pcall(require, 'vim.treesitter')
+    local ok_get_parser, parser = pcall(ts.get_parser, 0, vim.bo.filetype)
+    if not ok_ts or not ok_get_parser or not parser then
+        -- If treesitter or the parser are not installed just use the ip motion
+        vim.api.nvim_feedkeys('zfip', 'n', 'v:false')
+        return
+    end
 
---     local ts_utils = require('nvim-treesitter.ts_utils')
---     local node = ts_utils.get_node_at_cursor()
+    local ts_utils = require("nvim-treesitter.ts_utils") -- Treesitter utilities
+    local node = ts_utils.get_node_at_cursor() -- Get the node under cursor
 
---     local function create_fold_on_node()
---         local start_line, _, end_line, _ = ts_utils.get_node_range(node)
---         start_line = start_line + 1 -- Treesitter reads lines from 0 instead of 1 like in neovim
---         end_line = end_line + 1
+    local NODES = {
+        'if_statement',
+        'for_statement',
+        'function_declaration',
+        'function_definition',
+        'class_definition',
+    }
 
---         vim.api.nvim_win_set_cursor(0, { start_line, 0 }) -- Move to the start of the function
---         vim.cmd('norm {') -- And we get the comments or whatever that it is on top of the function
+    local function create_fold_on_node()
+        local start_line, _, end_line, _ = ts_utils.get_node_range(node)
+        start_line = start_line + 1 -- Treesitter reads lines from 0 instead of 1 like in neovim
+        end_line = end_line + 1
 
---         local start_block = vim.api.nvim_win_get_cursor(0)
+        vim.api.nvim_win_set_cursor(0, { start_line, 0 }) -- Move to the start of the function
+        vim.cmd('norm {') -- And we get the comments or whatever that it is on top of the function
 
---         vim.api.nvim_win_set_cursor(0, { end_line, 0 }) -- Now we move to the end of the function
---         vim.cmd('norm }') -- And we get whatever it is that it's under the function
---         local end_block = vim.api.nvim_win_get_cursor(0)
+        local start_block = vim.api.nvim_win_get_cursor(0)
 
---         vim.notify('Fold created from ' .. start_block[1] + 1 .. ' to ' .. end_block[1] - 1, vim.log.levels.INFO)
---         vim.cmd(':' .. start_block[1] + 1 .. ',' .. end_block[1] - 1 .. 'fold') -- Create the fold
---         return vim.api.nvim_win_set_cursor(0, { start_line, 0 }) -- And put the cursor on the fold line
---     end
+        vim.api.nvim_win_set_cursor(0, { end_line, 0 }) -- Now we move to the end of the function
+        vim.cmd('norm }') -- And we get whatever it is that it's under the function
+        local end_block = vim.api.nvim_win_get_cursor(0)
 
---     local BLOCKS = {
---         'block',
---         'if_statement',
---         'for_statement',
---         'function_declaration',
---         'function_definition',
---         'class_definition',
---     }
+        vim.notify('Fold created from ' .. start_block[1] + 1 .. ' to ' .. end_block[1] - 1, vim.log.levels.INFO)
+        vim.cmd(':' .. start_block[1] + 1 .. ',' .. end_block[1] - 1 .. 'fold') -- Create the fold
+        return vim.api.nvim_win_set_cursor(0, { start_line, 0 }) -- And put the cursor on the fold line
+    end
 
---     for _, statement in ipairs(BLOCKS) do
---         if statement == node:type() then
---             create_fold_on_node()
---         else
---             -- If the statement is the last statement in the table
---             if statement == BLOCKS[#BLOCKS] then
---                 node = node:parent()
---             end
---         end
---     end
-
---     -- If treesitter doesn't find a valid node
---     if node ~= nil then
---         vim.cmd('normal zfip')
---     end
--- end
--- vim.keymap.set('n', 'zfip', folds.fold_block) -- Override zfip to use treesitter
+    for _, current_node in ipairs(NODES) do
+        if current_node == node:type() then
+            create_fold_on_node()
+            break
+        elseif current_node == node:parent():type() then
+            node = node:parent()
+            create_fold_on_node()
+        end
+    end
+end
+vim.keymap.set('n', 'zfib', function()
+    return folds.fold_this_block()
+end)
 
 -- Fold settings
 vim.opt.foldtext = 'v:lua.require("csj.core.folds").foldtext_expression()'
@@ -105,12 +97,9 @@ vim.opt.foldmethod = 'manual'
 vim.opt.fillchars:append {
     fold = ' ', -- Filling foldtext
     -- foldsep = '🮍',
-    foldclose = '▾',
-    -- foldopen = '▴',
-    -- foldsep = '│',
-    -- foldclose = 'ᐉ',
-    foldopen = '▎',
+    foldclose = '▴',
     foldsep = '▎',
+    foldopen = '▾',
 }
 
 return folds

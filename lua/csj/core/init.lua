@@ -22,7 +22,7 @@ local opts = {
     inccommand = 'split', -- Shows just like nosplit, but partially off-screen
     joinspaces = true, -- Commands like gq or J insert two spaces on punctuation
     laststatus = 0, -- Mode of the status bar
-    cmdheight = 1,
+    cmdheight = 0,
     lazyredraw = true, -- Lazy redraw the screen
     matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
     mouse = 'ar', -- Mouse options, all enabled
@@ -57,7 +57,7 @@ local opts = {
     title = true, -- Set the window title based on the value of titlestring
     undofile = true, -- Persistent undo - undo after you re-open the file
     undolevels = 6000, -- Levels of undoing
-    updatetime = 400, -- Faster completion, it's the time for CursorHold event
+    updatetime = 300, -- Faster completion, it's the time for CursorHold event
     virtualedit = 'all', -- Be able to put the cursor where there's not actual text
     whichwrap = '<,>,[,],h,l,b,s,~', -- Jump to the next line if you reach eol
     winblend = 6, -- Transparency for windows
@@ -73,7 +73,7 @@ vim.opt.path:append('**') -- Search files recursively
 
 -- Ensure this settings persist in all buffers
 function _G.all_buffers_settings()
-    vim.opt.iskeyword = '@,48-57,192-255'
+    -- vim.opt.iskeyword = '@,48-57,192-255'
     vim.opt.formatoptions = 'rtqjpn2l' -- :help fo-table
 
     -- There's a non-visible character at cchar= so watch

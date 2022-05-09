@@ -68,22 +68,22 @@ end
 
 function M.lsp_highlight_document(client)
     -- Highlight words matching the word under cursor
-    -- if client.resolved_capabilities.document_highlight then
-    --     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-    --         buffer = 0,
-    --         group = lsp_settings,
-    --         callback = vim.lsp.buf.document_highlight,
-    --     })
+    if client.resolved_capabilities.document_highlight then
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            buffer = 0,
+            group = lsp_settings,
+            callback = vim.lsp.buf.document_highlight,
+        })
 
-    --     vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-    --         buffer = 0,
-    --         group = lsp_settings,
-    --         callback = vim.lsp.buf.clear_references,
-    --     })
+        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+            buffer = 0,
+            group = lsp_settings,
+            callback = vim.lsp.buf.clear_references,
+        })
 
-    --     local set_hl = require('csj.utils').set_hl
-    --     set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, { link = 'PounceAcceptBest' })
-    -- end
+        local set_hl = require('csj.utils').set_hl
+        set_hl({ 'LspReferenceText', 'LspReferenceRead', 'LspReferenceWrite' }, { link = 'LspDocumentHighlight' })
+    end
 end
 
 function M.on_attach(client, _)

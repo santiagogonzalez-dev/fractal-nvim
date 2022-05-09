@@ -42,7 +42,6 @@ vim.defer_fn(function()
             'project.nvim',
             'telescope.nvim',
             'indent-blankline.nvim',
-            'vim-hexokinase',
             'nvim-lspconfig',
             'nvim-cmp',
         } do

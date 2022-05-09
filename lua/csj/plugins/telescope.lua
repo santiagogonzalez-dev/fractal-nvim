@@ -71,13 +71,13 @@ telescope.setup {
         winblend = 9,
     },
 
-    extensions = {
-        ['ui-select'] = { clean_dropdown },
-    },
+    -- extensions = {
+    --     ['ui-select'] = { clean_dropdown },
+    -- },
 }
 
 telescope.load_extension('projects')
-telescope.load_extension('ui-select')
+-- telescope.load_extension('ui-select')
 
 vim.keymap.set('n', 'gr', '<CMD>Telescope lsp_references theme=dropdown<CR>')
 vim.keymap.set('n', 't/', '<CMD>Telescope live_grep theme=dropdown<CR>')

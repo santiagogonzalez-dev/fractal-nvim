@@ -104,22 +104,22 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('OptionSet', {
     pattern = 'cursorcolumn',
-    callback=function ()
+    callback = function()
         vim.api.nvim_create_autocmd('WinEnter', {
             group = buffer_settings,
-            callback=function ()
+            callback = function()
                 vim.opt.cursorline = true
                 vim.opt.cursorcolumn = true
-            end
+            end,
         })
         vim.api.nvim_create_autocmd('WinLeave', {
             group = buffer_settings,
-            callback=function ()
+            callback = function()
                 vim.opt.cursorline = false
                 vim.opt.cursorcolumn = false
-            end
+            end,
         })
-    end
+    end,
 })
 
 -- Conditionals

@@ -25,16 +25,16 @@ vim.keymap.set('n', 'gll', function()
         end
         return diags
     end
-end, { desc = 'Show diagnostics in a float window'})
+end, { desc = 'Show diagnostics in a float window' })
 
 vim.keymap.set('n', 'gl', function()
     return utils.not_interfere_on_float() and vim.lsp.buf.hover()
-end, { desc = 'Show a description of the word under cursor'})
+end, { desc = 'Show a description of the word under cursor' })
 
-vim.keymap.set('n', '<Leader>dj', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
-vim.keymap.set('n', '<Leader>dk', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
-vim.keymap.set('n', '<Leader>ld', require('csj.utils').toggle_diagnostics, {desc ='Toggle diagnostics'})
-vim.keymap.set('n', 'r', require('csj.utils').rename, {desc='Renamer'})
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc='Definitions'})
-vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc='Declarations'})
+vim.keymap.set('n', '<C-]>', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
+vim.keymap.set('n', '<C-[>', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
+vim.keymap.set('n', '<Leader>ld', require('csj.utils').toggle_diagnostics, { desc = 'Toggle diagnostics' })
+vim.keymap.set('n', 'r', require('csj.utils').rename, { desc = 'Renamer' })
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Definitions' })
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'Declarations' })
 -- vim.keymap.set('n', 'gr', vim.lsp.buf.references) -- References
