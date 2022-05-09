@@ -4,4 +4,4 @@ if not status_ok then
 end
 
 require('csj.lsp.handlers').setup()
-require('csj.lsp.handlers').setup_diagnostics()
+require('csj.lsp.top_right_lsp_diagnostics')

@@ -137,7 +137,6 @@ vim.opt.listchars:append {
     tab = '-->',
     trail = '█',
 }
-
 utils.better_eol()
 
 -- To appropriately highlight codefences
