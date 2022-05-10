@@ -89,16 +89,6 @@ function utils.rename()
     end, { buffer = created_buffer })
 end
 
-function utils.get_yanked_text()
-    -- Yanked text
-    return print(vim.fn.getreg('"'))
-end
-
-function utils.hide_at_term_width()
-    -- Conditional for width of the terminal
-    return vim.opt.columns:get() > 90
-end
-
 function utils.set_hl(mode, table)
     -- Highlights
     if type(mode) == 'table' then
@@ -163,18 +153,9 @@ function utils.not_interfere_on_float()
     return true
 end
 
-function utils.table_lenght(T)
-    -- Get the lenght of a table
-    local count = 0
-    for _ in pairs(T) do
-        count = count + 1
-    end
-    return count
-end
-
 function utils.append_by_random(option, T)
     -- Random set of items
-    return option:append(T[math.random(1, utils.table_lenght(T))])
+    return option:append(T[math.random(1, #T)])
 end
 
 function utils.wrap(function_pointer, ...)
@@ -192,20 +173,6 @@ function utils.is_empty(str)
     return str == '' or str == nil
 end
 
-function utils.is_bigger_than(filepath, size_in_kilobytes)
-    -- Fail if filepath is bigger than the provided size in kilobytes
-    vim.loop.fs_stat(filepath, function(_, stat)
-        if not stat then
-            return
-        end
-        if stat.size > size_in_kilobytes then
-            return
-        else
-            return true
-        end
-    end)
-end
-
 function utils.is_git()
     local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
     if is_git:match('true') then
@@ -215,33 +182,60 @@ function utils.is_git()
     end
 end
 
-function utils.h_motion()
-    local cursor_position = vim.api.nvim_win_get_cursor(0)
+function utils.strict_cursor()
+    -- Use stricter cursor movenments, only enable virtualedit cursor when pressing <Esc><Esc>
+    local function h_motion()
+        local cursor_position = vim.api.nvim_win_get_cursor(0)
 
-    vim.cmd('normal ^')
-    local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
+        vim.cmd('normal ^')
+        local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
 
-    if cursor_position[2] <= first_non_blank_char[2] then
-        return vim.cmd('normal 0')
-    else
-        vim.api.nvim_win_set_cursor(0, cursor_position)
-        return vim.cmd('normal! h')
+        if cursor_position[2] <= first_non_blank_char[2] then
+            return vim.cmd('normal 0')
+        else
+            vim.api.nvim_win_set_cursor(0, cursor_position)
+            return vim.cmd('normal! h')
+        end
     end
-end
 
-function utils.l_motion()
-    local cursor_position = vim.api.nvim_win_get_cursor(0)
+    local function l_motion()
+        local cursor_position = vim.api.nvim_win_get_cursor(0)
 
-    vim.cmd('normal ^')
-    local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
+        vim.cmd('normal ^')
+        local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
 
-    if cursor_position[2] < first_non_blank_char[2] then
-        return vim.cmd('normal ^')
-    else
-        vim.api.nvim_win_set_cursor(0, cursor_position)
-        return vim.cmd('normal! l')
+        if cursor_position[2] < first_non_blank_char[2] then
+            return vim.cmd('normal ^')
+        else
+            vim.api.nvim_win_set_cursor(0, cursor_position)
+            return vim.cmd('normal! l')
+        end
     end
+
+    local function switcher(mode)
+        if mode then
+            vim.keymap.set('n', 'h', function()
+                h_motion()
+            end)
+            vim.keymap.set('n', 'l', function()
+                l_motion()
+            end)
+            vim.opt.virtualedit = ''
+            vim.g.strict_cursor = false
+        else
+            vim.opt.virtualedit = 'all' -- Be able to put the cursor where there's not actual text
+            vim.keymap.del('n', 'h')
+            vim.keymap.del('n', 'l')
+            vim.g.strict_cursor = true
+        end
+    end
+
+    switcher(true) -- Enable strict cursor when running the function for the first time
+    vim.keymap.set('n', '<Esc><Esc>', function()
+        return switcher(vim.g.strict_cursor)
+    end)
 end
+utils.strict_cursor()
 
 function utils.better_eol()
     -- Better eol
@@ -335,6 +329,30 @@ end
 --             end
 --         end,
 --     })
+-- end
+
+-- function utils.is_bigger_than(filepath, size_in_kilobytes)
+--     -- Fail if filepath is bigger than the provided size in kilobytes
+--     vim.loop.fs_stat(filepath, function(_, stat)
+--         if not stat then
+--             return
+--         end
+--         if stat.size > size_in_kilobytes then
+--             return
+--         else
+--             return true
+--         end
+--     end)
+-- end
+
+-- function utils.get_yanked_text()
+--     -- Yanked text
+--     return print(vim.fn.getreg('"'))
+-- end
+
+-- function utils.hide_at_term_width()
+--     -- Conditional for width of the terminal
+--     return vim.opt.columns:get() > 90
 -- end
 
 return utils

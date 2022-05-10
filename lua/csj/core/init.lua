@@ -58,7 +58,6 @@ local opts = {
     undofile = true, -- Persistent undo - undo after you re-open the file
     undolevels = 6000, -- Levels of undoing
     updatetime = 300, -- Faster completion, it's the time for CursorHold event
-    virtualedit = 'all', -- Be able to put the cursor where there's not actual text
     whichwrap = '<,>,[,],h,l,b,s,~', -- Jump to the next line if you reach eol
     winblend = 6, -- Transparency for windows
     winhighlight = 'Normal:ActiveWindow,NormalNC:InactiveWindow', -- Window local highlights
@@ -73,7 +72,7 @@ vim.opt.path:append('**') -- Search files recursively
 
 -- Ensure this settings persist in all buffers
 function _G.all_buffers_settings()
-    -- vim.opt.iskeyword = '@,48-57,192-255'
+    vim.opt.iskeyword = '@,48-57,192-255'
     vim.opt.formatoptions = 'rtqjpn2l' -- :help fo-table
 
     -- There's a non-visible character at cchar= so watch
@@ -94,7 +93,7 @@ vim.opt.list = true
 
 vim.opt.fillchars:append {
     eob = ' ', -- Don't show the ~ at the eof
-    msgsep = '🮑',
+    msgsep = '🮑', -- Line that separates the cmdline from the buffer
 }
 
 utils.append_by_random(vim.opt.fillchars, {

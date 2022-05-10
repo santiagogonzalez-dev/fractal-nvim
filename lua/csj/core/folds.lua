@@ -45,7 +45,7 @@ function folds.fold_this_block()
         return
     end
 
-    local ts_utils = require("nvim-treesitter.ts_utils") -- Treesitter utilities
+    local ts_utils = require('nvim-treesitter.ts_utils') -- Treesitter utilities
     local node = ts_utils.get_node_at_cursor() -- Get the node under cursor
 
     local NODES = {

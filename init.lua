@@ -1,7 +1,7 @@
-local utils = require('csj.utils')
-
 pcall(require, 'impatient')
 
+vim.g.rtp = vim.api.nvim_get_option_value('runtimepath', {})
+vim.opt.runtimepath = ''
 vim.opt.shadafile = 'NONE'
 vim.cmd([[
     syntax off
@@ -12,7 +12,8 @@ vim.cmd([[
 require('csj.disabled')
 require('csj.autocommands')
 require('csj.keymaps')
-require('csj.netrw')
+
+local utils = require('csj.utils')
 utils.setup_session() -- Setup the session and load other settings
 
 vim.defer_fn(function()
@@ -23,6 +24,7 @@ vim.defer_fn(function()
         ]])
     end
 
+    vim.opt.runtimepath = vim.g.rtp
     vim.opt.shadafile = ''
     vim.cmd([[
         rshada!
@@ -31,7 +33,6 @@ vim.defer_fn(function()
         filetype on
         filetype plugin indent on
     ]])
-
     require('csj.colors')
 
     local ok_plugins, _ = pcall(require, 'csj.plugins')
@@ -50,6 +51,7 @@ vim.defer_fn(function()
     end
 
     utils.is_git()
+    require('csj.netrw')
     require('csj.core')
     require('csj.filetype')
 end, 3)

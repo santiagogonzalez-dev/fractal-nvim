@@ -2,18 +2,17 @@ local statusline = {}
 
 vim.api.nvim_create_autocmd('WinEnter', {
     group = 'session_opts',
-    callback=function ()
+    callback = function()
         vim.opt.laststatus = 3
-    end
+    end,
 })
 
 vim.api.nvim_create_autocmd('WinLeave', {
     group = 'session_opts',
-    callback=function ()
+    callback = function()
         vim.opt.laststatus = 0
-    end
+    end,
 })
-
 
 -- local modes = {
 --     ['n'] = 'NORMAL',

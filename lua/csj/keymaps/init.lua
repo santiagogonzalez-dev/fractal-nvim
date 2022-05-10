@@ -60,15 +60,11 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Center commands' })
 vim.keymap.set('n', 'J', 'mzJ`zzv', { desc = 'Center commands' })
 
 -- TODO(santigo-zero): ci( and ci) will work normally, and  c( and c) should work line wise, fix this
--- The same goes for di( and di) and d( and d)
+-- The same goes for di( and di) and d( and d). Also maintain the column when pasting
 -- vim.keymap.set('n', 'c)', 'ci)', { desc = 'c} does the same and I prefer using it'})
 -- vim.keymap.set('n', 'c(', 'ci(', { desc = 'c{ does the same and I prefer using it'})
-
--- -- TODO find better mappings, and create a function for + and -
 -- vim.keymap.set('n', '<S-l>', utils.l_motion, { desc = 'Alternative behaviour to l' })
 -- vim.keymap.set('n', '<S-h>', utils.h_motion, { desc = 'Alternative behaviour to h' })
-vim.keymap.set('n', '<Leader>j', '+')
-vim.keymap.set('n', '<Leader>k', '-')
 
 vim.keymap.set('n', '#', '*Nzv', { desc = 'Better #' })
 vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], { desc = 'Better #' })
