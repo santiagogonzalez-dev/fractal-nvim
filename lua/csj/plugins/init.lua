@@ -81,28 +81,6 @@ return packer.startup(function(use)
         end,
     }
 
-    -- Colorscheme
-    use {
-        'rose-pine/neovim',
-        as = 'rose-pine',
-        config = function()
-            require('rose-pine').setup {
-                dark_variant = 'main',
-                -- dark_variant = 'moon',
-                disable_italics = false,
-            }
-        end,
-    }
-
-    use('rebelot/kanagawa.nvim')
-    use('cocopon/iceberg.vim')
-    use {
-        'catppuccin/nvim',
-        as = 'catppuccin',
-    }
-    use { 'folke/tokyonight.nvim' }
-    use('Domeee/mosel.nvim')
-
     -- Comment
     use {
         'numToStr/Comment.nvim',
@@ -173,31 +151,31 @@ return packer.startup(function(use)
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
             -- 'p00f/nvim-ts-rainbow',
-            {
-                'nvim-treesitter/playground',
-                config = function()
-                    require('nvim-treesitter.configs').setup {
-                        playground = {
-                            enable = true,
-                            disable = {},
-                            updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-                            persist_queries = false, -- Whether the query persists across vim sessions
-                            keybindings = {
-                                toggle_query_editor = 'o',
-                                toggle_hl_groups = 'i',
-                                toggle_injected_languages = 't',
-                                toggle_anonymous_nodes = 'a',
-                                toggle_language_display = 'I',
-                                focus_language = 'f',
-                                unfocus_language = 'F',
-                                update = 'R',
-                                goto_node = '<cr>',
-                                show_help = '?',
-                            },
-                        },
-                    }
-                end,
-            },
+            -- {
+            --     'nvim-treesitter/playground',
+            --     config = function()
+            --         require('nvim-treesitter.configs').setup {
+            --             playground = {
+            --                 enable = true,
+            --                 disable = {},
+            --                 updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+            --                 persist_queries = false, -- Whether the query persists across vim sessions
+            --                 keybindings = {
+            --                     toggle_query_editor = 'o',
+            --                     toggle_hl_groups = 'i',
+            --                     toggle_injected_languages = 't',
+            --                     toggle_anonymous_nodes = 'a',
+            --                     toggle_language_display = 'I',
+            --                     focus_language = 'f',
+            --                     unfocus_language = 'F',
+            --                     update = 'R',
+            --                     goto_node = '<cr>',
+            --                     show_help = '?',
+            --                 },
+            --             },
+            --         }
+            --     end,
+            -- },
             {
                 'JoosepAlviste/nvim-ts-context-commentstring',
                 after = 'Comment.nvim',
@@ -209,63 +187,76 @@ return packer.startup(function(use)
     }
 
     -- Completion and snippets
-    use {
-        'hrsh7th/nvim-cmp', -- The completion plugin
-        opt = true,
-        requires = {
-            'hrsh7th/cmp-buffer', -- Buffer completion
-            'hrsh7th/cmp-cmdline', -- Cmdline completion
-            'hrsh7th/cmp-nvim-lsp', -- LSP completion
-            'hrsh7th/cmp-nvim-lua', -- LSP completion for Lua
-            'hrsh7th/cmp-path', -- Path completion
-        },
-        config = function()
-            require('csj.plugins.cmp')
-        end,
-    }
+    -- use {
+    --     'hrsh7th/nvim-cmp', -- The completion plugin
+    --     opt = true,
+    --     requires = {
+    --         'hrsh7th/cmp-buffer', -- Buffer completion
+    --         'hrsh7th/cmp-cmdline', -- Cmdline completion
+    --         'hrsh7th/cmp-nvim-lsp', -- LSP completion
+    --         'hrsh7th/cmp-nvim-lua', -- LSP completion for Lua
+    --         'hrsh7th/cmp-path', -- Path completion
+    --     },
+    --     config = function()
+    --         require('csj.plugins.cmp')
+    --     end,
+    -- }
 
-    use {
-        'L3MON4D3/LuaSnip', -- Snippet engine
-        after = 'nvim-cmp',
-        requires = {
-            'rafamadriz/friendly-snippets', -- Additional snippets
-            'saadparwaiz1/cmp_luasnip', -- Snippet completion
-        },
-    }
+    -- use {
+    --     'L3MON4D3/LuaSnip', -- Snippet engine
+    --     after = 'nvim-cmp',
+    --     requires = {
+    --         'rafamadriz/friendly-snippets', -- Additional snippets
+    --         'saadparwaiz1/cmp_luasnip', -- Snippet completion
+    --     },
+    -- }
 
-    -- LSP
+    -- -- LSP
+    -- use {
+    --     'neovim/nvim-lspconfig',
+    --     opt = true,
+    --     requires = {
+    --         {
+    --             'williamboman/nvim-lsp-installer', -- Neovim Language Server Installer
+    --             opt = true,
+    --         },
+    --         {
+    --             'jose-elias-alvarez/null-ls.nvim', -- Null-LS
+    --             opt = true,
+    --         },
+    --     },
+    -- }
+
+    -- -- LSP
+    -- use {
+    --     'williamboman/nvim-lsp-installer',
+    --     {
+    --         'neovim/nvim-lspconfig',
+    --         config = function()
+    --             require('nvim-lsp-installer').setup {
+    --                 'cssls',
+    --                 'cssmodules_ls',
+    --                 'html',
+    --                 'jsonls',
+    --                 'pyright',
+    --                 'sumneko_lua',
+    --                 'tsserver',
+    --             }
+    --             local lspconfig = require('lspconfig')
+    --             lspconfig.sumneko_lua.setup {}
+    --         end
+    --     }
+    -- }
+
     use {
         'neovim/nvim-lspconfig',
         opt = true,
         requires = {
-            -- Neovim Language Server Installer
             {
                 'williamboman/nvim-lsp-installer',
-                config = function()
-                    require('csj.lsp.lsp-installer')
-                end,
-            },
-            -- -- Null-LS
-            -- {
-            --     'jose-elias-alvarez/null-ls.nvim',
-            --     config = function()
-            --         require('csj.lsp.null-ls')
-            --     end,
-            -- },
-        },
-        config = function()
-            require('csj.lsp')
-        end,
-    }
-
-    -- Toggle term
-    use {
-        'akinsho/toggleterm.nvim',
-        module = 'toggleterm',
-        keys = [[<C-\>]],
-        config = function()
-            require('csj.plugins.toggleterm')
-        end,
+                opt = true,
+            }
+        }
     }
 
     -- Git Signs
@@ -284,10 +275,6 @@ return packer.startup(function(use)
         module = 'telescope',
         opt = true,
         requires = {
-            -- {
-            --     'nvim-telescope/telescope-ui-select.nvim',
-            --     opt = true,
-            -- },
             'nvim-lua/plenary.nvim',
             'ahmedkhalf/project.nvim',
         },
@@ -316,16 +303,16 @@ return packer.startup(function(use)
         end,
     }
 
-    use {
-        'norcalli/nvim-colorizer.lua',
-        config = function()
-            vim.cmd(':ColorizerToggle')
-            vim.api.nvim_create_autocmd('CursorHold', { command = ':ColorizerReloadAllBuffers' })
-            vim.api.nvim_create_autocmd('BufRead', {
-                command = 'ColorizerAttachToBuffer',
-            })
-        end,
-    }
+    -- use {
+    --     'norcalli/nvim-colorizer.lua',
+    --     config = function()
+    --         vim.cmd(':ColorizerToggle')
+    --         vim.api.nvim_create_autocmd('CursorHold', { command = ':ColorizerReloadAllBuffers' })
+    --         vim.api.nvim_create_autocmd('BufRead', {
+    --             command = 'ColorizerAttachToBuffer',
+    --         })
+    --     end,
+    -- }
 
     if PACKER_BOOTSTRAP then
         require('packer').sync()

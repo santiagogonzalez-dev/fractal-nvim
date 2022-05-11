@@ -99,7 +99,7 @@ vim.opt.fillchars:append {
     -- foldsep = '🮍',
     foldclose = '',
     foldsep = '▎',
-    foldopen = '',
+    foldopen = '▎',
 }
 
 return folds

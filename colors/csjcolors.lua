@@ -1,5 +1,4 @@
--- WIP
-vim.cmd('hi clear')
+vim.cmd('highlight clear')
 
 if 1 == vim.fn.exists('syntax_on') then
     vim.cmd('syntax reset')
@@ -73,7 +72,7 @@ h('MsgArea', { fg = p.fg }) -- Area for messages and cmdline, / and :
 h('ModeMsg', { fg = p.fg }) -- The 'showmode' message (e.g., '-- INSERT --') uses this
 h('LineNr', { bg = p.bg, fg = p.fg_dim2 }) -- The gutter, where relativenumbers and numbers show
 h('FoldColumn', { bg = p.bg, fg = p.fg_dim }) -- Column to the right of the gutter, shows folds present
-h('Folded', { bg = '#1b1924', fg = p.fg_dim2 }) -- Line that shows foldtext, TODO: Do we want folds to be just like comments?
+h('Folded', { fg = p.fg_dim2 }) -- Line that shows foldtext, TODO: Do we want folds to be just like comments?
 h('ColorColumn', {}) -- Column that shows limit of characters
 h('Conceal', {}) -- Replacement hl group for concealed characters
 h('MatchParen', { bg = p.orange, fg = p.bg }) -- The character under the cursor or just before it, if it is a paired bracket, and its match

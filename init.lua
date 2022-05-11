@@ -1,7 +1,6 @@
 pcall(require, 'impatient')
 
-vim.g.rtp = vim.api.nvim_get_option_value('runtimepath', {})
-vim.opt.runtimepath = ''
+require('csj.disabled')
 vim.opt.shadafile = 'NONE'
 vim.cmd([[
     syntax off
@@ -9,12 +8,11 @@ vim.cmd([[
     filetype plugin indent off
 ]])
 
-require('csj.disabled')
-require('csj.autocommands')
-require('csj.keymaps')
-
 local utils = require('csj.utils')
 utils.setup_session() -- Setup the session and load other settings
+
+require('csj.autocommands')
+require('csj.colors')
 
 vim.defer_fn(function()
     if not vim.opt.loadplugins then
@@ -24,34 +22,31 @@ vim.defer_fn(function()
         ]])
     end
 
-    vim.opt.runtimepath = vim.g.rtp
     vim.opt.shadafile = ''
     vim.cmd([[
         rshada!
         doautocmd BufEnter
+        doautocmd ColorScheme
         syntax on
         filetype on
         filetype plugin indent on
     ]])
-    require('csj.colors')
 
-    local ok_plugins, _ = pcall(require, 'csj.plugins')
-    if ok_plugins then
-        require('csj.plugins.packer_compiled')
-        for _, plugin in ipairs {
-            'nvim-treesitter',
-            'project.nvim',
-            'telescope.nvim',
-            'indent-blankline.nvim',
-            'nvim-lspconfig',
-            'nvim-cmp',
-        } do
-            vim.cmd('PackerLoad ' .. plugin)
-        end
+    local ok, _ = pcall(require, 'csj.plugins')
+    if ok then
+        pcall(require, 'csj.plugins.packer_compiled')
+
+        vim.cmd([[
+            PackerLoad nvim-treesitter
+            PackerLoad project.nvim
+            PackerLoad telescope.nvim
+            PackerLoad indent-blankline.nvim
+        ]])
     end
 
     utils.is_git()
     require('csj.netrw')
     require('csj.core')
     require('csj.filetype')
-end, 3)
+    require('csj.manners')
+end, 0)

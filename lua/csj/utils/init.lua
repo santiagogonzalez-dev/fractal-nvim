@@ -1,42 +1,5 @@
 local utils = {}
 
-function utils.close_or_quit()
-    -- Close or quit buffer
-    local count_bufs_by_type = function(loaded_only)
-        loaded_only = (loaded_only == nil and true or loaded_only)
-        local COUNT = {
-            normal = 0,
-            acwrite = 0,
-            help = 0,
-            nofile = 0,
-            nowrite = 0,
-            quickfix = 0,
-            terminal = 0,
-            prompt = 0,
-        }
-        for _, bufname in pairs(vim.api.nvim_list_bufs()) do
-            if not loaded_only or vim.api.nvim_buf_is_loaded(bufname) then
-                local buf_type = vim.api.nvim_buf_get_option(bufname, 'buftype')
-                buf_type = buf_type ~= '' and buf_type or 'normal'
-                COUNT[buf_type] = COUNT[buf_type] + 1
-            end
-        end
-        return COUNT
-    end
-
-    if count_bufs_by_type().normal <= 1 then
-        vim.ui.select({ 'Delete the buffer', 'Quit neovim' }, {}, function(_, prompt)
-            if tonumber(prompt) == 1 then
-                return vim.cmd('bd')
-            elseif tonumber(prompt) == 2 then
-                return vim.cmd('q')
-            end
-        end)
-    else
-        return vim.cmd('bp | sp | bn | bd')
-    end
-end
-
 function utils.toggle_diagnostics()
     -- Toggle diagnostics
     if not vim.g.diagnostics_active then
@@ -181,61 +144,6 @@ function utils.is_git()
         return
     end
 end
-
-function utils.strict_cursor()
-    -- Use stricter cursor movenments, only enable virtualedit cursor when pressing <Esc><Esc>
-    local function h_motion()
-        local cursor_position = vim.api.nvim_win_get_cursor(0)
-
-        vim.cmd('normal ^')
-        local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
-
-        if cursor_position[2] <= first_non_blank_char[2] then
-            return vim.cmd('normal 0')
-        else
-            vim.api.nvim_win_set_cursor(0, cursor_position)
-            return vim.cmd('normal! h')
-        end
-    end
-
-    local function l_motion()
-        local cursor_position = vim.api.nvim_win_get_cursor(0)
-
-        vim.cmd('normal ^')
-        local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
-
-        if cursor_position[2] < first_non_blank_char[2] then
-            return vim.cmd('normal ^')
-        else
-            vim.api.nvim_win_set_cursor(0, cursor_position)
-            return vim.cmd('normal! l')
-        end
-    end
-
-    local function switcher(mode)
-        if mode then
-            vim.keymap.set('n', 'h', function()
-                h_motion()
-            end)
-            vim.keymap.set('n', 'l', function()
-                l_motion()
-            end)
-            vim.opt.virtualedit = ''
-            vim.g.strict_cursor = false
-        else
-            vim.opt.virtualedit = 'all' -- Be able to put the cursor where there's not actual text
-            vim.keymap.del('n', 'h')
-            vim.keymap.del('n', 'l')
-            vim.g.strict_cursor = true
-        end
-    end
-
-    switcher(true) -- Enable strict cursor when running the function for the first time
-    vim.keymap.set('n', '<Esc><Esc>', function()
-        return switcher(vim.g.strict_cursor)
-    end)
-end
-utils.strict_cursor()
 
 function utils.better_eol()
     -- Better eol
