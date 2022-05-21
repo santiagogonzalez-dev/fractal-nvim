@@ -1,76 +1,77 @@
 vim.cmd('highlight clear')
 
 if 1 == vim.fn.exists('syntax_on') then
-    vim.cmd('syntax reset')
+   vim.cmd('syntax reset')
 end
 
 vim.opt.termguicolors = true
-vim.g.colors_name = 'csjcolors'
+vim.g.colors_name = 'jetjbp'
 
 vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 
 -- Color palette
 local p = {
-    -- Background
-    bg = '#1a1724',
-    bg2 = '#211f2c',
+   -- Background
+   bg = '#1a1724',
+   bg2 = '#211f2c',
 
-    -- Foreground
-    fg = '#aeacc0',
-    fg2 = '#c1bfd5',
-    fg_dim = '#3d3a56',
-    fg_dim2 = '#534f79', -- Used for comments, foldtext and identation/whitespaces spaces
+   -- Foreground
+   fg = '#aeacc0',
+   fg2 = '#c1bfd5',
+   fg_dim = '#3d3a56',
+   fg_dim2 = '#534f79', -- Used for comments, foldtext and identation/whitespaces spaces
+   fg_grey = '#646186',
 
-    -- Red
-    red = '#eb6f92', -- Used in errors and diagnostics too
+   -- Red
+   red = '#eb6f92', -- Used in errors and diagnostics too
 
-    -- Pink
-    pink = '#FF99C9', -- Used in strings
+   -- Pink
+   pink = '#FF99C9', -- Used in strings
 
-    -- Orange
-    orange = '#FA9336', -- Give accent to things that need attention
+   -- Orange
+   orange = '#FA9336', -- Give accent to things that need attention
 
-    -- Yellow
-    yellow = '#f6c177', -- Used in warnings and diagnostics too
+   -- Yellow
+   yellow = '#f6c177', -- Used in warnings and diagnostics too
 
-    -- Green
-    green = '#339899',
+   -- Green
+   green = '#339899',
 
-    -- LightBlue
-    light_blue = '#73CEF4',
-    light_blue2 = '#B4E6F8',
+   -- LightBlue
+   light_blue = '#73CEF4',
+   light_blue2 = '#B4E6F8',
 
-    -- Blue
-    blue_alt = '#7AA2F7',
-    teal = '#28728F',
+   -- Blue
+   blue_alt = '#7AA2F7',
+   teal = '#28728F',
 
-    -- Purple
-    purple = '#BB9AF7', -- Used for information, some things that need to be highlighted
-    purple_td = '#9d86b9', -- Used in info and diagnostics too
+   -- Purple
+   purple = '#BB9AF7', -- Used for information, some things that need to be highlighted
+   purple_td = '#9d86b9', -- Used in info and diagnostics too
 
-    -- Background colors for colors
-    -- TODO(santigo-zero): Outdated colors
-    red_bg = '#3C2636', -- bg for red
-    yellow_bg = '#3E3332', -- bg for yellow
-    purple_td_bg = '#2F2A3D', -- bg for purple
-    green_bg = '#1D2E35', -- bg for green
+   -- Background colors for colors
+   -- TODO(santigo-zero): Outdated colors
+   red_bg = '#3C2636', -- bg for red
+   yellow_bg = '#3E3332', -- bg for yellow
+   purple_td_bg = '#2F2A3D', -- bg for purple
+   green_bg = '#1D2E35', -- bg for green
 }
 
 local h = function(...)
-    return vim.api.nvim_set_hl(0, ...)
+   return vim.api.nvim_set_hl(0, ...)
 end
 
 -- Interface
 h('CursorColumn', { bg = p.bg2 }) -- The column of the crosshair of the cursor
 h('CursorLine', { bg = p.bg2 }) -- The line of the crosshair of the cursor
-h('CursorLineNr', { bg = p.bg2, fg = p.fg2 }) -- Current position of the cursor but in the gutter
+h('CursorLineNr', { bg = p.bg2, fg = p.orange }) -- Current position of the cursor but in the gutter
 h('Cursor', { bg = p.fg2, fg = p.bg }) -- This doesn't seem to do anything
 h('lCursor', { bg = p.fg2, fg = p.bg }) -- This doesn't seem to do anything
 h('WarningMsg', { fg = p.yellow }) -- Warning messages
 h('ErrorMsg', { link = 'Error' }) -- Error messages on the command line
 h('MsgArea', { fg = p.fg }) -- Area for messages and cmdline, / and :
 h('ModeMsg', { fg = p.fg }) -- The 'showmode' message (e.g., '-- INSERT --') uses this
-h('LineNr', { bg = p.bg, fg = p.fg_dim2 }) -- The gutter, where relativenumbers and numbers show
+h('LineNr', { bg = p.bg, fg = p.fg_dim }) -- The gutter, where relativenumbers and numbers show
 h('FoldColumn', { bg = p.bg, fg = p.fg_dim }) -- Column to the right of the gutter, shows folds present
 h('Folded', { fg = p.fg_dim2 }) -- Line that shows foldtext, TODO: Do we want folds to be just like comments?
 h('ColorColumn', {}) -- Column that shows limit of characters
@@ -84,7 +85,7 @@ h('InactiveWindow', { bg = p.bg2, fg = p.fg }) -- Check why this works and Norma
 h('NormalNC', { bg = p.bg2, fg = p.fg }) -- Normal text in non-current windows
 h('EndOfBuffer', { bg = p.bg, fg = p.fg }) -- Where ~ appear
 h('Question', { fg = p.fg }) -- hit-enter prompts and yes/no questions
-h('IncSearch', { fg = p.fg2, bold = true }) -- Current search pattern when searching with /
+h('IncSearch', { fg = p.orange, bold = true }) -- Current search pattern when searching with /
 h('CurSearch', { link = 'IncSearch' }) -- Current search match under the cursor
 h('Search', { bg = p.orange, fg = p.fg_dim }) -- Last search pattern
 h('Substitute', { fg = p.orange, bold = true, underline = true }) -- :substitute or :s///gc replacement text highlighting
@@ -100,10 +101,10 @@ h('Ignore', {})
 h('Bold', { bold = true })
 h('Italic', { italic = true })
 h('Underline', { underline = true })
--- h('Pmenu', { bg = p.bg_reg, fg = p.fg_reg })
--- h('PmenuSbar', { bg = p.bg_high })
--- h('PmenuSel', { bg = p.bg_high, fg = p.text })
--- h('PmenuThumb', { bg = p.fg })
+h('Pmenu', { bg = p.bg, fg = p.fg })
+h('PmenuSbar', { bg = p.fg_dim2 })
+h('PmenuThumb', { bg = p.fg_dim })
+h('PmenuSel', { bg = p.fg_dim2, blend = 0 })
 
 -- Syntax
 h('Character', { fg = p.fg2 }) -- A character constant: 'c', '\n'
@@ -114,15 +115,15 @@ h('String', { fg = p.pink })
 h('Number', { fg = p.red })
 h('Float', { fg = p.red })
 h('Keyword', { fg = p.purple_td }) -- Like function, or local
-h('Conditional', { fg = p.purple_td }) -- if, then, else, endif, switch, etc.
-h('Repeat', { fg = p.purple_td }) -- for, while
+h('Conditional', { fg = p.fg_grey }) -- if, then, else, endif, switch, etc.
+h('Repeat', { fg = p.fg_grey }) -- for, while
 -- h('Debug', { fg = p.fg })
 -- h('Define', { fg = p.fg })
 h('Delimiter', { fg = p.fg2 }) -- . and ,
 -- h('Directory', { fg = p.fg_reg })
 -- h('Exception', { fg = p.fg })
 h('Error', { bg = p.red_bg, fg = p.red }) -- Errors
-h('Function', { fg = p.blue_alt, italic = true }) -- The name of the function, my_func(), not the keyword
+h('Function', { fg = p.blue_alt }) -- The name of the function, my_func(), not the keyword
 -- h('Identifier', { fg = p.fg_reg })
 h('Include', { fg = p.fg2 }) -- from ... import ...
 -- h('Label', { fg = p.fg_reg })
@@ -154,7 +155,7 @@ h('TSInclude', { link = 'Include' })
 h('TSFunction', { link = 'Function' }) -- The name of the function, my_func(), not the keyword
 -- h('TSKeyword', { link = 'Keyword' })
 h('TSKeywordReturn', { fg = p.purple_td, bold = true }) -- The return keyword
-h('TSKeywordFunction', { link = 'Keyword' }) -- The function or def keyword
+h('TSKeywordFunction', { fg = p.fg_grey }) -- The function or def keyword
 h('TSConditional', { link = 'Conditional' }) -- If, then, else, endif, switch, case, etc.
 h('TSRepeat', { link = 'Repeat' }) -- for, while
 h('TSFuncBuiltin', { link = 'Keyword' }) -- Try use a purple color in here
@@ -166,13 +167,12 @@ h('TSNumber', { link = 'Number' })
 h('TSParameter', { fg = p.purple })
 -- h('TSProperty', { link = 'TSField' })
 h('TSPunctBracket', { fg = p.fg })
-h('TSConstructor', { fg = p.yellow })
+h('TSConstructor', { fg = p.green })
 h('TSPunctDelimiter', { link = 'Delimiter' })
 h('TSPunctSpecial', { link = 'Special' })
 h('TSString', { link = 'String' })
 h('TSFuncMacro', { link = 'String' })
 h('TSStringSpecial', { link = 'String' })
-h('TSStringEscape', { link = p.green })
 -- h('TSTag', { link = 'Tag' })
 h('TSTagDelimiter', { link = 'Delimiter' })
 h('TSTitle', { link = 'Title' })
@@ -184,7 +184,6 @@ h('TSKeywordOperator', { fg = p.purple })
 
 -- Diagnostics
 -- LspCodeLens LspCodeLensSeparator
-h('LspDocumentHighlight', { bg = p.yellow_bg, fg = p.yellow })
 h('DiagnosticError', { bg = p.red_bg, fg = p.red })
 h('DiagnosticHint', { bg = p.green_bg, fg = p.green })
 h('DiagnosticInfo', { bg = p.purple_td_bg, fg = p.purple_td })
@@ -196,3 +195,10 @@ h('DiagnosticUnderlineWarn', { undercurl = true, sp = p.yellow })
 h('GitSignsChange', { fg = p.purple_td }) -- Don't set up a background for GitSigns
 h('GitSignsAdd', { fg = p.green })
 h('GitSignsDelete', { fg = p.red })
+h('LspReferenceRead', { bg = p.purple_td_bg, fg = p.purple_td }) -- When you call a function or use a method/class
+h('LspReferenceText', { bg = p.purple_td_bg, fg = p.purple_td })
+h('LspReferenceWrite', { bg = p.purple_td_bg, fg = p.purple_td }) -- When you define a variable or function
+
+-- Plugins
+h('IndentBlanklineChar', { fg = p.fg_dim })
+h('IndentBlanklineContextChar', { fg = p.green })

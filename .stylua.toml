@@ -1,11 +1,11 @@
 column_width = 160
 indent_type = 'Spaces'
 # indent_type = 'Tabs'
-indent_width = 4
+indent_width = 3
 quote_style = 'AutoPreferSingle'
 no_call_parentheses = false
 line_endings = 'Unix'
-call_parentheses = 'NoSingleTable'
+# call_parentheses = 'NoSingleTable'
 # call_parentheses = 'NoSingleString'
 # call_parentheses = 'Always'
 # call_parentheses = 'None'

@@ -1,0 +1,37 @@
+require('null-ls').setup({
+   sources = {
+      require('null-ls').builtins.formatting.stylua,
+      require('null-ls').builtins.formatting.prettier.with({
+         prefer_local = 'node_modules/.bin',
+         command = 'prettier',
+         filetypes = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+            'vue',
+            'css',
+            'scss',
+            'less',
+            'html',
+            'json',
+            'jsonc',
+            'yaml',
+            'markdown',
+            'graphql',
+            'handlebars',
+         },
+         extra_args = {
+            '--no-semi',
+            '--single-quote',
+            '--jsx-single-quote',
+            -- '--tab-width',
+            -- '4',
+            '--print-width',
+            '80',
+         },
+      }),
+      require('null-ls').builtins.diagnostics.eslint,
+      require('null-ls').builtins.completion.spell,
+   },
+})
