@@ -10,8 +10,8 @@ local SERVERS = {
    'sumneko_lua',
    'pyright',
    'cssmodules_ls',
-   -- 'cssls',
-   -- 'html',
+   'cssls',
+   'html',
    'tsserver',
 }
 

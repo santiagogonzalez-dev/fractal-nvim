@@ -14,8 +14,26 @@ local statusline = {}
 --     end,
 -- })
 
-vim.opt.laststatus = 3
--- vim.opt.laststatus = 0
+vim.opt.laststatus = 0
+-- vim.opt.laststatus = 3
+
+vim.api.nvim_create_autocmd('FileType', {
+   desc = 'Disable statusline on ignored filetypes',
+   group = 'buffer_settings',
+   pattern = { 'TelescopePrompt', 'netrw' },
+   callback = function()
+      vim.opt.laststatus = 0
+   end,
+})
+
+vim.api.nvim_create_autocmd('WinEnter', {
+   desc = 'Enable statusline when entering a window',
+   group = 'buffer_settings',
+   callback = function()
+      vim.opt.laststatus = 3
+   end,
+})
+
 
 local function filepath()
    local fpath = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')

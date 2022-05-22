@@ -1,10 +1,10 @@
 return {
    settings = {
       Lua = {
-         diagnostics = {
-            globals = {
-               'vim',
-            },
+         diagnostics = { globals = { 'vim' } },
+         completion = {
+            keywordSnippet = 'Replace',
+            callSnippet = 'Replace',
          },
          workspace = {
             library = {

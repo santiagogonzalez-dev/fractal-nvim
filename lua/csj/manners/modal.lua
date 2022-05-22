@@ -7,6 +7,9 @@ function modals.show_dot_mark_on_gutter()
    local dot_mark_ns = vim.api.nvim_create_namespace('dot_mark_ns')
    function modals.show_dot()
       local mark_pos = vim.api.nvim_buf_get_mark(0, '.') -- Get the position of the . mark
+      if mark_pos[1] == 0 and mark_pos[2] == 0 then
+         return
+      end
 
       local get_hl = vim.api.nvim_get_hl_by_name
       utils.set_hl('ShowDotMarkOnGutter', { fg = get_hl('CursorLineNr', true).foreground, bg = get_hl('Normal', true).background })
