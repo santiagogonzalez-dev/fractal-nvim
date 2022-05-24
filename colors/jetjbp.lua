@@ -1,3 +1,4 @@
+local colors = {}
 vim.cmd('highlight clear')
 
 if 1 == vim.fn.exists('syntax_on') then
@@ -10,7 +11,7 @@ vim.g.colors_name = 'jetjbp'
 vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 
 -- Color palette
-local p = {
+colors.palette = {
    -- Background
    bg = '#1a1724',
    bg2 = '#211f2c',
@@ -62,70 +63,70 @@ local h = function(...)
 end
 
 -- Interface
-h('CursorColumn', { bg = p.bg2 }) -- The column of the crosshair of the cursor
-h('CursorLine', { bg = p.bg2 }) -- The line of the crosshair of the cursor
-h('CursorLineNr', { bg = p.bg2, fg = p.orange }) -- Current position of the cursor but in the gutter
-h('Cursor', { bg = p.fg2, fg = p.bg }) -- This doesn't seem to do anything
-h('lCursor', { bg = p.fg2, fg = p.bg }) -- This doesn't seem to do anything
-h('WarningMsg', { fg = p.yellow }) -- Warning messages
+h('CursorColumn', { bg = colors.palette.bg2 }) -- The column of the crosshair of the cursor
+h('CursorLine', { bg = colors.palette.bg2 }) -- The line of the crosshair of the cursor
+h('CursorLineNr', { bg = colors.palette.bg2, fg = colors.palette.orange }) -- Current position of the cursor but in the gutter
+h('Cursor', { bg = colors.palette.fg2, fg = colors.palette.bg }) -- This doesn't seem to do anything
+h('lCursor', { bg = colors.palette.fg2, fg = colors.palette.bg }) -- This doesn't seem to do anything
+h('WarningMsg', { fg = colors.palette.yellow }) -- Warning messages
 h('ErrorMsg', { link = 'Error' }) -- Error messages on the command line
-h('MsgArea', { fg = p.fg }) -- Area for messages and cmdline, / and :
-h('ModeMsg', { fg = p.fg }) -- The 'showmode' message (e.g., '-- INSERT --') uses this
-h('LineNr', { bg = p.bg, fg = p.fg_dim }) -- The gutter, where relativenumbers and numbers show
-h('FoldColumn', { bg = p.bg, fg = p.fg_dim }) -- Column to the right of the gutter, shows folds present
-h('Folded', { fg = p.fg_dim2 }) -- Line that shows foldtext, TODO: Do we want folds to be just like comments?
+h('MsgArea', { fg = colors.palette.fg }) -- Area for messages and cmdline, / and :
+h('ModeMsg', { fg = colors.palette.fg }) -- The 'showmode' message (e.g., '-- INSERT --') uses this
+h('LineNr', { bg = colors.palette.bg, fg = colors.palette.fg_dim }) -- The gutter, where relativenumbers and numbers show
+h('FoldColumn', { bg = colors.palette.bg, fg = colors.palette.fg_dim }) -- Column to the right of the gutter, shows folds present
+h('Folded', { fg = colors.palette.fg_dim2 }) -- Line that shows foldtext, TODO: Do we want folds to be just like comments?
 h('ColorColumn', {}) -- Column that shows limit of characters
 h('Conceal', {}) -- Replacement hl group for concealed characters
-h('MatchParen', { bg = p.orange, fg = p.bg }) -- The character under the cursor or just before it, if it is a paired bracket, and its match
-h('NonText', { fg = p.fg_dim }) -- Used in showbreak, listchars and virtualtext
-h('Whitespace', { bg = p.bg, fg = p.fg_dim2 }) -- Whitespaces
-h('Normal', { bg = p.bg, fg = p.fg }) -- Normal text
-h('NormalFloat', { bg = p.bg, fg = p.fg }) -- Normal text in floating windows
-h('InactiveWindow', { bg = p.bg2, fg = p.fg }) -- Check why this works and NormalNC doesn't
-h('NormalNC', { bg = p.bg2, fg = p.fg }) -- Normal text in non-current windows
-h('EndOfBuffer', { bg = p.bg, fg = p.fg }) -- Where ~ appear
-h('Question', { fg = p.fg }) -- hit-enter prompts and yes/no questions
-h('IncSearch', { fg = p.orange, bold = true }) -- Current search pattern when searching with /
+h('MatchParen', { bg = colors.palette.orange, fg = colors.palette.bg }) -- The character under the cursor or just before it, if it is a paired bracket, and its match
+h('NonText', { fg = colors.palette.fg_dim }) -- Used in showbreak, listchars and virtualtext
+h('Whitespace', { bg = colors.palette.bg, fg = colors.palette.fg_dim2 }) -- Whitespaces
+h('Normal', { bg = colors.palette.bg, fg = colors.palette.fg }) -- Normal text
+h('NormalFloat', { bg = colors.palette.bg, fg = colors.palette.fg }) -- Normal text in floating windows
+h('InactiveWindow', { bg = colors.palette.bg2, fg = colors.palette.fg }) -- Check why this works and NormalNC doesn't
+h('NormalNC', { bg = colors.palette.bg2, fg = colors.palette.fg }) -- Normal text in non-current windows
+h('EndOfBuffer', { bg = colors.palette.bg, fg = colors.palette.fg }) -- Where ~ appear
+h('Question', { fg = colors.palette.fg }) -- hit-enter prompts and yes/no questions
+h('IncSearch', { fg = colors.palette.orange, bold = true }) -- Current search pattern when searching with /
 h('CurSearch', { link = 'IncSearch' }) -- Current search match under the cursor
-h('Search', { bg = p.orange, fg = p.fg_dim }) -- Last search pattern
-h('Substitute', { fg = p.orange, bold = true, underline = true }) -- :substitute or :s///gc replacement text highlighting
-h('SignColumn', { bg = p.bg }) -- Where linting and errors popup
-h('StatusLine', { bg = p.bg, fg = p.fg }) -- The statusline
-h('StatusLineNC', { bg = p.bg, fg = p.fg }) -- The non-current statusline
-h('Title', { fg = p.fg }) -- Titles for output from ':set all', ':autocmd' etc.
+h('Search', { bg = colors.palette.orange, fg = colors.palette.fg_dim }) -- Last search pattern
+h('Substitute', { fg = colors.palette.orange, bold = true, underline = true }) -- :substitute or :s///gc replacement text highlighting
+h('SignColumn', { bg = colors.palette.bg }) -- Where linting and errors popup
+h('StatusLine', { bg = colors.palette.bg, fg = colors.palette.fg }) -- The statusline
+h('StatusLineNC', { bg = colors.palette.bg, fg = colors.palette.fg }) -- The non-current statusline
+h('Title', { fg = colors.palette.fg }) -- Titles for output from ':set all', ':autocmd' etc.
 h('Visual', { reverse = true }) -- Visual mode uses this
 h('VisualNOS', { reverse = true }) -- When vim is not owning the selection
-h('VertSplit', { fg = p.fg_dim }) -- The column separating vertically split windows
-h('WinSeperator', { fg = p.fg_dim }) -- The line separating split windows
+h('VertSplit', { fg = colors.palette.fg_dim }) -- The column separating vertically split windows
+h('WinSeperator', { fg = colors.palette.fg_dim }) -- The line separating split windows
 h('Ignore', {})
 h('Bold', { bold = true })
 h('Italic', { italic = true })
 h('Underline', { underline = true })
-h('Pmenu', { bg = p.bg, fg = p.fg })
-h('PmenuSbar', { bg = p.fg_dim2 })
-h('PmenuThumb', { bg = p.fg_dim })
-h('PmenuSel', { bg = p.fg_dim2, blend = 0 })
+h('Pmenu', { bg = colors.palette.bg, fg = colors.palette.fg })
+h('PmenuSbar', { bg = colors.palette.fg_dim2 })
+h('PmenuThumb', { bg = colors.palette.fg_dim })
+h('PmenuSel', { bg = colors.palette.fg_dim2, blend = 0 })
 
 -- Syntax
-h('Character', { fg = p.fg2 }) -- A character constant: 'c', '\n'
-h('Boolean', { fg = p.yellow, italic = true }) -- true-false True-False If not setup it uses Constant fg colors
-h('Comment', { fg = p.fg_dim2, italic = true })
-h('Constant', { fg = p.red }) -- NOTE: to self, this changes the name in -> TODO(santigo-zero):
-h('String', { fg = p.pink })
-h('Number', { fg = p.red })
-h('Float', { fg = p.red })
-h('Keyword', { fg = p.purple_td }) -- Like function, or local
-h('Conditional', { fg = p.fg_grey }) -- if, then, else, endif, switch, etc.
-h('Repeat', { fg = p.fg_grey }) -- for, while
+h('Character', { fg = colors.palette.fg2 }) -- A character constant: 'c', '\n'
+h('Boolean', { fg = colors.palette.yellow, italic = true }) -- true-false True-False If not setup it uses Constant fg colors
+h('Comment', { fg = colors.palette.fg_dim2, italic = true })
+h('Constant', { fg = colors.palette.red }) -- NOTE: to self, this changes the name in -> TODO(santigo-zero):
+h('String', { fg = colors.palette.pink })
+h('Number', { fg = colors.palette.red })
+h('Float', { fg = colors.palette.red })
+h('Keyword', { fg = colors.palette.purple_td }) -- Like function, or local
+h('Conditional', { fg = colors.palette.fg_grey }) -- if, then, else, endif, switch, etc.
+h('Repeat', { fg = colors.palette.fg_grey }) -- for, while
 -- h('Debug', { fg = p.fg })
 -- h('Define', { fg = p.fg })
-h('Delimiter', { fg = p.fg2 }) -- . and ,
+h('Delimiter', { fg = colors.palette.fg2 }) -- . and ,
 -- h('Directory', { fg = p.fg_reg })
 -- h('Exception', { fg = p.fg })
-h('Error', { bg = p.red_bg, fg = p.red }) -- Errors
-h('Function', { fg = p.blue_alt }) -- The name of the function, my_func(), not the keyword
+h('Error', { bg = colors.palette.red_bg, fg = colors.palette.red }) -- Errors
+h('Function', { fg = colors.palette.blue_alt }) -- The name of the function, my_func(), not the keyword
 -- h('Identifier', { fg = p.fg_reg })
-h('Include', { fg = p.fg2 }) -- from ... import ...
+h('Include', { fg = colors.palette.fg2 }) -- from ... import ...
 -- h('Label', { fg = p.fg_reg })
 -- h('Macro', { fg = p.fg })
 -- h('Operator', { fg = p.fg })
@@ -139,35 +140,35 @@ h('Include', { fg = p.fg2 }) -- from ... import ...
 -- h('StorageClass', { fg = p.fg })
 -- h('Structure', { fg = p.fg })
 -- h('Tag', { fg = p.fg_high })
-h('Todo', { fg = p.purple, bold = true }) -- INUPPERCASE: FIXME / TODO(santigo-zero):
-h('Type', { fg = p.purple }) -- The name of a class, not the class keyword
+h('Todo', { fg = colors.palette.purple, bold = true }) -- INUPPERCASE: FIXME / TODO(santigo-zero):
+h('Type', { fg = colors.palette.purple }) -- The name of a class, not the class keyword
 -- h('Typedef', { fg = p.fg })
-h('Statement', { fg = p.fg }) -- The = and ==
+h('Statement', { fg = colors.palette.fg }) -- The = and ==
 
 -- Treesitter syntax
 h('TSBoolean', { link = 'Boolean' })
 h('TSCharacter', { link = 'Character' })
 h('TSConstant', { link = 'Constant' })
-h('TSConstBuiltin', { fg = p.red })
+h('TSConstBuiltin', { fg = colors.palette.red })
 h('TSComment', { link = 'Comment' })
-h('TSField', { fg = p.light_blue }) -- Elements of a table or api in vim.api and ui in vim.ui, or bold in bold = true
+h('TSField', { fg = colors.palette.light_blue }) -- Elements of a table or api in vim.api and ui in vim.ui, or bold in bold = true
 h('TSInclude', { link = 'Include' })
 h('TSFunction', { link = 'Function' }) -- The name of the function, my_func(), not the keyword
 -- h('TSKeyword', { link = 'Keyword' })
-h('TSKeywordReturn', { fg = p.purple_td, bold = true }) -- The return keyword
-h('TSKeywordFunction', { fg = p.fg_grey }) -- The function or def keyword
+h('TSKeywordReturn', { fg = colors.palette.purple_td, bold = true }) -- The return keyword
+h('TSKeywordFunction', { fg = colors.palette.fg_grey }) -- The function or def keyword
 h('TSConditional', { link = 'Conditional' }) -- If, then, else, endif, switch, case, etc.
 h('TSRepeat', { link = 'Repeat' }) -- for, while
 h('TSFuncBuiltin', { link = 'Keyword' }) -- Try use a purple color in here
-h('TSVariableBuiltin', { fg = p.purple })
+h('TSVariableBuiltin', { fg = colors.palette.purple })
 -- h('TSLabel', { link = 'Label' })
 -- h('TSMethod', { fg = p.fg_reg })
 -- h('TSNote', { fg = p.accent })
 h('TSNumber', { link = 'Number' })
-h('TSParameter', { fg = p.purple })
+h('TSParameter', { fg = colors.palette.purple })
 -- h('TSProperty', { link = 'TSField' })
-h('TSPunctBracket', { fg = p.fg })
-h('TSConstructor', { fg = p.green })
+h('TSPunctBracket', { fg = colors.palette.fg })
+h('TSConstructor', { fg = colors.palette.green })
 h('TSPunctDelimiter', { link = 'Delimiter' })
 h('TSPunctSpecial', { link = 'Special' })
 h('TSString', { link = 'String' })
@@ -178,27 +179,29 @@ h('TSTagDelimiter', { link = 'Delimiter' })
 h('TSTitle', { link = 'Title' })
 h('TSType', { link = 'Type' }) -- The name of a class, not the class keyword
 h('TSURI', { link = 'String' }) -- Links
-h('TSVariable', { fg = p.purple_td })
+h('TSVariable', { fg = colors.palette.purple_td })
 -- h('TSWarning', { link = 'Todo' }) -- Is this actually a treesitter hl group?
-h('TSKeywordOperator', { fg = p.purple })
+h('TSKeywordOperator', { fg = colors.palette.purple })
 
 -- Diagnostics
 -- LspCodeLens LspCodeLensSeparator
-h('DiagnosticError', { bg = p.red_bg, fg = p.red })
-h('DiagnosticHint', { bg = p.green_bg, fg = p.green })
-h('DiagnosticInfo', { bg = p.purple_td_bg, fg = p.purple_td })
-h('DiagnosticWarn', { bg = p.yellow_bg, fg = p.yellow })
-h('DiagnosticUnderlineError', { undercurl = true, sp = p.red })
-h('DiagnosticUnderlineHint', { undercurl = true, sp = p.green })
-h('DiagnosticUnderlineInfo', { undercurl = true, sp = p.purple_td })
-h('DiagnosticUnderlineWarn', { undercurl = true, sp = p.yellow })
-h('GitSignsChange', { fg = p.purple_td }) -- Don't set up a background for GitSigns
-h('GitSignsAdd', { fg = p.green })
-h('GitSignsDelete', { fg = p.red })
-h('LspReferenceRead', { bg = p.purple_td_bg, fg = p.purple_td }) -- When you call a function or use a method/class
-h('LspReferenceText', { bg = p.purple_td_bg, fg = p.purple_td })
-h('LspReferenceWrite', { bg = p.purple_td_bg, fg = p.purple_td }) -- When you define a variable or function
+h('DiagnosticError', { bg = colors.palette.red_bg, fg = colors.palette.red })
+h('DiagnosticHint', { bg = colors.palette.green_bg, fg = colors.palette.green })
+h('DiagnosticInfo', { bg = colors.palette.purple_td_bg, fg = colors.palette.purple_td })
+h('DiagnosticWarn', { bg = colors.palette.yellow_bg, fg = colors.palette.yellow })
+h('DiagnosticUnderlineError', { undercurl = true, sp = colors.palette.red })
+h('DiagnosticUnderlineHint', { undercurl = true, sp = colors.palette.green })
+h('DiagnosticUnderlineInfo', { undercurl = true, sp = colors.palette.purple_td })
+h('DiagnosticUnderlineWarn', { undercurl = true, sp = colors.palette.yellow })
+h('GitSignsChange', { fg = colors.palette.purple_td }) -- Don't set up a background for GitSigns
+h('GitSignsAdd', { fg = colors.palette.green })
+h('GitSignsDelete', { fg = colors.palette.red })
+h('LspReferenceRead', { bg = colors.palette.purple_td_bg, fg = colors.palette.purple_td }) -- When you call a function or use a method/class
+h('LspReferenceText', { bg = colors.palette.purple_td_bg, fg = colors.palette.purple_td })
+h('LspReferenceWrite', { bg = colors.palette.purple_td_bg, fg = colors.palette.purple_td }) -- When you define a variable or function
 
 -- Plugins
-h('IndentBlanklineChar', { fg = p.fg_dim })
-h('IndentBlanklineContextChar', { fg = p.green })
+h('IndentBlanklineChar', { fg = colors.palette.fg_dim })
+h('IndentBlanklineContextChar', { fg = colors.palette.green })
+
+return colors

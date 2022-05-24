@@ -217,9 +217,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 require('csj.core.folds')
--- require('csj.core.bettertf') -- TODO, refactor this
-require('csj.core.virt-column') -- TODO, this pretty much works as spected - Moded version of Lukas Reineke's virt-column.nvim
+require('csj.core.virt-column').setup() -- TODO, this pretty much works as spected - Moded version of Lukas Reineke's virt-column.nvim
 require('csj.core.statusline')
 require('csj.manners')
 require('csj.netrw')
+vim.notify = require('csj.core.notifications').notify_send
 -- TODO(santigo-zero): create a function that can paste and understand hex colors so that I don't  have to delete and add # and quotes etc etc

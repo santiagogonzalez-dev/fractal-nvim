@@ -8,9 +8,17 @@ vim.keymap.set({ 'v', 'x' }, '<Leader>ca', ':lua vim.lsp.buf.range_code_action()
 vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
 
 -- Formatting
-vim.keymap.set('n', '<Leader><Leader>f', vim.lsp.buf.formatting, { desc = 'Formatting the file' })
-vim.keymap.set({ 'v', 'x' }, '<Leader><Leader>f', ':lua vim.lsp.buf.range_formatting()<CR>', { desc = 'Range formatting the file' })
-vim.api.nvim_create_user_command('Format', vim.lsp.buf.formatting_sync, {})
+vim.keymap.set('n', '<Leader><Leader>f', function()
+   return vim.lsp.buf.format({ async = true })
+end, { desc = 'Format the file' })
+
+vim.keymap.set({ 'v', 'x' }, '<Leader><Leader>f', function()
+   return vim.lsp.buf.range_formatting()
+end, { desc = 'Range formatting the file' })
+
+vim.api.nvim_create_user_command('Format', function()
+   return vim.lsp.buf.format({ async = false })
+end, {})
 
 -- Diagnostics
 vim.keymap.set('n', '<Leader>d', vim.diagnostic.setqflist, { desc = 'Show all diagnostics an a quickfix list' })
