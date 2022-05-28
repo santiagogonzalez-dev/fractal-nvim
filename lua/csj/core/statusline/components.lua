@@ -31,7 +31,6 @@ function component.vcs()
       '%#StatusLineGitSignsAdd#',
       ' ',
       git_info.head,
-      ' ',
       '%#StatusLine#',
    }
 end
@@ -43,11 +42,9 @@ function component.lineinfo()
    local line_lenght = vim.api.nvim_get_current_line()
 
    return table.concat {
-      ' ',
       '%P %l:%c',
       '',
       #line_lenght,
-      ' ',
    }
 end
 
@@ -61,10 +58,10 @@ function component.filepath()
    if vim.opt.filetype:get() == 'lua' then
       -- For lua use . as a separator instead of /
       local replace_fpath = string.gsub(filepath, '/', '.')
-      return string.format(' %%<%s.', replace_fpath)
+      return string.format('%%<%s.', replace_fpath)
    end
 
-   return string.format(' %%<%s/', filepath)
+   return string.format('%%<%s/', filepath)
 end
 
 function component.filename()
