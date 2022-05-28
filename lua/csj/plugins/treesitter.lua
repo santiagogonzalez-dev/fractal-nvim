@@ -3,7 +3,7 @@ if not status_ok then
    return
 end
 
-treesitter.setup({
+treesitter.setup {
    -- ensure_installed = 'all',
    ensure_installed = {
       'comment',
@@ -44,27 +44,6 @@ treesitter.setup({
          'vue',
          'xhtml',
          'xml',
-      },
-   },
-   rainbow = {
-      enable = true,
-      extended_mode = true,
-      max_file_lines = 1000,
-      colors = {
-         '#28728F',
-         '#f6c177',
-         '#339899',
-         '#73CEF4',
-         '#7AA2F7',
-         '#FA9336',
-         '#BB9AF7', -- Used for information, some things that need to be highlighted
-         -- '#31748f',
-         -- '#908caa',
-         -- '#c4a7e7',
-         -- '#f6c177',
-         -- '#9ccfd8',
-         -- '#eb6f92',
-         -- '#ebbcba',
       },
    },
    incremental_selection = {
@@ -126,4 +105,4 @@ treesitter.setup({
          },
       },
    },
-})
+}

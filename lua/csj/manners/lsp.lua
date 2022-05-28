@@ -9,7 +9,7 @@ vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { desc = 'Code action
 
 -- Formatting
 vim.keymap.set('n', '<Leader><Leader>f', function()
-   return vim.lsp.buf.format({ async = true })
+   return vim.lsp.buf.format { async = true }
 end, { desc = 'Format the file' })
 
 vim.keymap.set({ 'v', 'x' }, '<Leader><Leader>f', function()
@@ -17,7 +17,7 @@ vim.keymap.set({ 'v', 'x' }, '<Leader><Leader>f', function()
 end, { desc = 'Range formatting the file' })
 
 vim.api.nvim_create_user_command('Format', function()
-   return vim.lsp.buf.format({ async = false })
+   return vim.lsp.buf.format { async = false }
 end, {})
 
 -- Diagnostics
@@ -62,7 +62,8 @@ vim.keymap.set('n', 'r', function()
          vim.api.nvim_win_close(0, true)
          vim.lsp.buf.rename(vim.trim(new))
       end)
-      vim.notify(rename_old .. '  ' .. new)
+      -- vim.notify(rename_old .. '  ' .. new)
+      return vim.notify(string.format('%s%s%s', rename_old, '  ', new))
    end
 
    local rename_old = vim.fn.expand('<cword>')

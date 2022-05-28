@@ -1,5 +1,3 @@
-local manners = {}
-
 -- TODO(santigo-zero): ci( and ci) will work normally, and  c( and c) should work line wise, fix this
 -- The same goes for di( and di) and d( and d). Also maintain the column when pasting
 -- vim.keymap.set('n', 'c)', 'ci)', { desc = 'c} does the same and I prefer using it'})
@@ -64,15 +62,10 @@ vim.keymap.set('n', '<S-Tab>', 'zm', { desc = 'Close all folds' })
 vim.keymap.set('n', 'zo', '<CMD>silent! foldopen<CR>', { silent = true, desc = 'Silence this keybind' })
 vim.keymap.set('n', 'zc', '<CMD>silent! foldclose<CR>', { silent = true, desc = 'Silence this keybind' })
 
--- Center commands
--- vim.keymap.set('n', 'J', 'mzJ`zzv', { desc = 'Center commands' })
-
 vim.keymap.set('n', '#', '*Nzv', { desc = 'Better #' })
 vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], { desc = 'Better #' })
 
 vim.keymap.set({ 'v', 'x' }, '<', '<gv', { desc = 'Keep visual selection after shifting code block' })
 vim.keymap.set({ 'v', 'x' }, '>', '>gv', { desc = 'Keep visual selection after shifting code block' })
 
-require('csj.manners.modal').init()
-
-return manners
+require('csj.manners.interface').init()

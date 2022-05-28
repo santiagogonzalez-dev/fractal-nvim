@@ -11,43 +11,20 @@ function utils.set_hl(mode, table)
    end
 end
 
-function utils.setup_session()
+function utils.session()
    vim.opt.number = true -- Display line number on the side
 
    -- Function to setup the initial load and maintain some settings between buffers
    local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
 
-   vim.api.nvim_create_autocmd('UIEnter', {
-      desc = 'Correctly restore the cursor position',
-      group = save_sessions,
-      callback = utils.wrap(vim.schedule, function()
-         if vim.tbl_contains({ 'TelescopePrompt', 'gitcommit', 'gitdiff', 'netrw' }, vim.bo.filetype) then
-            return
-         end
-
-         local markpos = vim.api.nvim_buf_get_mark(0, '"') -- Get position of last saved edit
-         local line = markpos[1]
-         local col = markpos[2]
-         -- If the cursor line position is less than 1, but not bigger than the lines of the buffer then
-         if line <= vim.api.nvim_buf_line_count(0) then
-            vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
-            if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
-               -- return vim.cmd('silent normal! zo') -- To open it
-               return vim.api.nvim_cmd({
-                  cmd = 'normal',
-                  args = { 'zo' },
-                  bang = true,
-               }, {}) -- To open it
-            end
-         end
-      end),
-   })
+   vim.cmd('silent! loadview') -- Load the view for the current buffer
 
    vim.api.nvim_create_autocmd('BufWinEnter', {
       desc = 'Load the view of the buffer',
       group = save_sessions,
       callback = function()
-         return vim.cmd('silent! loadview')
+         vim.cmd('silent! loadview') -- Load the view for the opened buffer
+         return utils.restore_cursor_position() -- Restore the cursor position
       end,
    })
 
@@ -58,6 +35,31 @@ function utils.setup_session()
          return vim.cmd('silent! mkview')
       end,
    })
+
+   vim.opt.shadafile = ''
+   vim.api.nvim_cmd({ cmd = 'rshada', bang = true }, {})
+   return utils.restore_cursor_position()
+end
+
+function utils.restore_cursor_position()
+   if vim.tbl_contains(utils.ignore_ft(), vim.bo.filetype) then
+      return
+   end
+
+   local markpos = vim.api.nvim_buf_get_mark(0, '"') -- Get position of last saved edit
+   local line = markpos[1]
+   local col = markpos[2]
+   -- If the cursor line position is less than 1, but not bigger than the lines of the buffer then
+   if line <= vim.api.nvim_buf_line_count(0) then
+      vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
+      if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
+         return vim.api.nvim_cmd({
+            cmd = 'normal',
+            args = { 'zo' },
+            bang = true,
+         }, {}) -- To open it
+      end
+   end
 end
 
 function utils.not_interfere_on_float()
@@ -68,6 +70,7 @@ function utils.not_interfere_on_float()
          return false
       end
    end
+
    return true
 end
 
@@ -83,7 +86,7 @@ function utils.wrap(function_pointer, ...)
    local params = { ... }
 
    return function()
-      return function_pointer(unpack(params))
+      function_pointer(unpack(params))
    end
 end
 
@@ -94,13 +97,44 @@ end
 function utils.is_git()
    local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
    if is_git:match('true') then
-      return vim.cmd('doautocmd User IsGit')
+      vim.api.nvim_cmd({
+         cmd = 'doautocmd',
+         args = { 'User', 'IsGit' },
+      }, {})
+      return true
    else
+      return false
+   end
+end
+
+function utils.ignore_ft()
+   return {
+      'TelescopePrompt',
+      'gitcommit',
+      'gitdiff',
+      'netrw',
+   }
+end
+
+function utils.conditionals()
+   -- Conditionals
+   local conditionals = vim.api.nvim_create_augroup('conditionals', {})
+
+   -- Git
+   -- Run a comprobation for git, if the file is under git control there's no need to create an autocommand
+   if utils.is_git() then
       return
+   else
+      -- If the current buffer wasn't under git version control run the comprobation each time you change of directory
+      vim.api.nvim_create_autocmd('DirChanged', {
+         group = conditionals,
+         callback = utils.wrap(vim.schedule_wrap, utils.is_git()),
+      })
    end
 end
 
 -- function utils.is_bigger_than(filepath, size_in_kilobytes)
+--     https://www.reddit.com/r/neovim/comments/uz0l9s/psa_if_youre_using_libuv_clean_up_after_yourself/
 --     -- Fail if filepath is bigger than the provided size in kilobytes
 --     vim.loop.fs_stat(filepath, function(_, stat)
 --         if not stat then

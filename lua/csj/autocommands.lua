@@ -121,10 +121,3 @@ vim.api.nvim_create_autocmd('OptionSet', {
       })
    end,
 })
-
--- Conditionals
-local conditionals = vim.api.nvim_create_augroup('conditionals', {})
-vim.api.nvim_create_autocmd('DirChanged', {
-   group = conditionals,
-   callback = utils.wrap(vim.schedule_wrap, utils.is_git()),
-})

@@ -49,26 +49,11 @@ function M.setup(config)
    vim.api.nvim_set_hl(0, 'VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
    vim.api.nvim_set_hl(0, 'ColorColumn', {})
 
-   -- vim.api.nvim_create_augroup('VirtColumnAutogroup', {})
-   -- vim.api.nvim_create_autocmd({ 'FileChangedShellPost', 'TextChanged', 'TextChangedI', 'CompleteChanged', 'BufWinEnter' }, {
-   --    group = 'VirtColumnAutogroup',
-   --    command = 'VirtColumnRefresh',
-   -- })
-   -- vim.api.nvim_create_autocmd('OptionSet', {
-   --    group = 'VirtColumnAutogroup',
-   --    command = 'VirtColumnRefresh',
-   -- })
-   -- vim.api.nvim_create_autocmd({ 'VimEnter', 'SessionLoadPost' }, {
-   --    group = 'VirtColumnAutogroup',
-   --    command = 'VirtColumnRefresh!',
-   -- })
    vim.api.nvim_create_augroup('_virt-column', {})
-   vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'CompleteChanged' }, { group = '_virt-column', command = 'VirtColumnRefresh' })
-   vim.schedule_wrap(
-      vim.api.nvim_cmd({
-         cmd = 'VirtColumnRefresh',
-      }, {})
-   )
+   vim.api.nvim_create_autocmd({ 'WinEnter', 'InsertLeave', 'TextChanged', 'CompleteChanged' }, { group = '_virt-column', command = 'VirtColumnRefresh' })
+   vim.schedule_wrap(vim.api.nvim_cmd({
+      cmd = 'VirtColumnRefresh',
+   }, {}))
 end
 
 function M.setup_buffer(config)

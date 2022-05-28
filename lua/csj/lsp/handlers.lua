@@ -1,7 +1,6 @@
 local M = {}
-local lsp_settings = vim.api.nvim_create_augroup('_lsp_settings', {})
 
-M.setup = function()
+function M.setup()
    local signs = {
       { name = 'DiagnosticSignError', text = ' ', texthl = 'DiagnosticSignError' },
       { name = 'DiagnosticSignWarn', text = ' ', texthl = 'DiagnosticSignWarn' },
@@ -35,24 +34,27 @@ M.setup = function()
    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded ' })
 end
 
-function M.lsp_highlight_document(client)
+function M.lsp_highlight_document(client, bufnr)
    if client.server_capabilities.documentHighlightProvider then
+      vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
+      vim.api.nvim_create_autocmd('CursorHold', {
+         callback = function()
+            vim.lsp.buf.document_highlight()
+         end,
+         buffer = bufnr,
+      })
       vim.api.nvim_create_autocmd('CursorMoved', {
          callback = function()
             vim.lsp.buf.clear_references()
-            return vim.lsp.buf.document_highlight()
          end,
+         buffer = bufnr,
       })
    end
 end
 
-M.on_attach = function(client)
-   -- if client.name == 'tsserver' then
-   --    client.resolved_capabilities.document_formatting = false
-   -- end
-
+function M.on_attach(client, bufnr)
    require('csj.manners.lsp')
-   M.lsp_highlight_document(client)
+   M.lsp_highlight_document(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

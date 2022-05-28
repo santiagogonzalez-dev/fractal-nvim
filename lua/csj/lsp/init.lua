@@ -13,13 +13,14 @@ local SERVERS = {
    'cssls',
    'html',
    'tsserver',
+   'emmet_ls',
 }
 
-require('nvim-lsp-installer').setup({
+require('nvim-lsp-installer').setup {
    -- Setup nvim-lsp-installer, it needs to be setup before calling lspconfig
    ensure_installed = SERVERS, -- Ensure these list of servers are always installed
    automatic_installation = false, -- Automatically detect which servers to install (based on which servers are set up via lspconfig)
-})
+}
 
 for _, server in pairs(SERVERS) do
    local opts = {
@@ -27,9 +28,9 @@ for _, server in pairs(SERVERS) do
       capabilities = require('csj.lsp.handlers').capabilities,
    }
 
-   local has_custom_opts, server_custom_opts = pcall(require, 'csj.lsp.settings.' .. server)
-   if has_custom_opts then
-      opts = vim.tbl_deep_extend('force', server_custom_opts, opts)
+   local has_opts, custom_opts = pcall(require, string.format('%s.%s', 'csj.lsp.settings', server))
+   if has_opts then
+      opts = vim.tbl_deep_extend('force', custom_opts, opts)
    end
 
    lspconfig[server].setup(opts)

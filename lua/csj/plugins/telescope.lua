@@ -8,7 +8,7 @@ local previewers = require('telescope.previewers')
 local previewers_utils = require('telescope.previewers.utils')
 
 -- Themes
-local clean_dropdown = require('telescope.themes').get_dropdown({ previewer = false }) -- Dropdown Theme
+local clean_dropdown = require('telescope.themes').get_dropdown { previewer = false } -- Dropdown Theme
 
 local function project_files()
    local opts = vim.deepcopy(clean_dropdown)
@@ -18,7 +18,7 @@ local function project_files()
    end
 end
 
-telescope.setup({
+telescope.setup {
    defaults = {
       vimgrep_arguments = {
          'rg',
@@ -70,7 +70,7 @@ telescope.setup({
       sorting_strategy = 'ascending',
       winblend = 9,
    },
-})
+}
 
 telescope.load_extension('projects')
 

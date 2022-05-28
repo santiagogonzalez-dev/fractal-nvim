@@ -1,25 +1,25 @@
-local modals = {}
+local module = {}
 local utils = require('csj.utils')
 
-function modals.show_dot_mark_on_gutter()
+function module.show_dot_mark_on_gutter()
    -- TODO(santigo-zero): The . mark isn't going to be set on a buffer we have never entered, so don't set the extmark
    -- Other ideas -> use virtualtext, like a ticket '.    笠  mark
-   local dot_mark_ns = vim.api.nvim_create_namespace('dot_mark_ns')
-   function modals.show_dot()
-      local mark_pos = vim.api.nvim_buf_get_mark(0, '.') -- Get the position of the . mark
-      if mark_pos[1] == 0 and mark_pos[2] == 0 then
+   local dot_mark = vim.api.nvim_create_namespace('dot_mark_ns')
+   function module.show_dot()
+      local mark = vim.api.nvim_buf_get_mark(0, '.') -- Get the position of the . mark
+      if mark[1] == 0 and mark[2] == 0 then
          return
       end
 
       local get_hl = vim.api.nvim_get_hl_by_name
       utils.set_hl('ShowDotMarkOnGutter', { fg = get_hl('CursorLineNr', true).foreground, bg = get_hl('Normal', true).background })
-      vim.g.dot_mark_extmark = vim.api.nvim_buf_set_extmark(0, dot_mark_ns, mark_pos[1] - 1, 0, { sign_text = ' ', sign_hl_group = 'ShowDotMarkOnGutter' })
-      return vim.g.dot_mark_extmark
+      vim.g.dot_mark = vim.api.nvim_buf_set_extmark(0, dot_mark, mark[1] - 1, 0, { sign_text = '', sign_hl_group = 'ShowDotMarkOnGutter' })
+      return vim.g.dot_mark
    end
 
-   function modals.remove_dot()
-      if vim.g.dot_mark_extmark then
-         return pcall(vim.api.nvim_buf_del_extmark, 0, dot_mark_ns, vim.g.dot_mark_extmark)
+   function module.remove_dot()
+      if vim.g.dot_mark then
+         return pcall(vim.api.nvim_buf_del_extmark, 0, dot_mark, vim.g.dot_mark)
       end
    end
 
@@ -27,15 +27,15 @@ function modals.show_dot_mark_on_gutter()
    vim.api.nvim_create_autocmd('InsertLeave', {
       group = dot_mark_group,
       callback = function()
-         modals.remove_dot()
-         return modals.show_dot()
+         module.remove_dot()
+         return module.show_dot()
       end,
    })
 
    vim.api.nvim_create_autocmd('InsertEnter', {
       group = dot_mark_group,
       callback = function()
-         return modals.remove_dot()
+         return module.remove_dot()
       end,
    })
 
@@ -43,8 +43,8 @@ function modals.show_dot_mark_on_gutter()
       group = dot_mark_group,
       once = true,
       callback = function()
-         modals.remove_dot()
-         return modals.show_dot()
+         module.remove_dot()
+         return module.show_dot()
       end,
    })
 
@@ -53,14 +53,14 @@ function modals.show_dot_mark_on_gutter()
       callback = function()
          -- We check the mode because BufModifiedSet gets triggered on insert and we don't want that
          if vim.api.nvim_get_mode().mode == 'n' then
-            modals.remove_dot()
-            return modals.show_dot()
+            module.remove_dot()
+            return module.show_dot()
          end
       end,
    })
 end
 
-function modals.strict_cursor()
+function module.strict_cursor()
    local function h_motion()
       local cursor_position = vim.api.nvim_win_get_cursor(0)
       local line = cursor_position[1]
@@ -100,10 +100,10 @@ function modals.strict_cursor()
    local function switcher(mode)
       if mode then
          vim.keymap.set('n', 'h', function()
-            h_motion()
+            return h_motion()
          end)
          vim.keymap.set('n', 'l', function()
-            l_motion()
+            return l_motion()
          end)
          vim.opt.virtualedit = ''
          vim.g.strict_cursor = false
@@ -121,10 +121,9 @@ function modals.strict_cursor()
    end)
 end
 
-function modals.ask_for_input_on_last_buffer()
+function module.ask_for_input_on_last_buffer()
    local function eval_buffers()
-      local count_bufs_by_type = function(loaded_only)
-         loaded_only = (loaded_only == nil and true or loaded_only)
+      local count_bufs_by_type = function()
          local COUNT = {
             normal = 0,
             acwrite = 0,
@@ -136,7 +135,7 @@ function modals.ask_for_input_on_last_buffer()
             prompt = 0,
          }
          for _, bufname in pairs(vim.api.nvim_list_bufs()) do
-            if not loaded_only or vim.api.nvim_buf_is_loaded(bufname) then
+            if vim.api.nvim_buf_is_loaded(bufname) then
                local buf_type = vim.api.nvim_buf_get_option(bufname, 'buftype')
                buf_type = buf_type ~= '' and buf_type or 'normal'
                COUNT[buf_type] = COUNT[buf_type] + 1
@@ -160,10 +159,10 @@ function modals.ask_for_input_on_last_buffer()
    vim.keymap.set('n', '<Leader>c', eval_buffers)
 end
 
-function modals.init()
-   modals.show_dot_mark_on_gutter()
-   modals.strict_cursor() -- Use stricter cursor movements, only enable virtualedit cursor when pressing <Esc><Esc>
-   modals.ask_for_input_on_last_buffer() -- Ask user for input if there is only one active normal buffer
+function module.init()
+   module.show_dot_mark_on_gutter()
+   module.strict_cursor() -- Use stricter cursor movements, only enable virtualedit cursor when pressing <Esc><Esc>
+   module.ask_for_input_on_last_buffer() -- Ask user for input if there is only one active normal buffer
 end
 
-return modals
+return module

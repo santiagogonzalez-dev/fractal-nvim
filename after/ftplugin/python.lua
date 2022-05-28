@@ -20,7 +20,7 @@ local toggle_fstring = function()
       return
    end
 
-   local srow, scol, _, _ = ts_utils.get_vim_range({ node:range() })
+   local srow, scol, _, _ = ts_utils.get_vim_range { node:range() }
    vim.fn.setcursorcharpos(srow, scol)
    local char = vim.api.nvim_get_current_line():sub(scol, scol)
    local is_fstring = (char == 'f')

@@ -1,4 +1,3 @@
---Collection of notification system implementations.
 local notifications = {}
 
 local log_level_to_urgency = {
@@ -8,7 +7,7 @@ local log_level_to_urgency = {
    [4] = 'critical',
 }
 
---Send notifications through the `notify-send` command line application.
+-- Send notifications through the `notify-send` command line application.
 function notifications.notify_send(msg, log_level, opts)
    log_level = log_level or 3
    opts = opts or {}
