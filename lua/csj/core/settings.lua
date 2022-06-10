@@ -21,7 +21,7 @@ local opts = {
    ignorecase = true, -- Ignore case
    inccommand = 'split', -- Shows just like nosplit, but partially off-screen
    joinspaces = true, -- Commands like gq or J insert two spaces on punctuation
-   cmdheight = 0,
+   cmdheight = 1,
    lazyredraw = true, -- Lazy redraw the screen
    matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
    mouse = 'ar', -- Mouse options, all enabled

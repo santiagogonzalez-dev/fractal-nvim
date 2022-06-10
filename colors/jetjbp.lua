@@ -1,13 +1,7 @@
-vim.api.nvim_cmd({
-   cmd = 'highlight',
-   args = { 'clear' },
-}, {})
+vim.cmd('highlight clear')
 
 if 1 == vim.fn.exists('syntax_on') then
-   vim.api.nvim_cmd({
-      cmd = 'syntax',
-      args = { 'reset' },
-   }, {})
+   vim.cmd('syntax reset')
 end
 
 vim.opt.termguicolors = true
@@ -94,7 +88,7 @@ h('PmenuSel', { bg = p.dimmed3, blend = 0 })
 h('Character', { fg = p.upper2 }) -- A character constant: 'c', '\n'
 h('Boolean', { fg = p.orange, italic = true }) -- true-false True-False If not setup it uses Constant fg colors
 h('Comment', { fg = p.dimmed3, italic = true })
-h('Constant', { fg = p.orange }) -- NOTE: to self, this changes the name in -> TODO(santigo-zero):
+h('Constant', { fg = p.maroon }) -- NOTE: to self, this changes the name in -> TODO(santigo-zero):
 h('String', { fg = p.dimmed1 })
 h('Number', { fg = p.maroon })
 h('Float', { fg = p.orange })
@@ -181,6 +175,9 @@ h('LspReferenceRead', { fg = p.orange }) -- When you call a function or use a me
 h('LspReferenceText', { fg = p.orange })
 h('LspReferenceWrite', { fg = p.orange }) -- When you define a variable or function
 
--- Plugins
-h('IndentBlanklineChar', { fg = p.fg_dim })
-h('IndentBlanklineContextChar', { fg = p.blue })
+-- -- Plugins -- TODO remove IndentBlankline
+-- h('IndentBlanklineChar', { fg = p.fg_dim })
+-- h('IndentBlanklineContextChar', { fg = p.blue })
+
+h('IndentScopeSymbol', { fg = p.fg_dim })
+h('IndentScopePrefix', { fg = p.blue })

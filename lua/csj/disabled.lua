@@ -1,5 +1,5 @@
 -- Plugins
-vim.g.loadplugins = false
+vim.g.loadplugins = false -- true disables netrw and completion with cmp
 vim.g.did_indent_on = 1
 vim.g.did_load_ftplugin = 1
 vim.g.loaded_2html_plugin = 1

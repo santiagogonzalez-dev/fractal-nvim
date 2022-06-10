@@ -1,6 +1,7 @@
 local ok_cmp, cmp = pcall(require, 'cmp')
 
 if not ok_cmp then
+   print('cmp not okay')
    return
 end
 

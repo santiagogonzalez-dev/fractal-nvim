@@ -35,25 +35,28 @@ function M.setup()
 end
 
 function M.lsp_highlight_document(client, bufnr)
+   -- if client.resolved_capabilities.document_highlight then -- Deprecated
    if client.server_capabilities.documentHighlightProvider then
-      vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
-      vim.api.nvim_create_autocmd('CursorHold', {
-         callback = function()
-            vim.lsp.buf.document_highlight()
-         end,
+      local lsp_highlight = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
+      vim.api.nvim_clear_autocmds {
          buffer = bufnr,
+         group = 'lsp_document_highlight',
+      }
+      vim.api.nvim_create_autocmd('CursorHold', {
+         group = lsp_highlight,
+         buffer = bufnr,
+         callback = vim.lsp.buf.document_highlight,
       })
       vim.api.nvim_create_autocmd('CursorMoved', {
-         callback = function()
-            vim.lsp.buf.clear_references()
-         end,
+         group = lsp_highlight,
          buffer = bufnr,
+         callback = vim.lsp.buf.clear_references,
       })
    end
 end
 
 function M.on_attach(client, bufnr)
-   require('csj.manners.lsp')
+   require('csj.manners.lsp').keymaps(bufnr)
    M.lsp_highlight_document(client, bufnr)
 end
 

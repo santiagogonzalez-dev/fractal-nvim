@@ -69,3 +69,5 @@ vim.keymap.set({ 'v', 'x' }, '<', '<gv', { desc = 'Keep visual selection after s
 vim.keymap.set({ 'v', 'x' }, '>', '>gv', { desc = 'Keep visual selection after shifting code block' })
 
 require('csj.manners.interface').init()
+-- require('csj.manners.acceleratedjk').init()
+require('csj.manners.indent').setup {}

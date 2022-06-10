@@ -1,25 +1,17 @@
-require('packer').loader('nvim-lsp-installer')
-require('packer').loader('null-ls.nvim')
-
 local status, lspconfig = pcall(require, 'lspconfig')
 if not status then
    return -- Return if there is any problem with lspconfig
 end
 
 local SERVERS = {
-   'sumneko_lua',
-   'pyright',
-   'cssmodules_ls',
+   'bashls',
    'cssls',
    'html',
+   'pyright',
+   'sumneko_lua',
    'tsserver',
-   'emmet_ls',
-}
-
-require('nvim-lsp-installer').setup {
-   -- Setup nvim-lsp-installer, it needs to be setup before calling lspconfig
-   ensure_installed = SERVERS, -- Ensure these list of servers are always installed
-   automatic_installation = false, -- Automatically detect which servers to install (based on which servers are set up via lspconfig)
+   -- 'cssmodules_ls',
+   -- 'emmet_ls',
 }
 
 for _, server in pairs(SERVERS) do
@@ -38,6 +30,8 @@ end
 
 require('csj.lsp.handlers').setup()
 require('csj.lsp.top_right_lsp_diagnostics')
+
+require('packer').loader('null-ls.nvim')
 require('csj.lsp.null-ls')
 
-vim.api.nvim_cmd({ cmd = 'LspStart' }, {}) -- vim.cmd('LspStart')
+vim.cmd('LspStart')

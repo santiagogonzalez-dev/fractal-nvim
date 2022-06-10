@@ -37,7 +37,7 @@ function utils.session()
    })
 
    vim.opt.shadafile = ''
-   vim.api.nvim_cmd({ cmd = 'rshada', bang = true }, {})
+   vim.cmd('rshada!')
    return utils.restore_cursor_position()
 end
 
@@ -53,11 +53,7 @@ function utils.restore_cursor_position()
    if line <= vim.api.nvim_buf_line_count(0) then
       vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
       if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
-         return vim.api.nvim_cmd({
-            cmd = 'normal',
-            args = { 'zo' },
-            bang = true,
-         }, {}) -- To open it
+         return vim.cmd('normal! zo')
       end
    end
 end
@@ -97,10 +93,7 @@ end
 function utils.is_git()
    local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
    if is_git:match('true') then
-      vim.api.nvim_cmd({
-         cmd = 'doautocmd',
-         args = { 'User', 'IsGit' },
-      }, {})
+      vim.cmd('doautocmd User IsGit')
       return true
    else
       return false

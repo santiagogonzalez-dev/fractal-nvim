@@ -51,9 +51,7 @@ function M.setup(config)
 
    vim.api.nvim_create_augroup('_virt-column', {})
    vim.api.nvim_create_autocmd({ 'WinEnter', 'InsertLeave', 'TextChanged', 'CompleteChanged' }, { group = '_virt-column', command = 'VirtColumnRefresh' })
-   vim.schedule_wrap(vim.api.nvim_cmd({
-      cmd = 'VirtColumnRefresh',
-   }, {}))
+   vim.schedule_wrap(vim.cmd('VirtColumnRefresh'))
 end
 
 function M.setup_buffer(config)

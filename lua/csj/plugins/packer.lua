@@ -36,7 +36,6 @@ return packer.startup(function(use)
    use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
    use { 'metakirby5/codi.vim', cmd = 'Codi' } -- Codi
    use('tpope/vim-surround') -- Surround
-   use('tpope/vim-repeat') -- Repeat
    use('kyazdani42/nvim-web-devicons')
 
    -- Impatient
@@ -123,13 +122,6 @@ return packer.startup(function(use)
                highlight_grey = 'IncSearch',
             },
          }
-         -- local cmp_ok, cmp = pcall(require, 'cmp')
-         -- if not cmp_ok then
-         --     return
-         -- else
-         --     local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-         --     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
-         -- end
       end,
    }
 
@@ -139,7 +131,6 @@ return packer.startup(function(use)
       event = 'User LoadPlugins',
       run = ':TSUpdate',
       requires = {
-         'nvim-treesitter/nvim-treesitter-textobjects',
          {
             'JoosepAlviste/nvim-ts-context-commentstring',
             after = 'Comment.nvim',
@@ -204,24 +195,6 @@ return packer.startup(function(use)
       end,
    }
 
-   -- Indent Blankline
-   use {
-      'lukas-reineke/indent-blankline.nvim',
-      event = 'User LoadPlugins',
-      config = function()
-         require('indent_blankline').setup {
-            show_current_context = true,
-            show_current_context_start = false,
-            show_end_of_line = true,
-            show_trailing_blankline_indent = false,
-            -- char = ' ',
-            -- char = '▎',
-            space_char_blankline = ' ',
-            max_indent_increase = 1,
-         }
-      end,
-   }
-
    -- Colorizer
    use {
       'norcalli/nvim-colorizer.lua',
@@ -240,13 +213,15 @@ return packer.startup(function(use)
    use {
       'neovim/nvim-lspconfig',
       event = 'User LoadPlugins',
-      requires = {
-         'williamboman/nvim-lsp-installer',
-         'jose-elias-alvarez/null-ls.nvim',
-      },
       config = function()
          require('csj.lsp')
       end,
+   }
+
+   -- Null-LS
+   use {
+      'jose-elias-alvarez/null-ls.nvim',
+      opt = true, -- Managed under lua/csj/lsp/init.lua
    }
 
    -- Completion, snippets
