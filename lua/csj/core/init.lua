@@ -11,7 +11,6 @@ vim.schedule(function()
    if not vim.opt.loadplugins then
       vim.cmd('runtime plugin/**/*.vim plugin/**/*.lua')
    end
-
    require('csj.plugins')
    require('csj.netrw')
    require('csj.core.settings')

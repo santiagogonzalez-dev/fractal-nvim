@@ -31,6 +31,7 @@
   environment = {
     systemPackages = with pkgs; [
       black
+      neovim
       nodePackages.bash-language-server
       nodePackages.dockerfile-language-server-nodejs
       nodePackages.prettier

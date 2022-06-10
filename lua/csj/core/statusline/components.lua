@@ -7,24 +7,14 @@ function component.vcs()
    if not git_info or git_info.head == '' then
       return ''
    end
-   vim.api.nvim_set_hl(
-      0,
-      'StatusLineGitSignsAdd',
-      { bg = vim.api.nvim_get_hl_by_name('StatusLine', true).background, fg = vim.api.nvim_get_hl_by_name('GitSignsAdd', true).foreground }
-   )
-   vim.api.nvim_set_hl(
-      0,
-      'StatusLineGitSignsChange',
-      { bg = vim.api.nvim_get_hl_by_name('StatusLine', true).background, fg = vim.api.nvim_get_hl_by_name('GitSignsChange', true).foreground }
-   )
-   vim.api.nvim_set_hl(
-      0,
-      'StatusLineGitSignsDelete',
-      { bg = vim.api.nvim_get_hl_by_name('StatusLine', true).background, fg = vim.api.nvim_get_hl_by_name('GitSignsDelete', true).foreground }
-   )
+
+   vim.api.nvim_set_hl(0, 'StatusLineGitSignsAdd', { bg = utils.get_bg_hl('StatusLine'), fg = utils.get_fg_hl('GitSignsAdd') })
+   vim.api.nvim_set_hl(0, 'StatusLineGitSignsChange', { bg = utils.get_bg_hl('StatusLine'), fg = utils.get_fg_hl('GitSignsChange') })
+   vim.api.nvim_set_hl(0, 'StatusLineGitSignsDelete', { bg = utils.get_bg_hl('StatusLine'), fg = utils.get_fg_hl('GitSignsDelete') })
    local added = git_info.added and ('%#StatusLineGitSignsAdd#+' .. git_info.added .. ' ') or ''
    local changed = git_info.changed and ('%#StatusLineGitSignsChange#~' .. git_info.changed .. ' ') or ''
    local removed = git_info.removed and ('%#StatusLineGitSignsDelete#-' .. git_info.removed .. ' ') or ''
+
    if git_info.added == 0 then
       added = ''
    end
@@ -43,6 +33,7 @@ function component.vcs()
       '%#StatusLineGitSignsAdd#',
       ' ',
       git_info.head,
+      ' ',
       '%#StatusLine#',
    }
 end
@@ -54,9 +45,10 @@ function component.lineinfo()
    local line_lenght = vim.api.nvim_get_current_line()
 
    return table.concat {
-      '%P %l:%c',
+      ' %P %l:%c',
       '',
       #line_lenght,
+      ' ',
    }
 end
 

@@ -126,6 +126,14 @@ function utils.conditionals()
    end
 end
 
+function utils.get_fg_hl(hl_group)
+   return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
+end
+
+function utils.get_bg_hl(hl_group)
+   return vim.api.nvim_get_hl_by_name(hl_group, true).background
+end
+
 -- function utils.is_bigger_than(filepath, size_in_kilobytes)
 --     https://www.reddit.com/r/neovim/comments/uz0l9s/psa_if_youre_using_libuv_clean_up_after_yourself/
 --     -- Fail if filepath is bigger than the provided size in kilobytes
