@@ -52,10 +52,10 @@ vim.keymap.set('n', '<C-Down>', ':resize -1<CR>', { desc = 'Resize windows' })
 vim.keymap.set('n', '<C-Left>', ':vertical resize +1<CR>', { desc = 'Resize windows' })
 vim.keymap.set('n', '<C-Right>', ':vertical resize -1<CR>', { desc = 'Resize windows' })
 
-vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move current block of text up and down' }) -- Normal mode
-vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move current block of text up and down' })
-vim.keymap.set({ 'v', 'x' }, '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move current block of text up and down' }) -- Visual mode
-vim.keymap.set({ 'v', 'x' }, '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move current block of text up and down' })
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { silent = true, desc = 'Move current block of text up and down' }) -- Normal mode
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { silent = true, desc = 'Move current block of text up and down' })
+vim.keymap.set({ 'v', 'x' }, '<A-j>', ":m '>+1<CR>gv=gv", { silent = true, desc = 'Move current block of text up and down' }) -- Visual mode
+vim.keymap.set({ 'v', 'x' }, '<A-k>', ":m '<-2<CR>gv=gv", { silent = true, desc = 'Move current block of text up and down' })
 
 vim.keymap.set('n', '<Tab>', 'za', { desc = 'Toggle folds' })
 vim.keymap.set('n', '<S-Tab>', 'zm', { desc = 'Close all folds' })

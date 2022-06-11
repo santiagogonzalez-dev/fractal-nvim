@@ -51,7 +51,6 @@ local opts = {
    -- tabstop = tab_lenght, -- Tab length
    textwidth = 80, -- Delimit text blocks to N columns
    timeoutlen = 300, -- Time given for doing a sequence
-   title = true, -- Set the window title based on the value of titlestring
    undofile = true, -- Persistent undo - undo after you re-open the file
    undolevels = 6000, -- Levels of undoing
    updatetime = 300, -- Faster completion, it's the time for CursorHold event
