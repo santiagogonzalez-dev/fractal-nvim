@@ -8,19 +8,6 @@
     # vimAlias = true;
     # configure = {
     #   packages.nix.start = with pkgs; [
-    #     black
-    #     nodePackages.bash-language-server
-    #     nodePackages.dockerfile-language-server-nodejs
-    #     nodePackages.prettier
-    #     nodePackages.pyright
-    #     nodePackages.typescript-language-server
-    #     nodePackages.vscode-css-languageserver-bin
-    #     nodePackages.vscode-html-languageserver-bin
-    #     nodePackages.vscode-json-languageserver-bin
-    #     nodePackages.yaml-language-server
-    #     python310
-    #     python310Packages.flake8
-    #     shellcheck
     #     stylua
     #   ];
     # };
@@ -30,21 +17,24 @@
   # Install the packages globally to avoid problems
   environment = {
     systemPackages = with pkgs; [
-      black
       neovim
+
+      # Formatters & linters
+      black
+      nodePackages.prettier
+      python310Packages.flake8
+      shellcheck
+      stylua
+
+      # Language servers
       nodePackages.bash-language-server
       nodePackages.dockerfile-language-server-nodejs
-      nodePackages.prettier
       nodePackages.pyright
       nodePackages.typescript-language-server
       nodePackages.vscode-css-languageserver-bin
       nodePackages.vscode-html-languageserver-bin
       nodePackages.vscode-json-languageserver-bin
       nodePackages.yaml-language-server
-      python310
-      python310Packages.flake8
-      shellcheck
-      stylua
       sumneko-lua-language-server
     ];
   };
