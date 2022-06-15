@@ -5,7 +5,7 @@ require('csj.disabled')
 vim.opt.shadafile = 'NONE'
 
 require('csj.autocommands')
-vim.cmd('colorscheme jetjbp')
+vim.api.nvim_cmd({ cmd = 'colorscheme', args = { 'jetjbp' } }, {}) -- vim.cmd('colorscheme jetjbp')
 
 vim.schedule(function()
    if not vim.opt.loadplugins then

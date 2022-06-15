@@ -220,6 +220,12 @@ return packer.startup(function(use)
       end,
    }
 
+   -- LSP installer
+   use {
+      'williamboman/nvim-lsp-installer',
+      opt = true, -- Managed under lua/csj/lsp/init.lua
+   }
+
    -- Null-LS
    use {
       'jose-elias-alvarez/null-ls.nvim',
