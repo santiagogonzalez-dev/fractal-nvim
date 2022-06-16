@@ -11,6 +11,7 @@ treesitter.setup {
       'java',
       'javascript',
       'lua',
+      'markdown',
       'nix',
       'python',
       'toml',
