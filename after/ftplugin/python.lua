@@ -26,7 +26,7 @@ local toggle_fstring = function()
    local is_fstring = (char == 'f')
 
    if is_fstring then
-      vim.cmd('normal x')
+      vim.cmd('normal x') -- TODO(santigo-zero): move to vim.api.nvim_cmd
       -- If cursor is in the same line as text change
       if srow == cursor[1] then
          cursor[2] = cursor[2] - 1 -- negative offset to cursor

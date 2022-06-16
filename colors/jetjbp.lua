@@ -1,7 +1,13 @@
-vim.cmd('highlight clear')
+vim.api.nvim_cmd({
+   cmd = 'highlight',
+   args = { 'clear' },
+}, {}) -- vim.cmd('highlight clear')
 
 if 1 == vim.fn.exists('syntax_on') then
-   vim.cmd('syntax reset')
+   vim.api.nvim_cmd({
+      cmd = 'syntax',
+      args = { 'reset' },
+   }, {}) -- vim.cmd('syntax reset')
 end
 
 vim.opt.termguicolors = true

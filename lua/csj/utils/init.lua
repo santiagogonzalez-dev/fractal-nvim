@@ -17,13 +17,22 @@ function utils.session()
    -- Function to setup the initial load and maintain some settings between buffers
    local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
 
+   -- TODO(santigo-zero): move to vim.api.nvim_cmd
    vim.cmd('silent! loadview') -- Load the view for the current buffer
 
    vim.api.nvim_create_autocmd('BufWinEnter', {
       desc = 'Load the view of the buffer',
       group = save_sessions,
       callback = function()
+         if vim.tbl_contains(utils.ignore_ft(), vim.bo.filetype) then
+            return
+         end
          vim.cmd('silent! loadview') -- Load the view for the opened buffer
+         -- vim.api.nvim_cmd({
+         --    cmd = 'silent',
+         --    args = { 'loadview' },
+         --    bang = true,
+         -- }, {})
          return utils.restore_cursor_position() -- Restore the cursor position
       end,
    })
@@ -32,12 +41,23 @@ function utils.session()
       desc = 'Save the view of the buffer',
       group = save_sessions,
       callback = function()
+         if vim.tbl_contains(utils.ignore_ft(), vim.bo.filetype) then
+            return
+         end
          return vim.cmd('silent! mkview')
+         -- vim.api.nvim_cmd({
+         --    cmd = 'silent',
+         --    args = { 'mkview' },
+         --    bang = true,
+         -- }, {})
       end,
    })
 
    vim.opt.shadafile = ''
-   vim.cmd('rshada!')
+   vim.api.nvim_cmd({
+      cmd = 'rshada',
+      bang = true,
+   }, {}) -- vim.cmd('rshada!')
    return utils.restore_cursor_position()
 end
 
