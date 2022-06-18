@@ -36,7 +36,7 @@ local p = {
    yellow = '#f6c177',
    accent = '#FA9336', -- Give accent to things that need attention
    green = '#93c88e',
-   strong_green = '#559a93',
+   strong_green = '#559a8b',
    blue = '#87B0F9',
    purple = '#8689b9',
    violet = '#9d86b9', -- Used in info and diagnostics too
@@ -75,7 +75,7 @@ h('CurSearch', { link = 'IncSearch' }) -- Current search match under the cursor
 h('Search', { bg = p.bg_high, fg = p.orange }) -- Last search pattern
 h('Substitute', { fg = p.upper3, bold = true, underline = true }) -- :substitute or :s///gc replacement text highlighting
 h('SignColumn', { bg = p.bg_low }) -- Where linting and errors popup
-h('StatusLine', { bg = p.bg_med, fg = p.fg_low }) -- The statusline
+h('StatusLine', { bg = p.bg_med, fg = p.dimmed2 }) -- The statusline
 h('StatusLineAccent', { bg = p.bg_high }) -- The same as Visual
 h('Title', { fg = p.upper1 }) -- Titles for output from ':set all', ':autocmd' etc.
 h('Visual', { bg = p.bg_high }) -- Visual mode uses this

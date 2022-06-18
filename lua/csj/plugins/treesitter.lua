@@ -17,13 +17,20 @@ treesitter.setup {
       'toml',
       'typescript',
       'vim',
-      'yaml'
+      'yaml',
    },
    sync_install = false,
    highlight = {
       enable = true,
       aditional_vim_regex_highlighting = false,
-      disable = { 'latex' },
+      disable = {
+         function(_, bufnr)
+            local buf_name = vim.api.nvim_buf_get_name(bufnr)
+            local file_size = vim.api.nvim_call_function('getfsize', { buf_name })
+            return file_size > 256 * 1024
+         end,
+         'latex',
+      },
    },
    context_commentstring = {
       enable = true,

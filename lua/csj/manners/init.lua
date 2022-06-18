@@ -46,6 +46,9 @@ vim.keymap.set('n', 'cg*', '*Ncgn', { desc = 'Find and replace next match of the
 vim.keymap.set({ 'n', 'x', 'o' }, 'n', '"Nn"[v:searchforward]', { expr = true, desc = 'n is always next' })
 vim.keymap.set({ 'n', 'x', 'o' }, 'N', '"nN"[v:searchforward]', { expr = true, desc = 'N is always previous' })
 vim.keymap.set('n', '^^', '0', { desc = 'Better ^' })
+vim.keymap.set('n', 'gx', function()
+   vim.fn.jobstart({ 'xdg-open', vim.fn.expand('<cfile>', nil, nil) }, { detach = true, desc = 'Better gx' })
+end, {})
 
 vim.keymap.set('n', '<C-Up>', ':resize +1<CR>', { desc = 'Resize windows' })
 vim.keymap.set('n', '<C-Down>', ':resize -1<CR>', { desc = 'Resize windows' })
@@ -68,6 +71,5 @@ vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], { desc = 'Bette
 vim.keymap.set({ 'v', 'x' }, '<', '<gv', { desc = 'Keep visual selection after shifting code block' })
 vim.keymap.set({ 'v', 'x' }, '>', '>gv', { desc = 'Keep visual selection after shifting code block' })
 
-require('csj.manners.interface').init()
--- require('csj.manners.acceleratedjk').init()
+require('csj.manners.modules').init()
 require('csj.manners.indent').setup {}

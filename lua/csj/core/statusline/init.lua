@@ -8,6 +8,7 @@ function statusline.init()
       '%#StatusLineAccent#',
       component.lineinfo(),
       '%#StatusLine#',
+      ' ',
       component.filepath(),
       component.filename(),
       '%=%', -- Put component in the right side

@@ -21,7 +21,7 @@ local opts = {
    ignorecase = true, -- Ignore case
    inccommand = 'split', -- Shows just like nosplit, but partially off-screen
    joinspaces = true, -- Commands like gq or J insert two spaces on punctuation
-   cmdheight = 1,
+   cmdheight = 0,
    lazyredraw = true, -- Lazy redraw the screen
    matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
    mouse = 'ar', -- Mouse options, all enabled
@@ -177,6 +177,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = 'session_opts',
    callback = function()
-      pcall(vim.highlight.on_yank, { higroup = 'LineNr', timeout = 600 })
+      pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 })
    end,
 })

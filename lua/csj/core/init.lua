@@ -5,6 +5,7 @@ require('csj.disabled')
 vim.opt.shadafile = 'NONE'
 
 require('csj.autocommands')
+require('csj.netrw')
 vim.api.nvim_cmd({ cmd = 'colorscheme', args = { 'jetjbp' } }, {}) -- vim.cmd('colorscheme jetjbp')
 
 vim.schedule(function()
@@ -12,7 +13,6 @@ vim.schedule(function()
       vim.cmd('runtime plugin/**/*.vim plugin/**/*.lua')
    end
    require('csj.plugins')
-   require('csj.netrw')
    require('csj.core.settings')
    require('csj.core.folds')
    require('csj.core.virt-column').setup() -- Moded version of Lukas Reineke's virt-column.nvim
