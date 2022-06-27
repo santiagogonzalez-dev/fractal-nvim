@@ -10,7 +10,11 @@ function statusline.init()
       '%#StatusLine#',
       ' ',
       component.filepath(),
+      '%#StatusLineAccentBlue#',
       component.filename(),
+      '%#StatusLine#',
+      ' ',
+      component.filewritable(),
       '%=%', -- Put component in the right side
       component.vcs(),
    }

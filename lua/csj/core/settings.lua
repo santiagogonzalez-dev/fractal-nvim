@@ -7,21 +7,22 @@ vim.opt.guicursor:append('r-cr-o:hor20')
 
 -- Settings
 -- local tab_lenght = 4
-
 local opts = {
-   cursorline = true,
-   cursorcolumn = true,
+   -- shiftwidth = tab_lenght, -- Size of a > or < when indenting
+   -- tabstop = tab_lenght, -- Tab length
    breakindent = true, -- Every wrapped line will continue visually indented
    clipboard = 'unnamedplus', -- Clipboard mode
+   cmdheight = 0,
    conceallevel = 2, -- Show concealed text when the cursor is not on top
    confirm = true, -- Confirm dialogs
+   cursorcolumn = true,
+   cursorline = true,
    diffopt = 'foldcolumn:0,hiddenoff,vertical',
    expandtab = true, -- Convert tabs to spaces
    grepprg = 'rg --hidden --no-heading --vimgrep', -- Grep command
    ignorecase = true, -- Ignore case
    inccommand = 'split', -- Shows just like nosplit, but partially off-screen
    joinspaces = true, -- Commands like gq or J insert two spaces on punctuation
-   cmdheight = 0,
    lazyredraw = true, -- Lazy redraw the screen
    matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
    mouse = 'ar', -- Mouse options, all enabled
@@ -31,7 +32,6 @@ local opts = {
    scrolloff = 9, -- Cursor does not reach top/bottom
    secure = true, -- Self-explanatory
    shiftround = true, -- Round indent to multiple of "shiftwidth"
-   -- shiftwidth = tab_lenght, -- Size of a > or < when indenting
    shortmess = 'oOstIFS', -- Style for displaying messages
    showbreak = '↪ ', -- Shows when text is being wrapped
    showmode = false, -- Show or hide the mode you are on in the status line
@@ -48,7 +48,6 @@ local opts = {
    splitright = true, -- Force vertical splits to go to the right of current window
    swapfile = false, -- It does (not) creates a swapfileWage synmaxcol = 160, -- Column
    synmaxcol = 160, -- Column limit for syntax highlight
-   -- tabstop = tab_lenght, -- Tab length
    textwidth = 80, -- Delimit text blocks to N columns
    timeoutlen = 300, -- Time given for doing a sequence
    undofile = true, -- Persistent undo - undo after you re-open the file
@@ -80,8 +79,9 @@ function _G.all_buffers_settings()
    -- There's a non-visible character at cchar= so watch
    vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
    vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
-   vim.cmd([[syntax match hidechars '\[\[' conceal]])
-   vim.cmd([[syntax match hidechars '\]\]' conceal]])
+   vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
+   vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
+   -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
@@ -95,45 +95,38 @@ vim.opt.list = true
 
 vim.opt.fillchars:append {
    eob = ' ', -- Don't show the ~ at the eof
-   msgsep = '🮑', -- Line that separates the cmdline from the buffer
-   horiz = ' ',
-   horizup = ' ',
-   horizdown = ' ',
-   vert = ' ',
-   vertleft = ' ',
-   vertright = ' ',
-   verthoriz = ' ',
+   msgsep = '🮑', -- Line that separates the cmdline from the buffer, doesn't work with cmdheight=0
 }
 
--- utils.append_by_random(vim.opt.fillchars, {
---    {
---       horiz = '━',
---       horizup = '┻',
---       horizdown = '┳',
---       vert = '┃',
---       vertleft = '┫',
---       vertright = '┣',
---       verthoriz = '╋',
---    },
---    {
---       horiz = '─',
---       horizup = '┴',
---       horizdown = '┬',
---       vert = '│',
---       vertleft = '┤',
---       vertright = '├',
---       verthoriz = '┼',
---    },
---    {
---       horiz = ' ',
---       horizup = ' ',
---       horizdown = ' ',
---       vert = ' ',
---       vertleft = ' ',
---       vertright = ' ',
---       verthoriz = ' ',
---    },
--- })
+utils.append_by_random(vim.opt.fillchars, {
+   {
+      horiz = '━',
+      horizup = '┻',
+      horizdown = '┳',
+      vert = '┃',
+      vertleft = '┫',
+      vertright = '┣',
+      verthoriz = '╋',
+   },
+   {
+      horiz = '─',
+      horizup = '┴',
+      horizdown = '┬',
+      vert = '│',
+      vertleft = '┤',
+      vertright = '├',
+      verthoriz = '┼',
+   },
+   {
+      horiz = ' ',
+      horizup = ' ',
+      horizdown = ' ',
+      vert = ' ',
+      vertleft = ' ',
+      vertright = ' ',
+      verthoriz = ' ',
+   },
+})
 
 vim.opt.listchars:append {
    -- eol = '↴',
@@ -178,5 +171,29 @@ vim.api.nvim_create_autocmd('TextYankPost', {
    group = 'session_opts',
    callback = function()
       pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 })
+   end,
+})
+
+vim.api.nvim_create_autocmd('CursorMoved', {
+   desc = 'Enable crosshair when we are moving the cursor',
+   group = 'session_opts',
+   callback = function()
+      vim.opt.cursorcolumn = true
+      vim.opt.cursorline = true
+      vim.g.cursor_show = true
+   end,
+})
+
+vim.api.nvim_create_autocmd('CursorHold', {
+   desc = 'Disable crosshair when we are not moving the cursor',
+   group = 'session_opts',
+   callback = function()
+      vim.g.cursor_show = false
+      vim.defer_fn(function()
+         if vim.g.cursor_show == false then
+            vim.opt.cursorcolumn = false
+            vim.opt.cursorline = false
+         end
+      end, 3000)
    end,
 })

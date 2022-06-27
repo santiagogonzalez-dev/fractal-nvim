@@ -52,6 +52,18 @@ function component.lineinfo()
    }
 end
 
+function component.filewritable()
+   local fmode = vim.fn.filewritable(vim.fn.expand('%:F'))
+   if fmode == 0 then
+      return ' '
+   elseif fmode == 1 then
+      local show_sign = false
+      return show_sign and ' ' or ' '
+      -- elseif fmode == 2 then
+      --    return ' '
+   end
+end
+
 function component.filepath()
    -- Return the filepath without the name of the file
    local filepath = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')

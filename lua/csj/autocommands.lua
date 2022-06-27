@@ -96,9 +96,25 @@ local buffer_settings = vim.api.nvim_create_augroup('buffer_settings', { clear =
 vim.api.nvim_create_autocmd('FileType', {
    desc = 'Quit with q in this filetypes',
    group = buffer_settings,
-   pattern = 'netrw,qf,help,man,lspinfo,startuptime',
+   pattern = {
+      'help',
+      'lspinfo',
+      'man',
+      'netrw',
+      'qf',
+      'startuptime',
+   },
    callback = function()
       vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 })
+   end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+   desc = 'Quit! with q in this filetypes',
+   group = buffer_settings,
+   pattern = 'TelescopePrompt',
+   callback = function()
+      vim.keymap.set('n', 'q', ':q!<CR>', { buffer = 0 })
    end,
 })
 

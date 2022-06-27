@@ -11,17 +11,15 @@ function M.keymaps(bufnr)
 
    -- Formatting
    vim.keymap.set('n', '<Leader><Leader>f', function()
-      -- return vim.lsp.buf.format { async = true }
-      return vim.lsp.buf.formatting()
+      vim.lsp.buf.format { async = true }
    end, { buffer = bufnr, desc = 'Format the file' })
 
    vim.keymap.set({ 'v', 'x' }, '<Leader><Leader>f', function()
-      return vim.lsp.buf.range_formatting()
+      vim.lsp.buf.range_formatting()
    end, { buffer = bufnr, desc = 'Range formatting the file' })
 
    vim.api.nvim_create_user_command('Format', function()
-      -- return vim.lsp.buf.format { async = false }
-      return vim.lsp.buf.formatting()
+      vim.lsp.buf.format { async = false }
    end, {})
 
    -- Diagnostics

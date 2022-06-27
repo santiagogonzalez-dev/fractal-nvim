@@ -1,9 +1,3 @@
--- TODO(santigo-zero): ci( and ci) will work normally, and  c( and c) should work line wise, fix this
--- The same goes for di( and di) and d( and d). Also maintain the column when pasting
--- vim.keymap.set('n', 'c)', 'ci)', { desc = 'c} does the same and I prefer using it'})
--- vim.keymap.set('n', 'c(', 'ci(', { desc = 'c{ does the same and I prefer using it'})
--- a better f t F T, also change in "
-
 -- Make dead keys
 local dead_keys = { '<Space>', '<BS>', '<Down>', '<Left>', '<Right>', '<Up>', 'q:' }
 for _, almost in ipairs(dead_keys) do
@@ -22,9 +16,9 @@ vim.g.maplocalleader = ' '
 
 -- Simple keymappings
 vim.keymap.set('n', '<Leader>u', '<CMD>update<CR>', { desc = 'Update the file' })
-vim.keymap.set('n', '<Leader>q', '<CMD>quit<CR>', { desc = 'Quit neovim' })
-vim.keymap.set('n', '<Leader>w', '<CMD>wqall<CR>', { desc = 'Write and Quit' })
+vim.keymap.set('n', '<Leader>q', '<CMD>quitall!<CR>', { desc = 'Quit neovim' })
 vim.keymap.set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>', { desc = 'Delete all buffers' })
+vim.keymap.set('n', '<Leader>w', '<CMD>wqall<CR>', { desc = 'Write and Quit' })
 vim.keymap.set('n', '<Leader>p', [["_diwP]], { desc = 'Paste in word under the cursor without overwriting the yank register' })
 vim.keymap.set('n', '<Leader>s', ':luafile %<CR>', { desc = 'Source lua file' })
 
@@ -38,6 +32,9 @@ vim.keymap.set('n', '<Leader>ps', '<CMD>PackerSync<CR>', { desc = 'Packer: Packe
 vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>', { desc = 'Packer: PackerCompile' })
 
 vim.keymap.set('n', "'", '`', { desc = "Swap ' with `" })
+vim.keymap.set('n', '`', "'", { desc = "Swap ` with '" })
+vim.keymap.set({ 'n', 'v', 'x' }, ';', ':', { desc = 'Swap ; with :' })
+vim.keymap.set({ 'n', 'v', 'x' }, ':', ';', { desc = 'Swap : with ;' })
 vim.keymap.set('n', '<CR>', 'i<CR><ESC>', { desc = 'Normal <CR> behaviour, opposite to J' })
 vim.keymap.set('n', '<A-n>', '<CMD>nohlsearch<CR>', { desc = 'Disable highlight' })
 vim.keymap.set({ 'n', 'v' }, '$', 'g_', { desc = 'Make $ behave as spected' })
@@ -72,4 +69,3 @@ vim.keymap.set({ 'v', 'x' }, '<', '<gv', { desc = 'Keep visual selection after s
 vim.keymap.set({ 'v', 'x' }, '>', '>gv', { desc = 'Keep visual selection after shifting code block' })
 
 require('csj.manners.modules').init()
-require('csj.manners.indent').setup {}

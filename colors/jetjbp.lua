@@ -70,13 +70,14 @@ h('InactiveWindow', { bg = p.bg_med, fg = p.fg }) -- Check why this works and No
 h('NormalNC', { bg = p.bg_med, fg = p.fg }) -- Normal text in non-current windows
 h('EndOfBuffer', { bg = p.bg_low, fg = p.upper1 }) -- Where ~ appear
 h('Question', { fg = p.upper1 }) -- hit-enter prompts and yes/no questions
-h('IncSearch', { fg = p.orange }) -- Current search pattern when searching with /
-h('CurSearch', { link = 'IncSearch' }) -- Current search match under the cursor
+h('IncSearch', { bg = p.bg_high, fg = p.blue }) -- Current search pattern when searching with /
+h('CurSearch', { bg = p.bg_high, fg = p.blue }) -- Current search match under the cursor
 h('Search', { bg = p.bg_high, fg = p.orange }) -- Last search pattern
-h('Substitute', { fg = p.upper3, bold = true, underline = true }) -- :substitute or :s///gc replacement text highlighting
+h('Substitute', { bg = p.bg_high, fg = p.violet }) -- :substitute or :s///gc replacement text highlighting
 h('SignColumn', { bg = p.bg_low }) -- Where linting and errors popup
 h('StatusLine', { bg = p.bg_med, fg = p.dimmed2 }) -- The statusline
 h('StatusLineAccent', { bg = p.bg_high }) -- The same as Visual
+h('StatusLineAccentBlue', { bg = p.bg_med, fg = p.blue }) -- The statusline
 h('Title', { fg = p.upper1 }) -- Titles for output from ':set all', ':autocmd' etc.
 h('Visual', { bg = p.bg_high }) -- Visual mode uses this
 h('VisualNOS', { reverse = true }) -- When vim is not owning the selection
@@ -185,6 +186,3 @@ h('LspReferenceWrite', { fg = p.orange }) -- When you define a variable or funct
 -- -- Plugins -- TODO remove IndentBlankline
 -- h('IndentBlanklineChar', { fg = p.fg_dim })
 -- h('IndentBlanklineContextChar', { fg = p.blue })
-
-h('IndentScopeSymbol', { fg = p.fg_dim })
-h('IndentScopePrefix', { fg = p.blue })
