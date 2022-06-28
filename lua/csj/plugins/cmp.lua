@@ -45,13 +45,6 @@ local kind_icons = {
    Module = ' ',
 }
 
-local set_hl = require('csj.utils').set_hl
-set_hl('CmpItemAbbrDeprecated', { strikethrough = true, fg = '#808080' })
-set_hl({ 'CmpItemAbbrMatch', 'CmpItemAbbrMatchFuzzy' }, { bold = true, fg = '#d7827e' })
-set_hl({ 'CmpItemKindVariable', 'CmpItemKindInterface', 'CmpItemKindText' }, { fg = '#9ccfd8' })
-set_hl({ 'CmpItemKindFunction', 'CmpItemKindMethod', 'CmpItemKindKeyword' }, { fg = '#c4a7e7' })
-set_hl({ 'CmpItemKindProperty', 'CmpItemKindUnit' }, { fg = '#e0def4' })
-
 cmp.setup {
    snippet = {
       expand = function(args)

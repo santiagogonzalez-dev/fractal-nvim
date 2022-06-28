@@ -137,3 +137,30 @@ vim.api.nvim_create_autocmd('OptionSet', {
       })
    end,
 })
+
+vim.api.nvim_create_autocmd('InsertEnter', {
+   desc = 'Avoid unexpected behaviour when using snippets',
+   pattern = 'buffer_settings',
+   callback = function()
+      local luasnip = require('luasnip')
+      if luasnip.expand_or_jumpable() then
+         luasnip.unlink_current()
+      end
+   end,
+})
+
+vim.api.nvim_create_autocmd('CmdLineEnter', {
+   desc = 'Hotfix for cmdheight = 0 not showing :s///g',
+   pattern = 'buffer_settings',
+   callback = function ()
+      vim.opt.cmdheight = 1
+   end
+})
+
+vim.api.nvim_create_autocmd('CmdLineLeave', {
+   desc = 'Hotfix for cmdheight = 0 not showing :s///g',
+   pattern = 'buffer_settings',
+   callback = function ()
+      vim.opt.cmdheight = 0
+   end
+})

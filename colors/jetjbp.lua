@@ -183,6 +183,19 @@ h('LspReferenceRead', { fg = p.orange }) -- When you call a function or use a me
 h('LspReferenceText', { fg = p.orange })
 h('LspReferenceWrite', { fg = p.orange }) -- When you define a variable or function
 
--- -- Plugins -- TODO remove IndentBlankline
--- h('IndentBlanklineChar', { fg = p.fg_dim })
--- h('IndentBlanklineContextChar', { fg = p.blue })
+-- Plugins
+-- IndentBlankline
+h('IndentBlanklineChar', { fg = p.fg_dim })
+h('IndentBlanklineContextChar', { fg = p.blue })
+
+-- CMP
+h('CmpItemAbbrDeprecated', { strikethrough = true, fg = p.strong_green })
+h('CmpItemAbbrMatch', { bold = true, fg = p.maroon })
+h('CmpItemAbbrMatchFuzzy' , { bold = true, fg = p.maroon })
+h('CmpItemKindVariable', { fg = p.green })
+h('CmpItemKindInterface', { fg = p.green })
+h('CmpItemKindFunction', { fg = p.violet })
+h('CmpItemKindMethod', { fg = p.violet })
+h('CmpItemKindKeyword', { fg = p.violet })
+h('CmpItemKindProperty', { fg = p.upper3 })
+h('CmpItemKindUnit', { fg = p.upper3 })
