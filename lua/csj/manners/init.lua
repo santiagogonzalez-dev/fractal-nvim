@@ -28,6 +28,7 @@ vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { silent = tru
 vim.keymap.set('n', '<C-n>', ':bnext<CR>', { silent = true, desc = 'Switch to next buffer' })
 vim.keymap.set('n', '<C-p>', ':bprevious<CR>', { silent = true, desc = 'Switch to prev buffer' })
 
+vim.keymap.set('n', '<Leader>lcc', '<CMD>LuaCacheClear<CR>', { desc = 'Impatient.nvim: Clear cache' })
 vim.keymap.set('n', '<Leader>ps', '<CMD>PackerSync<CR>', { desc = 'Packer: PackerSync' })
 vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>', { desc = 'Packer: PackerCompile' })
 

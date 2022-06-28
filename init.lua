@@ -10,3 +10,4 @@ require('csj.core')
 -- vim.keymap.set('n', 'c(', 'ci(', { desc = 'c{ does the same and I prefer using it'})
 --
 -- * A better f t F T, also change in "
+-- * Settings do not get applied (till using netrw, telescope and other plugins) when opening certain files :e.g .gitignore
