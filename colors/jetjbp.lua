@@ -191,7 +191,7 @@ h('IndentBlanklineContextChar', { fg = p.blue })
 -- CMP
 h('CmpItemAbbrDeprecated', { strikethrough = true, fg = p.strong_green })
 h('CmpItemAbbrMatch', { bold = true, fg = p.maroon })
-h('CmpItemAbbrMatchFuzzy' , { bold = true, fg = p.maroon })
+h('CmpItemAbbrMatchFuzzy', { bold = true, fg = p.maroon })
 h('CmpItemKindVariable', { fg = p.green })
 h('CmpItemKindInterface', { fg = p.green })
 h('CmpItemKindFunction', { fg = p.violet })

@@ -35,7 +35,6 @@ function M.setup()
 end
 
 function M.lsp_highlight_document(client, bufnr)
-   -- if client.resolved_capabilities.document_highlight then -- Deprecated
    if client.server_capabilities.documentHighlightProvider then
       local lsp_highlight = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
       vim.api.nvim_clear_autocmds {
@@ -60,13 +59,13 @@ function M.on_attach(client, bufnr)
    M.lsp_highlight_document(client, bufnr)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not status_ok then
+   return
+end
 
--- local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
--- if not status_ok then
---    return
--- end
-
--- M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
 
 return M

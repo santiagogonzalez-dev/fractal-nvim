@@ -152,15 +152,15 @@ vim.api.nvim_create_autocmd('InsertEnter', {
 vim.api.nvim_create_autocmd('CmdLineEnter', {
    desc = 'Hotfix for cmdheight = 0 not showing :s///g',
    pattern = 'buffer_settings',
-   callback = function ()
+   callback = function()
       vim.opt.cmdheight = 1
-   end
+   end,
 })
 
 vim.api.nvim_create_autocmd('CmdLineLeave', {
    desc = 'Hotfix for cmdheight = 0 not showing :s///g',
    pattern = 'buffer_settings',
-   callback = function ()
+   callback = function()
       vim.opt.cmdheight = 0
-   end
+   end,
 })

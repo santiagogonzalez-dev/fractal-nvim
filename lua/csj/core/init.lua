@@ -6,12 +6,13 @@ vim.opt.shadafile = 'NONE'
 
 require('csj.autocommands')
 require('csj.netrw')
-vim.api.nvim_cmd({ cmd = 'colorscheme', args = { 'jetjbp' } }, {}) -- vim.cmd('colorscheme jetjbp')
 
 vim.schedule(function()
    if not vim.opt.loadplugins then
       vim.cmd('runtime plugin/**/*.vim plugin/**/*.lua')
    end
+
+   vim.api.nvim_cmd({ cmd = 'colorscheme', args = { 'jetjbp' } }, {})
    require('csj.plugins')
    require('csj.core.settings')
    require('csj.core.folds')
