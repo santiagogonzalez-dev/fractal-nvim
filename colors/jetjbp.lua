@@ -1,13 +1,14 @@
+-- TODO(santigo-zero): colors for diff (-d flag)
 vim.api.nvim_cmd({
-   cmd = 'highlight',
-   args = { 'clear' },
+  cmd = 'highlight',
+  args = { 'clear' },
 }, {}) -- vim.cmd('highlight clear')
 
 if 1 == vim.fn.exists('syntax_on') then
-   vim.api.nvim_cmd({
-      cmd = 'syntax',
-      args = { 'reset' },
-   }, {}) -- vim.cmd('syntax reset')
+  vim.api.nvim_cmd({
+    cmd = 'syntax',
+    args = { 'reset' },
+  }, {}) -- vim.cmd('syntax reset')
 end
 
 vim.opt.termguicolors = true
@@ -18,32 +19,32 @@ vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 -- Color palette
 -- :so $VIMRUNTIME/syntax/hitest.vim
 local p = {
-   bg_low = '#1a1724',
-   bg_med = '#1f1d2e',
-   bg_high = '#26233a',
+  bg_low = '#1a1724',
+  bg_med = '#1f1d2e',
+  bg_high = '#26233a',
 
-   upper3 = '#C6D0F5',
-   upper2 = '#B6BEE3',
-   upper1 = '#A5ABD2',
-   dimmed1 = '#74749C',
-   dimmed2 = '#63618B',
-   dimmed3 = '#534f79', -- Used for comments, foldtext and identation/whitespaces spaces
-   fg_dim = '#3d3a56',
+  upper3 = '#C6D0F5',
+  upper2 = '#B6BEE3',
+  upper1 = '#A5ABD2',
+  dimmed1 = '#74749C',
+  dimmed2 = '#63618B',
+  dimmed3 = '#534f79', -- Used for comments, foldtext and identation/whitespaces spaces
+  fg_dim = '#3d3a56',
 
-   red = '#eb6f92',
-   maroon = '#EBA0AC',
-   orange = '#FAB387',
-   yellow = '#f6c177',
-   accent = '#FA9336', -- Give accent to things that need attention
-   green = '#93c88e',
-   strong_green = '#559a8b',
-   blue = '#87B0F9',
-   purple = '#8689b9',
-   violet = '#9d86b9', -- Used in info and diagnostics too
+  red = '#eb6f92',
+  maroon = '#EBA0AC',
+  orange = '#FAB387',
+  yellow = '#f6c177',
+  accent = '#FA9336', -- Give accent to things that need attention
+  green = '#93c88e',
+  strong_green = '#559a8b',
+  blue = '#87B0F9',
+  purple = '#8689b9',
+  violet = '#9d86b9', -- Used in info and diagnostics too
 }
 
 local h = function(...)
-   return vim.api.nvim_set_hl(0, ...)
+  return vim.api.nvim_set_hl(0, ...)
 end
 
 -- Interface
@@ -109,7 +110,7 @@ h('Directory', { fg = p.blue }) -- Directories in NetRW
 -- h('Exception', { fg = 'red' })
 h('Error', { fg = p.red }) -- Errors
 h('Function', { fg = p.violet }) -- The name of the function, my_func(), not the keyword
-h('Keyword', { fg = p.violet, italic = true }) -- Like function, or local
+h('Keyword', { fg = p.violet }) -- Like function, or local
 -- h('Identifier', { fg = p.fg_reg })
 h('Include', { fg = p.violet }) -- from ... import ...
 -- h('Label', { fg = p.fg_reg })
