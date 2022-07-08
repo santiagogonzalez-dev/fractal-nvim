@@ -61,29 +61,9 @@ function M.setup()
   )
 end
 
-function M.lsp_highlight_document(client, bufnr)
-  if client.server_capabilities.documentHighlightProvider then
-    local lsp_highlight = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
-    vim.api.nvim_clear_autocmds {
-      buffer = bufnr,
-      group = 'lsp_document_highlight',
-    }
-    vim.api.nvim_create_autocmd('CursorHold', {
-      group = lsp_highlight,
-      buffer = bufnr,
-      callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd('CursorMoved', {
-      group = lsp_highlight,
-      buffer = bufnr,
-      callback = vim.lsp.buf.clear_references,
-    })
-  end
-end
-
 function M.on_attach(client, bufnr)
   require('csj.lsp.keymaps').keymaps(bufnr)
-  M.lsp_highlight_document(client, bufnr)
+  require('csj.core.highlightword').highlight_word_under_cursor(client, bufnr)
 end
 
 local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')

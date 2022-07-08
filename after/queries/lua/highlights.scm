@@ -150,9 +150,9 @@
 ; (("for" @repeat) (#set! conceal ""))
 (("while" @repeat) (#set! conceal "∞"))
 
-; for -> circle arrow
-(
-  (break_statement)@keyword
-  (#eq? @keyword  "break" )
-  (#set! conceal "")
-)
+; ; for -> circle arrow
+; (
+;   (break_statement)@keyword
+;   (#eq? @keyword  "break" )
+;   (#set! conceal "")
+; )

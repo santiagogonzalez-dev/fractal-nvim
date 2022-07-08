@@ -29,7 +29,7 @@ local function close_or_quit()
     vim.ui.select({ 'Close buffer', 'Quit neovim' }, {
       prompt = 'What do you want to do?',
       format_item = function(item)
-        return string.format('%s%s', '=> ', item)
+        return string.format('%s%s', '-> ', item)
       end,
     }, function(_, choice)
       if choice == 1 then

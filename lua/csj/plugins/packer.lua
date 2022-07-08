@@ -20,15 +20,11 @@ if not status_ok then
 end
 
 packer.init {
-  -- Path for packer_compiled.lua
-  compile_path = vim.fn.stdpath('config') .. '/lua/csj/plugins/packer_compiled.lua',
-
+  compile_path = vim.fn.stdpath('config') .. '/lua/csj/plugins/packer_compiled.lua', -- Path for packer_compiled.lua
   git = { clone_timeout = 360 },
-
-  -- Have packer use a popup window
   display = {
     open_fn = function()
-      return require('packer.util').float { border = 'rounded' }
+      return require('packer.util').float { border = 'rounded' } -- Have packer use a popup window
     end,
   },
 }
@@ -45,16 +41,6 @@ return packer.startup(function(use)
     'lewis6991/impatient.nvim',
     config = function()
       require('impatient').enable_profile()
-    end,
-  }
-
-  -- Accelerated jk
-  use {
-    'rainbowhxch/accelerated-jk.nvim',
-    keys = { 'j', 'k' },
-    config = function()
-      vim.keymap.set('n', 'j', '<Plug>(accelerated_jk_j)')
-      vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_k)')
     end,
   }
 
@@ -138,10 +124,7 @@ return packer.startup(function(use)
     'nvim-treesitter/nvim-treesitter',
     event = 'User LoadPlugins',
     run = ':TSUpdate',
-    requires = {
-      'JoosepAlviste/nvim-ts-context-commentstring',
-      after = 'Comment.nvim',
-    },
+    requires = { { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'Comment.nvim' } },
     config = function()
       require('csj.plugins.treesitter')
     end,

@@ -1,5 +1,7 @@
 local folds = {}
 
+-- When a block of code is folded some text appears in the line of the fold,
+-- this function reformats the code to be "smarter"
 ---@return string
 function folds.foldtext_header()
   local AVOID = {
@@ -79,8 +81,58 @@ function folds.fold_this_block()
     end
   end
 end
-vim.keymap.set('n', 'zfib', function()
-  return folds.fold_this_block()
+
+function folds.fold_block()
+  vim.opt.cmdheight = 1
+  -- -- Check if treesitter is working
+  -- local ok_ts, ts = pcall(require, 'vim.treesitter')
+  -- local ok_get_parser, parser = pcall(ts.get_parser, 0, vim.bo.filetype)
+  -- if not ok_ts or not ok_get_parser or not parser then
+  --   -- TODO(santigo-zero): If treesitter or the parser are not installed just
+  --   -- use the ip motion
+  --   return
+  -- end
+
+  -- local ts_utils = require('nvim-treesitter.ts_utils') -- Treesitter utilities
+  -- local node = ts_utils.get_node_at_cursor() -- Get the node under cursor
+
+  -- local NODES = {
+  --   'if_statement',
+  --   'for_statement',
+  --   'function_declaration',
+  --   'function_definition',
+  --   'class_definition',
+  -- }
+
+  -- local start_line, _, end_line, _ = ts_utils.get_node_range(node)
+  -- print(start_line .. '|' .. end_line)
+  if not packer_plugins['nvim-treesitter'] or packer_plugins['nvim-treesitter'].loaded == false then
+    return ' '
+  end
+  local f = require('nvim-treesitter').statusline {
+    indicator_size = 300,
+    type_patterns = {
+      'class',
+      'function',
+      'method',
+      'interface',
+      'type_spec',
+      'table',
+      'if_statement',
+      'for_statement',
+      'for_in_statement',
+    },
+  }
+  local context = string.format('%s', f) -- convert to string, it may be a empty ts node
+
+  if context == 'vim.NIL' then
+    return ' '
+  end
+  return ' ' .. context
+end
+
+vim.keymap.set('n', 'test', function()
+  return folds.fold_block()
 end)
 
 -- Fold settings

@@ -1,19 +1,18 @@
 local M = {}
-local component = require('csj.core.statusline.components')
+local component = require('csj.core.status.components')
 local utils = require('csj.utils')
 
 function M.active()
   vim.opt.laststatus = 3
 
   return table.concat {
-    '%#StatusLineAccent#',
     component.lineinfo(),
     '%#StatusLine#',
     ' ',
     component.filepath(),
-    '%#StatusLineAccentBlue#',
     component.filename(),
-    '%#StatusLine#',
+    -- ' ',
+    -- component.location_treesitter()
     ' ',
     component.filewritable(),
     '%=%', -- Put component in the right side
@@ -21,20 +20,17 @@ function M.active()
   }
 end
 
-function M.inactive()
-  return '%#InactiveNC#'
-end
-
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   callback = function()
-    vim.opt.statusline = '%!v:lua.require("csj.core.statusline").active()'
+    vim.opt.statusline = '%!v:lua.require("csj.core.status").active()'
+    -- vim.opt.winbar = '%!v:lua.require("csj.core.status.components").location_treesitter()'
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FileType', 'WinEnter' }, {
+vim.api.nvim_create_autocmd('FileType', {
   pattern = utils.IGNORE_FT,
   callback = function()
-    vim.opt.statusline = '%!v:lua.require("csj.core.statusline").inactive()'
+    vim.opt.statusline = '%#EndOfBuffer#' -- Change color of the statusline
   end,
 })
 

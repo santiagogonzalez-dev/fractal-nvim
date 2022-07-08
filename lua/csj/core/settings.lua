@@ -82,7 +82,7 @@ function _G.all_buffers_settings()
   vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
   vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
   vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
-  vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
+  -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {

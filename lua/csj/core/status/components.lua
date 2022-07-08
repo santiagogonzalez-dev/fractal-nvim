@@ -1,6 +1,31 @@
 local component = {}
 local utils = require('csj.utils')
 
+function component.treesitter_info()
+  if utils.avoid_filetype() then
+    return
+  end
+  local ts_utils = require('nvim-treesitter.ts_utils')
+  local start_line, _, end_line, _ = ts_utils.get_node_range(ts_utils.get_node_at_cursor())
+
+  return table.concat {
+    ' ',
+    ts_utils.get_node_at_cursor():type(),
+    '  ',
+    start_line,
+    '|',
+    end_line,
+  }
+end
+
+-- function component.location_treesitter()
+--   if utils.avoid_filetype() then
+--     return ' '
+--   else
+--     return string.format('%s%s', '%#StatusLine#', require('nvim-treesitter').statusline())
+--   end
+-- end
+
 function component.vcs()
   -- Requires gitsigns.nvim
   local git_info = vim.b.gitsigns_status_dict
@@ -52,6 +77,7 @@ function component.lineinfo()
   local line_lenght = vim.api.nvim_get_current_line()
 
   return table.concat {
+    '%#StatusLineAccent#',
     ' %P %l:%c',
     '',
     #line_lenght,
@@ -93,7 +119,7 @@ function component.filename()
     return ''
   end
 
-  return filename
+  return string.format('%s%s%s', '%#StatusLineAccentBlue#', filename, '%#StatusLine#')
 end
 
 return component

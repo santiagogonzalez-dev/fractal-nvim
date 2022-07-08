@@ -180,9 +180,9 @@ h('DiagnosticUnderlineWarn', { undercurl = true, sp = p.yellow })
 h('GitSignsChange', { fg = p.violet }) -- Don't set up a background for GitSigns
 h('GitSignsAdd', { fg = p.blue })
 h('GitSignsDelete', { fg = p.red })
-h('LspReferenceRead', { fg = p.orange }) -- When you call a function or use a method/class
-h('LspReferenceText', { fg = p.orange })
-h('LspReferenceWrite', { fg = p.orange }) -- When you define a variable or function
+h('LspReferenceRead', { fg = p.orange, bg = p.bg_high }) -- When you call a function or use a method/class
+h('LspReferenceText', { fg = p.orange, bg = p.bg_high })
+h('LspReferenceWrite', { fg = p.orange, bg = p.bg_high }) -- When you define a variable or function
 
 -- Plugins
 -- IndentBlankline

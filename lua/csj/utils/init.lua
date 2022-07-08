@@ -43,9 +43,6 @@ function utils.disable()
   vim.g.loaded_ruby_provider = 1
   vim.g.loaded_perl_provider = 1
 
-  -- Filetype
-  vim.g.did_load_filetypes = 0 -- Disable filetype.vim
-
   -- Shada
   vim.opt.shadafile = 'NONE'
 end
@@ -84,7 +81,6 @@ end
 -- cursor position.
 function utils.session()
   vim.opt.number = true -- Display line number on the side
-  vim.g.do_filetype_lua = 1 -- Enable filetype.lua
 
   -- Setup the initial load and maintain some settings between buffers
   local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
@@ -205,6 +201,7 @@ utils.IGNORE_FT = {
   'gitcommit',
   'gitdiff',
   'netrw',
+  'packer',
 }
 
 -- If there's a filetype that I want to ignore return true, so you can do
