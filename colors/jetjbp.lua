@@ -43,9 +43,7 @@ local p = {
   violet = '#9d86b9', -- Used in info and diagnostics too
 }
 
-local h = function(...)
-  return vim.api.nvim_set_hl(0, ...)
-end
+local h = function(...) return vim.api.nvim_set_hl(0, ...) end
 
 -- Interface
 h('CursorColumn', { bg = p.bg_med }) -- The column of the crosshair of the cursor

@@ -6,9 +6,7 @@ if not ok_cmp then
 end
 
 local ok_snippets, luasnip = pcall(require, 'luasnip')
-if not ok_snippets then
-  return
-end
+if not ok_snippets then return end
 
 require('luasnip/loaders/from_vscode').lazy_load()
 
@@ -47,9 +45,7 @@ local kind_icons = {
 
 cmp.setup {
   snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
+    expand = function(args) require('luasnip').lsp_expand(args.body) end,
   },
   window = {
     -- documentation = "native",

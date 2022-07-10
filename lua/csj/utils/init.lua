@@ -4,7 +4,7 @@ local utils = {}
 -- filetype.vim and the shada file.
 function utils.disable()
   -- Plugins
-  vim.g.loadplugins = false
+  vim.g.loadplugins = true
   vim.g.did_indent_on = 1
   vim.g.did_load_ftplugin = 1
 
@@ -63,16 +63,12 @@ function utils.colorscheme(name)
   local ok, _ = pcall(vim.api.nvim_cmd, { cmd = 'colorscheme', args = { name } }, {})
 
   if not ok then
-    vim.schedule(function()
-      vim.notify('Colorscheme not found', vim.log.levels.INFO)
-    end)
+    vim.schedule(function() vim.notify('Colorscheme not found', vim.log.levels.INFO) end)
     return false
   end
 
   vim.api.nvim_create_autocmd('UIEnter', {
-    callback = function()
-      vim.api.nvim_cmd({ cmd = 'colorscheme', args = { name } }, {})
-    end,
+    callback = function() vim.api.nvim_cmd({ cmd = 'colorscheme', args = { name } }, {}) end,
   })
   return true
 end
@@ -91,9 +87,7 @@ function utils.session()
     desc = 'Load the view of the buffer',
     group = save_sessions,
     callback = function()
-      if utils.avoid_filetype() then
-        return
-      end
+      if utils.avoid_filetype() then return end
       vim.cmd('silent! loadview') -- Load the view for the opened buffer
       return utils.restore_cursor_position() -- Restore the cursor position
     end,
@@ -103,9 +97,7 @@ function utils.session()
     desc = 'Save the view of the buffer',
     group = save_sessions,
     callback = function()
-      if utils.avoid_filetype() then
-        return
-      end
+      if utils.avoid_filetype() then return end
       return vim.cmd('silent! mkview')
     end,
   })
@@ -162,7 +154,8 @@ end
 ---@param option any
 ---@param T table
 function utils.append_by_random(option, T)
-  return option:append(T[math.random(1, #T)])
+  local randomized = option:append(T[math.random(1, #T)])
+  return randomized
 end
 
 -- Wrapper for functions, it works like pcall
@@ -173,16 +166,12 @@ end
 function utils.wrap(function_pointer, ...)
   local params = { ... }
 
-  return function()
-    function_pointer(unpack(params))
-  end
+  return function() function_pointer(unpack(params)) end
 end
 
 ---@param str string
 ---@return string|boolean @ Either an empty string or false
-function utils.is_empty(str)
-  return str == '' or str == nil
-end
+function utils.is_empty(str) return str == '' or str == nil end
 
 function utils.is_git()
   local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
@@ -206,9 +195,9 @@ utils.IGNORE_FT = {
 
 -- If there's a filetype that I want to ignore return true, so you can do
 -- something like:
---  if utils.avoid_filetype() then
---    return
---  end
+-- if utils.avoid_filetype() then
+--   return
+-- end
 ---@return boolean @ Return false if the filetype of the buffer is matching the
 ---table utils.IGNORE_FT
 function utils.avoid_filetype()
@@ -233,24 +222,17 @@ function utils.conditionals()
       -- comprobation each time you change of directory
       vim.api.nvim_create_autocmd('DirChanged', {
         group = conditionals,
-        callback = function()
-          return utils.is_git()
-        end,
+        callback = function() return utils.is_git() end,
       })
     end
   end)
 end
 
-function utils.get_fg_hl(hl_group)
-  return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
-end
-
-function utils.get_bg_hl(hl_group)
-  return vim.api.nvim_get_hl_by_name(hl_group, true).background
-end
+function utils.get_fg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).foreground end
+function utils.get_bg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).background end
 
 -- Return whatever it is that you have on the register "
----@return string
+---@return string @ From the register "
 function utils.get_yanked_text()
   -- Yanked text
   return vim.fn.getreg('"')
@@ -258,8 +240,6 @@ end
 
 -- Conditional for width of the terminal
 ---@return boolean
-function utils.hide_at_term_width()
-  return vim.opt.columns:get() > 90
-end
+function utils.hide_at_term_width() return vim.opt.columns:get() > 90 end
 
 return utils

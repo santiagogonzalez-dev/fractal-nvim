@@ -1,7 +1,5 @@
 local status_ok, gitsigns = pcall(require, 'gitsigns')
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 gitsigns.setup {
   signs = {
@@ -77,22 +75,14 @@ gitsigns.setup {
 
     -- Navigation
     map('n', ']c', function()
-      if vim.wo.diff then
-        return ']c'
-      end
-      vim.schedule(function()
-        gitsigns.next_hunk()
-      end)
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gitsigns.next_hunk() end)
       return '<Ignore>'
     end, { expr = true })
 
     map('n', '[c', function()
-      if vim.wo.diff then
-        return '[c'
-      end
-      vim.schedule(function()
-        gitsigns.prev_hunk()
-      end)
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gitsigns.prev_hunk() end)
       return '<Ignore>'
     end, { expr = true })
 
@@ -103,14 +93,10 @@ gitsigns.setup {
     map('n', '<leader>hu', gitsigns.undo_stage_hunk)
     map('n', '<leader>hR', gitsigns.reset_buffer)
     map('n', '<leader>hp', gitsigns.preview_hunk)
-    map('n', '<leader>hb', function()
-      gitsigns.blame_line { full = true }
-    end)
+    map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end)
     map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
     map('n', '<leader>hd', gitsigns.diffthis)
-    map('n', '<leader>hD', function()
-      gitsigns.diffthis('~')
-    end)
+    map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
     map('n', '<leader>td', gitsigns.toggle_deleted)
 
     -- Text object

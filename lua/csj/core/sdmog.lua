@@ -5,29 +5,29 @@ local utils = require('csj.utils')
 local dot_mark = vim.api.nvim_create_namespace('dot_mark_ns')
 local function show_dot_mark_on_gutter()
   local mark = vim.api.nvim_buf_get_mark(0, '.') -- Get the position of the . mark
-  if mark[1] == 0 and mark[2] == 0 then
-    return
-  end
+  if mark[1] == 0 and mark[2] == 0 then return end
 
   local get_hl = vim.api.nvim_get_hl_by_name
   utils.set_hl('ShowDotMarkOnGutter', {
     fg = get_hl('CursorLineNr', true).foreground,
     bg = get_hl('Normal', true).background,
   })
-  vim.g.dot_mark = vim.api.nvim_buf_set_extmark(
-    0,
-    dot_mark,
-    mark[1] - 1,
-    0,
-    { sign_text = '', sign_hl_group = 'ShowDotMarkOnGutter' }
+  vim.g.dot_mark = pcall(
+    function()
+      return vim.api.nvim_buf_set_extmark(
+        0,
+        dot_mark,
+        mark[1] - 1,
+        0,
+        { sign_text = '', sign_hl_group = 'ShowDotMarkOnGutter' }
+      )
+    end
   )
   return vim.g.dot_mark
 end
 
 local function remove_dot()
-  if vim.g.dot_mark then
-    return pcall(vim.api.nvim_buf_del_extmark, 0, dot_mark, vim.g.dot_mark)
-  end
+  if vim.g.dot_mark then return pcall(vim.api.nvim_buf_del_extmark, 0, dot_mark, vim.g.dot_mark) end
 end
 
 local dot_mark_group = vim.api.nvim_create_augroup('dot_mark_group', {})
@@ -41,9 +41,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 
 vim.api.nvim_create_autocmd('InsertEnter', {
   group = dot_mark_group,
-  callback = function()
-    return remove_dot()
-  end,
+  callback = function() return remove_dot() end,
 })
 
 vim.api.nvim_create_autocmd('CursorHold', {

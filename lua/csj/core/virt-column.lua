@@ -33,18 +33,14 @@ end
 ffi.cdef('int curwin_col_off(void);')
 
 function M.clear_buf(bufnr)
-  if M.namespace then
-    vim.api.nvim_buf_clear_namespace(bufnr, M.namespace, 0, -1)
-  end
+  if M.namespace then vim.api.nvim_buf_clear_namespace(bufnr, M.namespace, 0, -1) end
 end
 
 function M.setup(config)
   M.config = vim.tbl_deep_extend('force', M.config, config or {})
   M.namespace = vim.api.nvim_create_namespace('virt-column')
 
-  vim.api.nvim_create_user_command('VirtColumnRefresh', function()
-    commands.refresh('<bang> == !')
-  end, { bang = true })
+  vim.api.nvim_create_user_command('VirtColumnRefresh', function() commands.refresh('<bang> == !') end, { bang = true })
 
   local set_hl = require('csj.utils').set_hl
 
@@ -75,9 +71,7 @@ end
 function M.refresh()
   local bufnr = vim.api.nvim_get_current_buf()
 
-  if not vim.api.nvim_buf_is_loaded(bufnr) then
-    return
-  end
+  if not vim.api.nvim_buf_is_loaded(bufnr) then return end
 
   local config = vim.tbl_deep_extend('force', M.config, M.buffer_config[bufnr] or {})
   local winnr = vim.api.nvim_get_current_win()
@@ -104,9 +98,7 @@ function M.refresh()
     end
   end
 
-  table.sort(colorcolumn, function(a, b)
-    return a > b
-  end)
+  table.sort(colorcolumn, function(a, b) return a > b end)
 
   M.clear_buf(bufnr)
 

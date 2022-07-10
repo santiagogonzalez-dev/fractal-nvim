@@ -51,14 +51,10 @@ function M.setup()
   }
 
   vim.diagnostic.config(config)
-  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-    vim.lsp.handlers.hover,
-    { focusable = true, border = 'rounded' }
-  )
-  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-    { border = 'rounded ' }
-  )
+  vim.lsp.handlers['textDocument/hover'] =
+    vim.lsp.with(vim.lsp.handlers.hover, { focusable = true, border = 'rounded' })
+  vim.lsp.handlers['textDocument/signatureHelp'] =
+    vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded ' })
 end
 
 function M.on_attach(client, bufnr)
@@ -67,9 +63,7 @@ function M.on_attach(client, bufnr)
 end
 
 local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true

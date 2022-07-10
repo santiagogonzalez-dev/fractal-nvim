@@ -23,7 +23,7 @@ end
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   callback = function()
     vim.opt.statusline = '%!v:lua.require("csj.core.status").active()'
-    -- vim.opt.winbar = '%!v:lua.require("csj.core.status.components").location_treesitter()'
+    -- vim.opt_local.winbar = '%!v:lua.require("csj.core.status.components").location_treesitter()'
   end,
 })
 

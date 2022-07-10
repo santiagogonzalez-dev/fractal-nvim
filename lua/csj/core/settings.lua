@@ -22,6 +22,7 @@ local opts = {
   grepprg = 'rg --hidden --no-heading --vimgrep', -- Grep command
   ignorecase = true, -- Ignore case
   inccommand = 'split', -- Shows just like nosplit, but partially off-screen
+  infercase = true,
   joinspaces = true, -- Commands like gq or J insert two spaces on punctuation
   lazyredraw = true, -- Lazy redraw the screen
   matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
@@ -33,7 +34,7 @@ local opts = {
   shiftround = true, -- Round indent to multiple of "shiftwidth"
   shiftwidth = tab_lenght, -- Size of a > or < when indenting
   shortmess = 'oOstIFS', -- Style for displaying messages
-  showbreak = '↪ ', -- Shows when text is being wrapped
+  showbreak = '↪', -- '↳' Shows when text is being wrapped
   showmode = false, -- Show or hide the mode you are on in the status line
   showtabline = 0, -- Show top tab bar
   sidescrolloff = 9, -- Cursor does not reach sides
@@ -86,7 +87,7 @@ function _G.all_buffers_settings()
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
-  -- group = 'session_opts',
+  group = 'session_opts',
   callback = _G.all_buffers_settings,
 })
 _G.all_buffers_settings()
@@ -132,15 +133,20 @@ utils.append_by_random(vim.opt.fillchars, {
 })
 
 vim.opt.listchars:append {
+  -- eol = '↪',
+  -- eol = '↲',
   -- eol = '↴',
   -- eol = '⏎',
   -- eol = '',
+  -- space = '·',
+  -- tab = '-->',
+  -- trail = "·",
+  -- trail = '█',
   extends = '◣',
   nbsp = '␣',
   precedes = '◢',
-  tab = '-->',
-  trail = '█',
-  -- space = '·',
+  tab = '!·',
+  trail = '␣',
 }
 
 -- To appropriately highlight codefences

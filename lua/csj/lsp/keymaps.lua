@@ -2,9 +2,12 @@ local M = {}
 local utils = require('csj.utils')
 
 function M.keymaps(bufnr)
-  vim.keymap.set({ 'n', 'v', 'x' }, '<Leader>ls', function()
-    return vim.lsp.stop_client(vim.lsp.get_active_clients())
-  end, { buffer = bufnr, desc = 'Stop the LS' })
+  vim.keymap.set(
+    { 'n', 'v', 'x' },
+    '<Leader>ls',
+    function() return vim.lsp.stop_client(vim.lsp.get_active_clients()) end,
+    { buffer = bufnr, desc = 'Stop the LS' }
+  )
 
   vim.keymap.set(
     { 'v', 'x' },
@@ -15,17 +18,21 @@ function M.keymaps(bufnr)
   vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'Code actions' })
 
   -- Formatting
-  vim.keymap.set('n', '<Leader><Leader>f', function()
-    vim.lsp.buf.format { async = true }
-  end, { buffer = bufnr, desc = 'Format the file' })
+  vim.keymap.set(
+    'n',
+    '<Leader><Leader>f',
+    function() vim.lsp.buf.format { async = true } end,
+    { buffer = bufnr, desc = 'Format the file' }
+  )
 
-  vim.keymap.set({ 'v', 'x' }, '<Leader><Leader>f', function()
-    vim.lsp.buf.range_formatting()
-  end, { buffer = bufnr, desc = 'Range formatting the file' })
+  vim.keymap.set(
+    { 'v', 'x' },
+    '<Leader><Leader>f',
+    function() vim.lsp.buf.range_formatting() end,
+    { buffer = bufnr, desc = 'Range formatting the file' }
+  )
 
-  vim.api.nvim_create_user_command('Format', function()
-    vim.lsp.buf.format { async = false }
-  end, {})
+  vim.api.nvim_create_user_command('Format', function() vim.lsp.buf.format { async = false } end, {})
 
   -- Diagnostics
   vim.keymap.set(
@@ -55,9 +62,7 @@ function M.keymaps(bufnr)
     end
   end, { buffer = bufnr, desc = 'Toggle diagnostics' })
 
-  vim.keymap.set('n', 'gl', function()
-    return utils.not_interfere_on_float() and vim.lsp.buf.hover()
-  end, {
+  vim.keymap.set('n', 'gl', function() return utils.not_interfere_on_float() and vim.lsp.buf.hover() end, {
     buffer = bufnr,
     desc = 'Show a description of the word under cursor',
   })
@@ -99,9 +104,7 @@ function M.keymaps(bufnr)
       vim.cmd('stopinsert')
     end, { buffer = created_buffer })
 
-    vim.keymap.set('i', '<CR>', function()
-      return post(rename_old)
-    end, { buffer = created_buffer })
+    vim.keymap.set('i', '<CR>', function() return post(rename_old) end, { buffer = created_buffer })
   end, { buffer = bufnr, desc = 'Rename using LSP' })
 end
 

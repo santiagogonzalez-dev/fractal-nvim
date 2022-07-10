@@ -15,9 +15,7 @@ end
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, 'packer')
-if not status_ok then
-  return
-end
+if not status_ok then return end
 
 packer.init {
   compile_path = vim.fn.stdpath('config') .. '/lua/csj/plugins/packer_compiled.lua', -- Path for packer_compiled.lua
@@ -39,9 +37,7 @@ return packer.startup(function(use)
   -- Impatient
   use {
     'lewis6991/impatient.nvim',
-    config = function()
-      require('impatient').enable_profile()
-    end,
+    config = function() require('impatient').enable_profile() end,
   }
 
   -- Project
@@ -125,9 +121,7 @@ return packer.startup(function(use)
     event = 'User LoadPlugins',
     run = ':TSUpdate',
     requires = { { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'Comment.nvim' } },
-    config = function()
-      require('csj.plugins.treesitter')
-    end,
+    config = function() require('csj.plugins.treesitter') end,
   }
 
   -- GitSigns
@@ -135,9 +129,7 @@ return packer.startup(function(use)
     'lewis6991/gitsigns.nvim',
     event = 'User IsGit',
     requires = 'nvim-lua/plenary.nvim',
-    config = function()
-      require('csj.plugins.gitsigns')
-    end,
+    config = function() require('csj.plugins.gitsigns') end,
   }
 
   -- Telescope
@@ -170,9 +162,7 @@ return packer.startup(function(use)
   use {
     'neovim/nvim-lspconfig',
     event = 'User LoadPlugins',
-    config = function()
-      require('csj.lsp')
-    end,
+    config = function() require('csj.lsp') end,
   }
 
   -- LSP installer
@@ -185,9 +175,7 @@ return packer.startup(function(use)
   use {
     'jose-elias-alvarez/null-ls.nvim',
     opt = true,
-    config = function()
-      require('csj.lsp.null-ls')
-    end,
+    config = function() require('csj.lsp.null-ls') end,
   }
 
   -- Completion, snippets
@@ -203,9 +191,7 @@ return packer.startup(function(use)
       'hrsh7th/cmp-cmdline',
       'L3MON4D3/LuaSnip',
     },
-    config = function()
-      require('csj.plugins.cmp')
-    end,
+    config = function() require('csj.plugins.cmp') end,
   }
 
   -- use {
@@ -223,8 +209,6 @@ return packer.startup(function(use)
   --    event = 'User LoadPlugins',
   -- }
 
-  if PACKER_BOOTSTRAP then
-    require('packer').sync()
-  end
+  if PACKER_BOOTSTRAP then require('packer').sync() end
   return packer
 end)
