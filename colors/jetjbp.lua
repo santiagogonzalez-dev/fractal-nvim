@@ -164,6 +164,10 @@ h('TSURI', { link = 'String' }) -- Links
 h('TSVariable', { fg = p.dimmed1 })
 -- h('TSWarning', { link = 'Todo' }) -- Is this actually a treesitter hl group?
 h('TSKeywordOperator', { fg = p.violet })
+h('TSProperty', { fg = p.strong_green })
+h('TSTagDelimiter', { fg = p.dimmed1 })
+h('TSNone', { fg = p.dimmed1 })
+h('TSTag', { fg = p.dimmed1 })
 
 -- Diagnostics
 -- LspCodeLens LspCodeLensSeparator

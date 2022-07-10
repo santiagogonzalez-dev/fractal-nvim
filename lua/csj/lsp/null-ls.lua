@@ -9,8 +9,8 @@ local completion = null.builtins.completion
 null.setup {
   sources = {
     actions.gitsigns,
-    actions.eslint,
-    diag.eslint,
+    -- actions.eslint,
+    -- diag.eslint,
     actions.shellcheck,
     diag.shellcheck,
     format.stylua,
@@ -59,7 +59,6 @@ null.setup {
       prefer_local = '.venv/bin',
       extra_args = { '--max-line-lenth', '88' },
     },
-    diag.eslint,
     completion.spell,
   },
 }
