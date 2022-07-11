@@ -8,8 +8,6 @@ vim.opt.guicursor:append('r-cr-o:hor20')
 -- Settings
 local tab_lenght = 4
 local opts = {
-  -- pumblend = 9, -- Transparency for the pop up menu
-  -- winblend = 9, -- Transparency for windows
   breakindent = true, -- Every wrapped line will continue visually indented
   clipboard = 'unnamedplus', -- Clipboard mode
   cmdheight = 0,
@@ -28,6 +26,7 @@ local opts = {
   matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
   mouse = 'ar', -- Mouse options, all enabled
   mousefocus = true, -- Focusing cursor on the window with the keyboard focus
+  pumblend = 9, -- Transparency for the pop up menu
   pumheight = 6, -- Amount of lines shown in completion menus
   scrolloff = 9, -- Cursor does not reach top/bottom
   secure = true, -- Self-explanatory
@@ -56,6 +55,7 @@ local opts = {
   undolevels = 6000, -- Levels of undoing
   updatetime = 300, -- Faster completion, it's the time for CursorHold event
   whichwrap = '<,>,[,],h,l,b,s,~', -- Jump to the next line if you reach eol
+  winblend = 9, -- Transparency for windows
   winhighlight = 'Normal:ActiveWindow,NormalNC:InactiveWindow',
   wrap = false, -- Wrap lines
 }

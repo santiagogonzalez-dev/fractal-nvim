@@ -110,9 +110,9 @@ vim.keymap.set('n', 'test', function() return folds.fold_block() end)
 vim.opt.jumpoptions = 'stack,view'
 vim.opt.foldtext = 'v:lua.require("csj.core.folds").foldtext_header()'
 vim.opt.foldcolumn = 'auto:3' -- Folds column
--- vim.opt.foldmethod = 'manual'
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldmethod = 'manual'
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 vim.opt.fillchars:append {
   fold = ' ', -- Filling foldtext

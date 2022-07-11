@@ -4,7 +4,7 @@ local utils = {}
 -- filetype.vim and the shada file.
 function utils.disable()
   -- Plugins
-  vim.g.loadplugins = true
+  vim.g.loadplugins = false
   vim.g.did_indent_on = 1
   vim.g.did_load_ftplugin = 1
 

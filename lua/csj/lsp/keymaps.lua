@@ -18,12 +18,11 @@ function M.keymaps(bufnr)
   vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'Code actions' })
 
   -- Formatting
-  vim.keymap.set(
-    'n',
-    '<Leader><Leader>f',
-    function() vim.lsp.buf.format { async = true } end,
-    { buffer = bufnr, desc = 'Format the file' }
-  )
+  vim.keymap.set('n', '<Leader><Leader>f', function()
+    vim.cmd('mkview')
+    vim.lsp.buf.format { async = false }
+    vim.cmd('loadview')
+  end, { buffer = bufnr, desc = 'Format the file' })
 
   vim.keymap.set(
     { 'v', 'x' },
@@ -32,7 +31,11 @@ function M.keymaps(bufnr)
     { buffer = bufnr, desc = 'Range formatting the file' }
   )
 
-  vim.api.nvim_create_user_command('Format', function() vim.lsp.buf.format { async = false } end, {})
+  vim.api.nvim_create_user_command('Format', function()
+    vim.cmd('mkview')
+    vim.lsp.buf.format { async = false }
+    vim.cmd('loadview')
+  end, {})
 
   -- Diagnostics
   vim.keymap.set(
