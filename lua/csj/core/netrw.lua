@@ -1,3 +1,5 @@
+-- NetRW config.
+
 local utils = require('csj.core.utils')
 
 vim.g.netrw_banner = 0 -- Toggle the banner

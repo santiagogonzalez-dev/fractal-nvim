@@ -19,7 +19,7 @@ function _G.all_buffers_settings()
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
-  group = 'session_opts',
+  -- group = 'session_opts',
   callback = _G.all_buffers_settings,
 })
 _G.all_buffers_settings()
@@ -32,11 +32,14 @@ return {
 
   -- Load modules
   modules = {
-    folds = true,
     acceleratedjk = true,
+    folds = true,
+    general = true,
+    keymaps = true,
+    netrw = true,
     notifications = true,
-    virtcolumn = true,
     skeletons = true,
+    virtcolumn = true,
   },
 
   -- Settings
