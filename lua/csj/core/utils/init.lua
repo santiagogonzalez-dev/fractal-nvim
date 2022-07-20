@@ -1,8 +1,17 @@
 local utils = {}
 
+function utils.settings(opts)
+  for k, v in pairs(opts) do
+    vim.opt[k] = v
+  end
+end
+
 -- Disable things I'm not going to use, this include builtin plugins, providers,
 -- filetype.vim and the shada file.
-function utils.disable()
+function utils.disable(mode)
+  if not mode then
+    return
+  end
   -- Plugins
   vim.g.loadplugins = false
   vim.g.did_indent_on = 1
@@ -76,8 +85,6 @@ end
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- cursor position.
 function utils.session()
-  vim.opt.number = true -- Display line number on the side
-
   -- Setup the initial load and maintain some settings between buffers
   local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
 

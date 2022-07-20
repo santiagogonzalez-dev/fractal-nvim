@@ -6,7 +6,7 @@ function M.return_read_command()
     'silent!',
     '0r',
     vim.fn.stdpath('config'),
-    '/after/ftplugin/skeleton',
+    '/user/skeleton/skeleton',
     vim.fn.expand('%f'):match('^.+(%..+)$'),
   }
 end

@@ -1,6 +1,6 @@
 local M = {}
 local component = require('csj.core.status.components')
-local utils = require('csj.utils')
+local utils = require('csj.core.utils')
 
 function M.active()
   vim.opt.laststatus = 3

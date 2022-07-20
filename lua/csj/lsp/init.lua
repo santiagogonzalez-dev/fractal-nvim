@@ -41,4 +41,4 @@ require('csj.lsp.top_right_lsp_diagnostics')
 require('packer').loader('null-ls.nvim')
 require('csj.lsp.null-ls')
 
-vim.api.nvim_cmd({ cmd = 'LspStart' }, {}) -- vim.cmd('LspStart')
+-- vim.api.nvim_cmd({ cmd = 'LspStart' }, {}) -- vim.cmd('LspStart')

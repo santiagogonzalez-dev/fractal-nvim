@@ -31,7 +31,8 @@ return packer.startup(function(use)
   use('wbthomason/packer.nvim') -- Packer
   use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
   use { 'metakirby5/codi.vim', cmd = 'Codi' } -- Codi
-  use('tpope/vim-surround') -- Surround
+  -- use('tpope/vim-surround') -- Surround
+  require('csj.plugins.surround')
   use('kyazdani42/nvim-web-devicons')
 
   -- Dim unused functions, variables, parameters
@@ -231,6 +232,7 @@ return packer.startup(function(use)
     'hrsh7th/nvim-cmp',
     requires = {
       'saadparwaiz1/cmp_luasnip',
+      'rafamadriz/friendly-snippets',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-buffer',

@@ -1,4 +1,4 @@
-local utils = require('csj.utils')
+local utils = require('csj.core.utils')
 
 -- TODO(santigo-zero): The . mark isn't going to be set on a buffer we have never entered, so don't set the extmark
 -- Other ideas -> use virtualtext, like a ticket '.    笠  mark

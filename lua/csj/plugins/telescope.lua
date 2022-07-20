@@ -1,4 +1,4 @@
-local utils = require('csj.utils')
+local utils = require('csj.core.utils')
 local status_ok, telescope = pcall(require, 'telescope')
 if not status_ok then return end
 

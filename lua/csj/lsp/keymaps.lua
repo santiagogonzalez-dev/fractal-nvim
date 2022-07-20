@@ -1,5 +1,5 @@
 local M = {}
-local utils = require('csj.utils')
+local utils = require('csj.core.utils')
 
 function M.keymaps(bufnr)
   vim.keymap.set(

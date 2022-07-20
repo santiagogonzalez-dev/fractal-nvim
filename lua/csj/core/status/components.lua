@@ -1,5 +1,5 @@
 local component = {}
-local utils = require('csj.utils')
+local utils = require('csj.core.utils')
 
 function component.treesitter_info()
   if utils.avoid_filetype() then return end

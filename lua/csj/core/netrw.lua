@@ -1,4 +1,4 @@
-local utils = require('csj.utils')
+local utils = require('csj.core.utils')
 
 vim.g.netrw_banner = 0 -- Toggle the banner
 vim.g.netrw_keepdir = 0 -- Keep the current directory and the browsing directory synced.
