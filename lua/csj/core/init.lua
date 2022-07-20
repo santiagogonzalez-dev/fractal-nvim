@@ -1,6 +1,6 @@
 local config_path = vim.fn.stdpath('config')
 local utils = require('csj.core.utils')
-local user
+local user = dofile(string.format('%s%s', config_path, '/user/init.lua'))
 
 -- Some settings are stored under `./user`, so add it to the lua path
 package.path = table.concat {
@@ -11,9 +11,6 @@ package.path = table.concat {
   config_path,
   '/user/?/init.lua;',
 }
-
--- This should define some user settings and return a table with user configs
-user = dofile(string.format('%s%s', config_path, '/user/init.lua'))
 
 utils.disable(user.disable_builtins) -- Whether or not to disable builtin plugins.
 utils.colorscheme(user.colorscheme) -- Apply colorscheme.

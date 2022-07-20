@@ -1,6 +1,5 @@
 -- Session managment
 local session_opts = vim.api.nvim_create_augroup('session_opts', { clear = false })
-local utils = require('csj.core.utils')
 
 vim.api.nvim_create_autocmd('FocusGained', {
   desc = 'Check if any file has changed when Vim is focused',
@@ -128,29 +127,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = 'session_opts',
   callback = function() pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 }) end,
 })
-
--- vim.api.nvim_create_autocmd('CursorMoved', {
---   desc = 'Enable crosshair when we are moving the cursor',
---   -- group = 'session_opts',
---   callback = function()
---     vim.opt.cursorcolumn = true
---     vim.opt.cursorline = true
---     vim.opt.concealcursor = ''
---     vim.g.cursor_show = true
---   end,
--- })
-
--- vim.api.nvim_create_autocmd('CursorHold', {
---   desc = 'Disable crosshair when we are not moving the cursor',
---   -- group = 'session_opts',
---   callback = function()
---     vim.g.cursor_show = false
---     vim.defer_fn(function()
---       if vim.g.cursor_show == false then
---         vim.opt.cursorcolumn = false
---         vim.opt.cursorline = false
---         vim.opt.concealcursor = 'n'
---       end
---     end, 8000)
---   end,
--- })
