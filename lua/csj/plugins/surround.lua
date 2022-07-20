@@ -1,3 +1,3 @@
 return {
-  'tpope/vim-surround' -- Surround
+  'tpope/vim-surround', -- Surround
 }

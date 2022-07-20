@@ -28,8 +28,18 @@ _G.all_buffers_settings()
 return {
   colorscheme = 'jetjbp', -- Colorscheme
   restore = true, -- Restore session, cursor and view
+  disable_builtins = true, -- Disable builtins plugins
 
-  -- General settings
+  -- Load modules
+  modules = {
+    folds = true,
+    acceleratedjk = true,
+    notifications = true,
+    virtcolumn = true,
+    skeletons = true,
+  },
+
+  -- Settings
   opts = {
     breakindent = true, -- Every wrapped line will continue visually indented
     clipboard = 'unnamedplus', -- Clipboard mode

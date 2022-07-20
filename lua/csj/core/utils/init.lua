@@ -1,5 +1,10 @@
 local utils = {}
 
+function utils.load(should_load, module)
+  if should_load ~= nil then
+    require(string.format('csj.core.%s', module)) end
+end
+
 function utils.settings(opts)
   for k, v in pairs(opts) do
     vim.opt[k] = v
@@ -7,11 +12,10 @@ function utils.settings(opts)
 end
 
 -- Disable things I'm not going to use, this include builtin plugins, providers,
--- filetype.vim and the shada file.
+-- and the shada file.
 function utils.disable(mode)
-  if not mode then
-    return
-  end
+  if not mode then return end
+
   -- Plugins
   vim.g.loadplugins = false
   vim.g.did_indent_on = 1
@@ -63,13 +67,18 @@ end
 -- We are basically applying the colorscheme at first, and set an
 -- autocommand to reapply the colorscheme when everything has been loaded.
 --
--- To modify this colorscheme go to ./colors/jetjbp.lua from the root of this
+-- To modify this colorscheme go to `./colors/jetjbp.lua`
 -- repo.
 ---@param name string
 ---@return boolean @ Returns false and sends notification if it fails to
 ---find/load the colorscheme and
 function utils.colorscheme(name)
-  local ok, _ = pcall(vim.api.nvim_cmd, { cmd = 'colorscheme', args = { name } }, {})
+  local ok
+  if name ~= nil or name ~= '' then
+    ok, _ = pcall(vim.api.nvim_cmd, { cmd = 'colorscheme', args = { name } }, {})
+  else
+    ok = false
+  end
 
   if not ok then
     vim.schedule(function() vim.notify('Colorscheme not found', vim.log.levels.INFO) end)
@@ -77,14 +86,20 @@ function utils.colorscheme(name)
   end
 
   vim.api.nvim_create_autocmd('UIEnter', {
-    callback = function() vim.api.nvim_cmd({ cmd = 'colorscheme', args = { name } }, {}) end,
+    callback = function()
+      vim.api.nvim_cmd({
+        cmd = 'colorscheme',
+        args = { name },
+      }, {})
+    end,
   })
   return true
 end
 
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- cursor position.
-function utils.session()
+function utils.session(mode)
+  if not mode then return end
   -- Setup the initial load and maintain some settings between buffers
   local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
 
@@ -236,6 +251,7 @@ function utils.conditionals()
 end
 
 function utils.get_fg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).foreground end
+
 function utils.get_bg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).background end
 
 -- Return whatever it is that you have on the register "

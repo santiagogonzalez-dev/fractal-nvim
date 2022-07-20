@@ -77,38 +77,39 @@ function M.keymaps(bufnr)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'Declarations' })
   -- vim.keymap.set('n', 'gr', vim.lsp.buf.references) -- References
 
-  vim.keymap.set('n', 'r', function()
-    local function post(rename_old)
-      vim.cmd('stopinsert!')
-      local new = vim.api.nvim_get_current_line()
-      vim.schedule(function()
-        vim.api.nvim_win_close(0, true)
-        vim.lsp.buf.rename(vim.trim(new))
-      end)
-      -- vim.notify(rename_old .. '  ' .. new)
-      return vim.notify(string.format('%s%s%s', rename_old, '  ', new))
-    end
+  -- vim.keymap.set('n', 'r', function()
+  --   local function post(rename_old)
+  --     vim.cmd('stopinsert!')
+  --     local new = vim.api.nvim_get_current_line()
+  --     vim.schedule(function()
+  --       vim.api.nvim_win_close(0, true)
+  --       vim.lsp.buf.rename(vim.trim(new))
+  --     end)
+  --     -- vim.notify(rename_old .. '  ' .. new)
+  --     return vim.notify(string.format('%s%s%s', rename_old, '  ', new))
+  --   end
 
-    local rename_old = vim.fn.expand('<cword>')
-    local created_buffer = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_open_win(created_buffer, true, {
-      relative = 'cursor',
-      style = 'minimal',
-      border = 'rounded',
-      row = -3,
-      col = 0,
-      width = 20,
-      height = 1,
-    })
-    vim.cmd('startinsert')
+  --   local rename_old = vim.fn.expand('<cword>')
+  --   local created_buffer = vim.api.nvim_create_buf(false, true)
+  --   vim.api.nvim_open_win(created_buffer, true, {
+  --     relative = 'cursor',
+  --     style = 'minimal',
+  --     border = 'rounded',
+  --     row = -3,
+  --     col = 0,
+  --     width = 20,
+  --     height = 1,
+  --   })
+  --   vim.cmd('startinsert')
 
-    vim.keymap.set('i', '<ESC>', function()
-      vim.cmd('q')
-      vim.cmd('stopinsert')
-    end, { buffer = created_buffer })
+  --   vim.keymap.set('i', '<ESC>', function()
+  --     vim.cmd('q')
+  --     vim.cmd('stopinsert')
+  --   end, { buffer = created_buffer })
 
-    vim.keymap.set('i', '<CR>', function() return post(rename_old) end, { buffer = created_buffer })
-  end, { buffer = bufnr, desc = 'Rename using LSP' })
+  --   vim.keymap.set('i', '<CR>', function() return post(rename_old) end, { buffer = created_buffer })
+  -- end, { buffer = bufnr, desc = 'Rename using LSP' })
+  vim.keymap.set('n', 'r', vim.lsp.buf.rename)
 end
 
 return M

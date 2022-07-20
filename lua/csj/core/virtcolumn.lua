@@ -1,3 +1,5 @@
+-- Modified version of lukas-reineke virt-column.nvim, overrides the colorcolumn.
+
 local ffi = require('ffi')
 local utils = {}
 local commands = {}
@@ -20,7 +22,7 @@ end
 function commands.refresh(bang)
   if bang then
     local win = vim.api.nvim_get_current_win()
-    vim.cmd('noautocmd windo lua require("csj.core.virt-column").refresh()')
+    vim.cmd('noautocmd windo lua require("csj.core.virtcolumn").refresh()')
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_set_current_win(win)
       M.refresh()
@@ -38,7 +40,7 @@ end
 
 function M.setup(config)
   M.config = vim.tbl_deep_extend('force', M.config, config or {})
-  M.namespace = vim.api.nvim_create_namespace('virt-column')
+  M.namespace = vim.api.nvim_create_namespace('virtcolumn')
 
   vim.api.nvim_create_user_command('VirtColumnRefresh', function() commands.refresh('<bang> == !') end, { bang = true })
 
@@ -49,7 +51,7 @@ function M.setup(config)
   set_hl('VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
   set_hl('ColorColumn', {})
 
-  vim.api.nvim_create_augroup('_virt-column', {})
+  vim.api.nvim_create_augroup('_virtcolumn', {})
   vim.api.nvim_create_autocmd({
     'BufWinEnter',
     'CompleteChanged',
@@ -59,7 +61,7 @@ function M.setup(config)
     'TextChangedI',
     'UIEnter',
     'WinEnter',
-  }, { group = '_virt-column', command = 'VirtColumnRefresh' })
+  }, { group = '_virtcolumn', command = 'VirtColumnRefresh' })
   -- vim.schedule_wrap(vim.cmd('VirtColumnRefresh'))
 end
 

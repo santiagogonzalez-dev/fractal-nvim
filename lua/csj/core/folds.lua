@@ -1,3 +1,5 @@
+-- Override default icons and settings related to folds.
+
 local folds = {}
 
 -- When a block of code is folded some text appears in the line of the fold,
