@@ -14,17 +14,11 @@ package.path = table.concat {
 
 utils.disable(user.disable_builtins) -- Whether or not to disable builtin plugins.
 utils.colorscheme(user.colorscheme) -- Apply colorscheme.
-
--- Load plugins
-require('csj.plugins')
-
 utils.conditionals() -- Conditionals to load plugins and modules.
 
--- Load core modules
+require('csj.plugins') -- Load plugins.
 require('csj.core.autocmds') -- Some common autocommands.
-require('csj.core.status') -- Simple pure lua statusline, winbar and other indicators.
-require('csj.core.sdmog') -- Show where the . mark is in the file with an icon on the sign column(gutter).
-require('csj.core.strict_cursor') -- Adds a second mode cursor.
+require('csj.core.keymaps')
 require('csj.core.afiolb') -- Ask user for input if there is only one active normal buffer.
 
 -- Load modules and settings specified by the user

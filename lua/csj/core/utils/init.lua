@@ -1,10 +1,30 @@
 local utils = {}
 
-function utils.load(should_load, module)
-  if should_load ~= nil then
-    require(string.format('csj.core.%s', module)) end
+---@return boolean|string|number|nil @ Either nil or the value of require()
+function utils.prequire(package)
+  local status, lib = pcall(require, package)
+  if status then
+    return lib
+  else
+    vim.schedule(function()
+      -- If you don't schedule this and you are using the notifications module
+      -- the errors will still showup on the terminal
+      vim.notify('Failed to require "' .. package .. '" from ' .. vim.log.levels.WARN)
+      -- vim.notify('Failed to require "' .. package .. '" from ' .. debug.getinfo(2).source)
+      -- This ^^ one will print the error in the terminal
+    end)
+    return nil
+  end
 end
 
+---@param should_load boolean
+---@param module string
+---@return nil
+function utils.load(should_load, module)
+  if should_load ~= nil then utils.prequire(string.format('csj.core.%s', module)) end
+end
+
+---@param opts table
 function utils.settings(opts)
   for k, v in pairs(opts) do
     vim.opt[k] = v
@@ -13,8 +33,10 @@ end
 
 -- Disable things I'm not going to use, this include builtin plugins, providers,
 -- and the shada file.
+---@param mode boolean
+---@return boolean
 function utils.disable(mode)
-  if not mode then return end
+  if not mode then return false end
 
   -- Plugins
   vim.g.loadplugins = false
@@ -58,6 +80,7 @@ function utils.disable(mode)
 
   -- Shada
   vim.opt.shadafile = 'NONE'
+  return true
 end
 
 -- This is a simple wrapper that avoids problems, like colors not getting
@@ -98,8 +121,10 @@ end
 
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- cursor position.
+---@param mode boolean
+---@return boolean
 function utils.session(mode)
-  if not mode then return end
+  if not mode then return false end
   -- Setup the initial load and maintain some settings between buffers
   local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
 
@@ -129,11 +154,13 @@ function utils.session(mode)
     cmd = 'rshada',
     bang = true,
   }, {})
+  return true
 end
 
 -- Wrapper for setting highlights groups
 ---@param mode string|table
 ---@param table table
+---@return nil
 function utils.set_hl(mode, table)
   -- Highlights
   if type(mode) == 'table' then
@@ -251,7 +278,6 @@ function utils.conditionals()
 end
 
 function utils.get_fg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).foreground end
-
 function utils.get_bg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).background end
 
 -- Return whatever it is that you have on the register "

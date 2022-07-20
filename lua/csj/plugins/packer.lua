@@ -31,8 +31,7 @@ return packer.startup(function(use)
   use('wbthomason/packer.nvim') -- Packer
   use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
   use { 'metakirby5/codi.vim', cmd = 'Codi' } -- Codi
-  -- use('tpope/vim-surround') -- Surround
-  require('csj.plugins.surround')
+  use('tpope/vim-surround') -- Surround
   use('kyazdani42/nvim-web-devicons')
 
   -- Dim unused functions, variables, parameters

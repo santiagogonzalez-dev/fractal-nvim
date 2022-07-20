@@ -35,10 +35,12 @@ return {
     acceleratedjk = true,
     folds = true,
     general = true,
-    keymaps = true,
     netrw = true,
-    notifications = true,
+    notifications = true, -- Override notifications to integrate with the DE/WM
+    sdmog = true, -- Show where the . mark is in the file with an icon on the sign column(gutter).
     skeletons = true,
+    status = true, -- Simple pure lua statusline, winbar and other indicators.
+    strict_cursor = true, -- Adds a second mode cursor.
     virtcolumn = true,
   },
 
@@ -63,7 +65,7 @@ return {
     matchpairs = '(:),{:},[:],<:>,=:;', -- Match pairs
     mousefocus = true, -- Focusing cursor on the window with the keyboard focus
     number = true,
-    pumblend = 9, -- Transparency for the pop up menu
+    -- pumblend = 9, -- Transparency for the pop up menu
     pumheight = 6, -- Amount of lines shown in completion menus
     relativenumber = true,
     scrolloff = 9, -- Cursor does not reach top/bottom
