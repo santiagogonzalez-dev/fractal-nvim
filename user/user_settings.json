@@ -5,8 +5,8 @@
 
   "modules": {
     "acceleratedjk": true,
-    "folds": true,
     "afiolb": true,
+    "folds": true,
     "netrw": true,
     "notifications": true,
     "sdmog": true,
@@ -17,8 +17,6 @@
   },
 
   "opts": {
-    "number": true,
-    "relativenumber": true,
     "breakindent": true,
     "clipboard": "unnamedplus",
     "cmdheight": 0,
@@ -38,8 +36,10 @@
     "matchpairs": "(:),{:},[:],<:>,=:;",
     "mousefocus": true,
     "number": true,
+    "number": true,
     "pumblend": 9,
     "pumheight": 6,
+    "relativenumber": true,
     "relativenumber": true,
     "scrolloff": 9,
     "secure": true,
