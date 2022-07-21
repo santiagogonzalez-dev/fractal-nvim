@@ -1,6 +1,5 @@
 local csj = require('csj.core.utils')
-local user = require('csj.core.userspace') -- Load userspace and return a table with user setings
-local json = require('csj.core.actionsjson')
+local user = require('csj.core.userspace').load_userspace() -- Load userspace and return a table with user setings
 
 require('csj.plugins') -- Load plugins and package manager.
 
