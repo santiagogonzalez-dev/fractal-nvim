@@ -28,3 +28,11 @@ utils.session(user.restore) -- Restore cursor and view.
 for k, v in pairs(user.modules) do
   utils.load(v, k)
 end
+
+local json = {}
+
+json.show = function()
+  return vim.fn.json_decode(table.concat(vim.fn.readfile('/home/st/.config/nvim/user/example.json'), '\n'))
+end
+
+return json
