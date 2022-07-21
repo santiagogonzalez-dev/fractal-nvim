@@ -243,21 +243,6 @@ return packer.startup(function(use)
     config = function() require('csj.plugins.cmp') end,
   }
 
-  -- use {
-  --    'mfussenegger/nvim-dap',
-  --    event = 'User LoadPlugins',
-  -- }
-
-  -- use {
-  --    'rcarriga/nvim-dap-ui',
-  --    event = 'User LoadPlugins',
-  -- }
-
-  -- use {
-  --    'ravenxrz/DAPInstall.nvim',
-  --    event = 'User LoadPlugins',
-  -- }
-
   if PACKER_BOOTSTRAP then require('packer').sync() end
   return packer
 end)

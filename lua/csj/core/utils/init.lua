@@ -1,5 +1,6 @@
 local utils = {}
 
+-- Protected require, notifies if there's an error loading a module
 ---@return boolean|string|number|nil @ Either nil or the value of require()
 function utils.prequire(package)
   local status, lib = pcall(require, package)
@@ -17,8 +18,8 @@ function utils.prequire(package)
   end
 end
 
----@param should_load boolean
----@param module string
+---@param should_load boolean @ Load or not the module
+---@param module string @ This is the name of the module
 ---@return nil
 function utils.load(should_load, module)
   if should_load ~= nil then utils.prequire(string.format('csj.core.%s', module)) end

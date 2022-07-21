@@ -1,29 +1,3 @@
--- Ensure this settings persist in all buffers
-function _G.all_buffers_settings()
-  vim.opt.iskeyword = '@,48-57,192-255'
-
-  vim.opt.formatoptions = vim.opt.formatoptions
-    + 'r' -- If the line is a comment insert another one below when hitting <CR>
-    + 'c' -- Wrap comments at the char defined in textwidth
-    + 'q' -- Allow formatting comments with gq
-    + 'j' -- Remove comment leader when joining lines when possible
-    - 'o' -- Don't continue comments after o/O
-    - 'l' -- Format in insert mode if the line is longer than textwidth
-
-  -- There's a non-visible character at cchar= so watch
-  vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
-  vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
-  vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
-  vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
-  -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
-end
-
-vim.api.nvim_create_autocmd('BufEnter', {
-  -- group = 'session_opts',
-  callback = _G.all_buffers_settings,
-})
-_G.all_buffers_settings()
-
 ---@return table
 return {
   colorscheme = 'jetjbp', -- Colorscheme
@@ -34,7 +8,8 @@ return {
   modules = {
     acceleratedjk = true,
     folds = true,
-    general = true,
+    keymaps = true,
+    afiolb = true, -- Ask user for input if there is only one active normal buffer.
     netrw = true,
     notifications = true, -- Override notifications to integrate with the DE/WM
     sdmog = true, -- Show where the . mark is in the file with an icon on the sign column(gutter).
