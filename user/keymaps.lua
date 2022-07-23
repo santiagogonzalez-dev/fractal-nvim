@@ -44,6 +44,18 @@ vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { desc = 'Open
 
 vim.keymap.set('n', '<C-n>', ':bnext<CR>', { desc = 'Switch to next buffer', silent = true })
 vim.keymap.set('n', '<C-p>', ':bprevious<CR>', { desc = 'Switch to prev buffer', silent = true })
+
+vim.g.last_accessed_buffer = false
+vim.keymap.set('n', 'g<Tab>', function()
+  if vim.g.last_accessed_buffer == false then
+    vim.cmd(':bprevious')
+    vim.g.last_accessed_buffer = true
+  else
+    vim.cmd(':bnext')
+    vim.g.last_accessed_buffer = false
+  end
+end, { desc = 'Go back and forth between two buffers' })
+
 vim.keymap.set('n', '<Leader>lcc', '<CMD>LuaCacheClear<CR>', { desc = 'Impatient.nvim: Clear cache' })
 vim.keymap.set('n', '<Leader>ps', '<CMD>PackerSync<CR>', { desc = 'Packer: PackerSync' })
 vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>', { desc = 'Packer: PackerCompile' })

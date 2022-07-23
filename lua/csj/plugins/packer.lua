@@ -184,7 +184,15 @@ return packer.startup(function(use)
   use {
     'nvim-telescope/telescope.nvim',
     module = 'telescope',
-    keys = { 'gr', 't/', 't//', 'tf', 'tp', 'tt' },
+    keys = {
+      '<Leader>gr',
+      '<Leader>t/',
+      '<Leader>t//',
+      '<Leader>tf',
+      '<Leader>tg',
+      '<Leader>tp',
+      '<Leader>tt',
+    },
     requires = 'nvim-lua/plenary.nvim',
     config = function()
       vim.cmd('PackerLoad project.nvim')
@@ -224,6 +232,12 @@ return packer.startup(function(use)
     'jose-elias-alvarez/null-ls.nvim',
     opt = true,
     config = function() require('csj.lsp.null-ls') end,
+  }
+
+  use {
+    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    event = 'LspAttach',
+    config = function() require('lsp_lines').setup() end,
   }
 
   -- Completion, snippets

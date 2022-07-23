@@ -72,9 +72,10 @@ telescope.setup {
 
 telescope.load_extension('projects')
 
-vim.keymap.set('n', 'gr', '<CMD>Telescope lsp_references theme=dropdown<CR>')
-vim.keymap.set('n', 't/', '<CMD>Telescope live_grep theme=dropdown<CR>')
-vim.keymap.set('n', 't//', '<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>')
-vim.keymap.set('n', 'tf', project_files)
-vim.keymap.set('n', 'tp', '<CMD>Telescope projects<CR>')
-vim.keymap.set('n', 'tt', '<CMD>Telescope<CR>')
+vim.keymap.set('n', '<Leader>gr', '<CMD>Telescope lsp_references theme=dropdown<CR>')
+vim.keymap.set('n', '<Leader>t/', '<CMD>Telescope live_grep theme=dropdown<CR>')
+vim.keymap.set('n', '<Leader>t//', '<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>')
+vim.keymap.set('n', '<Leader>tf', project_files)
+vim.keymap.set('n', '<Leader>tg', '<CMD>Telescope grep_string<CR>')
+vim.keymap.set('n', '<Leader>tp', '<CMD>Telescope projects<CR>')
+vim.keymap.set('n', '<Leader>tt', '<CMD>Telescope<CR>')

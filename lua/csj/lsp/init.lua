@@ -36,7 +36,7 @@ for _, server in pairs(SERVERS) do
 end
 
 require('csj.lsp.handlers').setup()
-require('csj.lsp.top_right_lsp_diagnostics')
+-- require('csj.lsp.top_right_lsp_diagnostics') -- Using lsp_lines.nvim for now
 
 require('packer').loader('null-ls.nvim')
 require('csj.lsp.null-ls')
