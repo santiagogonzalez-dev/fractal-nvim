@@ -12,7 +12,8 @@ function utils.prequire(package)
       -- the errors will still showup on the terminal
       vim.notify('Failed to require "' .. package .. '" from ' .. vim.log.levels.WARN)
       -- vim.notify('Failed to require "' .. package .. '" from ' .. debug.getinfo(2).source)
-      -- This ^^ one will print the error in the terminal
+      -- This ^^ one will print the error in the terminal even when using the
+      -- notification module
     end)
     return nil
   end
@@ -94,20 +95,21 @@ end
 -- To modify this colorscheme go to `./colors/jetjbp.lua`
 -- repo.
 ---@param name string
----@return boolean @ Returns false and sends notification if it fails to
----find/load the colorscheme and
+---@return boolean
 function utils.colorscheme(name)
-  local ok
-  if name ~= nil or name ~= '' then
-    ok, _ = pcall(vim.api.nvim_cmd, { cmd = 'colorscheme', args = { name } }, {})
-  else
-    ok = false
-  end
-
-  if not ok then
-    vim.schedule(function() vim.notify('Colorscheme not found', vim.log.levels.INFO) end)
+  -- Comprobation that `name` is a valid string
+  if name == '' or name == nil or name == vim.NIL then
+    vim.notify(
+      'The string for setting up the colorcheme might be wrong, check you user_settings.json',
+      vim.log.levels.INFO
+    )
     return false
   end
+
+  vim.api.nvim_cmd({
+    cmd = 'colorscheme',
+    args = { name },
+  }, {})
 
   vim.api.nvim_create_autocmd('UIEnter', {
     callback = function()
@@ -259,7 +261,7 @@ function utils.avoid_filetype()
 end
 
 function utils.conditionals()
-  vim.schedule(function()
+  local function run_comprobations()
     -- Conditionals
     local conditionals = vim.api.nvim_create_augroup('conditionals', {})
 
@@ -275,7 +277,8 @@ function utils.conditionals()
         callback = function() return utils.is_git() end,
       })
     end
-  end)
+  end
+  vim.schedule(run_comprobations)
 end
 
 function utils.get_fg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).foreground end
@@ -283,13 +286,9 @@ function utils.get_bg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, 
 
 -- Return whatever it is that you have on the register "
 ---@return string @ From the register "
-function utils.get_yanked_text()
-  -- Yanked text
-  return vim.fn.getreg('"')
-end
+function utils.get_yanked_text() return vim.fn.getreg('"') end
 
--- Conditional for width of the terminal
----@return boolean
+---@return boolean @ Conditional for width of the terminal
 function utils.hide_at_term_width() return vim.opt.columns:get() > 90 end
 
 return utils

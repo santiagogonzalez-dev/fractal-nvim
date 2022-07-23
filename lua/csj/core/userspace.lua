@@ -1,7 +1,6 @@
 local user = {}
 local config_path = vim.fn.stdpath('config')
 
-
 function user.load_user_init()
   -- Some settings are stored under `./user`, add it to the lua path so that the
   -- user can require the files under there too.

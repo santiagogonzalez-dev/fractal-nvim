@@ -9,7 +9,7 @@ csj.settings(user.opts) -- Set some settings.
 csj.session(user.restore) -- Restore cursor and view.
 csj.conditionals() -- Conditionals to load plugins and modules.
 
-require('csj.core.general') -- TODO(santigo-zero): Moved this to user config
+require('csj.core.general') -- General and common settings.
 require('csj.core.autocmds') -- Some common autocommands.
 
 -- Load modules specified by the user
