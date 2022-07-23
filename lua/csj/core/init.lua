@@ -8,6 +8,7 @@ csj.colorscheme(user.colorscheme) -- Apply colorscheme.
 csj.settings(user.opts) -- Set some settings.
 csj.session(user.restore) -- Restore cursor and view.
 csj.conditionals() -- Conditionals to load plugins and modules.
+csj.empty_buff()
 
 require('csj.core.general') -- General and common settings.
 require('csj.core.autocmds') -- Some common autocommands.

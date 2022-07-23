@@ -291,4 +291,25 @@ function utils.get_yanked_text() return vim.fn.getreg('"') end
 ---@return boolean @ Conditional for width of the terminal
 function utils.hide_at_term_width() return vim.opt.columns:get() > 90 end
 
+-- TODO(santigo-zero): Redo this into a more clean function, check if treesitter
+-- is installed first
+-- This function is run after neovim loads, it checks if you started neovim into
+-- an empty buffer and if you do it opens projects.nvim with telescope.
+---@return nil
+function utils.empty_buff()
+  vim.api.nvim_create_autocmd('UIEnter', {
+    callback = function()
+      if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
+        return
+      end
+      -- If the buffer doesn't have a filetype we also check if the buffer is
+      -- emtpy
+      if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
+        vim.cmd('PackerLoad telescope.nvim')
+        vim.cmd('Telescope projects')
+      end
+    end,
+  })
+end
+
 return utils
