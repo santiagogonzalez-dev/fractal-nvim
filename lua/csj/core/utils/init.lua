@@ -302,8 +302,7 @@ function utils.empty_buff()
       if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
         return
       end
-      -- If the buffer doesn't have a filetype we also check if the buffer is
-      -- emtpy
+      -- If it doesn't we check if it's empty
       if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
         vim.cmd('PackerLoad telescope.nvim')
         vim.cmd('Telescope projects')
