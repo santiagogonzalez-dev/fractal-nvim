@@ -1,6 +1,3 @@
--- Some general settings
-local utils = require('csj.core.utils')
-
 -- Default tab size, this is not applied if you specified a different one in
 -- ftplugin
 local tab_lenght = 4
