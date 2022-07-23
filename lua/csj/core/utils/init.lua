@@ -291,8 +291,6 @@ function utils.get_yanked_text() return vim.fn.getreg('"') end
 ---@return boolean @ Conditional for width of the terminal
 function utils.hide_at_term_width() return vim.opt.columns:get() > 90 end
 
--- TODO(santigo-zero): Redo this into a more clean function, check if treesitter
--- is installed first
 -- This function is run after neovim loads, it checks if you started neovim into
 -- an empty buffer and if you do it opens projects.nvim with telescope.
 ---@return nil
