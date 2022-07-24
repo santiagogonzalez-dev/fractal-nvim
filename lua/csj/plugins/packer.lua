@@ -237,7 +237,10 @@ return packer.startup(function(use)
   use {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'LspAttach',
-    config = function() require('lsp_lines').setup() end,
+    config = function()
+      require('lsp_lines').setup()
+      vim.keymap.set('', '<Leader>l', require('lsp_lines').toggle, { desc = 'Toggle lsp_lines' })
+    end,
   }
 
   -- Completion, snippets

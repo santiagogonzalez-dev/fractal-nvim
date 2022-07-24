@@ -56,7 +56,7 @@ function M.keymaps(bufnr)
   end, { buffer = bufnr, desc = 'Show diagnostics in a float window' })
 
   local diagnostics_active
-  vim.keymap.set('n', '<S-CR>', function()
+  vim.keymap.set('n', '<Leader>ld', function()
     diagnostics_active = not diagnostics_active
     if diagnostics_active then
       return vim.diagnostic.hide()
