@@ -3,12 +3,13 @@ if not status then
   return -- Return if there is any problem with lspconfig
 end
 
-require('packer').loader('nvim-lsp-installer')
+require('packer').loader('mason.nvim')
+require('packer').loader('mason-lspconfig.nvim')
 
 local SERVERS = {
   'bashls',
   'cssls',
-  'cssmodules_ls',
+  -- 'cssmodules_ls',
   'emmet_ls',
   'html',
   'jdtls',
@@ -17,11 +18,12 @@ local SERVERS = {
   'tsserver',
 }
 
-require('nvim-lsp-installer').setup {
-  -- Setup nvim-lsp-installer, it needs to be setup before calling lspconfig
-  ensure_installed = SERVERS, -- Ensure these list of servers are always installed
-  automatic_installation = false, -- Automatically detect which servers to install (based on which servers are set up via lspconfig)
+require('mason-lspconfig').setup {
+  ensure_installed = SERVERS,
+  automatic_installation = false,
 }
+
+require('mason').setup()
 
 for _, server in pairs(SERVERS) do
   local opts = {

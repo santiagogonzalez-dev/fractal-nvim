@@ -221,9 +221,13 @@ return packer.startup(function(use)
     config = function() require('csj.lsp') end,
   }
 
-  -- LSP installer
   use {
-    'williamboman/nvim-lsp-installer',
+    'williamboman/mason.nvim',
+    opt = true,
+  }
+
+  use {
+    'williamboman/mason-lspconfig.nvim',
     opt = true,
   }
 
