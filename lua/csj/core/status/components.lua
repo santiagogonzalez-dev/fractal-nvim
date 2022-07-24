@@ -1,8 +1,7 @@
 local component = {}
-local utils = require('csj.core.utils')
 
 function component.treesitter_info()
-  if utils.avoid_filetype() then return end
+  if csj.avoid_filetype() then return end
   local ts_utils = require('nvim-treesitter.ts_utils')
   local start_line, _, end_line, _ = ts_utils.get_node_range(ts_utils.get_node_at_cursor())
 
@@ -17,7 +16,7 @@ function component.treesitter_info()
 end
 
 function component.location_treesitter()
-  if utils.avoid_filetype() then
+  if csj.avoid_filetype() then
     return ' '
   else
     return string.format('%s%s', '%#StatusLine#', require('nvim-treesitter').statusline())
@@ -32,15 +31,15 @@ function component.vcs()
   vim.api.nvim_set_hl(
     0,
     'StatusLineGitSignsAdd',
-    { bg = utils.get_bg_hl('StatusLine'), fg = utils.get_fg_hl('GitSignsAdd') }
+    { bg = csj.get_bg_hl('StatusLine'), fg = csj.get_fg_hl('GitSignsAdd') }
   )
   vim.api.nvim_set_hl(0, 'StatusLineGitSignsChange', {
-    bg = utils.get_bg_hl('StatusLine'),
-    fg = utils.get_fg_hl('GitSignsChange'),
+    bg = csj.get_bg_hl('StatusLine'),
+    fg = csj.get_fg_hl('GitSignsChange'),
   })
   vim.api.nvim_set_hl(0, 'StatusLineGitSignsDelete', {
-    bg = utils.get_bg_hl('StatusLine'),
-    fg = utils.get_fg_hl('GitSignsDelete'),
+    bg = csj.get_bg_hl('StatusLine'),
+    fg = csj.get_fg_hl('GitSignsDelete'),
   })
   local added = git_info.added and ('%#StatusLineGitSignsAdd#+' .. git_info.added .. ' ') or ''
   local changed = git_info.changed and ('%#StatusLineGitSignsChange#~' .. git_info.changed .. ' ') or ''

@@ -24,7 +24,7 @@ local break_points = {
   '<CR>',
 }
 for _, b in pairs(break_points) do -- Undo break points
-  vim.keymap.set('i', b, b .. '<C-g>u')
+  vim.keymap.set('i', b, string.format('%s%s', b, '<C-g>u'))
 end
 
 -- Remap space as leader key
@@ -32,36 +32,36 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Simple keymappings
-vim.keymap.set('n', '<Leader>u', '<CMD>update<CR>', { desc = 'Update the file' })
-vim.keymap.set('n', '<Leader>q', '<CMD>quitall!<CR>', { desc = 'Quit neovim' })
+vim.keymap.set('n', '<Leader>u', vim.cmd.update, { desc = 'Update the file' })
+vim.keymap.set('n', '<Leader>q', vim.cmd.quitall, { desc = 'Quit neovim' })
 vim.keymap.set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>', { desc = 'Delete all buffers' })
-vim.keymap.set('n', '<Leader>w', '<CMD>wqall<CR>', { desc = 'Write and Quit' })
+vim.keymap.set('n', '<Leader>w', vim.cmd.wqall, { desc = 'Write and Quit' })
 vim.keymap.set('n', '<Leader>p', '"_diwP', { desc = 'Paste under cursor without overwriting the yank register' })
 vim.keymap.set('n', '<Leader>s', ':luafile %<CR>', { desc = 'Source lua file' })
-vim.keymap.set('n', '<Leader>E', ':e<CR>', { desc = 'Reedit the buffer', silent = true })
+vim.keymap.set('n', '<Leader>E', vim.cmd.e, { desc = 'Reedit the buffer', silent = true })
 vim.keymap.set('n', '<Leader>e', ':silent! Lexplore!<CR>', { desc = 'Open NetRW', silent = true })
 vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { desc = 'Open NetRW in the dir of the buffer' })
 
-vim.keymap.set('n', '<C-n>', ':bnext<CR>', { desc = 'Switch to next buffer', silent = true })
-vim.keymap.set('n', '<C-p>', ':bprevious<CR>', { desc = 'Switch to prev buffer', silent = true })
+vim.keymap.set('n', '<C-n>', vim.cmd.bnext, { desc = 'Switch to next buffer', silent = true })
+vim.keymap.set('n', '<C-p>', vim.cmd.bprevious, { desc = 'Switch to prev buffer', silent = true })
 
 vim.g.last_accessed_buffer = false
 vim.keymap.set('n', 'g<Tab>', function()
   if vim.g.last_accessed_buffer == false then
-    vim.cmd(':bprevious')
+    vim.cmd.bprevious()
     vim.g.last_accessed_buffer = true
   else
-    vim.cmd(':bnext')
+    vim.cmd.bnext()
     vim.g.last_accessed_buffer = false
   end
 end, { desc = 'Go back and forth between two buffers' })
 
-vim.keymap.set('n', '<Leader>lcc', '<CMD>LuaCacheClear<CR>', { desc = 'Impatient.nvim: Clear cache' })
-vim.keymap.set('n', '<Leader>ps', '<CMD>PackerSync<CR>', { desc = 'Packer: PackerSync' })
+vim.keymap.set('n', '<Leader>lcc', vim.cmd.LuaCacheClear, { desc = 'Impatient.nvim: Clear cache' })
+vim.keymap.set('n', '<Leader>ps', vim.cmd.PackerSync, { desc = 'Packer: PackerSync' })
 vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>', { desc = 'Packer: PackerCompile' })
 vim.keymap.set('n', '<Leader>pcc', function()
-  vim.cmd('PackerCompile profile=true')
-  vim.cmd('LuaCacheClear')
+  vim.cmd.PackerCompile('profile=true')
+  vim.cmd.LuaCacheClear()
 end)
 
 vim.keymap.set('n', "'", '`', { desc = "Swap ' with `" })
@@ -71,7 +71,7 @@ vim.keymap.set({ 'n', 'v', 'x' }, ':', ';', { desc = 'Swap : with ;' })
 vim.keymap.set('n', ':', ';', { desc = 'Swap : with ;' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Center J' })
 vim.keymap.set('n', 'K', 'i<CR><ESC>', { desc = 'Normal <CR> behaviour, opposite to J' })
-vim.keymap.set('n', '<A-n>', '<CMD>nohlsearch<CR>', { desc = 'Disable highlight' })
+vim.keymap.set('n', '<A-n>', vim.cmd.nohlsearch, { desc = 'Disable highlight' })
 vim.keymap.set({ 'n', 'v' }, '$', 'g_', { desc = 'Better $, behaves as expected' })
 vim.keymap.set('n', 'gvp', "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true })
 vim.keymap.set('n', 'cg*', '*Ncgn', { desc = 'Find and replace next match of the word under cursor' })

@@ -1,4 +1,6 @@
 local csj = require('csj.core.utils')
+_G.csj = csj -- Make utils global since we use them everywhere
+
 local user = require('csj.core.userspace').load_userspace() -- Load userspace and return a table with user setings
 
 require('csj.plugins') -- Load plugins and package manager.

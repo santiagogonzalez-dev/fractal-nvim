@@ -106,18 +106,10 @@ function utils.colorscheme(name)
     return false
   end
 
-  vim.api.nvim_cmd({
-    cmd = 'colorscheme',
-    args = { name },
-  }, {})
+  vim.cmd.colorscheme(name)
 
   vim.api.nvim_create_autocmd('UIEnter', {
-    callback = function()
-      vim.api.nvim_cmd({
-        cmd = 'colorscheme',
-        args = { name },
-      }, {})
-    end,
+    callback = function() vim.cmd.colorscheme(name) end,
   })
   return true
 end
@@ -131,6 +123,8 @@ function utils.session(mode)
   -- Setup the initial load and maintain some settings between buffers
   local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
 
+  -- This fails for some reason
+  -- vim.cmd.loadview({ mods = { silent = true }}) -- Load the view for the opened buffer
   vim.cmd('silent! loadview') -- Load the view for the current buffer
 
   vim.api.nvim_create_autocmd('BufWinEnter', {
@@ -138,7 +132,8 @@ function utils.session(mode)
     group = save_sessions,
     callback = function()
       if utils.avoid_filetype() then return end
-      vim.cmd('silent! loadview') -- Load the view for the opened buffer
+      pcall(vim.cmd.loadview) -- Load the view for the opened buffer
+      -- vim.cmd('silent! loadview') -- Load the view for the opened buffer
       return utils.restore_cursor_position() -- Restore the cursor position
     end,
   })
@@ -148,15 +143,17 @@ function utils.session(mode)
     group = save_sessions,
     callback = function()
       if utils.avoid_filetype() then return end
-      return vim.cmd('silent! mkview')
+      return vim.cmd.mkview()
+      -- return vim.cmd('silent! mkview')
     end,
   })
 
   vim.opt.shadafile = ''
-  vim.api.nvim_cmd({
-    cmd = 'rshada',
-    bang = true,
-  }, {})
+  vim.cmd.rshada { bang = true }
+  -- vim.api.nvim_cmd({
+  --   cmd = 'rshada',
+  --   bang = true,
+  -- }, {})
   return true
 end
 
@@ -185,7 +182,8 @@ function utils.restore_cursor_position()
   if line <= vim.api.nvim_buf_line_count(0) then
     vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
     if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
-      return vim.cmd('normal! zo')
+      return vim.cmd.normal('zo') -- return vim.cmd.normal { args = { 'zo' } }
+      -- return vim.cmd('normal! zo')
     end
   end
 end
@@ -228,7 +226,8 @@ function utils.is_empty(str) return str == '' or str == nil end
 function utils.is_git()
   local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
   if is_git:match('true') then
-    vim.cmd('doautocmd User IsGit')
+    vim.cmd.doautocmd('User IsGit') -- vim.cmd.doautocmd { args = { 'User', 'IsGit' } }
+    -- vim.cmd('doautocmd User IsGit')
     return true
   else
     return false
@@ -302,8 +301,8 @@ function utils.empty_buff()
       end
       -- If it doesn't we check if it's empty
       if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
-        vim.cmd('PackerLoad telescope.nvim')
-        vim.cmd('Telescope projects')
+        vim.cmd.PackerLoad('telescope.nvim')
+        vim.cmd.Telescope('projects')
       end
     end,
   })

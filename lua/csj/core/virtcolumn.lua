@@ -122,7 +122,8 @@ end
 
 vim.schedule_wrap(function()
   M.setup {}
-  vim.api.nvim_cmd({ cmd = 'VirtColumnRefresh' }, {})
+  -- vim.api.nvim_cmd({ cmd = 'VirtColumnRefresh' }, {})
+  vim.cmd.VirtColumnRefresh()
 end)()
 
 return M, utils, commands

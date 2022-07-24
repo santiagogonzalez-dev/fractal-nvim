@@ -18,6 +18,7 @@
   },
 
   "opts": {
+    "scrolloff": 9,
     "breakindent": true,
     "clipboard": "unnamedplus",
     "cmdheight": 0,
@@ -38,7 +39,6 @@
     "mousefocus": true,
     "pumblend": 0,
     "pumheight": 6,
-    "scrolloff": 9,
     "secure": true,
     "shiftround": true,
     "shortmess": "oOstIFS",

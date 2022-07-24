@@ -1,6 +1,5 @@
 local M = {}
 local component = require('csj.core.status.components')
-local utils = require('csj.core.utils')
 
 function M.active()
   vim.opt.laststatus = 3
@@ -28,7 +27,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = utils.IGNORE_FT,
+  pattern = csj.IGNORE_FT,
   callback = function()
     vim.opt.statusline = '%#EndOfBuffer#' -- Change color of the statusline
   end,

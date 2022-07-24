@@ -1,5 +1,4 @@
 local M = {}
-local utils = require('csj.core.utils')
 
 function M.keymaps(bufnr)
   vim.keymap.set(
@@ -46,7 +45,7 @@ function M.keymaps(bufnr)
   )
 
   vim.keymap.set('n', 'gll', function()
-    if utils.not_interfere_on_float() then -- If there is not a floating window present
+    if csj.not_interfere_on_float() then -- If there is not a floating window present
       local diags = vim.diagnostic.open_float(nil, { focus = false, scope = 'cursor' }) -- Try to open diagnostics under the cursor
       if not diags then -- If there's no diagnostic under the cursor show diagnostics of the entire line
         vim.diagnostic.open_float()
@@ -65,7 +64,7 @@ function M.keymaps(bufnr)
     end
   end, { buffer = bufnr, desc = 'Toggle diagnostics' })
 
-  vim.keymap.set('n', 'gl', function() return utils.not_interfere_on_float() and vim.lsp.buf.hover() end, {
+  vim.keymap.set('n', 'gl', function() return csj.not_interfere_on_float() and vim.lsp.buf.hover() end, {
     buffer = bufnr,
     desc = 'Show a description of the word under cursor',
   })

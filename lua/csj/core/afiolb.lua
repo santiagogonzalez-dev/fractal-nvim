@@ -31,9 +31,11 @@ local function close_or_quit()
       format_item = function(item) return string.format('%s%s', '-> ', item) end,
     }, function(_, choice)
       if choice == 1 then
-        return vim.cmd('bd')
+        return vim.cmd.bd()
+        -- return vim.cmd('bd')
       elseif choice == 2 then
-        return vim.cmd('q')
+        return vim.cmd.q()
+        -- return vim.cmd('q')
       end
     end)
   else

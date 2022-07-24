@@ -1,4 +1,3 @@
-local csj = require('csj.core.utils')
 require('keymaps')
 
 -- Settings for non-visible characters

@@ -3,11 +3,13 @@ local function h_motion()
   local line = cursor_position[1]
   local column = cursor_position[2]
 
-  vim.cmd('normal ^')
+  vim.cmd.normal('^')
+  -- vim.cmd('normal ^')
   local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
 
   if column == 0 then
-    return vim.cmd('normal! k') and vim.cmd('normal! $')
+    return vim.cmd.normal('k') and vim.cmd.normal('$')
+    -- return vim.cmd('normal! k') and vim.cmd('normal! $')
   elseif column <= first_non_blank_char[2] then
     return vim.api.nvim_win_set_cursor(0, { line, 0 })
   else
@@ -22,11 +24,13 @@ local function l_motion()
 
   local line_characters = vim.api.nvim_get_current_line()
 
-  vim.cmd('normal ^')
+  vim.cmd.normal('^')
+  -- vim.cmd('normal ^')
   local first_non_blank_char = vim.api.nvim_win_get_cursor(0)
 
   if column == #line_characters - 1 or #line_characters == 0 then
-    return vim.cmd('normal! j') and vim.cmd('normal! 0')
+    return vim.cmd.normal('j') and vim.cmd.normal('0')
+    -- return vim.cmd('normal! j') and vim.cmd('normal! 0')
   elseif column < first_non_blank_char[2] then
     return
   else
