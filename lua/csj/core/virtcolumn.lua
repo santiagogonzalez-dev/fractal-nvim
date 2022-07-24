@@ -44,12 +44,10 @@ function M.setup(config)
 
   vim.api.nvim_create_user_command('VirtColumnRefresh', function() commands.refresh('<bang> == !') end, { bang = true })
 
-  local set_hl = require('csj.core.utils').set_hl
-
   -- vim.api.nvim_set_hl(0, 'VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
   -- vim.api.nvim_set_hl(0, 'ColorColumn', {})
-  set_hl('VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
-  set_hl('ColorColumn', {})
+  csj.set_hl('VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
+  csj.set_hl('ColorColumn', {})
 
   vim.api.nvim_create_augroup('_virtcolumn', {})
   vim.api.nvim_create_autocmd({
