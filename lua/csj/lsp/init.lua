@@ -9,7 +9,7 @@ require('packer').loader('mason-lspconfig.nvim')
 local SERVERS = {
   'bashls',
   'cssls',
-  -- 'cssmodules_ls',
+  'cssmodules_ls',
   'emmet_ls',
   'html',
   'jdtls',

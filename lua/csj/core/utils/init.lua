@@ -150,10 +150,6 @@ function utils.session(mode)
 
   vim.opt.shadafile = ''
   vim.cmd.rshada { bang = true }
-  -- vim.api.nvim_cmd({
-  --   cmd = 'rshada',
-  --   bang = true,
-  -- }, {})
   return true
 end
 
@@ -182,8 +178,7 @@ function utils.restore_cursor_position()
   if line <= vim.api.nvim_buf_line_count(0) then
     vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
     if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
-      return vim.cmd.normal('zo') -- return vim.cmd.normal { args = { 'zo' } }
-      -- return vim.cmd('normal! zo')
+      return vim.cmd.normal('zo')
     end
   end
 end
