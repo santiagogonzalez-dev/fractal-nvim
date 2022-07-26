@@ -5,7 +5,6 @@
   "conditionals": true,
 
   "modules": {
-    "accelerated-jk": true,
     "afiolb": true,
     "gutter": true,
     "folds": true,

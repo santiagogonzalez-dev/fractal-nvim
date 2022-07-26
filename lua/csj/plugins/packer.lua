@@ -53,6 +53,19 @@ return packer.startup(function(use)
     end,
   }
 
+  use {
+    '~/workspace/accelerated-jk.nvim',
+    keys = { 'j', 'k', 'w', 'b', '+', '-' },
+    config = function()
+      require('accelerated-jk').setup({
+        enable_deceleration = true,
+        acceleration_motions = { 'w', 'b', '+', '-' }
+      })
+      vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', {})
+      vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', {})
+    end,
+  }
+
   -- use {
   --   'ton/vim-bufsurf',
   --   config = function()
