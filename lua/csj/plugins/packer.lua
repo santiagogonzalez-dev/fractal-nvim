@@ -53,6 +53,7 @@ return packer.startup(function(use)
     end,
   }
 
+  -- Accelerated jk
   use {
     '~/workspace/accelerated-jk.nvim',
     keys = { 'j', 'k', 'w', 'b', '+', '-' },
@@ -66,22 +67,16 @@ return packer.startup(function(use)
     end,
   }
 
-  -- use {
-  --   'ton/vim-bufsurf',
-  --   config = function()
-  --     vim.cmd([[
-  --       nmap ]b <Plug>(buf-surf-forward)
-  --       nmap [b <Plug>(buf-surf-back)
-  --     ]])
-  --   end,
-  -- }
-
-  -- use {
-  --   '~/workspace/surf-bufs.nvim',
-  --   config = function()
-  --     require('surf-bufs').setup()
-  --   end,
-  -- }
+  -- Vim bufsurf
+  use {
+    'ton/vim-bufsurf',
+    config = function()
+      vim.cmd([[
+        nmap ]b <Plug>(buf-surf-forward)
+        nmap [b <Plug>(buf-surf-back)
+      ]])
+    end,
+  }
 
   -- Dim unused functions, variables, parameters
   use {
@@ -278,11 +273,13 @@ return packer.startup(function(use)
     end,
   }
 
+  -- Mason
   use {
     'williamboman/mason.nvim',
     opt = true,
   }
 
+  -- Mason Lsp Installer
   use {
     'williamboman/mason-lspconfig.nvim',
     opt = true,
@@ -297,6 +294,7 @@ return packer.startup(function(use)
     end,
   }
 
+  -- LSP Lines, diagnostics
   use {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'LspAttach',
