@@ -55,7 +55,7 @@ return packer.startup(function(use)
 
   -- Accelerated jk
   use {
-    '~/workspace/accelerated-jk.nvim',
+    'rainbowhxch/accelerated-jk.nvim',
     keys = { 'j', 'k', 'w', 'b', '+', '-' },
     config = function()
       require('accelerated-jk').setup({

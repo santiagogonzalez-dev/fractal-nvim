@@ -9,7 +9,7 @@
     "gutter": true,
     "folds": true,
     "netrw": true,
-    "notifications": true,
+    "notifications": false,
     "sdmog": true,
     "skeletons": true,
     "status": true,
