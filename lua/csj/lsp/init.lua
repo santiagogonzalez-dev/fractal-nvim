@@ -32,7 +32,9 @@ for _, server in pairs(SERVERS) do
   }
 
   local has_opts, custom_opts = pcall(require, string.format('%s.%s', 'csj.lsp.settings', server))
-  if has_opts then opts = vim.tbl_deep_extend('force', custom_opts, opts) end
+  if has_opts then
+    opts = vim.tbl_deep_extend('force', custom_opts, opts)
+  end
 
   lspconfig[server].setup(opts)
 end

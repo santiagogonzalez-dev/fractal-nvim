@@ -22,7 +22,7 @@ end
 function commands.refresh(bang)
   if bang then
     local win = vim.api.nvim_get_current_win()
-    vim.cmd('noautocmd windo lua require("csj.core.virtcolumn").refresh()')
+    vim.cmd('noautocmd windo lua require("csj.core.modules.virtcolumn").refresh()')
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_set_current_win(win)
       M.refresh()
@@ -35,19 +35,23 @@ end
 ffi.cdef('int curwin_col_off(void);')
 
 function M.clear_buf(bufnr)
-  if M.namespace then vim.api.nvim_buf_clear_namespace(bufnr, M.namespace, 0, -1) end
+  if M.namespace then
+    vim.api.nvim_buf_clear_namespace(bufnr, M.namespace, 0, -1)
+  end
 end
 
 function M.setup(config)
   M.config = vim.tbl_deep_extend('force', M.config, config or {})
   M.namespace = vim.api.nvim_create_namespace('virtcolumn')
 
-  vim.api.nvim_create_user_command('VirtColumnRefresh', function() commands.refresh('<bang> == !') end, { bang = true })
+  vim.api.nvim_create_user_command('VirtColumnRefresh', function()
+    commands.refresh('<bang> == !')
+  end, { bang = true })
 
   -- vim.api.nvim_set_hl(0, 'VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
   -- vim.api.nvim_set_hl(0, 'ColorColumn', {})
-  csj.set_hl('VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
-  csj.set_hl('ColorColumn', {})
+  require('csj.core.utils').set_hl('VirtColumn', { fg = vim.api.nvim_get_hl_by_name('CursorColumn', true).background })
+  require('csj.core.utils').set_hl('ColorColumn', {})
 
   vim.api.nvim_create_augroup('_virtcolumn', {})
   vim.api.nvim_create_autocmd({
@@ -71,7 +75,9 @@ end
 function M.refresh()
   local bufnr = vim.api.nvim_get_current_buf()
 
-  if not vim.api.nvim_buf_is_loaded(bufnr) then return end
+  if not vim.api.nvim_buf_is_loaded(bufnr) then
+    return
+  end
 
   local config = vim.tbl_deep_extend('force', M.config, M.buffer_config[bufnr] or {})
   local winnr = vim.api.nvim_get_current_win()
@@ -98,7 +104,9 @@ function M.refresh()
     end
   end
 
-  table.sort(colorcolumn, function(a, b) return a > b end)
+  table.sort(colorcolumn, function(a, b)
+    return a > b
+  end)
 
   M.clear_buf(bufnr)
 

@@ -106,11 +106,13 @@ function folds.fold_block()
   }
 end
 
-vim.keymap.set('n', 'test', function() return folds.fold_block() end)
+vim.keymap.set('n', 'test', function()
+  return folds.fold_block()
+end)
 
 -- Fold settings
 vim.opt.jumpoptions = 'stack,view'
-vim.opt.foldtext = 'v:lua.require("csj.core.folds").foldtext_header()'
+vim.opt.foldtext = 'v:lua.require("csj.core.modules.folds").foldtext_header()'
 vim.opt.foldcolumn = 'auto:3' -- Folds column
 vim.opt.foldmethod = 'manual'
 -- vim.opt.foldmethod = 'expr'

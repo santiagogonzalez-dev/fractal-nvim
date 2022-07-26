@@ -1,3 +1,5 @@
+local utils = require('csj.core.utils')
+
 -- NetRW config.
 vim.g.netrw_banner = 0 -- Toggle the banner
 vim.g.netrw_keepdir = 0 -- Keep the current directory and the browsing directory synced.
@@ -24,12 +26,16 @@ vim.g.netrw_localcopydircmd = 'cp -r' -- Enable recursive copy of directories
 vim.g.netrw_localmkdir = 'mkdir -p' -- Enable recursive creation of directories
 vim.g.netrw_localrmdir = 'rm -r' -- Enable recursive removal of directories and files
 
-csj.set_hl('netrwMarkFile', { link = 'Search' }) -- Highlight marked files in the same way search matches are
+utils.set_hl('netrwMarkFile', { link = 'Search' }) -- Highlight marked files in the same way search matches are
 
 local function draw_icons()
-  if vim.bo.filetype ~= 'netrw' then return end
+  if vim.bo.filetype ~= 'netrw' then
+    return
+  end
   local is_devicons_available, devicons = pcall(require, 'nvim-web-devicons')
-  if not is_devicons_available then return end
+  if not is_devicons_available then
+    return
+  end
   local default_signs = {
     netrw_dir = {
       text = '',
@@ -68,7 +74,7 @@ local function draw_icons()
     -- Get line contents
     local line = vim.fn.getline(cur_line_nr)
 
-    if csj.is_empty(line) then
+    if utils.is_empty(line) then
       -- If current line is an empty line (newline) then increase current line count
       -- without doing nothing more
       cur_line_nr = cur_line_nr + 1
@@ -89,7 +95,9 @@ local function draw_icons()
 
         -- If filetype is still nil after manually setting extensions
         -- for unknown filetypes then let's use 'default'
-        if not filetype then filetype = 'default' end
+        if not filetype then
+          filetype = 'default'
+        end
 
         local icon, icon_highlight = devicons.get_icon(line, filetype, { default = '' })
         sign_name = 'netrw_' .. filetype
@@ -108,9 +116,13 @@ end
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'netrw',
-  callback = function() return draw_icons() end,
+  callback = function()
+    return draw_icons()
+  end,
 })
 
 vim.api.nvim_create_autocmd('TextChanged', {
-  callback = function() return draw_icons() end,
+  callback = function()
+    return draw_icons()
+  end,
 })

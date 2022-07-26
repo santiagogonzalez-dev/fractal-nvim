@@ -28,7 +28,9 @@ local function close_or_quit()
   if count_bufs_by_type().normal <= 1 then
     vim.ui.select({ 'Close buffer', 'Quit neovim' }, {
       prompt = 'What do you want to do?',
-      format_item = function(item) return string.format('%s%s', '-> ', item) end,
+      format_item = function(item)
+        return string.format('%s%s', '-> ', item)
+      end,
     }, function(_, choice)
       if choice == 1 then
         return vim.cmd.bd()
@@ -44,10 +46,7 @@ local function close_or_quit()
 end
 
 vim.schedule(function()
-  vim.keymap.set(
-    'n',
-    '<Leader>qq',
-    function() return close_or_quit() end,
-    { desc = 'Close the buffer without quitting neovim, or quit neovim' }
-  )
+  vim.keymap.set('n', '<Leader>qq', function()
+    return close_or_quit()
+  end, { desc = 'Close the buffer without quitting neovim, or quit neovim' })
 end)

@@ -36,7 +36,9 @@ end
 function acceleration:get_acceleration_step()
   local len = #self.acceleration_table
   for idx, value in ipairs(self.acceleration_table) do
-    if value > self.key_count then return idx end
+    if value > self.key_count then
+      return idx
+    end
   end
   return len + 1
 end
@@ -51,10 +53,14 @@ function acceleration:move_to(movement)
   local current_timestamp = vim.fn.reltime()
   local delta = vim.fn.split(vim.fn.reltimestr(vim.fn.reltime(previous_timestamp, current_timestamp)), '\\.')
   local msec = tonumber(delta[1] .. string.sub(delta[2], 1, 3))
-  if msec > self.acceleration_limit then self:decelerate(msec) end
+  if msec > self.acceleration_limit then
+    self:decelerate(msec)
+  end
   step = self:get_acceleration_step()
   vim.api.nvim_command('normal! ' .. step .. movement)
-  if self.key_count < self.end_of_count then self.key_count = self.key_count + 1 end
+  if self.key_count < self.end_of_count then
+    self.key_count = self.key_count + 1
+  end
   self.previous_timestamp[movement] = current_timestamp
 end
 

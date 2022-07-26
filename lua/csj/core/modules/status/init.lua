@@ -1,5 +1,6 @@
 local M = {}
-local component = require('csj.core.status.components')
+local component = require('csj.core.modules.status.components')
+local utils = require('csj.core.utils')
 
 function M.active()
   vim.opt.laststatus = 3
@@ -19,15 +20,17 @@ function M.active()
   }
 end
 
+vim.opt.statusline = '%!v:lua.require("csj.core.modules.status").active()'
+
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   callback = function()
-    vim.opt.statusline = '%!v:lua.require("csj.core.status").active()'
-    -- vim.opt_local.winbar = '%!v:lua.require("csj.core.status.components").location_treesitter()'
+    vim.opt.statusline = '%!v:lua.require("csj.core.modules.status").active()'
+    -- vim.opt_local.winbar = '%!v:lua.require("csj.core.modules.status.components").location_treesitter()'
   end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = csj.IGNORE_FT,
+  pattern = utils.IGNORE_FT,
   callback = function()
     vim.opt.statusline = '%#EndOfBuffer#' -- Change color of the statusline
   end,

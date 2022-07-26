@@ -1,3 +1,5 @@
+local utils = require('csj.core.utils')
+
 require('keymaps')
 
 -- Settings for non-visible characters
@@ -8,7 +10,7 @@ vim.opt.fillchars:append {
   msgsep = '🮑',
 }
 
-csj.append_by_random(vim.opt.fillchars, {
+utils.append_by_random(vim.opt.fillchars, {
   {
     horiz = '━',
     horizup = '┻',
@@ -80,3 +82,19 @@ vim.api.nvim_create_autocmd('BufEnter', {
   callback = _G.all_buffers_settings,
 })
 _G.all_buffers_settings()
+
+
+-- This is run after neovim loads, it checks if you started neovim into
+-- an empty buffer and if you did it opens projects.nvim with telescope.
+vim.api.nvim_create_autocmd('UIEnter', {
+  callback = function()
+    if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
+      return
+    end
+    -- If it doesn't we check if it's empty
+    if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
+      vim.cmd.PackerLoad('telescope.nvim')
+      vim.cmd.Telescope('projects')
+    end
+  end,
+})

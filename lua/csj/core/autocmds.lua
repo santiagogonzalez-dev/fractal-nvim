@@ -10,17 +10,21 @@ vim.api.nvim_create_autocmd('FocusGained', {
 vim.api.nvim_create_autocmd('FileChangedShellPost', {
   desc = 'Actions when the file is changed outside of Neovim',
   group = session_opts,
-  callback = function() vim.notify('File changed, reloading the buffer', vim.log.levels.WARN) end,
+  callback = function()
+    vim.notify('File changed, reloading the buffer', vim.log.levels.WARN)
+  end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
   desc = 'Create missing directories before saving the buffer',
   group = session_opts,
-  callback = function() return vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p') end,
+  callback = function()
+    return vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
+  end,
 })
 
 -- First load
-local first_load = vim.api.nvim_create_augroup('first_load', { clear = true })
+local first_load = vim.api.nvim_create_augroup('first_load', {})
 
 vim.api.nvim_create_autocmd('UIEnter', {
   desc = 'Print the output of flag --startuptime startuptime.txt',
@@ -28,19 +32,16 @@ vim.api.nvim_create_autocmd('UIEnter', {
   pattern = 'init.lua',
   once = true,
   callback = function()
-    vim.defer_fn(
-      function()
-        return vim.fn.filereadable('startuptime.txt') == 1
-          and vim.cmd(':!tail -n3 startuptime.txt')
-          and vim.fn.delete('startuptime.txt')
-      end,
-      1000
-    )
+    vim.defer_fn(function()
+      return vim.fn.filereadable('startuptime.txt') == 1
+        and vim.cmd(':!tail -n3 startuptime.txt')
+        and vim.fn.delete('startuptime.txt')
+    end, 1000)
   end,
 })
 
 -- Globals
-local buffer_settings = vim.api.nvim_create_augroup('buffer_settings', { clear = true })
+local buffer_settings = vim.api.nvim_create_augroup('buffer_settings', {})
 
 vim.api.nvim_create_autocmd('FileType', {
   desc = 'Quit with q in this filetypes',
@@ -53,17 +54,23 @@ vim.api.nvim_create_autocmd('FileType', {
     'qf',
     'startuptime',
   },
-  callback = function() vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 }) end,
+  callback = function()
+    vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 })
+  end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Quit! with q in this filetypes',
+  desc = 'Quit! with q! in this filetypes',
   group = buffer_settings,
   pattern = 'TelescopePrompt',
-  callback = function() vim.keymap.set('n', 'q', ':q!<CR>', { buffer = 0 }) end,
+  callback = function()
+    vim.keymap.set('n', 'q', ':q!<CR>', { buffer = 0 })
+  end,
 })
 
+-- TODO(santigo-zero): Put this elsewhere
 vim.api.nvim_create_autocmd('OptionSet', {
+  desc = 'Make the cursorline appear only on the active window/pan',
   pattern = 'cursorcolumn',
   callback = function()
     vim.api.nvim_create_autocmd('WinEnter', {
@@ -83,25 +90,20 @@ vim.api.nvim_create_autocmd('OptionSet', {
   end,
 })
 
-vim.api.nvim_create_autocmd('InsertEnter', {
-  desc = 'Avoid unexpected behaviour when using snippets',
-  pattern = 'buffer_settings',
-  callback = function()
-    local luasnip = require('luasnip')
-    if luasnip.expand_or_jumpable() then luasnip.unlink_current() end
-  end,
-})
-
 vim.api.nvim_create_autocmd('CmdLineEnter', {
   desc = 'Hotfix for cmdheight = 0 not showing :s///g',
   pattern = 'buffer_settings',
-  callback = function() vim.opt.cmdheight = 1 end,
+  callback = function()
+    vim.opt.cmdheight = 1
+  end,
 })
 
 vim.api.nvim_create_autocmd('CmdLineLeave', {
   desc = 'Hotfix for cmdheight = 0 not showing :s///g',
   pattern = 'buffer_settings',
-  callback = function() vim.opt.cmdheight = 0 end,
+  callback = function()
+    vim.opt.cmdheight = 0
+  end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -125,5 +127,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight on yank',
   group = 'session_opts',
-  callback = function() pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 }) end,
+  callback = function()
+    pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 })
+  end,
 })

@@ -3,6 +3,7 @@
 -- `./user/init.lua` it will read the skeleton(template) from the directory
 -- `./user/skeleton` so drop all your templates in there with the correct
 -- extension
+-- TODO(santigo-zero): Fix lazyloading
 
 local M = {}
 
@@ -18,7 +19,9 @@ function M.return_read_command()
 end
 
 vim.api.nvim_create_autocmd('BufNewFile', {
-  callback = function() vim.cmd(M.return_read_command()) end,
+  callback = function()
+    vim.cmd(M.return_read_command())
+  end,
 })
 
 return M

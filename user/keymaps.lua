@@ -80,12 +80,9 @@ vim.keymap.set({ 'n', 'x', 'o' }, 'N', '"nN"[v:searchforward]', { expr = true, d
 vim.keymap.set('n', 'dD', '0D', { desc = 'This only makes sense to me' })
 vim.keymap.set('n', '^^', '0', { desc = 'Better ^' })
 
-vim.keymap.set(
-  'n',
-  'gx',
-  function() vim.fn.jobstart({ 'xdg-open', vim.fn.expand('<cfile>', nil, nil) }, { detach = true }) end,
-  { desc = 'Better gx' }
-)
+vim.keymap.set('n', 'gx', function()
+  vim.fn.jobstart({ 'xdg-open', vim.fn.expand('<cfile>', nil, nil) }, { detach = true })
+end, { desc = 'Better gx' })
 
 vim.keymap.set('n', 'dd', function()
   if vim.api.nvim_get_current_line():match('^%s*$') then

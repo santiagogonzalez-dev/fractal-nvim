@@ -41,8 +41,12 @@ end
 ---@param mode boolean
 local function switcher(mode)
   if mode then
-    vim.keymap.set('n', 'h', function() return h_motion() end)
-    vim.keymap.set('n', 'l', function() return l_motion() end)
+    vim.keymap.set('n', 'h', function()
+      return h_motion()
+    end)
+    vim.keymap.set('n', 'l', function()
+      return l_motion()
+    end)
     vim.opt.virtualedit = ''
     vim.g.strict_cursor = false
   else
@@ -54,6 +58,8 @@ local function switcher(mode)
 end
 
 switcher(true) -- Enable strict cursor when running the function for the first time
-vim.keymap.set('n', '<Esc><Esc>', function() return switcher(vim.g.strict_cursor) end, {
+vim.keymap.set('n', '<Esc><Esc>', function()
+  return switcher(vim.g.strict_cursor)
+end, {
   desc = 'Add a second mode for the cursor, which either restricts or lets the cursor move freely',
 })
