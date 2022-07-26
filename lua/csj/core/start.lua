@@ -174,10 +174,17 @@ function M.modules_load(T)
     return false
   end
 
-  vim.fn.map(T, function(name)
-    local module = string.format('csj.core.modules.%s', name)
-    utils.prequire(module)
-  end)
+  for k, v in pairs(T) do
+    if v then
+      local module = string.format('csj.core.modules.%s', k)
+      utils.prequire(module)
+    end
+  end
+  -- vim.fn.map(T, function(name, value)
+  --   print(name, value)
+  --   -- local module = string.format('csj.core.modules.%s', name)
+  --   -- utils.prequire(module)
+  -- end)
 
   return true
 end
