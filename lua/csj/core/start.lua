@@ -93,6 +93,7 @@ function M.session(mode)
 
   -- Setup the initial load and maintain some settings between buffers
   local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
+
   local point_restore = function()
     pcall(vim.cmd.loadview) -- Load the view for the opened buffer
 
@@ -108,6 +109,7 @@ function M.session(mode)
       end
     end
   end
+
   point_restore()
 
   vim.api.nvim_create_autocmd('BufWinEnter', {
