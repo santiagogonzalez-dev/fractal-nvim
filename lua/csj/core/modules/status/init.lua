@@ -6,17 +6,37 @@ function M.active()
   vim.opt.laststatus = 3
 
   return table.concat {
+    -- LEFT
+    '',
+    '%#Conditional#',
     component.lineinfo(),
-    '%#StatusLine#',
-    ' ',
-    component.filepath(),
-    component.filename(),
-    -- ' ',
-    -- component.location_treesitter()
-    ' ',
     component.filewritable(),
-    '%=%', -- Put component in the right side
+    ' ', -- Icons from ^^ get cut so add a space in here
+    '%#StatusLine#', -- Reset hl groups
+
+    -- CENTER
+    '%=',
+    component.filepath(),
+    '%#StatusLineAccentBlue#',
+    component.filename(),
+    '%#StatusLine#', -- Reset hl groups
+
+    -- RIGHT
+    '%=',
     component.vcs(),
+    '%#StatusLine#', -- Reset hl groups
+    ' ',
+  }
+end
+
+function M.winbar_active()
+  return table.concat {
+    '%=',
+    '%#StatusLine#', -- Winbar doesn't define a default hl
+    component.filepath(),
+    '%#StatusLineAccentBlue#',
+    component.filename(),
+    '%#StatusLine#', -- Reset hl groups
   }
 end
 
@@ -25,7 +45,6 @@ vim.opt.statusline = '%!v:lua.require("csj.core.modules.status").active()'
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   callback = function()
     vim.opt.statusline = '%!v:lua.require("csj.core.modules.status").active()'
-    -- vim.opt_local.winbar = '%!v:lua.require("csj.core.modules.status.components").location_treesitter()'
   end,
 })
 

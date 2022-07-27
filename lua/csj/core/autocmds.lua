@@ -73,6 +73,9 @@ vim.api.nvim_create_autocmd('OptionSet', {
   desc = 'Make the cursorline appear only on the active window/pan',
   pattern = 'cursorcolumn',
   callback = function()
+    if vim.opt.cursorline ~= true and vim.opt.cursorcolumn ~= true then
+      return
+    end
     vim.api.nvim_create_autocmd('WinEnter', {
       group = buffer_settings,
       callback = function()

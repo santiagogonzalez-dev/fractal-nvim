@@ -92,6 +92,8 @@ utils.IGNORE_FT = {
   'gitdiff',
   'netrw',
   'packer',
+  'help',
+  'startify',
 }
 
 -- If there's a filetype that I want to ignore return true, so you can do
@@ -130,8 +132,8 @@ end
 ---@param a table
 ---@param b table
 ---@return boolean
-function utils.do_tables_match( a, b )
-    return table.concat(a) == table.concat(b)
+function utils.do_tables_match(a, b)
+  return table.concat(a) == table.concat(b)
 end
 
 return utils

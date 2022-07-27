@@ -1,31 +1,6 @@
 local utils = require('csj.core.utils')
 local component = {}
 
-function component.treesitter_info()
-  if utils.avoid_filetype() then
-    return
-  end
-  local ts_utils = require('nvim-treesitter.ts_utils')
-  local start_line, _, end_line, _ = ts_utils.get_node_range(ts_utils.get_node_at_cursor())
-
-  return table.concat {
-    ' ',
-    ts_utils.get_node_at_cursor():type(),
-    '  ',
-    start_line,
-    '|',
-    end_line,
-  }
-end
-
-function component.location_treesitter()
-  if utils.avoid_filetype() then
-    return ' '
-  else
-    return string.format('%s%s', '%#StatusLine#', require('nvim-treesitter').statusline())
-  end
-end
-
 function component.vcs()
   -- Requires gitsigns.nvim
   local git_info = vim.b.gitsigns_status_dict
@@ -68,21 +43,49 @@ function component.vcs()
     '%#StatusLineGitSignsAdd#',
     ' ',
     git_info.head,
-    ' ',
-    '%#StatusLine#',
   }
 end
 
 function component.lineinfo()
-  local line_lenght = vim.api.nvim_get_current_line()
-
+  -- Composition of other components
   return table.concat {
-    '%#StatusLineAccent#',
-    ' %P %l:%c',
-    '',
-    #line_lenght,
-    ' ',
+    '%l',
+    -- ^^ equivalent to tonumber(vim.api.nvim_eval_statusline('%l', {}).str)
+    -- or vim.fn.line('.')
+    component.position_icon(),
+    component.column_cursor(),
   }
+end
+
+function component.position_icon()
+  -- Icon representing the line number position
+  local current_line = vim.fn.line('.')
+  local total_lines = vim.fn.line('$') -- == tonumber(vim.api.nvim_eval_statusline('%L', {}).str)
+
+  if vim.api.nvim_eval_statusline('%P', {}).str == 'All' then
+    return ''
+  elseif current_line == 1 then
+    return ''
+  end
+
+  local chars = { '', '', '' }
+  local line_ratio = current_line / total_lines
+  local index = math.ceil(line_ratio * #chars)
+  return chars[index]
+end
+
+function component.column_cursor()
+  -- Represent cursor column and lenght of the line
+  local line_lenght = vim.fn.col('$') - 1
+  local cursor_column = vim.fn.col('.') -- == tonumber(vim.api.nvim_eval_statusline('%c', {}).str)
+
+  if line_lenght == cursor_column then
+    return cursor_column, '␊'
+  elseif line_lenght == 0 then
+    return '∅'
+  else
+    return cursor_column, '↲', line_lenght
+  end
 end
 
 function component.filewritable()
@@ -91,7 +94,7 @@ function component.filewritable()
     return ' '
   elseif fmode == 1 then
     local show_sign = false
-    return show_sign and ' ' or ' '
+    return show_sign and '' or ' '
     -- elseif fmode == 2 then
     --    return ' '
   end
@@ -119,7 +122,7 @@ function component.filename()
     return ''
   end
 
-  return string.format('%s%s%s', '%#StatusLineAccentBlue#', filename, '%#StatusLine#')
+  return filename
 end
 
 return component

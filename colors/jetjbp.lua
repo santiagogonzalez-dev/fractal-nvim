@@ -1,16 +1,8 @@
 -- TODO(santigo-zero): colors for diff (-d flag)
 vim.cmd.highlight { args = { 'clear' } }
--- vim.api.nvim_cmd({
---   cmd = 'highlight',
---   args = { 'clear' },
--- }, {}) -- vim.cmd('highlight clear')
 
 if 1 == vim.fn.exists('syntax_on') then
   vim.cmd.syntax('reset')
-  -- vim.api.nvim_cmd({
-  --   cmd = 'syntax',
-  --   args = { 'reset' },
-  -- }, {}) -- vim.cmd('syntax reset')
 end
 
 vim.opt.termguicolors = true
@@ -78,9 +70,6 @@ h('CurSearch', { bg = p.bg_high, fg = p.blue }) -- Current search match under th
 h('Search', { bg = p.bg_high, fg = p.orange }) -- Last search pattern
 h('Substitute', { bg = p.bg_high, fg = p.violet }) -- :substitute or :s///gc replacement text highlighting
 h('SignColumn', { bg = p.bg_low }) -- Where linting and errors popup
-h('StatusLine', { bg = p.bg_med, fg = p.dimmed2 }) -- The statusline
-h('StatusLineAccent', { bg = p.bg_high }) -- The same as Visual
-h('StatusLineAccentBlue', { bg = p.bg_med, fg = p.blue }) -- The statusline
 h('Title', { fg = p.upper1 }) -- Titles for output from ':set all', ':autocmd' etc.
 h('Visual', { bg = p.bg_high }) -- Visual mode uses this
 h('VisualNOS', { reverse = true }) -- When vim is not owning the selection
@@ -94,6 +83,11 @@ h('Pmenu', { bg = p.bg_low, fg = p.upper1 })
 h('PmenuSbar', { bg = p.dimmed3 })
 h('PmenuThumb', { bg = p.fg_dim })
 h('PmenuSel', { bg = p.dimmed3, blend = 0 })
+
+-- StatusLine
+h('StatusLine', { bg = p.bg_low, fg = p.dimmed1 }) -- The statusline
+h('StatusLineAccent', { bg = p.bg_high }) -- The same as Visual
+h('StatusLineAccentBlue', {fg = p.blue }) -- The statusline
 
 -- Syntax
 h('Character', { fg = p.upper2 }) -- A character constant: 'c', '\n'
