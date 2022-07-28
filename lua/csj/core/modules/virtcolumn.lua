@@ -1,5 +1,8 @@
 -- Modified version of lukas-reineke virt-column.nvim, overrides the colorcolumn.
 
+-- TODO
+-- vim.fn.matchadd('ModeMsg', [[\%80v]], 100)
+
 local ffi = require('ffi')
 local utils = {}
 local commands = {}

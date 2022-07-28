@@ -7,7 +7,7 @@ require('csj.core.autocmds') -- Some common autocommands.
 
 start.disable(user.disable_builtins)
 start.colorscheme(user.colorscheme) -- Apply colorscheme.
-start.early_modules_load(user.modules) -- Some modules can't be lazyloaded.
+start.modules_load(user.early_modules) -- Some modules can't be lazyloaded.
 
 vim.schedule(function()
   start.session(user.restore) -- Restore cursor and view.

@@ -70,11 +70,13 @@ function _G.all_buffers_settings()
     - 'l' -- Format in insert mode if the line is longer than textwidth
 
   -- There's a non-visible character at cchar= so watch
-  vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
-  vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
-  vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
-  vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
-  -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
+  vim.schedule(function()
+    vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
+    vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
+    vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
+    vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
+    -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
+  end)
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
@@ -82,7 +84,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
   callback = _G.all_buffers_settings,
 })
 _G.all_buffers_settings()
-
 
 -- This is run after neovim loads, it checks if you started neovim into
 -- an empty buffer and if you did it opens projects.nvim with telescope.

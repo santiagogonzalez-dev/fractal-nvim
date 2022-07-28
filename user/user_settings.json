@@ -4,14 +4,17 @@
   "disable_builtins": true,
   "conditionals": true,
 
+  "early_modules": {
+    "skeletons": true
+  },
+
   "modules": {
     "afiolb": true,
     "gutter": true,
     "folds": true,
     "netrw": true,
-    "notifications": false,
+    "notifications": true,
     "sdmog": true,
-    "skeletons": true,
     "status": true,
     "strict_cursor": true,
     "virtcolumn": true

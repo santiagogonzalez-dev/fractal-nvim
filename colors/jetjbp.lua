@@ -87,7 +87,7 @@ h('PmenuSel', { bg = p.dimmed3, blend = 0 })
 -- StatusLine
 h('StatusLine', { bg = p.bg_low, fg = p.dimmed1 }) -- The statusline
 h('StatusLineAccent', { bg = p.bg_high }) -- The same as Visual
-h('StatusLineAccentBlue', {fg = p.blue }) -- The statusline
+h('StatusLineAccentBlue', { fg = p.blue }) -- The statusline
 
 -- Syntax
 h('Character', { fg = p.upper2 }) -- A character constant: 'c', '\n'

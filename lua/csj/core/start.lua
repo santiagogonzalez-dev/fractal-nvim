@@ -168,51 +168,30 @@ end
 
 -- List of modules to be loaded, they can be found under
 -- `./lua/csj/core/modules` k is the name of the module and v is a boolean
----@param T table @ Modules to be loaded
+---@param T table @ Table containing the modules to be loaded
+---@return boolean
 function M.modules_load(T)
   if T == nil or T == vim.NIL then
     return false
   end
 
-  for k, v in pairs(T) do
-    if v then
-      local module = string.format('csj.core.modules.%s', k)
-      utils.prequire(module)
-    end
-  end
-  -- vim.fn.map(T, function(name, value)
-  --   print(name, value)
-  --   -- local module = string.format('csj.core.modules.%s', name)
-  --   -- utils.prequire(module)
+  -- for k, v in pairs(T) do
+  --   if v then
+  --     local module = string.format('csj.core.modules.%s', k)
+  --     utils.prequire(module)
+  --   end
+  -- end
+
+  -- vim.fn.map(T, function(module, value)
+  --   return value and utils.prequire(string.format('csj.core.modules.%s', module))
   -- end)
 
-  return true
-end
-
--- Some modules can't be lazyloaded, so in here we determine if the user wants
--- to lead some of them and we do so early on.
----@param T table @ Modules table == `user.modules`
----@return boolean
-function M.early_modules_load(T)
-  if T == nil or T == vim.NIL then
-    return false
-  end
-
-  -- Modules that need to be loaded early if the user opted in
-  local EARLY = {
-    skeletons = true,
-  }
-
-  -- For each module in `EARLY` we are going to run a comprobation
-  for k, _ in pairs(EARLY) do
-    -- So e.g. if we match `EARLY.skeletons` to `user.modules.skeletons` in
-    -- this case `T.skeletons`:
-    if utils.do_tables_match(T, EARLY) then
-      -- We load the module early
-      local module = string.format('csj.core.modules.%s', k)
-      utils.prequire(module)
+  utils.map(T, function(module, value)
+    if value then
+      local module_path = string.format('csj.core.modules.%s', module)
+      return utils.prequire(module_path)
     end
-  end
+  end)
 
   return true
 end

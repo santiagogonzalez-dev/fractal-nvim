@@ -1,7 +1,7 @@
 local utils = {}
 
 -- Protected require, notifies if there's an error loading a module
----@return boolean|string|number|nil @ Either nil or the value of require()
+---@return boolean|string|number @ Either nil or the value of require()
 function utils.prequire(package)
   local status, lib = pcall(require, package)
   if status then
@@ -15,7 +15,7 @@ function utils.prequire(package)
       -- This ^^ one will print the error in the terminal even when using the
       -- notification module
     end)
-    return nil
+    return false
   end
 end
 
@@ -134,6 +134,14 @@ end
 ---@return boolean
 function utils.do_tables_match(a, b)
   return table.concat(a) == table.concat(b)
+end
+
+function utils.map(tbl, func)
+  local NT = {}
+  for k, v in pairs(tbl) do
+    NT[k] = func(k, v)
+  end
+  return NT
 end
 
 return utils
