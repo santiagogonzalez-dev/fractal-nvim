@@ -7,11 +7,12 @@ function M.active()
 
   return table.concat {
     -- LEFT
-    '',
+    ' ',
+    -- '',
     '%#Conditional#',
     component.lineinfo(),
     component.filewritable(),
-    ' ', -- Icons from ^^ get cut so add a space in here
+    component.input(),
     '%#StatusLine#', -- Reset hl groups
 
     -- CENTER

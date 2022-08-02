@@ -1,6 +1,16 @@
 local utils = require('csj.core.utils')
 local component = {}
 
+function component.input()
+  local res = vim.fn.searchcount()
+
+  if res.total > 0 then
+    return string.format('%s/%d %s ', res.current, res.total, vim.fn.getreg('/'))
+  else
+    return ' '
+  end
+end
+
 function component.vcs()
   -- Requires gitsigns.nvim
   local git_info = vim.b.gitsigns_status_dict
@@ -63,12 +73,12 @@ function component.position_icon()
   local total_lines = vim.fn.line('$') -- == tonumber(vim.api.nvim_eval_statusline('%L', {}).str)
 
   if vim.api.nvim_eval_statusline('%P', {}).str == 'All' then
-    return ''
+    return ' '
   elseif current_line == 1 then
-    return ''
+    return ' '
   end
 
-  local chars = { '', '', '' }
+  local chars = { ' ', ' ', ' ' }
   local line_ratio = current_line / total_lines
   local index = math.ceil(line_ratio * #chars)
   return chars[index]
@@ -82,7 +92,7 @@ function component.column_cursor()
   if line_lenght == cursor_column then
     return cursor_column, '␊'
   elseif line_lenght == 0 then
-    return '∅'
+    return ''
   else
     return cursor_column, '↲', line_lenght
   end

@@ -12,6 +12,8 @@ vim.opt.guicursor:append('r-cr-o:hor20')
 -- Search files recursively
 vim.opt.path:append('**')
 
+vim.opt.showcmd = false
+
 -- To appropriately highlight codefences
 vim.g.markdown_fenced_languages = {
   'js=javascript',

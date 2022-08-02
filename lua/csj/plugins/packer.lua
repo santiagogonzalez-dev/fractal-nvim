@@ -58,10 +58,10 @@ return packer.startup(function(use)
     'rainbowhxch/accelerated-jk.nvim',
     keys = { 'j', 'k', 'w', 'b', '+', '-' },
     config = function()
-      require('accelerated-jk').setup({
+      require('accelerated-jk').setup {
         enable_deceleration = true,
-        acceleration_motions = { 'w', 'b', '+', '-' }
-      })
+        acceleration_motions = { 'w', 'b', '+', '-' },
+      }
       vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', {})
       vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', {})
     end,
@@ -189,31 +189,32 @@ return packer.startup(function(use)
     run = ':TSUpdate',
     requires = {
       { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'Comment.nvim' },
-      -- {
-      --   'nvim-treesitter/playground',
-      --   config = function()
-      --     require('nvim-treesitter.configs').setup {
-      --       playground = {
-      --         enable = true,
-      --         disable = {},
-      --         updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-      --         persist_queries = false, -- Whether the query persists across vim sessions
-      --         keybindings = {
-      --           toggle_query_editor = 'o',
-      --           toggle_hl_groups = 'i',
-      --           toggle_injected_languages = 't',
-      --           toggle_anonymous_nodes = 'a',
-      --           toggle_language_display = 'I',
-      --           focus_language = 'f',
-      --           unfocus_language = 'F',
-      --           update = 'R',
-      --           goto_node = '<cr>',
-      --           show_help = '?',
-      --         },
-      --       },
-      --     }
-      --   end,
-      -- },
+      {
+        'nvim-treesitter/playground',
+        cmd = 'TSPlaygroundToggle',
+        config = function()
+          require('nvim-treesitter.configs').setup {
+            playground = {
+              enable = true,
+              disable = {},
+              updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+              persist_queries = false, -- Whether the query persists across vim sessions
+              keybindings = {
+                toggle_query_editor = 'o',
+                toggle_hl_groups = 'i',
+                toggle_injected_languages = 't',
+                toggle_anonymous_nodes = 'a',
+                toggle_language_display = 'I',
+                focus_language = 'f',
+                unfocus_language = 'F',
+                update = 'R',
+                goto_node = '<cr>',
+                show_help = '?',
+              },
+            },
+          }
+        end,
+      },
     },
     config = function()
       require('csj.plugins.treesitter')
@@ -260,7 +261,21 @@ return packer.startup(function(use)
         group = colorizer,
         command = 'ColorizerAttachToBuffer',
       })
+
       vim.cmd('ColorizerAttachToBuffer')
+
+      vim.api.nvim_create_autocmd({
+        'ModeChanged',
+        'InsertChange',
+        'InsertEnter',
+        'InsertLeave',
+        'TextChanged',
+        'TextChangedI',
+      }, {
+        callback = function()
+          vim.cmd.ColorizerReloadAllBuffers()
+        end,
+      })
     end,
   }
 

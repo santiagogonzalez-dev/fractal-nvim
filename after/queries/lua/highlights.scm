@@ -139,11 +139,11 @@
 ; )
 
 ; (("return" @keyword) (#set! conceal ""))
-(("return" @keyword) (#set! conceal ""))
+; (("return" @keyword) (#set! conceal ""))
 ; (("local" @keyword) (#set! conceal "L"))
 ; (("local" @keyword) (#set! conceal ""))
 ; (("local" @keyword) (#set! conceal ""))
-(("function" @keyword) (#set! conceal ""))
+; (("function" @keyword) (#set! conceal ""))
 ; (("function" @keyword) (#set! conceal ""))
 ; (("then" @keyword) (#set! conceal ""))
 (("not" @keyword) (#set! conceal ""))

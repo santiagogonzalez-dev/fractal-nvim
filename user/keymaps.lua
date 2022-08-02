@@ -118,3 +118,5 @@ vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], { desc = 'Bette
 
 vim.keymap.set({ 'v', 'x' }, '<', '<gv', { desc = 'Keep visual selection after shifting code block' })
 vim.keymap.set({ 'v', 'x' }, '>', '>gv', { desc = 'Keep visual selection after shifting code block' })
+vim.keymap.set('n', '/', '/<Up>', { desc = 'Better search' })
+vim.keymap.set('n', '//', '/', { desc = 'Better search' })

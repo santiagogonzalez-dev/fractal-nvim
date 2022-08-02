@@ -20,7 +20,7 @@ local function show_dot_mark_on_gutter()
       dot_mark,
       mark[1] - 1,
       0,
-      { sign_text = '', sign_hl_group = 'ShowDotMarkOnGutter' }
+      { sign_text = '', sign_hl_group = 'CursorLineSign' }
     )
   end)
   return vim.g.dot_mark
