@@ -9,7 +9,7 @@ function M.active()
     -- LEFT
     ' ',
     -- '',
-    '%#Conditional#',
+    '%#StatusLine#',
     component.lineinfo(),
     component.filewritable(),
     component.input(),

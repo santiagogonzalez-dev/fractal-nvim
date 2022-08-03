@@ -69,6 +69,12 @@ function _G.all_buffers_settings()
     - 'o' -- Don't continue comments after o/O
     - 'l' -- Format in insert mode if the line is longer than textwidth
 
+  -- vim.opt.cpoptions = vim.opt.cpoptions
+  --   + 'n' -- Show `showbreak` icon in the number column
+
+  vim.opt.cpoptions = vim.opt.cpoptions
+    + 'n' -- Show the showbreak icon on the gutter
+
   -- There's a non-visible character at cchar= so watch
   vim.schedule(function()
     vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])

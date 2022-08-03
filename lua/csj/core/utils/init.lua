@@ -129,13 +129,6 @@ function utils.hide_at_term_width()
   return vim.opt.columns:get() > 90
 end
 
----@param a table
----@param b table
----@return boolean
-function utils.do_tables_match(a, b)
-  return table.concat(a) == table.concat(b)
-end
-
 function utils.map(tbl, func)
   local NT = {}
   for k, v in pairs(tbl) do

@@ -39,7 +39,7 @@
     "list": true,
     "matchpairs": "(:),{:},[:],<:>,=:;",
     "mousefocus": true,
-    "pumblend": 0,
+    "pumblend": 9,
     "pumheight": 6,
     "scrolloff": 9,
     "secure": true,
