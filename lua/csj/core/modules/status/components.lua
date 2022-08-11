@@ -4,7 +4,7 @@ local component = {}
 function component.input()
   local res = vim.fn.searchcount()
 
-  if res.total > 0 then
+  if res.total ~= vim.empty_dict() and res.total > 0 then
     return string.format('%s/%d %s ', res.current, res.total, vim.fn.getreg('/'))
   else
     return ' '
