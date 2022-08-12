@@ -13,6 +13,7 @@ local SERVERS = {
   'emmet_ls',
   'html',
   'jdtls',
+  'jsonls',
   'pyright',
   'sumneko_lua',
   'tsserver',

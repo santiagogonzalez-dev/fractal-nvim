@@ -359,6 +359,8 @@ jet.groups = {
   TSPunctSpecial = { link = 'Special' },
   Include = { fg = jet.jbp.violet }, -- from ... import ...
   TSField = { fg = jet.jbp.green }, -- Elements of a table or api in vim.api and ui in vim.ui, or bold in bold = true
+  Label = { fg = jet.jbp.green }, -- Used a lot in json files
+  TSLabel = { link = 'Label' },
   TSVariable = { fg = jet.jbp.dimmed1 }, -- All variables, globals or locals
   Function = { fg = jet.jbp.purple }, -- Function keyword (also: methods for classes)
   TSFunction = { fg = jet.jbp.blue }, -- The name of the function, my_func(), not the keyword
@@ -378,6 +380,7 @@ jet.groups = {
   NonText = { link = 'CursorLineNr' }, -- Used in showbreak, listchars and virtualtext
   Question = { fg = jet.jbp.upper1 }, -- hit-enter prompts and yes/no questions
   Identifier = { fg = jet.jbp.magenta }, -- (preferred) any variable name
+  TSFuncBuiltin = { fg = jet.jbp.purple }, -- Like `require`
 
   Pmenu = { bg = jet.jbp.bg_base, fg = jet.jbp.upper1 }, -- The non-selected entries of a completion menu, normal item
   PmenuSel = { bg = jet.jbp.bg_high, fg = jet.jbp.upper1, blend = 0 }, -- Selected item.

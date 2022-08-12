@@ -34,6 +34,7 @@ return packer.startup(function(use)
   use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
   use { 'metakirby5/codi.vim', cmd = 'Codi' } -- Codi
   use('kyazdani42/nvim-web-devicons')
+  use('b0o/SchemaStore.nvim') -- For json and yaml
 
   -- Surround
   use {
