@@ -20,7 +20,7 @@ if not status_ok then
 end
 
 packer.init {
-  compile_path = vim.fn.stdpath('config') .. '/lua/csj/plugins/packer_compiled.lua', -- Path for packer_compiled.lua
+  compile_path = vim.fn.stdpath('config') .. '/lua/user/plugins/packer_compiled.lua', -- Path for packer_compiled.lua
   git = { clone_timeout = 360 },
   display = {
     open_fn = function()
@@ -140,13 +140,13 @@ return packer.startup(function(use)
         pre_hook = function(ctx)
           local U = require('Comment.utils')
           local location = nil
-          if ctx.ctype == U.ctype.block then
+          if ctx.ctype == U.ctype.blockwise then
             location = require('ts_context_commentstring.utils').get_cursor_location()
           elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
             location = require('ts_context_commentstring.utils').get_visual_start_location()
           end
           return require('ts_context_commentstring.internal').calculate_commentstring {
-            key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
+            key = ctx.ctype == U.ctype.linewise and '__default' or '__multiline',
             location = location,
           }
         end,
@@ -218,7 +218,7 @@ return packer.startup(function(use)
       },
     },
     config = function()
-      require('csj.plugins.treesitter')
+      require('user.plugins.treesitter')
     end,
   }
 
@@ -228,7 +228,7 @@ return packer.startup(function(use)
     event = 'User IsGit',
     requires = 'nvim-lua/plenary.nvim',
     config = function()
-      require('csj.plugins.gitsigns')
+      require('user.plugins.gitsigns')
     end,
   }
 
@@ -248,7 +248,7 @@ return packer.startup(function(use)
     requires = 'nvim-lua/plenary.nvim',
     config = function()
       vim.cmd('PackerLoad project.nvim')
-      require('csj.plugins.telescope')
+      require('user.plugins.telescope')
     end,
   }
 
@@ -263,7 +263,7 @@ return packer.startup(function(use)
         command = 'ColorizerAttachToBuffer',
       })
 
-      vim.cmd('ColorizerAttachToBuffer')
+      vim.cmd.ColorizerAttachToBuffer()
 
       vim.api.nvim_create_autocmd({
         'ModeChanged',
@@ -285,7 +285,7 @@ return packer.startup(function(use)
     'neovim/nvim-lspconfig',
     event = 'User LoadPlugins',
     config = function()
-      require('csj.lsp')
+      require('user.lsp')
     end,
   }
 
@@ -306,7 +306,7 @@ return packer.startup(function(use)
     'jose-elias-alvarez/null-ls.nvim',
     opt = true,
     config = function()
-      require('csj.lsp.null-ls')
+      require('user.lsp.null-ls')
     end,
   }
 
@@ -335,7 +335,7 @@ return packer.startup(function(use)
       'L3MON4D3/LuaSnip',
     },
     config = function()
-      require('csj.plugins.cmp')
+      require('user.plugins.cmp')
     end,
   }
 

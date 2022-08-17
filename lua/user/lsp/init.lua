@@ -28,11 +28,11 @@ require('mason').setup()
 
 for _, server in pairs(SERVERS) do
   local opts = {
-    on_attach = require('csj.lsp.handlers').on_attach,
-    capabilities = require('csj.lsp.handlers').capabilities,
+    on_attach = require('user.lsp.handlers').on_attach,
+    capabilities = require('user.lsp.handlers').capabilities,
   }
 
-  local has_opts, custom_opts = pcall(require, string.format('%s.%s', 'csj.lsp.settings', server))
+  local has_opts, custom_opts = pcall(require, string.format('%s.%s', 'user.lsp.settings', server))
   if has_opts then
     opts = vim.tbl_deep_extend('force', custom_opts, opts)
   end
@@ -40,10 +40,10 @@ for _, server in pairs(SERVERS) do
   lspconfig[server].setup(opts)
 end
 
-require('csj.lsp.handlers').setup()
--- require('csj.lsp.top_right_lsp_diagnostics') -- Using lsp_lines.nvim for now
+require('user.lsp.handlers').setup()
+-- require('user.lsp.top_right_lsp_diagnostics') -- Using lsp_lines.nvim for now
 
 require('packer').loader('null-ls.nvim')
-require('csj.lsp.null-ls')
+require('user.lsp.null-ls')
 
 -- vim.api.nvim_cmd({ cmd = 'LspStart' }, {}) -- vim.cmd('LspStart')

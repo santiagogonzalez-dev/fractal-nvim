@@ -104,7 +104,8 @@
 (
   (dot_index_expression) @function
     (#eq? @function  "vim.api.nvim_create_autocmd" )
-  (#set! conceal "a")
+  ; (#set! conceal "a")
+  (#set! conceal "🪝")
 )
 
 ; (
@@ -143,7 +144,7 @@
 ; (("local" @keyword) (#set! conceal "L"))
 ; (("local" @keyword) (#set! conceal ""))
 ; (("local" @keyword) (#set! conceal ""))
-; (("function" @keyword) (#set! conceal ""))
+(("function" @keyword) (#set! conceal ""))
 ; (("function" @keyword) (#set! conceal ""))
 ; (("then" @keyword) (#set! conceal ""))
 (("not" @keyword) (#set! conceal ""))

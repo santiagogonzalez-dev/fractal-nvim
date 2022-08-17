@@ -46,7 +46,7 @@ local function close_or_quit()
 end
 
 vim.schedule(function()
-  vim.keymap.set('n', '<Leader>qq', function()
+  vim.keymap.set('n', '<Leader>q', function()
     return close_or_quit()
   end, { desc = 'Close the buffer without quitting neovim, or quit neovim' })
 end)

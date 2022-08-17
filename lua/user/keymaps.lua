@@ -33,7 +33,7 @@ vim.g.maplocalleader = ' '
 
 -- Simple keymappings
 vim.keymap.set('n', '<Leader>u', vim.cmd.update, { desc = 'Update the file' })
-vim.keymap.set('n', '<Leader>q', vim.cmd.quitall, { desc = 'Quit neovim' })
+vim.keymap.set('n', '<Leader>qq', vim.cmd.quitall, { desc = 'Quit neovim' })
 vim.keymap.set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>', { desc = 'Delete all buffers' })
 vim.keymap.set('n', '<Leader>w', vim.cmd.wqall, { desc = 'Write and Quit' })
 vim.keymap.set('n', '<Leader>p', '"_diwP', { desc = 'Paste under cursor without overwriting the yank register' })

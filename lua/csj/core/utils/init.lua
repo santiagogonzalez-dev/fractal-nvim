@@ -46,14 +46,6 @@ function utils.not_interfere_on_float()
   return true
 end
 
--- Randomize a set of items between startups
----@param option any
----@param T table
-function utils.append_by_random(option, T)
-  local randomized = option:append(T[math.random(1, #T)])
-  return randomized
-end
-
 -- Wrapper for functions, it works like pcall
 -- Varargs can't be used as an upvalue, so store them
 -- in this table first.

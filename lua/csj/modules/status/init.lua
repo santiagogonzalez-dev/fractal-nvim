@@ -1,5 +1,5 @@
 local M = {}
-local component = require('csj.core.modules.status.components')
+local component = require('csj.modules.status.components')
 local utils = require('csj.core.utils')
 
 function M.active()
@@ -41,11 +41,9 @@ function M.winbar_active()
   }
 end
 
-vim.opt.statusline = '%!v:lua.require("csj.core.modules.status").active()'
-
-vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
+vim.api.nvim_create_autocmd({ 'UIEnter', 'BufEnter', 'WinEnter' }, {
   callback = function()
-    vim.opt.statusline = '%!v:lua.require("csj.core.modules.status").active()'
+    vim.opt.statusline = '%!v:lua.require("csj.modules.status").active()'
   end,
 })
 

@@ -1,8 +1,6 @@
 local M = {}
 local utils = require('csj.core.utils')
 
--- TODO(santigo-zero): Shada file
-
 -- Disable things I'm not going to use, this include builtin plugins, providers,
 -- and the shada file.
 ---@param mode boolean
@@ -188,7 +186,7 @@ function M.modules_load(T)
 
   utils.map(T, function(module, value)
     if value then
-      local module_path = string.format('csj.core.modules.%s', module)
+      local module_path = string.format('csj.modules.%s', module)
       return utils.prequire(module_path)
     end
   end)

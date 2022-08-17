@@ -1,6 +1,6 @@
 local utils = require('csj.core.utils')
 
-require('keymaps')
+require('user.keymaps')
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append {
@@ -10,35 +10,31 @@ vim.opt.fillchars:append {
   msgsep = '🮑',
 }
 
-utils.append_by_random(vim.opt.fillchars, {
-  {
-    horiz = '━',
-    horizup = '┻',
-    horizdown = '┳',
-    vert = '┃',
-    vertleft = '┫',
-    vertright = '┣',
-    verthoriz = '╋',
-  },
-  {
-    horiz = '─',
-    horizup = '┴',
-    horizdown = '┬',
-    vert = '│',
-    vertleft = '┤',
-    vertright = '├',
-    verthoriz = '┼',
-  },
-  {
-    horiz = ' ',
-    horizup = ' ',
-    horizdown = ' ',
-    vert = ' ',
-    vertleft = ' ',
-    vertright = ' ',
-    verthoriz = ' ',
-  },
-})
+vim.opt.fillchars:append {
+  -- horiz = '━',
+  -- horizup = '┻',
+  -- horizdown = '┳',
+  -- vert = '┃',
+  -- vertleft = '┫',
+  -- vertright = '┣',
+  -- verthoriz = '╋',
+
+  -- horiz = '─',
+  -- horizup = '┴',
+  -- horizdown = '┬',
+  -- vert = '│',
+  -- vertleft = '┤',
+  -- vertright = '├',
+  -- verthoriz = '┼',
+
+  horiz = ' ',
+  horizup = ' ',
+  horizdown = ' ',
+  vert = ' ',
+  vertleft = ' ',
+  vertright = ' ',
+  verthoriz = ' ',
+}
 
 vim.opt.listchars:append {
   -- eol = '↪',
@@ -49,12 +45,12 @@ vim.opt.listchars:append {
   -- space = '·',
   -- tab = '-->',
   -- trail = "·",
-  -- trail = '█',
+  -- trail = '␣',
   extends = '◣',
   nbsp = '␣',
   precedes = '◢',
   tab = '!·',
-  trail = '␣',
+  trail = '█',
 }
 
 -- Ensure this settings persist in all buffers
@@ -86,22 +82,27 @@ function _G.all_buffers_settings()
 end
 
 vim.api.nvim_create_autocmd('BufEnter', {
-  -- group = 'session_opts',
+  group = 'session_opts',
   callback = _G.all_buffers_settings,
 })
 _G.all_buffers_settings()
 
--- This is run after neovim loads, it checks if you started neovim into
--- an empty buffer and if you did it opens projects.nvim with telescope.
-vim.api.nvim_create_autocmd('UIEnter', {
-  callback = function()
-    if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
-      return
-    end
-    -- If it doesn't we check if it's empty
-    if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
-      vim.cmd.PackerLoad('telescope.nvim')
-      vim.cmd.Telescope('projects')
-    end
-  end,
-})
+-- TODO(santigo-zero): create a function that bootstraps packer
+
+-- TODO(santigo-zero):
+-- -- This is run after neovim loads, it checks if you started neovim into
+-- -- an empty buffer and if you did it opens projects.nvim with telescope.
+-- vim.api.nvim_create_autocmd('UIEnter', {
+--   callback = function()
+--     if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
+--       return
+--     end
+--     -- If it doesn't we check if it's empty
+--     if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
+--       vim.cmd.PackerLoad('telescope.nvim')
+--       vim.cmd.Telescope('projects')
+--     end
+--   end,
+-- })
+
+require('user.plugins')

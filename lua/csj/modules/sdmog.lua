@@ -1,5 +1,3 @@
-local utils = require('csj.core.utils')
-
 -- TODO(santigo-zero): The . mark isn't going to be set on a buffer we have never entered, so don't set the extmark
 -- Other ideas -> use virtualtext, like a ticket '.    笠  mark
 local dot_mark = vim.api.nvim_create_namespace('dot_mark_ns')
@@ -9,18 +7,13 @@ local function show_dot_mark_on_gutter()
     return
   end
 
-  local get_hl = vim.api.nvim_get_hl_by_name
-  utils.set_hl('ShowDotMarkOnGutter', {
-    fg = get_hl('CursorLineNr', true).foreground,
-    bg = get_hl('Normal', true).background,
-  })
   vim.g.dot_mark = pcall(function()
     return vim.api.nvim_buf_set_extmark(
       0,
       dot_mark,
       mark[1] - 1,
       0,
-      { sign_text = '', sign_hl_group = 'CursorLineSign' }
+      { sign_text = '', sign_hl_group = 'Whitespace' }
     )
   end)
   return vim.g.dot_mark

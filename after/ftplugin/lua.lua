@@ -2,7 +2,7 @@ local tab_lenght = 2
 vim.opt.tabstop = tab_lenght
 vim.opt.shiftwidth = tab_lenght
 vim.opt.colorcolumn = '80,120'
-vim.opt.textwidth = 80
+vim.opt.textwidth = 100
 
 -- Iterator that splits a string o a given delimiter
 local function split(str, delim)

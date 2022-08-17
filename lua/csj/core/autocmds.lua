@@ -1,5 +1,5 @@
 -- Session managment
-local session_opts = vim.api.nvim_create_augroup('session_opts', { clear = false })
+local session_opts = vim.api.nvim_create_augroup('session_opts', {})
 
 vim.api.nvim_create_autocmd('FocusGained', {
   desc = 'Check if any file has changed when Vim is focused',
@@ -16,7 +16,8 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-  desc = 'Create missing directories before saving the buffer',
+  desc = 'Create directories before saving a buffer, should come by default',
+  once = true,
   group = session_opts,
   callback = function()
     return vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p')
