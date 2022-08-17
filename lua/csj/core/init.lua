@@ -1,3 +1,4 @@
+pcall(require, 'impatient')
 require('csj.core.general') -- General settings
 require('csj.core.autocmds') -- General autocommands
 
