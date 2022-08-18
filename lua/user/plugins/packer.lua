@@ -252,34 +252,6 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Colorizer
-  use {
-    'norcalli/nvim-colorizer.lua',
-    event = 'User LoadPlugins',
-    config = function()
-      local colorizer = vim.api.nvim_create_augroup('nvim-colorizer', {})
-      vim.api.nvim_create_autocmd('BufReadPost', {
-        group = colorizer,
-        command = 'ColorizerAttachToBuffer',
-      })
-
-      vim.cmd.ColorizerAttachToBuffer()
-
-      vim.api.nvim_create_autocmd({
-        'ModeChanged',
-        'InsertChange',
-        'InsertEnter',
-        'InsertLeave',
-        'TextChanged',
-        'TextChangedI',
-      }, {
-        callback = function()
-          vim.cmd.ColorizerReloadAllBuffers()
-        end,
-      })
-    end,
-  }
-
   -- LSP
   use {
     'neovim/nvim-lspconfig',

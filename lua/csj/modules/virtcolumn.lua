@@ -66,7 +66,14 @@ function M.setup(config)
     'TextChangedI',
     'UIEnter',
     'WinEnter',
-  }, { group = '_virtcolumn', command = 'VirtColumnRefresh' })
+  }, {
+    group = '_virtcolumn',
+    callback = function()
+      if require('csj.core.utils').avoid_filetype() then
+        vim.cmd.VirtColumnRefresh()
+      end
+    end,
+  })
   -- vim.schedule_wrap(vim.cmd('VirtColumnRefresh'))
 end
 
