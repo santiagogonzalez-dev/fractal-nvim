@@ -135,3 +135,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 })
   end,
 })
+
+-- Disable mouse in insert mode
+local mouse_original_value = vim.api.nvim_get_option('mouse')
+vim.api.nvim_create_autocmd('InsertEnter', {
+  desc = 'Disable mouse in insert mode',
+  group = 'session_opts',
+  callback = function()
+    vim.opt.mouse = ''
+  end,
+})
+
+vim.api.nvim_create_autocmd('InsertLeave', {
+  desc = 'Restore default values for mouse',
+  group = 'session_opts',
+  callback = function()
+    vim.opt.mouse = mouse_original_value
+  end,
+})
