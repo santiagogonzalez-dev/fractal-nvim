@@ -34,7 +34,7 @@ return packer.startup(function(use)
   use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
   use { 'metakirby5/codi.vim', cmd = 'Codi' } -- Codi
   use('kyazdani42/nvim-web-devicons')
-  use('b0o/SchemaStore.nvim') -- For json and yaml
+  -- use('b0o/SchemaStore.nvim') -- For json and yaml
 
   -- Surround
   use {
@@ -45,14 +45,14 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Stay-in-place
-  use {
-    'gbprod/stay-in-place.nvim',
-    keys = { '>', '>>', '<', '<<', '=', '==' },
-    config = function()
-      require('stay-in-place').setup()
-    end,
-  }
+  -- -- Stay-in-place
+  -- use {
+  --   'gbprod/stay-in-place.nvim',
+  --   keys = { '>', '>>', '<', '<<', '=', '==' },
+  --   config = function()
+  --     require('stay-in-place').setup()
+  --   end,
+  -- }
 
   -- Accelerated jk
   use {
@@ -68,45 +68,45 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Vim bufsurf
-  use {
-    'ton/vim-bufsurf',
-    config = function()
-      vim.cmd([[
-        nmap ]b <Plug>(buf-surf-forward)
-        nmap [b <Plug>(buf-surf-back)
-      ]])
-    end,
-  }
+  -- -- Vim bufsurf
+  -- use {
+  --   'ton/vim-bufsurf',
+  --   config = function()
+  --     vim.cmd([[
+  --       nmap ]b <Plug>(buf-surf-forward)
+  --       nmap [b <Plug>(buf-surf-back)
+  --     ]])
+  --   end,
+  -- }
 
-  -- Dim unused functions, variables, parameters
-  use {
-    'zbirenbaum/neodim',
-    event = 'LspAttach',
-    config = function()
-      require('neodim').setup {
-        alpha = 0.75,
-        blend_color = '#000000',
-        update_in_insert = {
-          enable = true,
-          delay = 100,
-        },
-        hide = {
-          virtual_text = true,
-          signs = true,
-          underline = true,
-        },
-      }
-    end,
-  }
+  -- -- Dim unused functions, variables, parameters
+  -- use {
+  --   'zbirenbaum/neodim',
+  --   event = 'LspAttach',
+  --   config = function()
+  --     require('neodim').setup {
+  --       alpha = 0.75,
+  --       blend_color = '#000000',
+  --       update_in_insert = {
+  --         enable = true,
+  --         delay = 100,
+  --       },
+  --       hide = {
+  --         virtual_text = true,
+  --         signs = true,
+  --         underline = true,
+  --       },
+  --     }
+  --   end,
+  -- }
 
-  -- Impatient
-  use {
-    'lewis6991/impatient.nvim',
-    config = function()
-      require('impatient').enable_profile()
-    end,
-  }
+  -- -- Impatient
+  -- use {
+  --   'lewis6991/impatient.nvim',
+  --   config = function()
+  --     require('impatient').enable_profile()
+  --   end,
+  -- }
 
   -- Project
   use {
@@ -308,6 +308,42 @@ return packer.startup(function(use)
     },
     config = function()
       require('user.plugins.cmp')
+    end,
+  }
+
+  -- Colorizer
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup()
+    end,
+  }
+
+  -- Indent blankline
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    event = 'User LoadPlugins',
+    config = function()
+      require('indent_blankline').setup {
+        show_current_context = true,
+        show_current_context_start = false,
+        show_end_of_line = true,
+        show_trailing_blankline_indent = false,
+      }
+      vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { link = 'Whitespace' }) -- All the lines
+      vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { link = 'Identifier' }) -- Current place
+    end,
+  }
+
+  -- Virtual colorcolumn
+  use {
+    'lukas-reineke/virt-column.nvim',
+    event = 'User LoadPlugins',
+    config = function()
+      require('virt-column').setup {
+        char = '│',
+        virtcolumn = '',
+      }
     end,
   }
 

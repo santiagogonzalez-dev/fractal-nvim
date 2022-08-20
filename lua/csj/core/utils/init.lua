@@ -34,6 +34,7 @@ function utils.set_hl(mode, table)
   end
 end
 
+---@return boolean
 function utils.not_interfere_on_float()
   -- Do not open floating windows if there's already one open
   for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
@@ -65,6 +66,7 @@ function utils.is_empty(str)
   return str == '' or str == nil
 end
 
+---@return boolean
 function utils.is_git()
   local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
   if is_git:match('true') then
@@ -121,12 +123,75 @@ function utils.hide_at_term_width()
   return vim.opt.columns:get() > 90
 end
 
-function utils.map(tbl, func)
+---@param T table
+---@param F function
+---@return table NT @ newer table
+function utils.map(T, F)
   local NT = {}
-  for k, v in pairs(tbl) do
-    NT[k] = func(k, v)
+  for k, v in pairs(T) do
+    NT[k] = F(k, v)
   end
   return NT
 end
+
+-- function utils.interpret_color()
+--   -- vim.cmd([[
+--   -- def InlineColors()
+--   --     for row in range(1, line('$'))
+--   --         var current = getline(row)
+--   --         var cnt = 1
+--   --         prop_clear(row)
+--   --         var [hex, starts, ends] = matchstrpos(current, '#\x\{6\}', 0, cnt)
+--   --         while starts != -1
+--   --             var col_tag = "inline_color_" .. hex[1 : ]
+--   --             var col_type = prop_type_get(col_tag)
+--   --             if col_type == {}
+--   --                 hlset([{ name: col_tag, guifg: hex}])
+--   --                 prop_type_add(col_tag, {highlight: col_tag})
+--   --             endif
+--   --             prop_add(row, starts + 1, { length: ends - starts, text: " ● ", type: col_tag })
+--   --             cnt += 1
+--   --             [hex, starts, ends] = matchstrpos(current, '#\x\{6\}', 0, cnt)
+--   --         endwhile
+--   --     endfor
+--   -- enddef
+--   -- ]])
+
+--   -- for row in ipairs(vim.fn.range(1, vim.fn.line('$'))) do
+--   --   local line_str = vim.fn.getline(row)
+--   --   local counter = 1
+--   --   local T = vim.fn.matchstrpos(line_str, [[#\x\{6\}]], 0, counter)
+--   --   local hex = T[1]
+--   --   local starts = T[2]
+--   --   local ends = T[3]
+
+--   --   while starts ~= -1 do
+--   --     local col_tag = string.format('%s%s', 'inline_color_', string.gsub(hex, '%#', ''))
+--   --     print(col_tag)
+--   --     counter = counter + 1
+--   --   end
+--   -- end
+--   local bnr = vim.fn.bufnr('%')
+--   local ns_id = vim.api.nvim_create_namespace('demo')
+
+--   -- local line_num = 5
+--   -- local col_num = 5
+--   local cursor = vim.api.nvim_win_get_cursor(0)
+--   local line_num = cursor[1]
+--   local col_num = cursor[2]
+
+--   local opts = {
+--     end_line = 10,
+--     id = 1,
+--     virt_text = { { 'demo', 'IncSearch' } },
+--     virt_text_pos = 'overlay',
+--     -- virt_text_win_col = 20,
+--   }
+
+--   local mark_id = vim.api.nvim_buf_set_extmark(bnr, ns_id, line_num, col_num, opts)
+-- end
+-- Put this somewhere else
+-- vim.keymap.set('n','<Leader>x', require('csj.core.utils').interpret_color)
+-- -- '#EBA0AC' '#2B6F92' '#E9436F' '#BB9AF7',
 
 return utils

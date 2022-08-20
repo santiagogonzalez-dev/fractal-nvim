@@ -1,5 +1,3 @@
-local utils = require('csj.core.utils')
-
 require('user.keymaps')
 
 -- Settings for non-visible characters
@@ -19,21 +17,21 @@ vim.opt.fillchars:append {
   -- vertright = '┣',
   -- verthoriz = '╋',
 
-  -- horiz = '─',
-  -- horizup = '┴',
-  -- horizdown = '┬',
-  -- vert = '│',
-  -- vertleft = '┤',
-  -- vertright = '├',
-  -- verthoriz = '┼',
+  horiz = '─',
+  horizup = '┴',
+  horizdown = '┬',
+  vert = '│',
+  vertleft = '┤',
+  vertright = '├',
+  verthoriz = '┼',
 
-  horiz = ' ',
-  horizup = ' ',
-  horizdown = ' ',
-  vert = ' ',
-  vertleft = ' ',
-  vertright = ' ',
-  verthoriz = ' ',
+  -- horiz = ' ',
+  -- horizup = ' ',
+  -- horizdown = ' ',
+  -- vert = ' ',
+  -- vertleft = ' ',
+  -- vertright = ' ',
+  -- verthoriz = ' ',
 }
 
 vim.opt.listchars:append {

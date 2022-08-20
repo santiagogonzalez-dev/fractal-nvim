@@ -1,4 +1,6 @@
-local function h_motion()
+local M = {}
+
+function M.h_motion()
   local cursor_position = vim.api.nvim_win_get_cursor(0)
   local line = cursor_position[1]
   local column = cursor_position[2]
@@ -17,7 +19,7 @@ local function h_motion()
   end
 end
 
-local function l_motion()
+function M.l_motion()
   local cursor_position = vim.api.nvim_win_get_cursor(0)
   local line = cursor_position[1]
   local column = cursor_position[2]
@@ -39,13 +41,13 @@ local function l_motion()
 end
 
 ---@param mode boolean
-local function switcher(mode)
+function M.switcher(mode)
   if mode then
     vim.keymap.set('n', 'h', function()
-      return h_motion()
+      return M.h_motion()
     end)
     vim.keymap.set('n', 'l', function()
-      return l_motion()
+      return M.l_motion()
     end)
     vim.opt.virtualedit = ''
     vim.g.strict_cursor = false
@@ -57,9 +59,14 @@ local function switcher(mode)
   end
 end
 
-switcher(true) -- Enable strict cursor when running the function for the first time
-vim.keymap.set('n', '<Esc><Esc>', function()
-  return switcher(vim.g.strict_cursor)
-end, {
-  desc = 'Add a second mode for the cursor, which either restricts or lets the cursor move freely',
-})
+---@param mapping string
+function M.setup(mapping)
+  M.switcher(true) -- Enable strict cursor when running the function for the first time
+  vim.keymap.set('n', mapping, function()
+    return M.switcher(vim.g.strict_cursor)
+  end, {
+    desc = 'The cursor has a default stricter mode, and a secondary mode, which lets the cursor move freely',
+  })
+end
+
+return M

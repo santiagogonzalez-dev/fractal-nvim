@@ -7,11 +7,12 @@ do
   local user = userspace.settings('/lua/user/settings.json') -- Table with user preferences
   local start = require('csj.core.utils.startup')
 
-  start.disable(user.disable_builtins) -- Disable builtin plugins and providers
+  start.disable(user.disable) -- Disable builtin plugins and providers
   start.colorscheme(user.colorscheme) -- Apply colorscheme.
   start.conditionals(user.conditionals) -- Conditionals to load plugins and modules.
   start.settings(user.opts) -- Set some settings.
-  start.modules_load(user.modules) -- Load modules specified by the user.
+  start.modules(user.modules) -- Load modules specified by the user.
+  start.mappings(user.mappings) -- Modules that need to be mapped
   start.session(user.restore) -- Restore cursor and view.
   require('user')
 end

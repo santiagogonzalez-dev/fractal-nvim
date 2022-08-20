@@ -1,6 +1,8 @@
+local M = {}
+
 ---@param loaded_only boolean|nil
 ---@return table
-local function count_bufs_by_type(loaded_only)
+function M.count_bufs_by_type(loaded_only)
   loaded_only = (loaded_only == nil and true or loaded_only)
   local count = {
     normal = 0,
@@ -24,8 +26,8 @@ local function count_bufs_by_type(loaded_only)
   return count
 end
 
-local function close_or_quit()
-  if count_bufs_by_type().normal <= 1 then
+function M.close_or_quit()
+  if M.count_bufs_by_type().normal <= 1 then
     vim.ui.select({ 'Close buffer', 'Quit neovim' }, {
       prompt = 'What do you want to do?',
       format_item = function(item)
@@ -45,8 +47,14 @@ local function close_or_quit()
   end
 end
 
-vim.schedule(function()
-  vim.keymap.set('n', '<Leader>q', function()
-    return close_or_quit()
-  end, { desc = 'Close the buffer without quitting neovim, or quit neovim' })
-end)
+---@param mapping string
+function M.setup(mapping)
+  -- For some reason scheduling is needed or the mapping just doesn't work
+  vim.schedule(function()
+    vim.keymap.set('n', mapping, function()
+      return M.close_or_quit()
+    end, { desc = 'Close the buffer without quitting neovim, or quit neovim' })
+  end)
+end
+
+return M

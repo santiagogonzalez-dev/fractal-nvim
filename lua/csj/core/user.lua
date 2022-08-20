@@ -1,6 +1,8 @@
 local user = {}
 local config_path = vim.fn.stdpath('config')
 
+-- We now put `./user` under `./lua/user` so there's no need to load a file like
+-- we do in this function
 ---@deprecated
 function user.load_user_init()
   -- Some settings are stored under `./user`, add it to the lua path so that the
@@ -18,7 +20,9 @@ function user.load_user_init()
   dofile(string.format('%s%s', config_path, '/user/init.lua'))
 end
 
----@param location string @ Most of the time it's going to be `./user/user_settings.json`
+-- Most of the time it's going to be `./lua/user/settings.json`, and we receive
+-- a lua table with all the user preferences
+---@param location string
 ---@return table @ Table with all the user preferences
 function user.settings(location)
   local path = string.format('%s%s', config_path, location)

@@ -168,7 +168,7 @@ end
 -- `./lua/csj/core/modules` k is the name of the module and v is a boolean
 ---@param T table @ Table containing the modules to be loaded
 ---@return boolean
-function M.modules_load(T)
+function M.modules(T)
   if T == nil or T == vim.NIL then
     return false
   end
@@ -192,6 +192,18 @@ function M.modules_load(T)
   end)
 
   return true
+end
+
+function M.mappings(T)
+  if T == nil or T == vim.NIL then
+    return false
+  end
+
+  utils.map(T, function(module, mapping)
+    if mapping ~= '' then
+      require(string.format('csj.modules.%s', module)).setup(mapping)
+    end
+  end)
 end
 
 return M

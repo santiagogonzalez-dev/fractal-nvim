@@ -1,8 +1,9 @@
 local gutter = {}
 
--- This enables relativenumber after a `waiting_time` when starting neovim, this
--- way we see numbers first, mostly because of looks.
----@param waiting_time number
+-- DESCRIPTION: An attempt to give the gutter or number column a nicer look
+
+-- Enable `relativenumber` after `waiting_time` on startup
+---@param waiting_time number @ In milliseconds, e.g. 1 second would be 1000
 ---@return nil
 function gutter.delay_set_relativenumber(waiting_time)
   vim.defer_fn(function()
@@ -10,6 +11,9 @@ function gutter.delay_set_relativenumber(waiting_time)
   end, waiting_time)
 end
 
+-- Disable `relativenumber` when we are using the cmdline, this way it's easier
+-- to work with ranges
+---@return nil
 function gutter.only_numbers_cmdline()
   vim.api.nvim_create_autocmd('CmdlineEnter', {
     callback = function()
@@ -23,6 +27,8 @@ function gutter.only_numbers_cmdline()
   })
 end
 
+-- Disable `relativenumber` when we are in insert mode
+---@return nil
 function gutter.disable_on_insert()
   vim.api.nvim_create_autocmd('InsertEnter', {
     callback = function()

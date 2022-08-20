@@ -10,6 +10,7 @@ treesitter.setup {
     'comment',
     'java',
     'javascript',
+    'json',
     'lua',
     'markdown',
     'nix',

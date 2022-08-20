@@ -1,20 +1,22 @@
 {
   "colorscheme": "jetjbp",
   "restore": true,
-  "disable_builtins": true,
+  "disable": true,
   "conditionals": true,
 
   "modules": {
-    "afiolb": true,
     "folds": true,
     "gutter": true,
     "netrw": true,
     "notifications": true,
-    "sdmog": true,
+    "show-insert-mark": true,
     "skeletons": true,
-    "status": true,
-    "strict_cursor": true,
-    "virtcolumn": true
+    "status": true
+  },
+
+  "mappings": {
+    "ask-on-quit": "<Leader>q",
+    "strict-cursor": "<Esc><Esc>"
   },
 
   "opts": {
