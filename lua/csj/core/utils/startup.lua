@@ -210,17 +210,4 @@ function M.modules(T)
   return true
 end
 
-function M.mappings(T)
-  if T == nil or T == vim.NIL then
-    return false
-  end
-
-  utils.map(T, function(module, mappings)
-    if mappings == '' then
-      return
-    end
-    require(string.format('csj.modules.%s', module)).setup(mappings)
-  end)
-end
-
 return M

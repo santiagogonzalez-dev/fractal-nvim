@@ -6,7 +6,6 @@ start.colorscheme(user.colorscheme) -- Apply colorscheme.
 start.conditionals(user.conditionals) -- Conditionals to load plugins and modules.
 start.opts(user.opts) -- Set some settings.
 start.modules(user.modules) -- Load modules specified by the user.
--- start.mappings(user.mappings) -- Modules that need to be mapped.
 start.session(user.restore) -- Restore cursor and view.
 
 require('csj.core.general') -- General settings.
