@@ -1,17 +1,26 @@
 local utils = require('csj.core.utils')
-local component = {}
+local M = {}
+M.formatted = {} -- This table is for functions that return formatted strings with icons.
 
-function component.input()
-  local res = vim.fn.searchcount()
+-- Component for the statusline.
+---@return string
+function M.formatted.search_count()
+  local res = vim.fn.searchcount { recomput = 1, maxcount = 1000 }
 
   if res.total ~= vim.empty_dict() and res.total > 0 then
-    return string.format('%s/%d %s ', res.current, res.total, vim.fn.getreg('/'))
+    return string.format(
+      ' %s/%d %s ',
+      -- ' %s/%d %s ',
+      res.current,
+      res.total,
+      vim.fn.getreg('/')
+    )
   else
     return ' '
   end
 end
 
-function component.vcs()
+function M.formatted.vcs()
   -- Requires gitsigns.nvim
   local git_info = vim.b.gitsigns_status_dict
   if not git_info or git_info.head == '' then
@@ -31,9 +40,14 @@ function component.vcs()
     bg = utils.get_bg_hl('StatusLine'),
     fg = utils.get_fg_hl('GitSignsDelete'),
   })
-  local added = git_info.added and ('%#StatusLineGitSignsAdd#+' .. git_info.added .. ' ') or ''
-  local changed = git_info.changed and ('%#StatusLineGitSignsChange#~' .. git_info.changed .. ' ') or ''
-  local removed = git_info.removed and ('%#StatusLineGitSignsDelete#-' .. git_info.removed .. ' ') or ''
+  local added = git_info.added and ('%#StatusLineGitSignsAdd#+' .. git_info.added .. ' ')
+    or ''
+  local changed = git_info.changed
+      and ('%#StatusLineGitSignsChange#~' .. git_info.changed .. ' ')
+    or ''
+  local removed = git_info.removed
+      and ('%#StatusLineGitSignsDelete#-' .. git_info.removed .. ' ')
+    or ''
 
   if git_info.added == 0 then
     added = ''
@@ -56,18 +70,19 @@ function component.vcs()
   }
 end
 
-function component.lineinfo()
+---@return string
+function M.formatted.line_and_column_buffer()
   -- Composition of other components
   return table.concat {
     '%l',
     -- ^^ equivalent to tonumber(vim.api.nvim_eval_statusline('%l', {}).str)
-    -- or vim.fn.line('.')
-    component.position_icon(),
-    component.column_cursor(),
+    -- or vim.fn.line('.') or vim.api.nvim_win_get_cursor(0)[1]
+    M.formatted.icon_by_cursor_line_position(),
+    M.formatted.cursor_column_interpreted(),
   }
 end
 
-function component.position_icon()
+function M.formatted.icon_by_cursor_line_position()
   -- Icon representing the line number position
   local current_line = vim.fn.line('.')
   local total_lines = vim.fn.line('$') -- == tonumber(vim.api.nvim_eval_statusline('%L', {}).str)
@@ -84,7 +99,7 @@ function component.position_icon()
   return chars[index]
 end
 
-function component.column_cursor()
+function M.formatted.cursor_column_interpreted()
   -- Represent cursor column and lenght of the line
   local line_lenght = vim.fn.col('$') - 1
   local cursor_column = vim.fn.col('.') -- == tonumber(vim.api.nvim_eval_statusline('%c', {}).str)
@@ -98,7 +113,7 @@ function component.column_cursor()
   end
 end
 
-function component.filewritable()
+function M.formatted.filewritable()
   local fmode = vim.fn.filewritable(vim.fn.expand('%:F'))
   if fmode == 0 then
     return ' '
@@ -110,7 +125,9 @@ function component.filewritable()
   end
 end
 
-function component.filepath()
+-- Return the path of the file, without the file nor extension of it.
+---@return string @ Returns a path like `/home/user/.config/nvim`
+function M.formatted.filepath()
   -- Return the filepath without the name of the file
   local filepath = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')
   if filepath == '' or filepath == '.' then
@@ -126,7 +143,7 @@ function component.filepath()
   return string.format('%%<%s/', filepath)
 end
 
-function component.filename()
+function M.formatted.filename()
   local filename = vim.fn.expand('%:t')
   if filename == '' then
     return ''
@@ -135,4 +152,10 @@ function component.filename()
   return filename
 end
 
-return component
+-- Return the column number of the cursor line
+---@return integer
+function M.current_line_lenght()
+  return #vim.api.nvim_win_get_cursor(0)
+end
+
+return M

@@ -1,7 +1,6 @@
 {
   "colorscheme": "jetjbp",
   "restore": true,
-  "disable": true,
   "conditionals": true,
 
   "modules": {
@@ -11,12 +10,14 @@
     "notifications": true,
     "show-insert-mark": true,
     "skeletons": true,
-    "status": true
-  },
-
-  "mappings": {
+    "statusline": true,
     "ask-on-quit": "<Leader>q",
     "strict-cursor": "<Esc><Esc>"
+  },
+
+  "skeletons": {
+    "name": "santigo-zero",
+    "email": "santiagogonzalezbogado@gmail.com"
   },
 
   "opts": {
@@ -38,9 +39,10 @@
     "list": true,
     "matchpairs": "(:),{:},[:],<:>,=:;",
     "mousefocus": true,
-    "pumblend": 9,
+    "numberwidth": 1,
+    "pumblend": 0,
     "pumheight": 6,
-    "scrolloff": 9,
+    "scrolloff": 9999,
     "secure": true,
     "shiftround": true,
     "shortmess": "oOstIFS",
@@ -63,9 +65,9 @@
     "timeoutlen": 300,
     "undofile": true,
     "undolevels": 6000,
-    "updatetime": 0,
+    "updatetime": 60,
     "whichwrap": "<,>,[,],h,l,b,s,~",
-    "winblend": 9,
+    "winblend": 0,
     "winhighlight": "Normal:ActiveWindow,NormalNC:InactiveWindow",
     "wrap": false
   }

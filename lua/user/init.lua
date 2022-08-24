@@ -1,4 +1,5 @@
 require('user.keymaps')
+require('user.plugins')
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append {
@@ -9,6 +10,7 @@ vim.opt.fillchars:append {
 }
 
 vim.opt.fillchars:append {
+
   -- horiz = '━',
   -- horizup = '┻',
   -- horizdown = '┳',
@@ -17,21 +19,21 @@ vim.opt.fillchars:append {
   -- vertright = '┣',
   -- verthoriz = '╋',
 
-  horiz = '─',
-  horizup = '┴',
-  horizdown = '┬',
-  vert = '│',
-  vertleft = '┤',
-  vertright = '├',
-  verthoriz = '┼',
+  -- horiz = '─',
+  -- horizup = '┴',
+  -- horizdown = '┬',
+  -- vert = '│',
+  -- vertleft = '┤',
+  -- vertright = '├',
+  -- verthoriz = '┼',
 
-  -- horiz = ' ',
-  -- horizup = ' ',
-  -- horizdown = ' ',
-  -- vert = ' ',
-  -- vertleft = ' ',
-  -- vertright = ' ',
-  -- verthoriz = ' ',
+  horiz = ' ',
+  horizup = ' ',
+  horizdown = ' ',
+  vert = ' ',
+  vertleft = ' ',
+  vertright = ' ',
+  verthoriz = ' ',
 }
 
 vim.opt.listchars:append {
@@ -63,27 +65,25 @@ function _G.all_buffers_settings()
     - 'o' -- Don't continue comments after o/O
     - 'l' -- Format in insert mode if the line is longer than textwidth
 
-  -- vim.opt.cpoptions = vim.opt.cpoptions
-  --   + 'n' -- Show `showbreak` icon in the number column
+  vim.opt.cpoptions = vim.opt.cpoptions + 'n' -- Show `showbreak` icon in the number column
 
-  vim.opt.cpoptions = vim.opt.cpoptions
-    + 'n' -- Show the showbreak icon on the gutter
-
-  -- There's a non-visible character at cchar= so watch
-  vim.schedule(function()
-    vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
-    vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
-    vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
-    vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
-    -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
-  end)
+  -- -- There's a non-visible character at cchar= so watch
+  -- vim.schedule(function()
+  --   vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
+  --   vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
+  --   vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
+  --   vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
+  --   -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
+  -- end)
 end
 
-vim.api.nvim_create_autocmd('BufEnter', {
-  group = 'session_opts',
-  callback = _G.all_buffers_settings,
-})
-_G.all_buffers_settings()
+vim.schedule(function()
+  vim.api.nvim_create_autocmd({ 'UIEnter', 'BufEnter' }, {
+    group = 'session_opts',
+    callback = _G.all_buffers_settings,
+  })
+  _G.all_buffers_settings()
+end)
 
 -- TODO(santigo-zero): create a function that bootstraps packer
 
@@ -102,5 +102,3 @@ _G.all_buffers_settings()
 --     end
 --   end,
 -- })
-
-require('user.plugins')

@@ -1,5 +1,6 @@
 local gutter = {}
 
+-- TODO(santigo-zero): Add exceptions based on filetypes to not cause any errors
 -- DESCRIPTION: An attempt to give the gutter or number column a nicer look
 
 -- Enable `relativenumber` after `waiting_time` on startup
@@ -27,6 +28,20 @@ function gutter.only_numbers_cmdline()
   })
 end
 
+-- Disable `relativenumber` in non focused windows
+function gutter.only_numbers_focused_window()
+  vim.api.nvim_create_autocmd('WinLeave', {
+    callback = function()
+      vim.opt.relativenumber = false
+    end,
+  })
+  vim.api.nvim_create_autocmd('WinEnter', {
+    callback = function()
+      vim.opt.relativenumber = true
+    end,
+  })
+end
+
 -- Disable `relativenumber` when we are in insert mode
 ---@return nil
 function gutter.disable_on_insert()
@@ -46,7 +61,9 @@ vim.opt.number = true -- First enable just the numbers
 vim.opt.relativenumber = false -- And disable relativenumbers if they are setup on user.opts
 gutter.delay_set_relativenumber(3000)
 gutter.only_numbers_cmdline()
+gutter.only_numbers_focused_window()
 gutter.disable_on_insert()
+vim.cmd.redraw { bang = true }
 
 -- TODO(santigo-zero): Maybe notify if the user have both relativenumber and
 -- this module enabled and do something about it.

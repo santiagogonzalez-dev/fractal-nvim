@@ -1,3 +1,5 @@
+local M = {}
+
 -- Default tab size, this is not applied if you specified a different one in
 -- ftplugin
 local tab_lenght = 4
@@ -21,3 +23,26 @@ vim.g.markdown_fenced_languages = {
   'ts=typescript',
   'tsx=typescriptreact',
 }
+
+-- TODO(santigo-zero): Delete this, it's just an example
+-- -- Warn the user that it's at the bottom of the file
+-- local _ns_general = vim.api.nvim_create_namespace('general') -- Namespace
+-- local function create_virt_lines(lines)
+--   local virt_lines = {}
+--   for _, l in ipairs(lines) do
+--     virt_lines[#virt_lines + 1] = { { l, 'ErrorMsg' } }
+--   end
+--   return virt_lines
+-- end
+
+-- function M.show_eob()
+--   vim.api.nvim_buf_set_extmark(0, _ns_general, vim.fn.line('$') - 1, 0, {
+--     virt_lines = create_virt_lines { 'END OF BUFFER' },
+--   })
+-- end
+
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   callback = M.show_eob,
+-- })
+
+return M

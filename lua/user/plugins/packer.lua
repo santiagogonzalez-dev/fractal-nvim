@@ -34,7 +34,6 @@ return packer.startup(function(use)
   use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
   use { 'metakirby5/codi.vim', cmd = 'Codi' } -- Codi
   use('kyazdani42/nvim-web-devicons')
-  -- use('b0o/SchemaStore.nvim') -- For json and yaml
 
   -- Surround
   use {
@@ -44,15 +43,6 @@ return packer.startup(function(use)
       require('nvim-surround').setup()
     end,
   }
-
-  -- -- Stay-in-place
-  -- use {
-  --   'gbprod/stay-in-place.nvim',
-  --   keys = { '>', '>>', '<', '<<', '=', '==' },
-  --   config = function()
-  --     require('stay-in-place').setup()
-  --   end,
-  -- }
 
   -- Accelerated jk
   use {
@@ -67,46 +57,6 @@ return packer.startup(function(use)
       vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', {})
     end,
   }
-
-  -- -- Vim bufsurf
-  -- use {
-  --   'ton/vim-bufsurf',
-  --   config = function()
-  --     vim.cmd([[
-  --       nmap ]b <Plug>(buf-surf-forward)
-  --       nmap [b <Plug>(buf-surf-back)
-  --     ]])
-  --   end,
-  -- }
-
-  -- -- Dim unused functions, variables, parameters
-  -- use {
-  --   'zbirenbaum/neodim',
-  --   event = 'LspAttach',
-  --   config = function()
-  --     require('neodim').setup {
-  --       alpha = 0.75,
-  --       blend_color = '#000000',
-  --       update_in_insert = {
-  --         enable = true,
-  --         delay = 100,
-  --       },
-  --       hide = {
-  --         virtual_text = true,
-  --         signs = true,
-  --         underline = true,
-  --       },
-  --     }
-  --   end,
-  -- }
-
-  -- -- Impatient
-  -- use {
-  --   'lewis6991/impatient.nvim',
-  --   config = function()
-  --     require('impatient').enable_profile()
-  --   end,
-  -- }
 
   -- Project
   use {
@@ -137,13 +87,19 @@ return packer.startup(function(use)
         padding = true,
         sticky = true,
         ignore = '^$',
+        mappings = {
+          basic = true,
+          extra = true,
+          extended = true,
+        },
         pre_hook = function(ctx)
           local U = require('Comment.utils')
           local location = nil
           if ctx.ctype == U.ctype.blockwise then
             location = require('ts_context_commentstring.utils').get_cursor_location()
           elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-            location = require('ts_context_commentstring.utils').get_visual_start_location()
+            location =
+              require('ts_context_commentstring.utils').get_visual_start_location()
           end
           return require('ts_context_commentstring.internal').calculate_commentstring {
             key = ctx.ctype == U.ctype.linewise and '__default' or '__multiline',
@@ -288,7 +244,12 @@ return packer.startup(function(use)
     event = 'LspAttach',
     config = function()
       require('lsp_lines').setup()
-      vim.keymap.set('', '<Leader>l', require('lsp_lines').toggle, { desc = 'Toggle lsp_lines' })
+      vim.keymap.set(
+        '',
+        '<Leader>l',
+        require('lsp_lines').toggle,
+        { desc = 'Toggle lsp_lines' }
+      )
     end,
   }
 
@@ -331,7 +292,7 @@ return packer.startup(function(use)
         show_trailing_blankline_indent = false,
       }
       vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { link = 'Whitespace' }) -- All the lines
-      vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { link = 'Identifier' }) -- Current place
+      vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { link = 'Function' }) -- Current place
     end,
   }
 
@@ -344,6 +305,9 @@ return packer.startup(function(use)
         char = '│',
         virtcolumn = '',
       }
+      vim.schedule(function()
+        vim.cmd.VirtColumnRefresh()
+      end)
     end,
   }
 

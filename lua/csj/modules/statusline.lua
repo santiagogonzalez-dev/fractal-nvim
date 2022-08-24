@@ -1,5 +1,5 @@
 local M = {}
-local component = require('csj.modules.status.components')
+local components = require('csj.core.utils.components').formatted
 local utils = require('csj.core.utils')
 
 function M.active()
@@ -10,21 +10,22 @@ function M.active()
     ' ',
     -- '',
     '%#StatusLine#',
-    component.lineinfo(),
-    component.filewritable(),
-    component.input(),
+    components.line_and_column_buffer(),
+    components.filewritable(),
+    '%#StatusLineBlue#', -- Reset hl groups
+    components.search_count(),
     '%#StatusLine#', -- Reset hl groups
 
     -- CENTER
     '%=',
-    component.filepath(),
+    components.filepath(),
     '%#StatusLineAccentBlue#',
-    component.filename(),
+    components.filename(),
     '%#StatusLine#', -- Reset hl groups
 
     -- RIGHT
     '%=',
-    component.vcs(),
+    components.vcs(),
     '%#StatusLine#', -- Reset hl groups
     ' ',
   }
@@ -34,16 +35,20 @@ function M.winbar_active()
   return table.concat {
     '%=',
     '%#StatusLine#', -- Winbar doesn't define a default hl
-    component.filepath(),
+    components.filepath(),
     '%#StatusLineAccentBlue#',
-    component.filename(),
+    components.filename(),
     '%#StatusLine#', -- Reset hl groups
   }
 end
 
-vim.api.nvim_create_autocmd({ 'UIEnter', 'BufEnter', 'WinEnter' }, {
+vim.api.nvim_create_autocmd({
+  'UIEnter',
+  'BufEnter',
+  'WinEnter',
+}, {
   callback = function()
-    vim.opt.statusline = '%!v:lua.require("csj.modules.status").active()'
+    vim.opt.statusline = '%!v:lua.require("csj.modules.statusline").active()'
   end,
 })
 

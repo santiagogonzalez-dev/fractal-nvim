@@ -1,15 +1,55 @@
 local M = {}
+local utils = require('csj.core.utils')
 local _ns_sim = vim.api.nvim_create_namespace('_ns_sim') -- Namespace
+
+-- TODO(santigo-zero): Avoid showing the mark in certain filetypes
+
+-- Generate highlight groups
+vim.api.nvim_set_hl(0, 'SIM', { link = 'TSVariableBuiltin' })
+vim.api.nvim_set_hl(
+  0,
+  'SIMReversed',
+  { bg = utils.get_fg_hl('SIM'), fg = utils.get_bg_hl('CursorLineNr') }
+)
 
 -- DESCRIPTION: This module shows a sign in the last place you went into insert
 -- mode, so the user just has to think in terms of gi or `i and maybe `` and `.
 -- instead of relying in numbers, relativenumbers or any other type of movemen#232136t
 -- to move between two places.
 
+---@return number @ id of the extmark
 function M.display_mark()
   local pos_cur = vim.api.nvim_win_get_cursor(0)
+
   vim.api.nvim_buf_set_mark(0, 'i', pos_cur[1], pos_cur[2] + 1, {}) -- Set a mark at i
-  return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, { sign_text = '', sign_hl_group = 'Constant' })
+
+  -- return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
+  --   cursorline_hl_group = 'SIMReversed',
+  --   sign_text = ' ',
+  --   sign_hl_group = 'SIM',
+  -- })
+
+  -- If the cursor is almost at the end of the line
+  if pos_cur[2] >= #vim.api.nvim_get_current_line() - 5 then
+    -- Use virtual text at the end of the line
+    return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
+      virt_text = {
+        { ' Last Insert ', 'SIM' },
+      },
+      virt_text_pos = 'eol',
+      -- virt_text_win_col = #vim.api.nvim_get_current_line(),
+      -- virt_text_win_col = tonumber(
+      --   vim.api.nvim_win_get_option(0, 'colorcolumn'):match('(.+),')
+      -- ) - 1, -- Shows the virtual text at the column of the first colorcolumn
+    })
+  else
+    -- If the cursor is not at the end of the line use a sign instead of virtual text
+    return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
+      cursorline_hl_group = 'SIMReversed',
+      sign_text = ' ',
+      sign_hl_group = 'SIM',
+    })
+  end
 end
 
 function M.hide_mark(id_extmark)

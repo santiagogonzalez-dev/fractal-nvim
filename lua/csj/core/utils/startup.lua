@@ -1,19 +1,18 @@
 local M = {}
 local utils = require('csj.core.utils')
 
--- Disable things I'm not going to use, this include builtin plugins, providers,
--- and the shada file.
----@param mode boolean
----@return boolean
-function M.disable(mode)
-  if not mode then
-    return false
-  end
+-- Disable temporarily syntax, ftplugin, shadafile, runtimepath and other
+-- builtin plugins and providers in order to improve startup time.
+function M.disable()
+  vim.cmd.syntax('off')
+  vim.cmd.filetype('off')
+  vim.cmd.filetype('plugin indent off')
+  vim.opt.shadafile = 'NONE'
 
   -- Plugins
-  vim.g.loadplugins = false
+  -- vim.opt.loadplugins = false -- TODO(santigo-zero): CMP doesn't work with this enabled.
   vim.g.did_indent_on = 1
-  vim.g.did_load_ftplugin = 1
+  -- vim.g.did_load_ftplugin = 1
 
   vim.g.loaded_2html_plugin = 1
   vim.g.loaded_bugreport = 1
@@ -49,10 +48,21 @@ function M.disable(mode)
   vim.g.loaded_node_provider = 1
   vim.g.loaded_ruby_provider = 1
   vim.g.loaded_perl_provider = 1
+end
 
-  -- Shada
-  -- vim.opt.shadafile = 'NONE'
-  return true
+-- Enable stuff that was disable by M.disable
+function M.enable()
+  vim.cmd.syntax('on')
+  vim.cmd.filetype('on')
+  vim.cmd.filetype('plugin indent on')
+  vim.opt.shadafile = ''
+  vim.cmd.rshada { bang = true }
+
+  -- Load runtime files.
+  if not vim.opt.loadplugins then
+    vim.cmd.runtime('plugin/**/*.lua')
+    vim.cmd.runtime('plugin/**/*.vim')
+  end
 end
 
 -- Set a colorscheme or notify if there's something wrong with it
@@ -74,7 +84,7 @@ end
 
 -- Apply settings using the settings from user.opts
 ---@param opts table
-function M.settings(opts)
+function M.opts(opts)
   for k, v in pairs(opts) do
     vim.opt[k] = v
   end
@@ -184,10 +194,16 @@ function M.modules(T)
   --   return value and utils.prequire(string.format('csj.core.modules.%s', module))
   -- end)
 
-  utils.map(T, function(module, value)
-    if value then
-      local module_path = string.format('csj.modules.%s', module)
+  utils.map(T, function(name_of_the_module, opts)
+    local module_path = string.format('csj.modules.%s', name_of_the_module)
+
+    -- If the opts for the module are just booleans call the module
+    if type(opts) == 'boolean' and opts then
       return utils.prequire(module_path)
+    -- In the other hand if the opts for the module are tables call the setups
+    -- for each module
+    elseif type(opts) == 'table' or type(opts) == 'string' then
+      return require(module_path).setup(opts)
     end
   end)
 
@@ -199,10 +215,11 @@ function M.mappings(T)
     return false
   end
 
-  utils.map(T, function(module, mapping)
-    if mapping ~= '' then
-      require(string.format('csj.modules.%s', module)).setup(mapping)
+  utils.map(T, function(module, mappings)
+    if mappings == '' then
+      return
     end
+    require(string.format('csj.modules.%s', module)).setup(mappings)
   end)
 end
 

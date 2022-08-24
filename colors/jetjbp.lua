@@ -93,7 +93,9 @@ jet.groups = {
 
   -- StatusLine
   StatusLine        = { bg = jet.jbp.bg_low, fg = jet.jbp.dimmed1 },
-  StatusLineNC      = { bg = jet.jbp.bg_low, fg = jet.jbp.dimmed1 },
+
+  StatusLineBlue    = { bg = jet.jbp.bg_low, fg = jet.jbp.blue },
+  StatusLineNC      = {},
 
   -- Syntax
   Comment           = { fg = jet.jbp.dimmed3, italic = true },
