@@ -237,15 +237,15 @@ return packer.startup(function(use)
     end,
   }
 
-  -- LSP Lines, diagnostics
-  use {
-    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    event = 'LspAttach',
-    config = function()
-      require('lsp_lines').setup()
-      vim.keymap.set('', '<Leader>l', require('lsp_lines').toggle, { desc = 'Toggle lsp_lines' })
-    end,
-  }
+  -- -- LSP Lines, diagnostics
+  -- use {
+  --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+  --   event = 'LspAttach',
+  --   config = function()
+  --     require('lsp_lines').setup()
+  --     vim.keymap.set('', '<Leader>l', require('lsp_lines').toggle, { desc = 'Toggle lsp_lines' })
+  --   end,
+  -- }
 
   -- Completion, snippets
   use {
@@ -302,6 +302,19 @@ return packer.startup(function(use)
       vim.schedule(function()
         vim.cmd.VirtColumnRefresh()
       end)
+    end,
+  }
+
+  use {
+    'mfussenegger/nvim-dap',
+    event = 'User LoadPlugins',
+  }
+
+  use {
+    'rcarriga/nvim-dap-ui',
+    event = 'User LoadPlugins',
+    config = function()
+      require('user.plugins.dap')
     end,
   }
 

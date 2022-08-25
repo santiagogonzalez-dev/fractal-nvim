@@ -42,7 +42,7 @@ for _, server in pairs(SERVERS) do
 end
 
 require('user.lsp.handlers').setup()
--- require('user.lsp.top-right-lsp-diagnostics') -- Using lsp_lines.nvim for now
+require('user.lsp.top-right-lsp-diagnostics') -- Using lsp_lines.nvim for now
 
 require('packer').loader('null-ls.nvim')
 require('user.lsp.null-ls')

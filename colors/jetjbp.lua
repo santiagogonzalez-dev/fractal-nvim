@@ -71,6 +71,7 @@ jet.groups = {
   VisualNOS         = { link = 'Visual' }, -- When vim is not owning the visual selection.
   VertSplit         = { bg = jet.jbp.bg_base, fg = jet.jbp.grey }, -- Used for splits, also used for completion menus
   -- WinSeperator      = { bg = 'red' },
+  -- ColorColumn       = { bg = jet.jbp.dimmed3, fg = jet.jbp.bg_med },
   ColorColumn       = {},
   Conceal           = {},
   Title             = { fg = jet.jbp.upper1 }, -- Titles for output from ':set all', ':autocmd' etc.
@@ -90,6 +91,8 @@ jet.groups = {
   MsgArea           = { link = 'ModeMsg' }, -- Area for messages and cmdline, / and :
   MsgSeparator      = { link = 'ModeMsg' },
   MatchParen        = { bg = jet.jbp.orange1 },
+  TSType            = { fg = jet.jbp.green1 },
+  TSTypeBuiltin     = { fg = jet.jbp.green1 },
 
   -- StatusLine and Winbar
   StatusLine        = { bg = jet.jbp.bg_low, fg = jet.jbp.dimmed1 },
