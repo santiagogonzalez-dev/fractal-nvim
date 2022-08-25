@@ -8,7 +8,7 @@ function M.find_fullpath(extension)
   return string.format(
     '%s%s%s',
     vim.fn.stdpath('config'),
-    '/lua/user/skeleton/skeleton',
+    '/lua/user/skeletons/skeleton',
     extension
   )
 end

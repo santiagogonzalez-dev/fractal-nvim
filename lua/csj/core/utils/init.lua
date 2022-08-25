@@ -66,6 +66,7 @@ function utils.is_empty(str)
   return str == '' or str == nil
 end
 
+-- Check if the working directory is under git managment
 ---@return boolean
 function utils.is_git()
   local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
@@ -110,28 +111,6 @@ function utils.get_fg_hl(hl_group)
 end
 function utils.get_bg_hl(hl_group)
   return vim.api.nvim_get_hl_by_name(hl_group, true).background
-end
-
--- Return whatever it is that you have on the register "
----@return string @ From the register "
-function utils.get_yanked_text()
-  return vim.fn.getreg('"')
-end
-
----@return boolean @ Conditional for width of the terminal
-function utils.hide_at_term_width()
-  return vim.opt.columns:get() > 90
-end
-
----@param T table
----@param F function
----@return table NT @ newer table
-function utils.map(T, F)
-  local NT = {}
-  for k, v in pairs(T) do
-    NT[k] = F(k, v)
-  end
-  return NT
 end
 
 -- function utils.interpret_color()

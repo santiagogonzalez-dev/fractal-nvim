@@ -142,9 +142,6 @@ function M.session(mode)
     end,
   })
 
-  -- vim.opt.shadafile = ''
-  -- vim.cmd.rshada { bang = true }
-
   return true
 end
 
@@ -152,6 +149,7 @@ function M.conditionals(mode)
   if not mode then
     return false
   end
+
   local function run_comprobations()
     -- Conditionals
     local conditionals = vim.api.nvim_create_augroup('conditionals', {})
@@ -170,44 +168,38 @@ function M.conditionals(mode)
       })
     end
   end
+
   vim.schedule(run_comprobations)
   return true
 end
 
 -- List of modules to be loaded, they can be found under
 -- `./lua/csj/core/modules` k is the name of the module and v is a boolean
----@param T table @ Table containing the modules to be loaded
----@return boolean
+---param T table @ Table containing the modules to be loaded
 function M.modules(T)
   if T == nil or T == vim.NIL then
     return false
   end
 
-  -- for k, v in pairs(T) do
-  --   if v then
-  --     local module = string.format('csj.core.modules.%s', k)
-  --     utils.prequire(module)
-  --   end
-  -- end
+  for k, v in pairs(T) do
+    local module_path = string.format('csj.modules.%s', k)
+    local status
 
-  -- vim.fn.map(T, function(module, value)
-  --   return value and utils.prequire(string.format('csj.core.modules.%s', module))
-  -- end)
-
-  utils.map(T, function(name_of_the_module, opts)
-    local module_path = string.format('csj.modules.%s', name_of_the_module)
-
-    -- If the opts for the module are just booleans call the module
-    if type(opts) == 'boolean' and opts then
-      return utils.prequire(module_path)
-    -- In the other hand if the opts for the module are tables call the setups
-    -- for each module
-    elseif type(opts) == 'table' or type(opts) == 'string' then
-      return require(module_path).setup(opts)
+    if type(v) == 'boolean' and v then
+      -- If the v for the module are just booleans call the module
+      status = utils.prequire(module_path)
+    elseif type(v) == 'table' or type(v) == 'string' then
+      -- In the other hand if the v for the module are tables call the setups
+      -- for each module
+      local lib = utils.prequire(module_path)
+      if lib then
+        status = lib.setup(v)
+      end
     end
-  end)
-
-  return true
+    if status then
+      vim.pretty_print(string.format('%s %s   ', '   Module loaded ->', k))
+    end
+  end
 end
 
 return M

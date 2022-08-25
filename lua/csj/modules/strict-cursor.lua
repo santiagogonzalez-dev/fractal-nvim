@@ -61,12 +61,17 @@ end
 
 ---@param mapping string
 function M.setup(mapping)
+  if type(mapping) ~= 'string' then
+    return false
+  end
+
   M.switcher(true) -- Enable strict cursor when running the function for the first time
   vim.keymap.set('n', mapping, function()
     return M.switcher(vim.g.strict_cursor)
   end, {
     desc = 'The cursor has a default stricter mode, and a secondary mode, which lets the cursor move freely',
   })
+  return true
 end
 
 return M

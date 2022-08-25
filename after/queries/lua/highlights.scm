@@ -61,7 +61,7 @@
     name: (identifier) @function.builtin
     (#eq? @function.builtin "pcall")
   )
-  (#set! conceal "P")
+  (#set! conceal "聯")
 )
 
 ; (
@@ -105,7 +105,8 @@
   (dot_index_expression) @function
     (#eq? @function  "vim.api.nvim_create_autocmd" )
   ; (#set! conceal "a")
-  (#set! conceal "🪝")
+  ; (#set! conceal "🪝")
+  (#set! conceal "ﯠ")
 )
 
 ; (
@@ -114,17 +115,17 @@
 ;   (#set! conceal "")
 ; )
 
-; (
-;   (dot_index_expression) @function
-;     (#eq? @function  "vim.cmd" )
-;   (#set! conceal ">")
-; )
+(
+  (dot_index_expression) @function
+    (#eq? @function  "vim.cmd" )
+  (#set! conceal "")
+)
 
-; (
-;   (dot_index_expression) @function
-;     (#eq? @function  "vim.api.nvim_cmd" )
-;   (#set! conceal ">")
-; )
+(
+  (dot_index_expression) @function
+    (#eq? @function  "vim.api.nvim_cmd" )
+  (#set! conceal "")
+)
 
 ; (
 ;   (dot_index_expression) @keyword

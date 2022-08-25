@@ -15,11 +15,6 @@
     "strict-cursor": "<Esc><Esc>"
   },
 
-  "skeletons": {
-    "name": "santigo-zero",
-    "email": "santiagogonzalezbogado@gmail.com"
-  },
-
   "opts": {
     "breakindent": true,
     "clipboard": "unnamedplus",
@@ -42,7 +37,7 @@
     "numberwidth": 1,
     "pumblend": 0,
     "pumheight": 6,
-    "scrolloff": 9999,
+    "scrolloff": 9,
     "secure": true,
     "shiftround": true,
     "shortmess": "oOstIFS",

@@ -49,12 +49,17 @@ end
 
 ---@param mapping string
 function M.setup(mapping)
+  if type(mapping) ~= 'string' then
+    return false
+  end
+
   -- For some reason scheduling is needed or the mapping just doesn't work
   vim.schedule(function()
     vim.keymap.set('n', mapping, function()
       return M.close_or_quit()
     end, { desc = 'Close the buffer without quitting neovim, or quit neovim' })
   end)
+  return true
 end
 
 return M
