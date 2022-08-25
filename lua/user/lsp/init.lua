@@ -33,8 +33,7 @@ for _, server in pairs(SERVERS) do
     capabilities = require('user.lsp.handlers').capabilities,
   }
 
-  local has_opts, custom_opts =
-    pcall(require, string.format('%s.%s', 'user.lsp.settings', server))
+  local has_opts, custom_opts = pcall(require, string.format('%s.%s', 'user.lsp.settings', server))
   if has_opts then
     opts = vim.tbl_deep_extend('force', custom_opts, opts)
   end

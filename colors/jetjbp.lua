@@ -91,11 +91,15 @@ jet.groups = {
   MsgSeparator      = { link = 'ModeMsg' },
   MatchParen        = { bg = jet.jbp.orange1 },
 
-  -- StatusLine
+  -- StatusLine and Winbar
   StatusLine        = { bg = jet.jbp.bg_low, fg = jet.jbp.dimmed1 },
+  -- WinBar            = { bg = jet.jbp.bg_low, fg = jet.jbp.dimmed1 },
 
   StatusLineBlue    = { bg = jet.jbp.bg_low, fg = jet.jbp.blue },
-  StatusLineNC      = {},
+  -- WinBarBlue        = { bg = jet.jbp.bg_low, fg = jet.jbp.blue },
+
+  StatusLineNC      = { link = 'InactiveWindow' },
+  -- WinBarNC          = {},
 
   -- Syntax
   Comment           = { fg = jet.jbp.dimmed3, italic = true },

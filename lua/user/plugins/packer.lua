@@ -98,8 +98,7 @@ return packer.startup(function(use)
           if ctx.ctype == U.ctype.blockwise then
             location = require('ts_context_commentstring.utils').get_cursor_location()
           elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-            location =
-              require('ts_context_commentstring.utils').get_visual_start_location()
+            location = require('ts_context_commentstring.utils').get_visual_start_location()
           end
           return require('ts_context_commentstring.internal').calculate_commentstring {
             key = ctx.ctype == U.ctype.linewise and '__default' or '__multiline',
@@ -244,12 +243,7 @@ return packer.startup(function(use)
     event = 'LspAttach',
     config = function()
       require('lsp_lines').setup()
-      vim.keymap.set(
-        '',
-        '<Leader>l',
-        require('lsp_lines').toggle,
-        { desc = 'Toggle lsp_lines' }
-      )
+      vim.keymap.set('', '<Leader>l', require('lsp_lines').toggle, { desc = 'Toggle lsp_lines' })
     end,
   }
 

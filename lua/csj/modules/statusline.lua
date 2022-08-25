@@ -1,15 +1,12 @@
 local M = {}
-local components = require('csj.core.utils.components').formatted
+local components = require('csj.core.utils.components')
 local utils = require('csj.core.utils')
 
-function M.active()
-  vim.opt.laststatus = 3
-
+function M.get()
   return table.concat {
     -- LEFT
-    ' ',
+    '',
     -- '',
-    '%#StatusLine#',
     components.line_and_column_buffer(),
     components.filewritable(),
     '%#StatusLineBlue#', -- Reset hl groups
@@ -19,43 +16,29 @@ function M.active()
     -- CENTER
     '%=',
     components.filepath(),
-    '%#StatusLineAccentBlue#',
+    '%#StatusLineBlue#',
     components.filename(),
     '%#StatusLine#', -- Reset hl groups
 
     -- RIGHT
     '%=',
     components.vcs(),
-    '%#StatusLine#', -- Reset hl groups
-    ' ',
   }
 end
 
-function M.winbar_active()
-  return table.concat {
-    '%=',
-    '%#StatusLine#', -- Winbar doesn't define a default hl
-    components.filepath(),
-    '%#StatusLineAccentBlue#',
-    components.filename(),
-    '%#StatusLine#', -- Reset hl groups
-  }
-end
-
-vim.api.nvim_create_autocmd({
-  'UIEnter',
-  'BufEnter',
-  'WinEnter',
-}, {
+_G.statusline = M
+vim.opt.laststatus = 3
+vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
   callback = function()
-    vim.opt.statusline = '%!v:lua.require("csj.modules.statusline").active()'
+    vim.opt.statusline = '%{%v:lua.statusline.get()%}' -- '%!v:lua.require("csj.modules.statusline").get()'
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {
   pattern = utils.IGNORE_FT,
   callback = function()
-    vim.opt.statusline = '%#EndOfBuffer#' -- Change color of the statusline
+    vim.opt.laststatus = 0
+    vim.opt.statusline = '%#StatusLineNC#' -- Disable statusline
   end,
 })
 

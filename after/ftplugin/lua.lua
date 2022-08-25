@@ -40,8 +40,7 @@ local function include_rtpaths(fname, ext)
   ext = ext or 'lua'
   local sep = dir_separator()
   local rtpaths = vim.api.nvim_list_runtime_paths()
-  local modfile, initfile =
-    string.format('%s.%s', fname, ext), string.format('init.%s', ext)
+  local modfile, initfile = string.format('%s.%s', fname, ext), string.format('init.%s', ext)
   for _, path in ipairs(rtpaths) do
     -- Look on runtime path for 'lua/*.lua' files
     local path1 = table.concat({ path, ext, modfile }, sep)
