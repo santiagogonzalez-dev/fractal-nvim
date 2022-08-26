@@ -6,7 +6,7 @@ vim.schedule(function()
   startup.enable()
 
   require('csj.core')
-  require('user') -- This loads my user settings, plugins, completion, LSP, etc.
+  -- require('user') -- This loads my user settings, plugins, completion, LSP, etc.
 
   vim.api.nvim_exec_autocmds('BufEnter', {})
   vim.api.nvim_exec_autocmds('UIEnter', {})
