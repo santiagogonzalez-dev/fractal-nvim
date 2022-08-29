@@ -126,7 +126,9 @@ function utils.is_installed(plugin_name)
    return vim.fn.isdirectory(plugin_path) ~= 0
 end
 
----@return string @ indentation in a string
+-- Determines the indentation of a given string
+---@param indented_string string
+---@return integer
 function utils.string_indentation(indented_string)
    local result = #indented_string - #string.match(indented_string, '^%s*(.*)')
    return result
