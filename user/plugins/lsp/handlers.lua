@@ -96,13 +96,13 @@ M.on_attach = function(client, bufnr)
    M.highlight_word_under_cursor(client, bufnr)
 end
 
--- local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
--- if not status_ok then
---    return
--- end
+local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not status_ok then
+   return
+end
 
--- M.capabilities = vim.lsp.protocol.make_client_capabilities()
--- M.capabilities.textDocument.completion.completionItem.snippetSupport = true
--- M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
 
 return M
