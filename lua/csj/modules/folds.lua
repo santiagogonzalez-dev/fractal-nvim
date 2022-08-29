@@ -124,7 +124,8 @@ vim.opt.fillchars:append {
    foldclose = '',
    -- foldclose = '',
    foldsep = '▎',
-   foldopen = '▎',
+   -- foldopen = '▎',
+   foldopen = '🢓',
 }
 
 return folds
