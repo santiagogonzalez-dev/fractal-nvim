@@ -1,9 +1,9 @@
 column_width = 120
 indent_type = 'Spaces'
 # indent_type = 'Tabs'
-indent_width = 2
+indent_width = 3
 quote_style = 'AutoPreferSingle'
-no_call_parentheses = false
+no_call_parentheses = true
 line_endings = 'Unix'
 call_parentheses = 'NoSingleTable'
 # collapse_simple_statement = "Always" # This makes some functions be one liners

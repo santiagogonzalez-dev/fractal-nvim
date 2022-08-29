@@ -4,14 +4,14 @@
   "conditionals": true,
 
   "modules": {
+    "ask-on-quit": true,
     "folds": true,
     "gutter": true,
     "netrw": true,
-    "notifications": true,
+    "notifications": false,
     "show-insert-mark": true,
     "skeletons": true,
     "statusline": true,
-    "ask-on-quit": "<Leader>q",
     "strict-cursor": "<Esc><Esc>"
   },
 
@@ -60,7 +60,8 @@
     "timeoutlen": 300,
     "undofile": true,
     "undolevels": 6000,
-    "updatetime": 60,
+    "updatetime": 30,
+    "virtualedit": "all",
     "whichwrap": "<,>,[,],h,l,b,s,~",
     "winblend": 0,
     "winhighlight": "Normal:ActiveWindow,NormalNC:InactiveWindow",

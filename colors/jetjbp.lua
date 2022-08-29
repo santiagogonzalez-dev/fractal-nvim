@@ -1,8 +1,8 @@
 -- TODO(santigo-zero): colors for diff (-d flag)
 vim.cmd.highlight { args = { 'clear' } }
 
-if 1 == vim.fn.exists('syntax_on') then
-  vim.cmd.syntax('reset')
+if 1 == vim.fn.exists 'syntax_on' then
+   vim.cmd.syntax 'reset'
 end
 
 vim.opt.termguicolors = true
@@ -67,7 +67,8 @@ jet.groups = {
   LineNr            = { bg = jet.jbp.bg_base, fg = jet.jbp.fg_dim }, -- Line number column, gutter.
   FoldColumn        = { link = 'LineNr' },
   Folded            = { fg = jet.jbp.dimmed3 }, -- When a fold is close you see this line.
-  Visual            = { bg = jet.jbp.bg_high },
+  -- Visual            = { bg = jet.jbp.bg_high },
+  Visual            = { reverse = true },
   VisualNOS         = { link = 'Visual' }, -- When vim is not owning the visual selection.
   VertSplit         = { bg = jet.jbp.bg_base, fg = jet.jbp.grey }, -- Used for splits, also used for completion menus
   -- WinSeperator      = { bg = 'red' },
@@ -80,9 +81,9 @@ jet.groups = {
   Todo              = { fg = jet.jbp.purple, bold = true }, -- INUPPERCASE: FIXME / TODO(santigo-zero):
   TSNote            = { fg = jet.jbp.blue }, -- NOTE: INUPPERCASE:
   Whitespace        = { fg = jet.jbp.fg_dim }, -- Whitespaces, listchars, etc etc.
-  IncSearch         = { bg = jet.jbp.bg_high, fg = jet.jbp.blue }, -- Current search pattern when searching with /
-  CurSearch         = { bg = jet.jbp.bg_high, fg = jet.jbp.blue }, -- Current search match under the cursor
-  Search            = { bg = jet.jbp.bg_high, fg = jet.jbp.green1 }, -- Last search pattern
+  IncSearch         = { fg = jet.jbp.bg_high, bg = jet.jbp.blue }, -- Current search pattern when searching with /
+  CurSearch         = { fg = jet.jbp.bg_high, bg = jet.jbp.blue }, -- Current search match under the cursor
+  Search            = { bg = jet.jbp.lorange, fg = jet.jbp.bg_high }, -- Last search pattern
   Substitute        = { bg = jet.jbp.bg_high, fg = jet.jbp.purple }, -- :substitute or :s///gc replacement text highlighting
   SignColumn        = { bg = jet.jbp.bg_low }, -- Where linting and errors popup
   ErrorMsg          = { link = 'Error' }, -- Error messages in the cmdline
@@ -91,6 +92,7 @@ jet.groups = {
   MsgArea           = { link = 'ModeMsg' }, -- Area for messages and cmdline, / and :
   MsgSeparator      = { link = 'ModeMsg' },
   MatchParen        = { bg = jet.jbp.orange1 },
+  Type              = { fg = jet.jbp.green1 },
   TSType            = { fg = jet.jbp.green1 },
   TSTypeBuiltin     = { fg = jet.jbp.green1 },
 
@@ -137,7 +139,7 @@ jet.groups = {
   Boolean           = { fg = jet.jbp.red0, italic = true }, -- true-false True-False If not setup it uses Constant fg colors
   TSVariableBuiltin = { fg = jet.jbp.green1 },
   Statement         = { fg = jet.jbp.red1 }, -- The = and ==
-  NonText           = { link = 'CursorLineNr' }, -- Used in showbreak, listchars and virtualtext
+  NonText           = { fg = jet.jbp.upper2 }, -- Used in showbreak, listchars and virtualtext
   Question          = { fg = jet.jbp.upper1 }, -- hit-enter prompts and yes/no questions
   Identifier        = { fg = jet.jbp.magenta }, -- (preferred) any variable name
   TSFuncBuiltin     = { fg = jet.jbp.purple }, -- Like `require`
@@ -166,7 +168,7 @@ jet.groups = {
 --stylua: ignore end
 
 for key, value in pairs(jet.groups) do
-  vim.api.nvim_set_hl(0, key, value)
+   vim.api.nvim_set_hl(0, key, value)
 end
 
 return jet

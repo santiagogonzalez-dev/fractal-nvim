@@ -1,45 +1,48 @@
 local M = {}
-local components = require('csj.core.utils.components')
-local utils = require('csj.core.utils')
+local components = require 'csj.utils.components'
+local utils = require 'csj.utils'
 
 function M.get()
-  return table.concat {
-    -- LEFT
-    '',
-    -- '',
-    components.line_and_column_buffer(),
-    components.filewritable(),
-    '%#StatusLineBlue#', -- Reset hl groups
-    components.search_count(),
-    '%#StatusLine#', -- Reset hl groups
+   return table.concat {
+      -- LEFT
+      ' ',
+      -- '',
+      components.line_and_column_buffer(),
+      -- components.filewritable(),
+      '%#StatusLineBlue#', -- Reset hl groups
+      ' ',
+      components.search_count(),
+      '%#StatusLine#', -- Reset hl groups
 
-    -- CENTER
-    '%=',
-    components.filepath(),
-    '%#StatusLineBlue#',
-    components.filename(),
-    '%#StatusLine#', -- Reset hl groups
+      -- CENTER
+      '%=',
+      components.filepath(),
+      '%#StatusLineBlue#',
+      components.filename(),
+      -- components.filename_icon(),
+      '%#StatusLine#', -- Reset hl groups
 
-    -- RIGHT
-    '%=',
-    components.vcs(),
-  }
+      -- RIGHT
+      '%=',
+      '%#StatusLineBlue#',
+      components.modified_buffer(),
+      '%#StatusLine#', -- Reset hl groups
+      components.vcs(),
+   }
 end
 
-_G.statusline = M
 vim.opt.laststatus = 3
 vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
-  callback = function()
-    vim.opt.statusline = '%{%v:lua.statusline.get()%}' -- '%!v:lua.require("csj.modules.statusline").get()'
-  end,
+   callback = function()
+      vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").get()%}'
+   end,
 })
 
 vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {
-  pattern = utils.IGNORE_FT,
-  callback = function()
-    vim.opt.laststatus = 0
-    vim.opt.statusline = '%#StatusLineNC#' -- Disable statusline
-  end,
+   pattern = utils.IGNORE_FT,
+   callback = function()
+      vim.opt.statusline = '%#StatusLineNC#' -- Disable statusline
+   end,
 })
 
 return M
