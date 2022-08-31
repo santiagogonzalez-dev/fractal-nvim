@@ -35,11 +35,4 @@ vim.api.nvim_create_autocmd('BufNewFile', {
    end,
 })
 
--- Manually check and trigger skeleton, this is done because I'm lazyloading,
--- uncomment if you are not doing any optimizations since neovim does this
--- already.
-if vim.fn.filereadable(vim.fn.expand(vim.api.nvim_eval_statusline('%F', {}).str)) == 0 then
-   vim.api.nvim_exec_autocmds('BufNewFile', {})
-end
-
 return M

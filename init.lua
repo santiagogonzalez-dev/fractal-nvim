@@ -1,5 +1,5 @@
 -- Builtin plugins and providers.
-vim.opt.loadplugins = false -- TODO(santigo-zero): CMP doesn't work with this enabled.
+vim.opt.loadplugins = false -- TODO(santigo-zero): CMP nor netrw doesn't work with this enabled.
 local builtins = false -- Any other value besides nil disables the plugins.
 vim.g.loaded_2html_plugin = builtins
 vim.g.loaded_bugreport = builtins
@@ -58,6 +58,13 @@ vim.schedule(function()
 
    require 'csj.core'
    vim.api.nvim_exec_autocmds('BufEnter', {})
+
+   -- Manually check and trigger BufNewFile, this is done because I'm lazyloading
+   if vim.fn.filereadable(vim.fn.expand(vim.api.nvim_eval_statusline('%F', {}).str)) == 0 then
+      vim.api.nvim_exec_autocmds('BufNewFile', {})
+   else
+      vim.cmd.e() -- or vim.cmd.filetype 'detect' -- Load ftplugin.
+   end
+
    vim.api.nvim_exec_autocmds('UIEnter', {})
-   vim.cmd.e() -- or vim.cmd.filetype 'detect' -- Load ftplugin.
 end)

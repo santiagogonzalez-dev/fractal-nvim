@@ -71,7 +71,7 @@ function M.keymaps(bufnr)
 
    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = 'Definitions' })
    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'Declarations' })
-   -- vim.keymap.set('n', 'gr', vim.lsp.buf.references) -- References
+   vim.keymap.set('n', 'gr', vim.lsp.buf.references) -- References
 
    -- vim.keymap.set('n', 'r', function()
    --   local function post(rename_old)

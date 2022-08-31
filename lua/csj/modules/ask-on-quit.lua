@@ -50,4 +50,15 @@ end
 -- Indicate that `close_or_quit` is a function meant to be called by a keybind
 -- _G.csj.map.close_or_quit = M.close_or_quit
 
+function M.setup(mapping)
+   if type(mapping) ~= 'string' then
+      return false
+   end
+
+   vim.schedule(function()
+      vim.keymap.set('n', mapping, require('csj.modules.ask-on-quit').close_or_quit, { desc = 'Ask before quitting' })
+   end)
+   return true
+end
+
 return M

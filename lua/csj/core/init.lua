@@ -1,5 +1,3 @@
-local utils = require 'csj.utils'
-
 -- Default settings
 require 'csj.core.general'
 require 'csj.core.autocmds'
@@ -12,9 +10,9 @@ local user = require('csj.utils').get_json(user_settings) -- User table
 local start = require 'csj.utils.start'
 start.colorscheme(user.colorscheme) -- Apply colorscheme.
 start.conditionals(user.conditionals) -- Conditionals to load plugins and modules.
-start.opts(user.opts) -- Set some settings.
 start.modules(user.modules) -- Load modules specified by the user.
 start.session(user.restore) -- Restore cursor and view.
+start.opts(user.opts) -- Set some settings.
 
 -- Add `./user` to lua path, do this before calling user's init.lua
 package.path = table.concat {

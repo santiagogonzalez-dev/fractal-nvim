@@ -137,6 +137,7 @@ function M.modules(T)
          vim.pretty_print(string.format('%s %s   ', '   Module loaded ->', k))
       end
    end
+   return true
 end
 
 return M

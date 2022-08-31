@@ -87,3 +87,12 @@ end
 -- Set options to open require with gf
 vim.opt_local.include = [=[\v<((do|load)file|require)\s*\(?['"]\zs[^'"]+\ze['"]]=]
 vim.opt_local.includeexpr = 'v:lua.Find_required_path(v:fname)'
+
+-- There's a non-visible character at cchar= so watch
+vim.schedule(function()
+   vim.cmd [[syntax match hidechars '\'' conceal " cchar= ]]
+   vim.cmd [[syntax match hidechars '\"' conceal " cchar= ]]
+   vim.cmd [[syntax match hidechars '\[\[' conceal " cchar= ]]
+   vim.cmd [[syntax match hidechars '\]\]' conceal " cchar= ]]
+   -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
+end)

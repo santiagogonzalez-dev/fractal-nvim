@@ -1,7 +1,6 @@
 local dead_keys = {
    '<BS>',
    '<CR>',
-
    '<Down>',
    '<Left>',
    '<Right>',
@@ -34,7 +33,6 @@ vim.g.maplocalleader = 'x'
 
 -- Simple keymappings
 vim.keymap.set('n', '<Leader>u', vim.cmd.update, { desc = 'Update the file' })
-vim.keymap.set('n', '<Leader>q', require('csj.modules.ask-on-quit').close_or_quit, { desc = 'Ask before quitting' })
 vim.keymap.set('n', '<Leader>qq', vim.cmd.quitall, { desc = 'Quit neovim' })
 vim.keymap.set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>', { desc = 'Delete all buffers' })
 vim.keymap.set('n', '<Leader>w', vim.cmd.wqall, { desc = 'Write and Quit' })
@@ -142,6 +140,21 @@ vim.keymap.set('n', '//', '/', { desc = 'Better search' })
 vim.keymap.set('n', '<Leader>e', ':silent! Lexplore!<CR>', { desc = 'Open NetRW', silent = true })
 vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { desc = 'Open NetRW in the dir of the buffer' })
 
-vim.keymap.set('c', '<A-j>', '<Down>')
-vim.keymap.set('c', '<A-k>', '<Up>')
+vim.keymap.set('c', '<C-j>', '<Down>')
+vim.keymap.set('c', '<C-k>', '<Up>')
 vim.keymap.set('c', 'wqa', vim.cmd.wqa)
+-- vim.keymap.set('c', 'G', 'grep ')
+-- vim.keymap.set('c', 'H', 'help ')
+
+vim.api.nvim_create_autocmd('FileType', {
+   pattern = 'qf',
+   callback = function()
+      vim.keymap.set('n', '<C-]>', function()
+         vim.cmd ':cn'
+      end, { buffer = 0, desc = 'Go to next item in quickfix list' })
+
+      vim.keymap.set('n', '<C-[>', function()
+         vim.cmd ':cp'
+      end, { buffer = 0, desc = 'Go to previous item in quickfix list' })
+   end,
+})

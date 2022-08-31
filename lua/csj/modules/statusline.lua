@@ -8,7 +8,7 @@ function M.get()
       ' ',
       -- '',
       components.line_and_column_buffer(),
-      -- components.filewritable(),
+      components.filewritable(),
       '%#StatusLineBlue#', -- Reset hl groups
       ' ',
       components.search_count(),

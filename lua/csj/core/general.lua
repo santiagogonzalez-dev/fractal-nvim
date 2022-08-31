@@ -8,6 +8,7 @@ vim.opt.tabstop = tab_lenght -- Tab length
 vim.opt.guicursor:append 'v:hor50'
 vim.opt.guicursor:append 'i-ci-ve:ver25'
 vim.opt.guicursor:append 'r-cr-o:hor20'
+-- vim.opt.guicursor = ''
 
 -- Search files recursively
 vim.opt.path:append '**'
@@ -28,7 +29,7 @@ vim.api.nvim_create_autocmd('Filetype', {
    desc = 'Open pages for man and help in a vertical split',
    pattern = { 'help', 'man' },
    callback = function()
-      if (vim.opt.lines:get() * 3) < vim.opt.columns:get() then
+      if (vim.opt.lines:get() * 4) < vim.opt.columns:get() then
          if not vim.w.help_is_moved or vim.w.help_is_moved ~= 'right' then
             vim.cmd.wincmd 'L'
             vim.w.help_is_moved = 'right'

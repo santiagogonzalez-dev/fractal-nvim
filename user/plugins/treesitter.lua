@@ -13,6 +13,7 @@ treesitter.setup {
       'json',
       'lua',
       'markdown',
+      'markdown_inline',
       'nix',
       'python',
       'toml',
@@ -20,6 +21,7 @@ treesitter.setup {
       'vim',
       'yaml',
    },
+   auto_install = true,
    sync_install = false,
    highlight = {
       enable = true,

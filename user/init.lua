@@ -74,15 +74,6 @@ function _G.all_buffers_settings()
       - 'l' -- Format in insert mode if the line is longer than textwidth
 
    vim.opt.cpoptions = vim.opt.cpoptions + 'n' -- Show `showbreak` icon in the number column
-
-   -- There's a non-visible character at cchar= so watch
-   vim.schedule(function()
-      vim.cmd [[syntax match hidechars '\'' conceal " cchar= ]]
-      vim.cmd [[syntax match hidechars '\"' conceal " cchar= ]]
-      vim.cmd [[syntax match hidechars '\[\[' conceal " cchar= ]]
-      vim.cmd [[syntax match hidechars '\]\]' conceal " cchar= ]]
-      -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
-   end)
 end
 
 vim.schedule(function()

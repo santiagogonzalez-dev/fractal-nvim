@@ -79,7 +79,9 @@ function utils.is_git()
    end
 end
 
+-- TODO: rewrite
 -- Filetypes to ignore
+---@deprecated
 ---@return table
 utils.IGNORE_FT = {
    'NetrwTreeListing',
@@ -87,10 +89,33 @@ utils.IGNORE_FT = {
    'gitcommit',
    'gitdiff',
    'help',
-   'netrw',
    'packer',
    'startify',
 }
+
+---@deprecated
+utils.IGNORE_BUFTYPE = {
+   'qf',
+   'netrw',
+}
+
+utils.AVOID_FILETYPES = {
+   NetrwTreeListing = true,
+   TelescopePrompt = true,
+   gitcommit = true,
+   gitdiff = true,
+   help = true,
+   packer = true,
+   startify = true,
+}
+
+function utils.present_in_table(T, to_check)
+   if T[to_check] ~= nil then
+      return true
+   else
+      return false
+   end
+end
 
 -- If there's a filetype that I want to ignore return true, so you can do
 -- something like:
