@@ -58,10 +58,10 @@ function M.session(mode)
       desc = 'Load buffer view and cursor position',
       group = save_sessions,
       callback = function()
-         if utils.avoid_filetype() then
-            return
+         if not utils.avoid_filetype() then
+            point_restore()
          end
-         point_restore()
+         -- return utils.avoid_filetype() and point_restore()
       end,
    })
 
@@ -69,10 +69,10 @@ function M.session(mode)
       desc = 'Save the view of the buffer',
       group = save_sessions,
       callback = function()
-         if utils.avoid_filetype() then
-            return
+         if not utils.avoid_filetype() then
+            return vim.cmd.mkview()
          end
-         return vim.cmd.mkview()
+         -- return utils.avoid_filetype() and vim.cmd.mkview()
       end,
    })
 

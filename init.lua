@@ -1,5 +1,6 @@
 -- Builtin plugins and providers.
-vim.opt.loadplugins = false -- TODO(santigo-zero): CMP nor netrw doesn't work with this enabled.
+vim.opt.loadplugins = false -- TODO(santigo-zero): Netrw doesn't work with this enabled.
+
 local builtins = false -- Any other value besides nil disables the plugins.
 vim.g.loaded_2html_plugin = builtins
 vim.g.loaded_bugreport = builtins

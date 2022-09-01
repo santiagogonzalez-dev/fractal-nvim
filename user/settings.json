@@ -5,6 +5,7 @@
 
   "modules": {
     "ask-on-quit": "<Leader>q",
+    "buffer-switch": false,
     "folds": true,
     "gutter": true,
     "netrw": true,
@@ -30,7 +31,7 @@
     "inccommand": "split",
     "infercase": true,
     "joinspaces": true,
-    "lazyredraw": true,
+    "lazyredraw": false,
     "list": true,
     "matchpairs": "(:),{:},[:],<:>,=:;",
     "mousefocus": true,

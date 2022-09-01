@@ -39,7 +39,16 @@ vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
 })
 
 vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {
-   pattern = utils.IGNORE_FT,
+   pattern = {
+      'NetrwTreeListing',
+      'TelescopePrompt',
+      'gitcommit',
+      'gitdiff',
+      'help',
+      'packer',
+      'startify',
+      'netrw',
+   },
    callback = function()
       vim.opt.statusline = '%#StatusLineNC#' -- Disable statusline
    end,

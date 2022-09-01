@@ -38,19 +38,9 @@ vim.keymap.set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>', { desc = 'Delete all 
 vim.keymap.set('n', '<Leader>w', vim.cmd.wqall, { desc = 'Write and Quit' })
 vim.keymap.set('n', '<Leader>p', '"_diwP', { desc = 'Paste under cursor without overwriting the yank register' })
 vim.keymap.set('n', '<Leader>s', ':luafile %<CR>', { desc = 'Source lua file' })
-vim.keymap.set('n', '<Leader>e', vim.cmd.e, { desc = 'Reedit the buffer', silent = true })
--- vim.keymap.set(
---   'n',
---   '<Leader>e',
---   ':silent! Lexplore!<CR>',
---   { desc = 'Open NetRW', silent = true }
--- )
--- vim.keymap.set(
---   'n',
---   '<Leader>ee',
---   ':silent! Lexplore! %:p:h<CR>',
---   { desc = 'Open NetRW in the dir of the buffer' }
--- )
+-- vim.keymap.set('n', '<Leader>e', vim.cmd.e, { desc = 'Reedit the buffer', silent = true })
+vim.keymap.set('n', '<Leader>e', ':Lexplore!<CR>', { desc = 'Open NetRW', silent = true })
+vim.keymap.set('n', '<Leader>ee', ':Lexplore! %:p:h<CR>', { desc = 'Open NetRW in the dir of the buffer' })
 
 vim.keymap.set('n', '<C-n>', vim.cmd.bnext, { desc = 'Switch to next buffer', silent = true })
 vim.keymap.set('n', '<C-p>', vim.cmd.bprevious, { desc = 'Switch to prev buffer', silent = true })
@@ -136,9 +126,6 @@ vim.keymap.set({ 'v', 'x' }, '<S-Tab>', '<gv', { desc = 'In visual mode use tabs
 
 vim.keymap.set('n', '/', '/<C-r>/', { desc = 'Better search' })
 vim.keymap.set('n', '//', '/', { desc = 'Better search' })
-
-vim.keymap.set('n', '<Leader>e', ':silent! Lexplore!<CR>', { desc = 'Open NetRW', silent = true })
-vim.keymap.set('n', '<Leader>ee', ':silent! Lexplore! %:p:h<CR>', { desc = 'Open NetRW in the dir of the buffer' })
 
 vim.keymap.set('c', '<C-j>', '<Down>')
 vim.keymap.set('c', '<C-k>', '<Up>')

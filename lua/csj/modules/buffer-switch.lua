@@ -29,14 +29,15 @@ function M.validate_buffer(bufnr)
 
    -- Clean the table if the buffer doesn't have a name or it's being detected
    -- that the filetype of it is not valid.
-   if buf.name == '' or utils.present_in_table(utils.AVOID_FILETYPES, buf.ft) then
+   -- if buf.name == '' or utils.present_in_table(utils.AVOID_FILETYPES, buf.ft) then
+   if buf.name == '' or utils.avoid_filetype() then
       -- M.buffers[bufnr] = nil
       -- table.insert(M.buffers, buf)
       return false
    else
       -- if M.buffers[bufnr] == nil then
-         -- M.buffers[bufnr] = buf
-         table.insert(M.buffers, buf)
+      -- M.buffers[bufnr] = buf
+      table.insert(M.buffers, buf)
       -- end
    end
 
@@ -60,25 +61,49 @@ end
 -- directoly by the loader in `core`
 M.setup(M.default_conf)
 
--- -- Validate opened buffers at startup
--- vim.api.nvim_create_autocmd('UIEnter', {
---    desc = 'Validate opened buffers at startup',
---    callback = function()
---       local first_buffers = vim.api.nvim_list_bufs()
---       for bufnr, _ in pairs(first_buffers) do
---          M.validate_buffer(bufnr)
---       end
---    end,
--- })
+-- Validate opened buffers at startup
+vim.api.nvim_create_autocmd('UIEnter', {
+   desc = 'Validate opened buffers at startup',
+   callback = function()
+      local first_buffers = vim.api.nvim_list_bufs()
+      for bufnr, _ in pairs(first_buffers) do
+         M.validate_buffer(bufnr)
+      end
 
--- -- Check each buffer that the user opens
--- vim.api.nvim_create_autocmd('BufWinEnter', {
---    callback = function()
---       M.validate_buffer(vim.api.nvim_get_current_buf())
---    end,
--- })
+      -- Check each buffer that the user opens
+      vim.api.nvim_create_autocmd('BufWinEnter', {
+         callback = function()
+            M.validate_buffer(vim.api.nvim_get_current_buf())
+         end,
+      })
+   end,
+})
 
 -- TODO(santigo-zero): I'll eventually do this.
 -- Maybe use output from `:buffers` to populate quickfix list
+
+-- setqflist(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), '{"bufnr": v:val}'))
+-- [{'bufnr': 1}, {'bufnr': 2}]
+-- echo filter(range(1, bufnr('$')), 'buflisted(v:val)')
+
+-- local M = {}
+
+-- M.toggle_qf = function()
+--   local qf_exists = false
+--   for _, win in pairs(vim.fn.getwininfo()) do
+--     if win["quickfix"] == 1 then
+--       qf_exists = true
+--     end
+--   end
+--   if qf_exists == true then
+--     vim.cmd "cclose"
+--     return
+--   end
+--   if not vim.tbl_isempty(vim.fn.getqflist()) then
+--     vim.cmd "copen"
+--   end
+-- end
+
+-- return M
 
 return M

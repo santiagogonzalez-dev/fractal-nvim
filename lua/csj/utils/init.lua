@@ -9,7 +9,7 @@ function utils.prequire(package)
    else
       vim.schedule(function()
          -- If you don't schedule this and you are using the notifications module
-         -- the errors will still showup on the terminal
+         -- the errors will still show up on the terminal
          vim.notify('Failed to require "' .. package .. '" from ' .. vim.log.levels.WARN)
          -- vim.notify('Failed to require "' .. package .. '" from ' .. debug.getinfo(2).source)
          -- This ^^ one will print the error in the terminal even when using the
@@ -60,6 +60,7 @@ function utils.wrap(function_pointer, ...)
    end
 end
 
+-- Simple wrapper to check if a str is empty
 ---@param str string
 ---@return string|boolean @ Either an empty string or false
 function utils.is_empty(str)
@@ -71,34 +72,28 @@ end
 function utils.is_git()
    local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
    if is_git:match 'true' then
-      vim.cmd.doautocmd 'User IsGit' -- vim.cmd.doautocmd { args = { 'User', 'IsGit' } }
-      -- vim.cmd('doautocmd User IsGit')
+      vim.cmd.doautocmd 'User IsGit'
       return true
    else
       return false
    end
 end
 
--- TODO: rewrite
--- Filetypes to ignore
----@deprecated
----@return table
-utils.IGNORE_FT = {
-   'NetrwTreeListing',
-   'TelescopePrompt',
-   'gitcommit',
-   'gitdiff',
-   'help',
-   'packer',
-   'startify',
-}
+-- Checks if an `element` is present in table `T`.
+---@param T table
+---@param element any
+---@return boolean
+function utils.present_in_table(T, element)
+   if T[element] ~= nil then
+      return true
+   else
+      return false
+   end
+end
 
----@deprecated
-utils.IGNORE_BUFTYPE = {
-   'qf',
-   'netrw',
-}
-
+-- If there's a filetype that you want to ignore put it in this table and call
+-- the function `utils.avoid_filetype()`, returns true if the filetype of the
+-- buffer is undesirable.
 utils.AVOID_FILETYPES = {
    NetrwTreeListing = true,
    TelescopePrompt = true,
@@ -106,32 +101,17 @@ utils.AVOID_FILETYPES = {
    gitdiff = true,
    help = true,
    packer = true,
+   qf = true,
+   quickfix = true,
    startify = true,
 }
 
-function utils.present_in_table(T, to_check)
-   if T[to_check] ~= nil then
-      return true
-   else
-      return false
-   end
-end
-
--- If there's a filetype that I want to ignore return true, so you can do
--- something like:
--- if utils.avoid_filetype() then
---   return
--- end
----@return boolean @ Return false if the filetype of the buffer is matching the
----table utils.IGNORE_FT
+---@return boolean @ Fail if the ft is matching the table utils.AVOID_FILETYPES
 function utils.avoid_filetype()
-   if vim.tbl_contains(utils.IGNORE_FT, vim.bo.filetype) then
-      return true
-   else
-      return false
-   end
+   return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
 end
 
+-- Highlight utils.
 function utils.get_fg_hl(hl_group)
    return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
 end
@@ -139,10 +119,12 @@ function utils.get_bg_hl(hl_group)
    return vim.api.nvim_get_hl_by_name(hl_group, true).background
 end
 
+-- Get json, converts the file to lua table.
 function utils.get_json(path)
    return vim.json.decode(table.concat(vim.fn.readfile(path), '\n'))
 end
 
+-- Check if a plugin is installed.
 -- utils.is_installed('opt/packer.nvim') utils.is_installed('start/packer.nvim')
 ---@return boolean
 function utils.is_installed(plugin_name)
@@ -151,12 +133,11 @@ function utils.is_installed(plugin_name)
    return vim.fn.isdirectory(plugin_path) ~= 0
 end
 
--- Determines the indentation of a given string
+-- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
 function utils.string_indentation(indented_string)
-   local result = #indented_string - #string.match(indented_string, '^%s*(.*)')
-   return result
+   return #indented_string - #string.match(indented_string, '^%s*(.*)')
 end
 
 return utils
