@@ -1,8 +1,8 @@
 local tab_lenght = 4
-vim.opt.tabstop = tab_lenght
-vim.opt.shiftwidth = tab_lenght
-vim.opt.colorcolumn = '80,88'
-vim.opt.textwidth = 87
+vim.opt_local.tabstop = tab_lenght
+vim.opt_local.shiftwidth = tab_lenght
+vim.opt_local.colorcolumn = '80,88'
+vim.opt_local.textwidth = 87
 vim.g.python3_host_prog = 'python'
 -- vim.g.python3_host_prog = '/usr/bin/python' -- Check if this changes when using venvironments
 vim.g.python_highlight_all = 1
