@@ -2,6 +2,13 @@ local M = {}
 local components = require 'csj.utils.components'
 local utils = require 'csj.utils'
 
+-- TODO(santigo-zero): Generate hl groups
+-- do
+--    local ns = vim.api.nvim_create_namespace 'namespace_name'
+--    vim.api.nvim_set_hl(ns, 'Normal', { link = '#000000' })
+--    vim.api.nvim_win_set_hl_ns(0, ns)
+-- end
+
 function M.get()
    return table.concat {
       -- LEFT

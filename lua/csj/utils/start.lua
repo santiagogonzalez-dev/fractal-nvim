@@ -120,22 +120,24 @@ function M.modules(T)
    -- _G.csj.map = {} -- Functions meant to be called by a keybind
    for k, v in pairs(T) do
       local module_path = string.format('csj.modules.%s', k)
-      local status
+      -- local status
 
       if type(v) == 'boolean' and v then
          -- If the v for the module are just booleans call the module
-         status = utils.prequire(module_path)
+         -- status = utils.prequire(module_path)
+         utils.prequire(module_path)
       elseif type(v) == 'table' or type(v) == 'string' then
          -- In the other hand if the v for the module are tables call the setups
          -- for each module
          local lib = utils.prequire(module_path)
          if lib then
-            status = lib.setup(v)
+            -- status = lib.setup(v)
+            lib.setup(v)
          end
       end
-      if status then
-         vim.pretty_print(string.format('%s %s   ', '   Module loaded ->', k))
-      end
+      -- if status then
+      --    vim.pretty_print(string.format('%s %s   ', '   Module loaded ->', k))
+      -- end
    end
    return true
 end

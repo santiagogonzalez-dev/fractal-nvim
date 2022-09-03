@@ -16,6 +16,7 @@ treesitter.setup {
       'markdown_inline',
       'nix',
       'python',
+      'query',
       'toml',
       'typescript',
       'vim',

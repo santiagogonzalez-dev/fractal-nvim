@@ -58,7 +58,6 @@ vim.schedule(function()
    vim.cmd.rshada { bang = true } -- Read shadafile.
 
    require 'csj.core'
-   vim.api.nvim_exec_autocmds('BufEnter', {})
 
    -- Manually check and trigger BufNewFile, this is done because I'm lazyloading
    if vim.fn.filereadable(vim.fn.expand(vim.api.nvim_eval_statusline('%F', {}).str)) == 0 then
@@ -67,5 +66,6 @@ vim.schedule(function()
       vim.cmd.e() -- or vim.cmd.filetype 'detect' -- Load ftplugin.
    end
 
+   vim.api.nvim_exec_autocmds('BufEnter', {})
    vim.api.nvim_exec_autocmds('UIEnter', {})
 end)

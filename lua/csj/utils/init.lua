@@ -95,7 +95,7 @@ end
 -- the function `utils.avoid_filetype()`, returns true if the filetype of the
 -- buffer is undesirable.
 utils.AVOID_FILETYPES = {
-   NetrwTreeListing = true,
+  NetrwTreeListing = true,
    TelescopePrompt = true,
    gitcommit = true,
    gitdiff = true,
