@@ -202,6 +202,10 @@ function jet.setup()
    -- jet.h('TSEnvironment', {}) -- Text environments of markup languages.
    -- jet.h('TSEnvironmentName', {}) -- Text/string indicating the type of text environment. Like the name of a `\begin` block in LaTeX.
 
+   -- Zsh
+   jet.h('zshSubst', { fg = jet.jbp.red0 })
+   jet.h('zshDeref', { fg = jet.jbp.red0 })
+
    jet.h('Exception', { fg = jet.jbp.purple0 }) -- try, catch, throw
    jet.h('TSException', { link = 'Exception' }) -- Exception related keywords: `try`, `except`, `finally` in Python.
 
