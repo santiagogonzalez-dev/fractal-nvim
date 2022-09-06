@@ -95,15 +95,15 @@ end
 -- the function `utils.avoid_filetype()`, returns true if the filetype of the
 -- buffer is undesirable.
 utils.AVOID_FILETYPES = {
-  NetrwTreeListing = true,
+   NetrwTreeListing = true,
    TelescopePrompt = true,
    gitcommit = true,
    gitdiff = true,
    help = true,
    packer = true,
+   startify = true,
    qf = true,
    quickfix = true,
-   startify = true,
 }
 
 ---@return boolean @ Fail if the ft is matching the table utils.AVOID_FILETYPES

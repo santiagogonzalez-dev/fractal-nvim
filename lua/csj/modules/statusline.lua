@@ -12,7 +12,7 @@ local utils = require 'csj.utils'
 function M.get()
    return table.concat {
       -- LEFT
-      ' ',
+      -- ' ',
       -- '',
       components.line_and_column_buffer(),
       components.filewritable(),

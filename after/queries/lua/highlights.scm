@@ -109,8 +109,8 @@
   (dot_index_expression) @function
     (#eq? @function  "vim.api.nvim_create_autocmd" )
   ; (#set! conceal "a")
-  (#set! conceal "🪝")
-  ; (#set! conceal "ﯠ")
+  ; (#set! conceal "🪝")
+  (#set! conceal "ﯠ")
 )
 
 (
@@ -165,12 +165,12 @@
 ; (("function" @keyword) (#set! conceal ""))
 (("then" @keyword) (#set! conceal ""))
 (("not" @keyword) (#set! conceal ""))
-; (("for" @repeat) (#set! conceal ""))
+(("for" @repeat) (#set! conceal "ﴳ"))
 (("while" @repeat) (#set! conceal "∞"))
 
-; ; for -> circle arrow
-; (
-;   (break_statement)@keyword
-;   (#eq? @keyword  "break" )
-;   (#set! conceal "")
-; )
+; for -> circle arrow
+(
+  (break_statement)@keyword
+  (#eq? @keyword  "break" )
+  (#set! conceal "")
+)

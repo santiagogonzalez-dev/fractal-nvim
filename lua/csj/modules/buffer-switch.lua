@@ -1,6 +1,13 @@
 local M = {}
 local utils = require 'csj.utils'
 
+-- TODO(santigo-zero): FIXME before using
+-- Maybe use output from `:buffers` to populate quickfix list
+
+-- setqflist(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), '{"bufnr": v:val}'))
+-- [{'bufnr': 1}, {'bufnr': 2}]
+-- echo filter(range(1, bufnr('$')), 'buflisted(v:val)')
+
 M.buffers = {}
 
 M.default_conf = {
@@ -79,12 +86,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
    end,
 })
 
--- TODO(santigo-zero): I'll eventually do this.
--- Maybe use output from `:buffers` to populate quickfix list
-
--- setqflist(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), '{"bufnr": v:val}'))
--- [{'bufnr': 1}, {'bufnr': 2}]
--- echo filter(range(1, bufnr('$')), 'buflisted(v:val)')
 
 -- local M = {}
 

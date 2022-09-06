@@ -65,7 +65,6 @@
     "virtualedit": "all",
     "whichwrap": "<,>,[,],h,l,b,s,~",
     "winblend": 0,
-    "winhighlight": "Normal:ActiveWindow,NormalNC:InactiveWindow",
     "wrap": false
   }
 }

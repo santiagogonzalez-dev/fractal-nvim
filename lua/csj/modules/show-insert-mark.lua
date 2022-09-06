@@ -30,8 +30,9 @@ function M.display_mark()
       -- Use virtual text at the end of the line
       return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
          virt_text = {
-            -- { ' Last Insert ', 'SIM' },
-            { 'LI', 'SIMReversed' },
+            { '', 'SIM' },
+            { ' ', 'SIMReversed' },
+            { '', 'SIM' },
          },
          virt_text_pos = 'eol',
          -- virt_text_win_col = #vim.api.nvim_get_current_line(),
@@ -50,6 +51,9 @@ function M.display_mark()
 end
 
 function M.hide_mark(id_extmark)
+   if not id_extmark then
+      return
+   end
    vim.api.nvim_buf_del_extmark(0, _ns_sim, id_extmark)
 end
 

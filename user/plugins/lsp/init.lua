@@ -3,8 +3,10 @@ if not status then
    return -- Return if there is any problem with lspconfig
 end
 
-require('packer').loader 'mason.nvim'
-require('packer').loader 'mason-lspconfig.nvim'
+local packer = require('plugins.packer').packer()
+
+packer.loader 'mason.nvim'
+packer.loader 'mason-lspconfig.nvim'
 
 local SERVERS = {
    'bashls',
@@ -45,7 +47,7 @@ end
 require('plugins.lsp.handlers').setup()
 require 'plugins.lsp.top-right-lsp-diagnostics' -- Using lsp_lines.nvim for now
 
-require('packer').loader 'null-ls.nvim'
+packer.loader 'null-ls.nvim'
 require 'plugins.lsp.null-ls'
 
 -- vim.cmd.LspStart()

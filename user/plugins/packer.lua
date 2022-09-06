@@ -7,6 +7,10 @@ function M.packer_load()
    packer = require 'packer'
 end
 
+function M.packer()
+   return packer
+end
+
 function M.check_packer()
    local packer_installed = require('csj.utils').is_installed 'opt/packer.nvim'
    local plugins_dir = string.format('%s%s', vim.fn.stdpath 'data', '/site/pack/packer') -- /home/user/.local/share/nvim/site/pack/packer
@@ -160,7 +164,7 @@ function M.list_plugins()
             { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'Comment.nvim' },
             {
                'nvim-treesitter/playground',
-               cmd = 'TSPlaygroundToggle',
+               cmd = { 'TSHighlightCapturesUnderCursor', 'TSPlaygroundToggle' },
                config = function()
                   require('nvim-treesitter.configs').setup {
                      playground = {
@@ -318,6 +322,14 @@ function M.list_plugins()
          event = 'User LoadPlugins',
          config = function()
             require 'plugins.dap'
+         end,
+      }
+
+      use {
+         'levouh/tint.nvim',
+         event = 'BufWinEnter',
+         config = function()
+            require('tint').setup()
          end,
       }
 

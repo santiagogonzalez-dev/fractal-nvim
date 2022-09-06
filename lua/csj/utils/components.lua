@@ -83,12 +83,12 @@ function M.icon_by_cursor_line_position()
    local total_lines = vim.fn.line '$' -- == tonumber(vim.api.nvim_eval_statusline('%L', {}).str)
 
    if vim.api.nvim_eval_statusline('%P', {}).str == 'All' then
-      return ''
+      return ' '
    elseif current_line == 1 then
-      return ''
+      return ' '
    end
 
-   local chars = { '', '', '' }
+   local chars = { ' ', ' ', ' ' }
    local line_ratio = current_line / total_lines
    local index = math.ceil(line_ratio * #chars)
    return chars[index]

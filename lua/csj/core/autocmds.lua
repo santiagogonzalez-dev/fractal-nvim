@@ -19,7 +19,6 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
 
 vim.api.nvim_create_autocmd('BufWritePre', {
    desc = 'Create directories before saving a buffer, should come by default',
-   once = true,
    group = session_opts,
    callback = function()
       return vim.fn.mkdir(vim.fn.expand '%:p:h', 'p')
