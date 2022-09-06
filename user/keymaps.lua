@@ -81,7 +81,6 @@ vim.keymap.set({ 'n', 'x', 'o' }, 'n', '"Nn"[v:searchforward]', { expr = true, d
 vim.keymap.set({ 'n', 'x', 'o' }, 'N', '"nN"[v:searchforward]', { expr = true, desc = 'N is always previous' })
 vim.keymap.set('n', 'dD', '0D', { desc = 'This only makes sense to me' })
 vim.keymap.set('n', '^^', '0', { desc = 'Better ^' })
-vim.keymap.set({ 'n', 'x' }, 'x', '"_x', { desc = 'Do not use the yank register when deleting with x' })
 
 vim.keymap.set('n', 'gx', function()
    vim.fn.jobstart({ 'xdg-open', vim.fn.expand('<cfile>', nil, nil) }, { detach = true })
