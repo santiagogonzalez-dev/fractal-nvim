@@ -193,8 +193,8 @@ function jet.setup()
    -- jet.h('TSEmphasis', {}) -- Text to be represented with emphasis.
    -- jet.h('TSUnderline', {}) -- Text to be represented with an underline.
    -- jet.h('TSStrike', { link = 'Title' }) -- Strikethrough text.
-   -- jet.h('Title', { fg = jet.jbp.text }) -- Titles for output from ":set all", ":autocmd" etc.
-   -- jet.h('TSTitle', { link = 'Title' }) -- Text that is part of a title.
+   jet.h('Title', { fg = jet.jbp.text }) -- Titles for output from ":set all", ":autocmd", also plugins use it for some windows.
+   jet.h('TSTitle', { link = 'Title' }) -- Text that is part of a title.
    -- jet.h('TSLiteral', {}) -- Literal or verbatim text.
    -- jet.h('TSURI', {}) -- URIs like hyperlinks or email addresses.
    -- jet.h('TSMath', {}) -- Math environments like LaTeX's `$ ... $`.
@@ -215,7 +215,6 @@ function jet.setup()
    jet.h('TSFunctionCall', { fg = jet.jbp.blue }) -- Function calls.
    jet.h('TSFuncBuiltin', { fg = jet.jbp.teal }) -- Built-in functions: `print` in Lua.
 
-   -- jet.h('TSFuncMacro', { fg = jet.jbp.purple0 }) -- Macro defined functions (calls and definitions): each `macro_rules` in Rust.
    jet.h('Include', { fg = jet.jbp.purple0 }) -- from ... import ...
    jet.h('TSInclude', { link = 'Include' }) -- File or module inclusion keywords: `#include` in C, `use` or `extern crate` in Rust.
 
@@ -232,14 +231,16 @@ function jet.setup()
    jet.h('TSMethod', { link = 'Method' }) -- Method definitions.
    jet.h('TSMethodCall', { fg = jet.jbp.blue }) -- Method calls.
 
-   jet.h('TSNamespace', { fg = jet.jbp.teal }) -- Identifiers referring to modules and namespaces.
-
+   jet.h('Macro', { fg = jet.jbp.red0 })
    jet.h('TSConstBuiltin', { fg = jet.jbp.orange1 }) -- Built-in constant values: `nil` in Lua.
    jet.h('TSConstMacro', { fg = jet.jbp.red0 }) -- Constants defined by macros: `NULL` in C.
+   jet.h('TSFuncMacro', { fg = jet.jbp.purple0 }) -- Macro defined functions (calls and definitions): each `macro_rules` in Rust.
 
    -- Will override Special colors, so we just link to it since in most cases
    -- constructors calls and definitions start with a capital letter.
    jet.h('TSConstructor', { link = 'Special' }) -- Constructor calls and definitions: `{}` in Lua, and Java constructors.
+   jet.h('TSNamespace', { fg = jet.jbp.teal }) -- Identifiers referring to modules and namespaces.
+   jet.h('TSNamespace', { fg = jet.jbp.teal }) -- Identifiers referring to modules and namespaces.
 
    jet.h('Character', { fg = jet.jbp.red1 }) -- A character constant: 'c', '\n'
    jet.h('TSCharacter', { link = 'Character' }) -- Character literals: `'a'` in C and .
@@ -255,6 +256,10 @@ function jet.setup()
    jet.h('SpecialComment', { link = 'SpecialChar' }) -- Special things inside a comment.
 
    -- Diagnostics
+   jet.h('DiffAdd', { fg = jet.jbp.blue })
+   jet.h('DiffChange', { fg = jet.jbp.green0 })
+   jet.h('DiffDelete', { fg = jet.jbp.red0 })
+   jet.h('DiffText', { fg = jet.jbp.text })
    jet.h('DiagnosticError', { fg = jet.jbp.red1 })
    jet.h('DiagnosticHint', { fg = jet.jbp.blue })
    jet.h('DiagnosticInfo', { fg = jet.jbp.purple0 })
@@ -269,12 +274,6 @@ function jet.setup()
    jet.h('LspReferenceRead', { fg = jet.jbp.orange1, bg = jet.jbp.bg_high }) -- When you call a function or use a method/class
    jet.h('LspReferenceText', { link = 'LspReferenceRead' })
    jet.h('LspReferenceWrite', { link = 'LspReferenceRead' })
-
-   -- TODO(santigo-zero): Add this.
-   -- jet.h('DiffAdd', {})
-   -- jet.h('DiffChange', {})
-   -- jet.h('DiffDelete', {})
-   -- jet.h('DiffText', {})
 end
 
 return jet
