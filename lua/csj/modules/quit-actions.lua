@@ -56,7 +56,7 @@ function M.setup(mapping)
    end
 
    vim.schedule(function()
-      vim.keymap.set('n', mapping, require('csj.modules.ask-on-quit').close_or_quit, { desc = 'Ask before quitting' })
+      vim.keymap.set('n', mapping, require('csj.modules.quit-actions').close_or_quit, { desc = 'Ask before quitting' })
    end)
    return true
 end
