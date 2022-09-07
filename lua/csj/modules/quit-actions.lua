@@ -1,33 +1,41 @@
 local M = {}
 
----@param loaded_only boolean|nil
----@return table
-function M.count_bufs_by_type(loaded_only)
-   loaded_only = (loaded_only == nil and true or loaded_only)
+function M.amount_of_buffers_by_buftype()
    local count = {
-      normal = 0,
+      NvimTree = 0,
       acwrite = 0,
       help = 0,
       nofile = 0,
+      normal = 0,
       nowrite = 0,
+      prompt = 0,
       quickfix = 0,
       terminal = 0,
-      prompt = 0,
-      Trouble = 0,
-      NvimTree = 0,
    }
+
+   -- This for loops gets the list of buffers by id and loops through the list.
    for _, bufname in pairs(vim.api.nvim_list_bufs()) do
-      if not loaded_only or vim.api.nvim_buf_is_loaded(bufname) then
+      -- Then checks if the buffer `bufname` is load.
+      if vim.api.nvim_buf_is_loaded(bufname) then
+         -- If it is then we get the buftype of the buffer
          local buf_type = vim.api.nvim_buf_get_option(bufname, 'buftype')
-         buf_type = buf_type ~= '' and buf_type or 'normal'
+
+         -- The `buftype` of a normal buffer is '', so if `buf_type` is empty it
+         -- means it's a `normal` buffer, else we keep whatever the type of the
+         -- buffer is.
+         buf_type = (buf_type ~= '' and buf_type or 'normal')
+
+         -- And we up +1 that element on the list, this way we can know how many
+         -- buffers of the same type there are loaded.
          count[buf_type] = count[buf_type] + 1
       end
    end
+
    return count
 end
 
-function M.close_or_quit()
-   if M.count_bufs_by_type().normal <= 1 then
+function M.actions()
+   if M.amount_of_buffers_by_buftype().normal <= 1 then
       vim.ui.select({ 'Close buffer', 'Quit neovim' }, {
          prompt = 'What do you want to do?',
          format_item = function(item)
@@ -36,10 +44,8 @@ function M.close_or_quit()
       }, function(_, choice)
          if choice == 1 then
             return vim.cmd.bd()
-         -- return vim.cmd('bd')
          elseif choice == 2 then
             return vim.cmd.q()
-            -- return vim.cmd('q')
          end
       end)
    else
@@ -47,16 +53,13 @@ function M.close_or_quit()
    end
 end
 
--- Indicate that `close_or_quit` is a function meant to be called by a keybind
--- _G.csj.map.close_or_quit = M.close_or_quit
-
 function M.setup(mapping)
    if type(mapping) ~= 'string' then
       return false
    end
 
    vim.schedule(function()
-      vim.keymap.set('n', mapping, require('csj.modules.quit-actions').close_or_quit, { desc = 'Ask before quitting' })
+      vim.keymap.set('n', mapping, require('csj.modules.quit-actions').actions, { desc = 'Actions when quitting' })
    end)
    return true
 end

@@ -140,4 +140,18 @@ function utils.string_indentation(indented_string)
    return #indented_string - #string.match(indented_string, '^%s*(.*)')
 end
 
+-- This function takes the value of each elements in a table and returns the
+-- total sum of all this values.
+---@param T table @ This list should be like { first = 1, second = 2 }
+---@return integer @ And the total sum of all the elements is going to be 3
+function utils.sum_elements(T)
+   local total_elements = 0
+
+   for _, value in pairs(T) do
+      total_elements = total_elements + value
+   end
+
+   return total_elements
+end
+
 return utils
