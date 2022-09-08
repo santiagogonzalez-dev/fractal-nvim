@@ -15,9 +15,7 @@ vim.api.nvim_set_hl(0, 'SIMReversed', { bg = utils.get_fg_hl 'SIM', fg = utils.g
 
 ---@return number @ id of the extmark
 function M.display_mark()
-   local pos_cur = vim.api.nvim_win_get_cursor(0)
-
-   vim.api.nvim_buf_set_mark(0, 'i', pos_cur[1], pos_cur[2] + 1, {}) -- Set a mark at i
+   local pos_cur = vim.api.nvim_buf_get_mark(0, '^')
 
    -- return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
    --   cursorline_hl_group = 'SIMReversed',
@@ -43,9 +41,9 @@ function M.display_mark()
    else
       -- If the cursor is not at the end of the line use a sign instead of virtual text
       return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
-         cursorline_hl_group = 'SIMReversed',
+         cursorline_hl_group = 'SIM',
          sign_text = ' ',
-         sign_hl_group = 'SIM',
+         sign_hl_group = 'SIMReversed',
       })
    end
 end
