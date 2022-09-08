@@ -4,7 +4,7 @@
   "conditionals": true,
 
   "modules": {
-    "quit-actions": "<Leader>q",
+    "quit-actions": "<Leader>qq",
     "buffer-switch": false,
     "folds": true,
     "gutter": true,
@@ -33,10 +33,12 @@
     "joinspaces": true,
     "lazyredraw": false,
     "list": true,
+    "omnifunc": "v:lua.vim.lsp.omnifunc",
+    "completefunc": "v:lua.vim.luasnip.completefunc",
     "matchpairs": "(:),{:},[:],<:>,=:;",
     "mousefocus": true,
     "numberwidth": 3,
-    "pumblend": 0,
+    "pumblend": 9,
     "pumheight": 6,
     "scrolloff": 9999,
     "secure": true,
@@ -64,7 +66,7 @@
     "updatetime": 30,
     "virtualedit": "all",
     "whichwrap": "<,>,[,],h,l,b,s,~",
-    "winblend": 0,
+    "winblend": 9,
     "wrap": false
   }
 }

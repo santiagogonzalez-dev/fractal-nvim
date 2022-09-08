@@ -4,7 +4,7 @@ vim.opt_local.shiftwidth = tab_lenght
 vim.opt_local.colorcolumn = '80,120'
 vim.opt_local.textwidth = 80
 
--- Iterator that splits a string o a given delimiter
+-- Iterator that splits a string o a given delimiter.
 local function split(str, delim)
    delim = delim or '%s'
    return string.gmatch(str, string.format('[^%s]+', delim))
@@ -35,7 +35,7 @@ local function include_paths(fname, ext)
    end
 end
 
--- Search for nvim lua include paths
+-- Search for nvim lua include paths.
 local function include_rtpaths(fname, ext)
    ext = ext or 'lua'
    local sep = dir_separator()
@@ -55,7 +55,7 @@ local function include_rtpaths(fname, ext)
    end
 end
 
--- Global function that searches the path for the required file
+-- Global function that searches the path for the required file.
 function Find_required_path(module)
    -- Look at package.config for directory separator string (it's the first line)
    local sep = string.match(package.config, '^[^\n]')
@@ -84,11 +84,11 @@ function Find_required_path(module)
    end
 end
 
--- Set options to open require with gf
+-- Set options to open require with gf.
 vim.opt_local.include = [=[\v<((do|load)file|require)\s*\(?['"]\zs[^'"]+\ze['"]]=]
 vim.opt_local.includeexpr = 'v:lua.Find_required_path(v:fname)'
 
--- There's a non-visible character at cchar= so watch
+-- There's a non-visible character at cchar= so watch out.
 vim.schedule(function()
    vim.cmd [[syntax match hidechars '\'' conceal " cchar= ]]
    vim.cmd [[syntax match hidechars '\"' conceal " cchar= ]]
