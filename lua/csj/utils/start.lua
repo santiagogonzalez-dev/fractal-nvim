@@ -72,7 +72,6 @@ function M.session(mode)
          if not utils.avoid_filetype() then
             return vim.cmd.mkview()
          end
-         -- return utils.avoid_filetype() and vim.cmd.mkview()
       end,
    })
 

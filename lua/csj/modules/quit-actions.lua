@@ -1,4 +1,76 @@
 local M = {}
+local utils = require 'csj.utils'
+
+-- -- delete all listed buffers, except current
+-- local function display(del, mod, term)
+--    local info, sep, warn, sep2, warn2 = '', '', '', '', ''
+--    if del == 1 then
+--       info = '1 buffer deleted'
+--    else
+--       info = del .. ' buffers deleted'
+--    end
+--    if mod > 0 then
+--       sep = ' ॥ '
+--       warn = mod .. ' modified'
+--    end
+--    if term > 0 then
+--       sep2 = ' ॥ '
+--       if term == 1 then
+--          warn2 = '1 terminal'
+--       else
+--          warn2 = term .. ' terminals'
+--       end
+--    end
+--    vim.api.nvim_echo({
+--       { info, 'DiagnosticInfo' },
+--       { sep, 'Comment' },
+--       { warn, 'DiagnosticWarn' },
+--       { sep2, 'Comment' },
+--       { warn2, 'DiagnosticWarn' },
+--    }, false, {})
+-- end
+
+-- M.bufonly = function()
+--    local buflist = vim.api.nvim_list_bufs()
+--    local sol = vim.api.nvim_get_current_buf()
+--    local del, mod, term = 0, 0, 0
+--    for _, buf in ipairs(buflist) do
+--       if vim.api.nvim_buf_is_valid(buf) then
+--          if buf ~= sol and vim.fn.buflisted(buf) == 1 then
+--             if vim.bo[buf].buftype == 'terminal' then
+--                term = term + 1
+--             elseif vim.bo[buf].modified == true then
+--                mod = mod + 1
+--             else
+--                vim.api.nvim_buf_delete(buf, {})
+--                del = del + 1
+--             end
+--          end
+--       end
+--    end
+--    display(del, mod, term)
+-- end
+
+-- local function remove_by_val(T, rem_val)
+--    for i, v in ipairs(T) do
+--       if v == rem_val then
+--          T[i] = nil
+--       end
+--    end
+-- end
+
+M.del_normal_bufs_with_exception = function(current_buf)
+   local buflist = vim.api.nvim_list_bufs()
+   for _, buf in ipairs(buflist) do
+      if vim.api.nvim_buf_is_valid(buf) then
+         if
+            buf ~= current_buf --[[ and vim.api.nvim_buf_get_option(buf, 'buflisted') ]]
+         then
+            vim.api.nvim_buf_delete(buf, {})
+         end
+      end
+   end
+end
 
 function M.amount_of_buffers_by_buftype()
    local count = {
@@ -35,8 +107,17 @@ function M.amount_of_buffers_by_buftype()
 end
 
 function M.actions()
-   if M.amount_of_buffers_by_buftype().normal <= 1 then
-      vim.ui.select({ 'Close buffer', 'Quit neovim' }, {
+   local bufs = M.amount_of_buffers_by_buftype()
+   bufs['nofile'] = bufs['nofile'] - bufs['nofile'] -- Ignore nofile buffers
+
+   if utils.sum_elements(bufs) > 1 then
+      -- If there's more than 1 buffer(excluding `nofile` buffers) quit all of
+      -- them but keep the current one.
+      M.del_normal_bufs_with_exception(vim.api.nvim_get_current_buf())
+   else
+      -- If there's only one buffer ask the user to delete it and get an empty
+      -- buffer or quit neovim altogether.
+      vim.ui.select({ 'Close the current and only buffer', 'Quit neovim' }, {
          prompt = 'What do you want to do?',
          format_item = function(item)
             return string.format('%s%s', '-> ', item)
@@ -48,9 +129,23 @@ function M.actions()
             return vim.cmd.q()
          end
       end)
-   else
-      return vim.cmd 'bp | sp | bn | bd'
    end
+   -- if M.amount_of_buffers_by_buftype().normal <= 1 then
+   --    vim.ui.select({ 'Close buffer', 'Quit neovim' }, {
+   --       prompt = 'What do you want to do?',
+   --       format_item = function(item)
+   --          return string.format('%s%s', '-> ', item)
+   --       end,
+   --    }, function(_, choice)
+   --       if choice == 1 then
+   --          return vim.cmd.bd()
+   --       elseif choice == 2 then
+   --          return vim.cmd.q()
+   --       end
+   --    end)
+   -- else
+   --    return vim.cmd 'bp | sp | bn | bd'
+   -- end
 end
 
 function M.setup(mapping)
@@ -59,7 +154,11 @@ function M.setup(mapping)
    end
 
    vim.schedule(function()
-      vim.keymap.set('n', mapping, require('csj.modules.quit-actions').actions, { desc = 'Actions when quitting' })
+      vim.keymap.set('n', mapping, M.actions, {
+         desc = [[Mapping associated with CSJNeovim module: quit-actions.
+                 Check the module at csj.modules.quit-actions
+                 for an in-depth description of the module.]],
+      })
    end)
    return true
 end

@@ -106,7 +106,8 @@ utils.AVOID_FILETYPES = {
    quickfix = true,
 }
 
----@return boolean @ Fail if the ft is matching the table utils.AVOID_FILETYPES
+---@return boolean @ If the filetype of the buffer is in the list
+--`utils.AVOID_FILETYPES` this function will return true.
 function utils.avoid_filetype()
    return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
 end
