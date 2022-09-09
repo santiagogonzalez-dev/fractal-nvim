@@ -274,6 +274,8 @@ function jet.setup()
    jet.h('LspReferenceRead', { fg = jet.jbp.orange1, bg = jet.jbp.bg_high }) -- When you call a function or use a method/class
    jet.h('LspReferenceText', { link = 'LspReferenceRead' })
    jet.h('LspReferenceWrite', { link = 'LspReferenceRead' })
+
+   jet.h('LspInlayHint', { bg = jet.jbp.bg_med, fg = jet.jbp.subtext})
 end
 
 return jet
