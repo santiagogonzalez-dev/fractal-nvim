@@ -1,64 +1,6 @@
 local M = {}
 local utils = require 'csj.utils'
 
--- -- delete all listed buffers, except current
--- local function display(del, mod, term)
---    local info, sep, warn, sep2, warn2 = '', '', '', '', ''
---    if del == 1 then
---       info = '1 buffer deleted'
---    else
---       info = del .. ' buffers deleted'
---    end
---    if mod > 0 then
---       sep = ' ॥ '
---       warn = mod .. ' modified'
---    end
---    if term > 0 then
---       sep2 = ' ॥ '
---       if term == 1 then
---          warn2 = '1 terminal'
---       else
---          warn2 = term .. ' terminals'
---       end
---    end
---    vim.api.nvim_echo({
---       { info, 'DiagnosticInfo' },
---       { sep, 'Comment' },
---       { warn, 'DiagnosticWarn' },
---       { sep2, 'Comment' },
---       { warn2, 'DiagnosticWarn' },
---    }, false, {})
--- end
-
--- M.bufonly = function()
---    local buflist = vim.api.nvim_list_bufs()
---    local sol = vim.api.nvim_get_current_buf()
---    local del, mod, term = 0, 0, 0
---    for _, buf in ipairs(buflist) do
---       if vim.api.nvim_buf_is_valid(buf) then
---          if buf ~= sol and vim.fn.buflisted(buf) == 1 then
---             if vim.bo[buf].buftype == 'terminal' then
---                term = term + 1
---             elseif vim.bo[buf].modified == true then
---                mod = mod + 1
---             else
---                vim.api.nvim_buf_delete(buf, {})
---                del = del + 1
---             end
---          end
---       end
---    end
---    display(del, mod, term)
--- end
-
--- local function remove_by_val(T, rem_val)
---    for i, v in ipairs(T) do
---       if v == rem_val then
---          T[i] = nil
---       end
---    end
--- end
-
 M.del_normal_bufs_with_exception = function(current_buf)
    local buflist = vim.api.nvim_list_bufs()
    for _, buf in ipairs(buflist) do
@@ -72,6 +14,8 @@ M.del_normal_bufs_with_exception = function(current_buf)
    end
 end
 
+-- Return the amount of buffers discriminated by buftype
+---@return table
 function M.amount_of_buffers_by_buftype()
    local count = {
       NvimTree = 0,
@@ -130,24 +74,10 @@ function M.actions()
          end
       end)
    end
-   -- if M.amount_of_buffers_by_buftype().normal <= 1 then
-   --    vim.ui.select({ 'Close buffer', 'Quit neovim' }, {
-   --       prompt = 'What do you want to do?',
-   --       format_item = function(item)
-   --          return string.format('%s%s', '-> ', item)
-   --       end,
-   --    }, function(_, choice)
-   --       if choice == 1 then
-   --          return vim.cmd.bd()
-   --       elseif choice == 2 then
-   --          return vim.cmd.q()
-   --       end
-   --    end)
-   -- else
-   --    return vim.cmd 'bp | sp | bn | bd'
-   -- end
 end
 
+---@param mapping string
+---@return boolean
 function M.setup(mapping)
    if type(mapping) ~= 'string' then
       return false

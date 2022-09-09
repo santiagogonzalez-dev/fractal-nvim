@@ -1,4 +1,5 @@
 return {
+   single_file_support = true,
    settings = {
       Lua = {
          format = {
@@ -6,17 +7,17 @@ return {
          },
          hint = {
             enable = true,
-            arrayIndex = 'Disable', -- 'Enable', 'Auto', 'Disable'
+            arrayIndex = 'Auto', -- 'Enable', 'Auto', 'Disable'
             await = true,
-            paramName = 'Disable', --'All', 'SameLine', 'Disable'
-            paramType = false,
-            semicolon = 'Disable', -- 'All', 'SameLine', 'Disable'
+            paramName = 'SameLine', --'All', 'SameLine', 'Disable'
+            paramType = true,
+            semicolon = 'SameLine', -- 'All', 'SameLine', 'Disable'
             setType = true,
          },
          diagnostics = { globals = { 'vim' } },
          completion = {
-            keywordSnippet = 'Replace',
-            callSnippet = 'Replace',
+            keywordSnippet = 'Both',
+            callSnippet = 'Both',
          },
          runtime = {
             version = 'LuaJIT',
@@ -30,6 +31,9 @@ return {
                [vim.fn.stdpath 'config' .. '/lua'] = true,
                [vim.fn.stdpath 'config' .. '/user'] = true,
             },
+         },
+         telemetry = {
+            enable = false,
          },
       },
    },
