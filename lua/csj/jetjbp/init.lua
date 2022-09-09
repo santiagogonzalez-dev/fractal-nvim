@@ -80,8 +80,8 @@ function jet.setup()
    jet.h('CurSearch', { bg = jet.jbp.blue, fg = jet.jbp.bg_high }) -- Current search match under the cursor
    jet.h('Substitute', { bg = jet.jbp.purple0, fg = jet.jbp.bg_base }) -- :substitute or :s///gc replacement text highlighting
 
-   jet.h('StatusLine', { bg = jet.jbp.bg_base, fg = jet.jbp.text })
-   jet.h('StatusLineBlue', { bg = jet.jbp.bg_base, fg = jet.jbp.blue })
+   jet.h('StatusLine', { bg = jet.jbp.bg_low, fg = jet.jbp.text })
+   jet.h('StatusLineBlue', { bg = jet.jbp.bg_low, fg = jet.jbp.blue })
 
    jet.h('StatusLineNC', { link = 'EndOfBuffer' })
    -- WinBar WinBarNC
