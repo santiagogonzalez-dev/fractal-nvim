@@ -1,3 +1,5 @@
+;; extends
+
 (
  (function_call
    (identifier) @require_call
@@ -6,7 +8,7 @@
  (set! "priority" 105)
  ; (#set! conceal "R")
  (#set! conceal "")
-)
+ )
 
 ; (
 ;  (function_call
@@ -19,6 +21,7 @@
 (function_declaration
   (identifier)@function_definition
   )
+
 (
  (function_declaration
    (dot_index_expression
@@ -58,14 +61,14 @@
  )
 
 (
-  (function_call
-    name: (identifier) @function.builtin
-    (#eq? @function.builtin "pcall")
-  )
-  ; (#set! conceal "聯")
-  ; (#set! conceal "")
-  (#set! conceal "🛡")
-)
+ (function_call
+   name: (identifier) @function.builtin
+   (#eq? @function.builtin "pcall")
+   )
+ ; (#set! conceal "聯")
+ ; (#set! conceal "")
+ (#set! conceal "🛡")
+ )
 
 ; (
 ;   (function_call
@@ -84,70 +87,70 @@
 ; )
 
 (
-  (identifier) @function
-  (#eq? @function "utils")
-  ; (#set! conceal "")
-  (#set! conceal "U")
-)
+ (identifier) @function
+ (#eq? @function "utils")
+ ; (#set! conceal "")
+ (#set! conceal "U")
+ )
 
 (
-  (dot_index_expression
-    table: (identifier) @keyword
-    (#eq? @keyword  "utils" )
-  )
-  (#set! conceal "U")
-)
+ (dot_index_expression
+   table: (identifier) @keyword
+   (#eq? @keyword  "utils" )
+   )
+ (#set! conceal "U")
+ )
 
 (
-  (dot_index_expression) @keyword
-    (#eq? @keyword  "vim.keymap.set" )
-  (#set! conceal "k")
-  (#set! conceal "襁")
-)
+ (dot_index_expression) @keyword
+ (#eq? @keyword  "vim.keymap.set" )
+ (#set! conceal "k")
+ (#set! conceal "襁")
+ )
 
 (
-  (dot_index_expression) @function
-    (#eq? @function  "vim.api.nvim_create_autocmd" )
-  ; (#set! conceal "a")
-  ; (#set! conceal "🪝")
-  (#set! conceal "ﯠ")
-)
+ (dot_index_expression) @function
+ (#eq? @function  "vim.api.nvim_create_autocmd" )
+ ; (#set! conceal "a")
+ ; (#set! conceal "🪝")
+ (#set! conceal "ﯠ")
+ )
 
 (
-  (dot_index_expression) @function
-    (#eq? @function  "vim.api.nvim_exec_autocmds" )
-  (#set! conceal "E")
-)
+ (dot_index_expression) @function
+ (#eq? @function  "vim.api.nvim_exec_autocmds" )
+ (#set! conceal "E")
+ )
 
 (
-  (dot_index_expression) @function
-    (#eq? @function  "vim.api.nvim_set_hl" )
-  (#set! conceal "")
-)
+ (dot_index_expression) @function
+ (#eq? @function  "vim.api.nvim_set_hl" )
+ (#set! conceal "")
+ )
 
 (
-  (dot_index_expression) @function
-    (#eq? @function  "vim.cmd" )
-  (#set! conceal "C")
-)
+ (dot_index_expression) @function
+ (#eq? @function  "vim.cmd" )
+ (#set! conceal "C")
+ )
 
 (
-  (dot_index_expression) @function
-    (#eq? @function  "vim.api.nvim_cmd" )
-  (#set! conceal "C")
-)
+ (dot_index_expression) @function
+ (#eq? @function  "vim.api.nvim_cmd" )
+ (#set! conceal "C")
+ )
 
 (
-  (dot_index_expression) @function
-    (#eq? @function  "vim.api.nvim_command" )
-  (#set! conceal "C")
-)
+ (dot_index_expression) @function
+ (#eq? @function  "vim.api.nvim_command" )
+ (#set! conceal "C")
+ )
 
 (
-  (dot_index_expression) @keyword
-    (#eq? @keyword  "vim.opt" )
-  (#set! conceal "O")
-)
+ (dot_index_expression) @keyword
+ (#eq? @keyword  "vim.opt" )
+ (#set! conceal "O")
+ )
 
 ; (
 ;   (dot_index_expression
@@ -170,7 +173,7 @@
 
 ; for -> circle arrow
 (
-  (break_statement)@keyword
-  (#eq? @keyword  "break" )
-  (#set! conceal "")
-)
+ (break_statement)@keyword
+ (#eq? @keyword  "break" )
+ (#set! conceal "")
+ )
