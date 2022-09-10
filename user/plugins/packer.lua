@@ -333,15 +333,15 @@ function M.list_plugins()
          end,
       }
 
-      use {
-         'jinh0/eyeliner.nvim',
-         event = 'User LoadPlugins',
-         config = function()
-            require('eyeliner').setup {
-               highlight_on_key = true,
-            }
-         end,
-      }
+      -- use {
+      --    'jinh0/eyeliner.nvim',
+      --    event = 'User LoadPlugins',
+      --    config = function()
+      --       require('eyeliner').setup {
+      --          highlight_on_key = true,
+      --       }
+      --    end,
+      -- }
 
       use {
          'gbprod/stay-in-place.nvim',
@@ -375,6 +375,14 @@ function M.list_plugins()
       use {
          'metakirby5/codi.vim',
          cmd = 'Codi',
+      }
+
+      use {
+         'santigo-zero/right-corner-diagnostics.nvim',
+         event = 'LspAttach',
+         config = function()
+            require('rcd').setup { position = 'bottom' }
+         end,
       }
 
       return packer

@@ -45,9 +45,6 @@ for _, server in pairs(SERVERS) do
 end
 
 require('plugins.lsp.handlers').setup()
-require 'plugins.lsp.top-right-lsp-diagnostics' -- Using lsp_lines.nvim for now
 
 packer.loader 'null-ls.nvim'
 require 'plugins.lsp.null-ls'
-
--- vim.cmd.LspStart()
