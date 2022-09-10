@@ -16,15 +16,19 @@ jet.jbp = {
    bg_low = '#15121D',
 
    red0 = '#EB6F92',
+   bg_red0 = '#2f161d',
    red1 = '#EBA0AC',
    orange0 = '#FF9E64',
    orange1 = '#FAB387',
    yellow = '#F6C177',
+   bg_yellow = '#312718',
    green0 = '#7ebdb6', -- Yes this is also goaway green
    green1 = '#AABCA8', -- Goaway green
    teal = '#3e8fb0',
    blue = '#87B0F9',
+   bg_blue = '#1b2332',
    purple0 = '#9D86B9',
+   bg_purple0 = '#2f2837',
 }
 
 function jet.h(name, T)
@@ -260,22 +264,31 @@ function jet.setup()
    jet.h('DiffChange', { fg = jet.jbp.green0 })
    jet.h('DiffDelete', { fg = jet.jbp.red0 })
    jet.h('DiffText', { fg = jet.jbp.text })
-   jet.h('DiagnosticError', { fg = jet.jbp.red1 })
+
+   jet.h('DiagnosticError', { fg = jet.jbp.red0 })
    jet.h('DiagnosticHint', { fg = jet.jbp.blue })
    jet.h('DiagnosticInfo', { fg = jet.jbp.purple0 })
    jet.h('DiagnosticWarn', { fg = jet.jbp.yellow })
-   jet.h('DiagnosticUnderlineError', { undercurl = true, sp = jet.jbp.red1 })
+
+   jet.h('DiagnosticVirtualTextError', { bg = jet.jbp.bg_red0, fg = jet.jbp.red0 })
+   jet.h('DiagnosticVirtualTextHint', { bg = jet.jbp.bg_blue, fg = jet.jbp.blue })
+   jet.h('DiagnosticVirtualTextInfo', { bg = jet.jbp.bg_purple0, fg = jet.jbp.purple0 })
+   jet.h('DiagnosticVirtualTextWarn', { bg = jet.jbp.bg_yellow, fg = jet.jbp.yellow })
+
+   jet.h('DiagnosticUnderlineError', { undercurl = true, sp = jet.jbp.red0 })
    jet.h('DiagnosticUnderlineHint', { undercurl = true, sp = jet.jbp.blue })
    jet.h('DiagnosticUnderlineInfo', { undercurl = true, sp = jet.jbp.purple0 })
    jet.h('DiagnosticUnderlineWarn', { undercurl = true, sp = jet.jbp.yellow })
+
    jet.h('GitSignsChange', { fg = jet.jbp.purple0 })
    jet.h('GitSignsAdd', { fg = jet.jbp.blue })
    jet.h('GitSignsDelete', { fg = jet.jbp.red1 })
+
    jet.h('LspReferenceRead', { fg = jet.jbp.orange1, bg = jet.jbp.bg_high }) -- When you call a function or use a method/class
    jet.h('LspReferenceText', { link = 'LspReferenceRead' })
    jet.h('LspReferenceWrite', { link = 'LspReferenceRead' })
 
-   jet.h('LspInlayHint', { bg = jet.jbp.bg_med, fg = jet.jbp.subtext})
+   jet.h('LspInlayHint', { bg = jet.jbp.bg_med, fg = jet.jbp.subtext })
 end
 
 return jet
