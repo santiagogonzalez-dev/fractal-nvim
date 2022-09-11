@@ -197,7 +197,7 @@ function jet.setup()
    -- jet.h('TSEmphasis', {}) -- Text to be represented with emphasis.
    -- jet.h('TSUnderline', {}) -- Text to be represented with an underline.
    -- jet.h('TSStrike', { link = 'Title' }) -- Strikethrough text.
-   jet.h('Title', { fg = jet.jbp.text }) -- Titles for output from ":set all", ":autocmd", also plugins use it for some windows.
+   jet.h('Title', { fg = jet.jbp.purple0 }) -- Titles for output from ":set all", ":autocmd", also plugins use it for some windows.
    jet.h('TSTitle', { link = 'Title' }) -- Text that is part of a title.
    -- jet.h('TSLiteral', {}) -- Literal or verbatim text.
    -- jet.h('TSURI', {}) -- URIs like hyperlinks or email addresses.
@@ -209,6 +209,8 @@ function jet.setup()
    -- Zsh
    jet.h('zshSubst', { fg = jet.jbp.red0 })
    jet.h('zshDeref', { fg = jet.jbp.red0 })
+
+   -- Markdown
 
    jet.h('Exception', { fg = jet.jbp.purple0 }) -- try, catch, throw
    jet.h('TSException', { link = 'Exception' }) -- Exception related keywords: `try`, `except`, `finally` in Python.
