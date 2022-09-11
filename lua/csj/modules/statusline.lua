@@ -1,6 +1,5 @@
 local M = {}
 local components = require 'csj.utils.components'
-local utils = require 'csj.utils'
 
 -- TODO(santigo-zero): Generate hl groups
 -- do
@@ -12,7 +11,7 @@ local utils = require 'csj.utils'
 function M.get()
    return table.concat {
       -- LEFT
-      -- ' ',
+      ' ',
       -- '',
       components.line_and_column_buffer(),
       components.filewritable(),
@@ -35,6 +34,7 @@ function M.get()
       components.modified_buffer(),
       '%#StatusLine#', -- Reset hl groups
       components.vcs(),
+      ' ',
    }
 end
 
