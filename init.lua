@@ -36,7 +36,7 @@ vim.g.loaded_node_provider = builtins
 vim.g.loaded_ruby_provider = builtins
 vim.g.loaded_perl_provider = builtins
 
--- Syntax and ftplugin.
+-- Disable temporarily syntax, ftplugin and shadafile.
 vim.cmd.syntax 'off'
 vim.cmd.filetype 'off'
 vim.cmd.filetype 'plugin indent off'
@@ -59,11 +59,12 @@ vim.schedule(function()
 
    require 'csj.core'
 
-   -- Trigger autocommands because we are lazyloading.
-   if vim.fn.filereadable(vim.fn.expand(vim.api.nvim_eval_statusline('%F', {}).str)) == 0 then
+   -- Trigger autocommands because we are lazyloading:
+   if vim.fn.filereadable(vim.fn.expand('%:p')) == 0 then -- Skeletons.
       vim.api.nvim_exec_autocmds('BufNewFile', {})
    else
-      vim.cmd.e() -- or vim.cmd.filetype 'detect' -- Load ftplugin.
+      -- vim.cmd.e()
+      vim.cmd.filetype 'detect' -- Load ftplugin.
    end
 
    vim.api.nvim_exec_autocmds('BufEnter', {})

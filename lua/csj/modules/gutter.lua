@@ -45,16 +45,17 @@ end
 -- Disable `relativenumber` when we are in insert mode
 ---@return nil
 function gutter.disable_on_insert()
-   vim.api.nvim_create_autocmd('InsertEnter', {
-      callback = function()
-         vim.opt.relativenumber = false
-      end,
-   })
-   vim.api.nvim_create_autocmd('InsertLeave', {
-      callback = function()
-         vim.opt.relativenumber = true
-      end,
-   })
+   -- vim.api.nvim_create_autocmd('InsertEnter', {
+   --    callback = function()
+   --       vim.opt.relativenumber = false
+   --    end,
+   -- })
+   -- vim.api.nvim_create_autocmd('InsertLeave', {
+   --    callback = function()
+   --       vim.opt.relativenumber = true
+   --    end,
+   -- })
+   print('this')
 end
 
 vim.opt.number = true -- First enable just the numbers

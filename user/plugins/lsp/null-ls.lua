@@ -48,11 +48,11 @@ null.setup {
       format.black.with {
          prefer_local = '.venv/bin',
          extra_args = {
-            '--fast',
+            -- '--fast',
             '--quiet',
-            -- '--skip-string-normalization',
-            -- '--line-length',
-            -- '88',
+            '--skip-string-normalization',
+            '--line-length',
+            '88',
             '--target-version',
             'py310',
          },

@@ -2,7 +2,7 @@ local utils = {}
 
 -- Protected require, notifies if there's an error loading a module
 ---@return boolean|string|number @ Either nil or the value of require()
-function utils.prequire(package)
+utils.prequire = function(package)
    local status, lib = pcall(require, package)
    if status then
       return lib
@@ -23,7 +23,7 @@ end
 ---@param mode string|table
 ---@param table table
 ---@return nil
-function utils.set_hl(mode, table)
+utils.set_hl = function(mode, table)
    -- Highlights
    if type(mode) == 'table' then
       for _, groups in pairs(mode) do
@@ -35,7 +35,7 @@ function utils.set_hl(mode, table)
 end
 
 ---@return boolean
-function utils.not_interfere_on_float()
+utils.not_interfere_on_float = function()
    -- Do not open floating windows if there's already one open
    for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
       if vim.api.nvim_win_get_config(winid).zindex then
@@ -52,7 +52,7 @@ end
 -- in this table first.
 ---@param function_pointer function
 ---@param ... any
-function utils.wrap(function_pointer, ...)
+utils.wrap = function(function_pointer, ...)
    local params = { ... }
 
    return function()
@@ -63,13 +63,13 @@ end
 -- Simple wrapper to check if a str is empty
 ---@param str string
 ---@return string|boolean @ Either an empty string or false
-function utils.is_empty(str)
+utils.is_empty = function(str)
    return str == '' or str == nil
 end
 
 -- Check if the working directory is under git managment
 ---@return boolean
-function utils.is_git()
+utils.is_git = function()
    local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
    if is_git:match 'true' then
       vim.cmd.doautocmd 'User IsGit'
@@ -83,7 +83,7 @@ end
 ---@param T table
 ---@param element any
 ---@return boolean
-function utils.present_in_table(T, element)
+utils.present_in_table = function(T, element)
    if T[element] ~= nil then
       return true
    else
@@ -108,27 +108,27 @@ utils.AVOID_FILETYPES = {
 
 ---@return boolean @ If the filetype of the buffer is in the list
 --`utils.AVOID_FILETYPES` this function will return true.
-function utils.avoid_filetype()
+utils.avoid_filetype = function()
    return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
 end
 
 -- Highlight utils.
-function utils.get_fg_hl(hl_group)
+utils.get_fg_hl = function(hl_group)
    return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
 end
-function utils.get_bg_hl(hl_group)
+utils.get_bg_hl = function(hl_group)
    return vim.api.nvim_get_hl_by_name(hl_group, true).background
 end
 
 -- Get json, converts the file to lua table.
-function utils.get_json(path)
+utils.get_json = function(path)
    return vim.json.decode(table.concat(vim.fn.readfile(path), '\n'))
 end
 
 -- Check if a plugin is installed.
 -- utils.is_installed('opt/packer.nvim') utils.is_installed('start/packer.nvim')
 ---@return boolean
-function utils.is_installed(plugin_name)
+utils.is_installed = function(plugin_name)
    local plugin_path = string.format('%s/site/pack/packer/%s', vim.fn.stdpath 'data', plugin_name)
    -- print(plugin_path)
    return vim.fn.isdirectory(plugin_path) ~= 0
@@ -137,7 +137,7 @@ end
 -- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
-function utils.string_indentation(indented_string)
+utils.string_indentation = function(indented_string)
    return #indented_string - #string.match(indented_string, '^%s*(.*)')
 end
 
@@ -145,7 +145,7 @@ end
 -- total sum of all this values.
 ---@param T table @ This list should be like { first = 1, second = 2 }
 ---@return integer @ And the total sum of all the elements is going to be 3
-function utils.sum_elements(T)
+utils.sum_elements = function(T)
    local total_elements = 0
 
    for _, value in pairs(T) do
