@@ -155,4 +155,15 @@ utils.sum_elements = function(T)
    return total_elements
 end
 
+-- Return true if the file is exists or is readable, else return false.
+---@param filename string
+---@return boolean
+utils.readable = function(filename)
+   if vim.fn.filereadable(filename) == 0 then -- Skeletons.
+      return false
+   else
+      return true
+   end
+end
+
 return utils

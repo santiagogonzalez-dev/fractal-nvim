@@ -9,10 +9,10 @@ return {
             enable = true,
             arrayIndex = 'Auto', -- 'Enable', 'Auto', 'Disable'
             await = true,
-            paramName = 'SameLine', --'All', 'SameLine', 'Disable'
+            paramName = 'Disable', --'All', 'SameLine', 'Disable'
             paramType = true,
-            semicolon = 'SameLine', -- 'All', 'SameLine', 'Disable'
-            setType = true,
+            semicolon = 'Disable', -- 'All', 'SameLine', 'Disable'
+            setType = false,
          },
          diagnostics = { globals = { 'vim' } },
          completion = {

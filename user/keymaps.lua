@@ -85,13 +85,8 @@ vim.keymap.set('n', 'g<Tab>', function()
    end
 end, { desc = 'Switch between two buffers' })
 
-vim.keymap.set('n', '<Leader>lcc', vim.cmd.LuaCacheClear, { desc = 'Impatient.nvim: Clear cache' })
 vim.keymap.set('n', '<Leader>ps', vim.cmd.PackerSync, { desc = 'Packer: PackerSync' })
 vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>', { desc = 'Packer: PackerCompile' })
-vim.keymap.set('n', '<Leader>pcc', function()
-   vim.cmd.PackerCompile 'profile=true'
-   vim.cmd.LuaCacheClear()
-end)
 
 vim.keymap.set('n', "'", '`', { desc = "Swap ' with `" })
 vim.keymap.set('n', '`', "'", { desc = "Swap ` with '" })

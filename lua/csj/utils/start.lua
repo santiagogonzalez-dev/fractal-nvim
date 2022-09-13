@@ -4,7 +4,7 @@ local utils = require 'csj.utils'
 -- Set a colorscheme or notify if there's something wrong with it
 ---@param name string
 ---@return boolean
-function M.colorscheme(name)
+M.colorscheme = function(name)
    -- Comprobation that `name` is a valid string
    if name == '' or name == nil or name == vim.NIL then
       vim.notify 'The string for setting up the colorcheme might be wrong, check you user_settings.json'
@@ -18,7 +18,7 @@ end
 
 -- Apply settings using the settings from user.opts
 ---@param opts table
-function M.opts(opts)
+M.opts = function(opts)
    for k, v in pairs(opts) do
       vim.opt[k] = v
    end
@@ -28,7 +28,7 @@ end
 -- cursor position.
 ---@param mode boolean
 ---@return boolean
-function M.session(mode)
+M.session = function(mode)
    if not mode then
       return false
    end
@@ -78,7 +78,7 @@ function M.session(mode)
    return true
 end
 
-function M.conditionals(mode)
+M.conditionals = function(mode)
    if not mode then
       return false
    end
@@ -103,6 +103,7 @@ function M.conditionals(mode)
    end
 
    vim.schedule(run_comprobations)
+
    return true
 end
 
@@ -110,7 +111,7 @@ end
 -- `./lua/modules` k is the name of the module and v is a boolean
 ---@param T table @ Table containing the modules to be loaded
 ---@return boolean
-function M.modules(T)
+M.modules = function(T)
    if T == nil or T == vim.NIL then
       return false
    end

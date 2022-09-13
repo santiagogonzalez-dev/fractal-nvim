@@ -120,13 +120,12 @@ vim.opt.foldmethod = 'manual'
 
 vim.opt.fillchars:append {
    fold = ' ', -- Filling foldtext
+   foldclose = '⯆',
    -- foldsep = '🮍',
-   -- foldclose = '',
-   foldclose = '',
-   -- foldclose = '',
    foldsep = '▎',
+   foldopen = '⯈',
+   -- foldclose = '',
    -- foldopen = '▎',
-   foldopen = '🢓',
 }
 
 return folds

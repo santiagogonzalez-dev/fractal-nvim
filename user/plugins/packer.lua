@@ -273,14 +273,6 @@ function M.list_plugins()
          end,
       }
 
-      -- Colorizer
-      use {
-         'norcalli/nvim-colorizer.lua',
-         config = function()
-            require('colorizer').setup()
-         end,
-      }
-
       -- Indent blankline
       use {
          'lukas-reineke/indent-blankline.nvim',
@@ -326,32 +318,6 @@ function M.list_plugins()
       }
 
       use {
-         'levouh/tint.nvim',
-         event = 'BufWinEnter',
-         config = function()
-            require('tint').setup()
-         end,
-      }
-
-      -- use {
-      --    'jinh0/eyeliner.nvim',
-      --    event = 'User LoadPlugins',
-      --    config = function()
-      --       require('eyeliner').setup {
-      --          highlight_on_key = true,
-      --       }
-      --    end,
-      -- }
-
-      use {
-         'gbprod/stay-in-place.nvim',
-         event = 'User LoadPlugins',
-         config = function()
-            require('stay-in-place').setup()
-         end,
-      }
-
-      use {
          'lvimuser/lsp-inlayhints.nvim',
          event = 'User LoadPlugins',
          config = function()
@@ -370,11 +336,6 @@ function M.list_plugins()
                end,
             })
          end,
-      }
-
-      use {
-         'metakirby5/codi.vim',
-         cmd = 'Codi',
       }
 
       use {
