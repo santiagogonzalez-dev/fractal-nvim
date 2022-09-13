@@ -7,10 +7,10 @@ do
    local config_path = vim.fn.stdpath 'config' -- "${XDG_CONFIG_HOME}/nvim"
 
    local user_settings_table = string.format('%s%s', config_path, '/user/settings.json')
-   if not utils.readable(user_settings_table) then
+   local ok, user = utils.get_json(user_settings_table) -- Get user prefs.
+   if not ok then
       vim.notify 'CSJNeovim is not able to find settings.json'
    else
-      local user = utils.get_json(user_settings_table) -- Get user prefs.
       local start = require 'csj.utils.start'
 
       start.colorscheme(user.colorscheme) -- Apply colorscheme.

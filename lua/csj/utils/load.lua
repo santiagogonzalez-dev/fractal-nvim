@@ -71,7 +71,9 @@ end
 
 -- Trigger autocommands because we are lazyloading.
 M.late_autocmds = function()
-   if utils.readable(vim.fn.expand '%:p') then -- Skeletons.
+   -- We can't use skeletons without doing this comprobation if we load neovim
+   -- using the `csjneovim.lua`.
+   if utils.readable(vim.fn.expand '%:p') then
       -- vim.cmd.e()
       vim.cmd.filetype 'detect' -- Load ftplugin.
    else
