@@ -24,7 +24,7 @@ do
    if not utils.readable(user_init) then
       vim.notify 'CSJNeovim is not able to find an init.lua for user'
    else
-      -- Add `./user` to lua path, do this before calling user's init.lua.
+      -- Add `./user` to lua path, do this before calling user's `init.lua`.
       package.path = table.concat {
          package.path,
          ';',
@@ -34,6 +34,6 @@ do
          '/user/?/init.lua;',
       }
 
-      dofile(user_init) -- User's init.lua.
+      dofile(user_init) -- User's `init.lua`.
    end
 end

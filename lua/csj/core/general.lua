@@ -24,7 +24,7 @@ vim.g.markdown_fenced_languages = {
 }
 
 -- Open help and man pages in a vertical split if there's enough space, just
--- like doing `:vert help` instead of `:help`
+-- like doing `:vert help` instead of `:help`.
 vim.api.nvim_create_autocmd('Filetype', {
    desc = 'Open pages for man and help in a vertical split',
    pattern = { 'help', 'man' },
