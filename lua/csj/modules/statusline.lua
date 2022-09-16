@@ -8,7 +8,7 @@ local components = require 'csj.utils.components'
 --    vim.api.nvim_win_set_hl_ns(0, ns)
 -- end
 
-function M.get()
+M.get = function()
    return table.concat {
       -- LEFT
       ' ',
@@ -38,27 +38,43 @@ function M.get()
    }
 end
 
-vim.opt.laststatus = 3
-vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
-   callback = function()
-      vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").get()%}'
-   end,
-})
+M.hide_completely = function()
+   local expr = vim.api.nvim_win_get_width(0)
+   local sign = vim.opt.fillchars:get().horiz
+   return vim.fn['repeat'](expr, sign)
+end
 
-vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {
-   pattern = {
-      'NetrwTreeListing',
-      'TelescopePrompt',
-      'gitcommit',
-      'gitdiff',
-      'help',
-      'packer',
-      'startify',
-      'netrw',
-   },
-   callback = function()
-      vim.opt.statusline = '%#StatusLineNC#' -- Disable statusline
-   end,
-})
+function M.setup(mode)
+   if mode == 'hide-completely' then
+      vim.opt.laststatus = 0
+      vim.opt.cmdheight = 0
+      vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
+      -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
+      vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").hide_completely()%}'
+   elseif mode == 'normal' then
+      vim.opt.laststatus = 3
+      vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
+         callback = function()
+            vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").get()%}'
+         end,
+      })
+
+      vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {
+         pattern = {
+            'NetrwTreeListing',
+            'TelescopePrompt',
+            'gitcommit',
+            'gitdiff',
+            'help',
+            'packer',
+            'startify',
+            'netrw',
+         },
+         callback = function()
+            vim.opt.statusline = '%#StatusLineNC#' -- Disable statusline
+         end,
+      })
+   end
+end
 
 return M
