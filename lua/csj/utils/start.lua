@@ -11,9 +11,14 @@ M.colorscheme = function(name)
       return false
    end
 
-   vim.cmd.colorscheme(name)
-   vim.cmd.redraw()
-   return true
+   local ok, _ = pcall(vim.cmd.colorscheme, name)
+   if not ok then
+      vim.notify 'Could not find the colorscheme, check your settings.json'
+      return false
+   else
+      vim.cmd.redraw()
+      return true
+   end
 end
 
 -- Apply settings using the settings from user.opts
