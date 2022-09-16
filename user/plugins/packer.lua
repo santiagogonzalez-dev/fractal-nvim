@@ -354,6 +354,8 @@ function M.list_plugins()
          end,
       }
 
+      use 'santigo-zero/jetjbp.nvim'
+
       return packer
    end)
 end
