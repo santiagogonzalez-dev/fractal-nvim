@@ -121,8 +121,6 @@ M.modules = function(T)
       return false
    end
 
-   -- _G.csj = {} -- Modules will store certain features in here
-   -- _G.csj.map = {} -- Functions meant to be called by a keybind
    for k, v in pairs(T) do
       local module_path = string.format('csj.modules.%s', k)
       -- local status
@@ -132,8 +130,8 @@ M.modules = function(T)
          -- status = utils.prequire(module_path)
          utils.prequire(module_path)
       elseif type(v) == 'table' or type(v) == 'string' then
-         -- In the other hand if the v for the module are tables call the setups
-         -- for each module
+         -- In the other hand if the v for the module are tables/strings call
+         -- the setups for each module.
          local lib = utils.prequire(module_path)
          if lib then
             -- status = lib.setup(v)

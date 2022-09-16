@@ -12,14 +12,13 @@
     "notifications": true,
     "show-insert-mark": true,
     "skeletons": true,
-    "statusline": true,
+    "statusline": "hide-completely",
     "strict-cursor": "<Esc><Esc>"
   },
 
   "opts": {
     "breakindent": true,
     "clipboard": "unnamedplus",
-    "cmdheight": 1,
     "conceallevel": 2,
     "confirm": true,
     "cursorcolumn": true,

@@ -45,20 +45,15 @@ vim.opt.fillchars:append {
 }
 
 vim.opt.listchars:append {
-   -- eol = '↪',
-   -- eol = '↲',
-   -- eol = '↴',
-   -- eol = '⏎',
-   -- eol = '',
+   eol = '↴', -- ↪ ↲ ⏎ 
    -- space = '·',
    -- tab = '-->',
-   -- trail = "·",
-   -- trail = '␣',
    extends = '◣',
    nbsp = '␣',
    precedes = '◢',
    tab = '!·',
-   trail = '█',
+   leadmultispace = '!·',
+   trail = '█', -- · ␣
 }
 
 -- Ensure this settings persist in all buffers
@@ -84,6 +79,7 @@ vim.schedule(function()
    _G.all_buffers_settings()
 end)
 
+vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 require 'plugins'
 
 -- TODO(santigo-zero):
