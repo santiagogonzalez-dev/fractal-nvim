@@ -19,7 +19,7 @@
   "opts": {
     "breakindent": true,
     "clipboard": "unnamedplus",
-    "cmdheight": 0,
+    "cmdheight": 1,
     "conceallevel": 2,
     "confirm": true,
     "cursorcolumn": true,

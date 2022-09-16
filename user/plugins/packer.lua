@@ -346,6 +346,14 @@ function M.list_plugins()
          end,
       }
 
+      use {
+         'NvChad/nvim-colorizer.lua',
+         event = 'BufEnter',
+         config = function()
+            require('colorizer').setup()
+         end,
+      }
+
       return packer
    end)
 end

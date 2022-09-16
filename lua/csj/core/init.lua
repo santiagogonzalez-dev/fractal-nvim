@@ -18,9 +18,9 @@ do
          local start = require 'csj.utils.start'
 
          start.colorscheme(user.colorscheme) -- Apply colorscheme.
-         start.conditionals(user.conditionals) -- Conditionals to load plugins and modules.
+         start.conditionals(user.conditionals) -- Conditions for requiring.
          start.modules(user.modules) -- Load modules specified by the user.
-         start.session(user.restore) -- Restore cursor position and view(folds, searches).
+         start.session(user.restore) -- Restore position, folds and searches.
          start.opts(user.opts) -- Set global settings defined by the user.
       end
    end
