@@ -1,6 +1,6 @@
-vim.opt_local.shiftwidth = 2
-vim.opt_local.tabstop = 2
-vim.opt_local.cmdheight = 2 -- more space in the neovim command line for displaying messages
+vim.opt_local.shiftwidth = 4
+vim.opt_local.tabstop = 4
+vim.opt_local.cmdheight = 1 -- more space in the neovim command line for displaying messages
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -16,20 +16,18 @@ if not status then
    return
 end
 
--- Determine OS
 local home = os.getenv 'HOME'
-if vim.fn.has 'mac' == 1 then
-   WORKSPACE_PATH = home .. '/workspace/'
-   CONFIG = 'mac'
-elseif vim.fn.has 'unix' == 1 then
-   WORKSPACE_PATH = home .. '/workspace/'
-   CONFIG = 'linux'
-else
-   print 'Unsupported system'
-end
+WORKSPACE_PATH = string.format('%s%s', home, '/workspace/')
+CONFIG = 'linux'
 
 -- Find root of project
-local root_markers = { '.git', 'mvnw', 'gradlew', 'pom.xml', 'build.gradle' }
+local root_markers = {
+   '.git',
+   'mvnw',
+   'gradlew',
+   'pom.xml',
+   'build.gradle',
+}
 local root_dir = require('jdtls.setup').find_root(root_markers)
 if root_dir == '' then
    return
@@ -40,7 +38,7 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
-local workspace_dir = WORKSPACE_PATH .. project_name
+local workspace_dir = string.format('%s%s', WORKSPACE_PATH, project_name)
 
 -- TODO: Testing
 
@@ -211,53 +209,3 @@ vim.cmd "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_co
 -- vim.cmd "command! -buffer JdtJol lua require('jdtls').jol()"
 vim.cmd "command! -buffer JdtBytecode lua require('jdtls').javap()"
 -- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
-
-local status_ok, which_key = pcall(require, 'which-key')
-if not status_ok then
-   return
-end
-
-local opts = {
-   mode = 'n', -- NORMAL mode
-   prefix = '<leader>',
-   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-   silent = true, -- use `silent` when creating keymaps
-   noremap = true, -- use `noremap` when creating keymaps
-   nowait = true, -- use `nowait` when creating keymaps
-}
-
-local vopts = {
-   mode = 'v', -- VISUAL mode
-   prefix = '<leader>',
-   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-   silent = true, -- use `silent` when creating keymaps
-   noremap = true, -- use `noremap` when creating keymaps
-   nowait = true, -- use `nowait` when creating keymaps
-}
-
-local mappings = {
-   L = {
-      name = 'Java',
-      o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", 'Organize Imports' },
-      v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", 'Extract Variable' },
-      c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", 'Extract Constant' },
-      t = { "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", 'Test Method' },
-      T = { "<Cmd>lua require'jdtls'.test_class()<CR>", 'Test Class' },
-      u = { '<Cmd>JdtUpdateConfig<CR>', 'Update Config' },
-   },
-}
-
-local vmappings = {
-   L = {
-      name = 'Java',
-      v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", 'Extract Variable' },
-      c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", 'Extract Constant' },
-      m = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", 'Extract Method' },
-   },
-}
-
-which_key.register(mappings, opts)
-which_key.register(vmappings, vopts)
-
--- debugging
--- git clone git@github.com:microsoft/java-debug.git
