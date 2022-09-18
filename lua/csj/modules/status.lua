@@ -1,5 +1,5 @@
 local M = {}
-local components = require 'csj.utils.components'
+local data = require 'csj.utils.data'
 
 -- TODO(santigo-zero): Generate hl groups
 -- do
@@ -12,28 +12,28 @@ M.get = function()
    return table.concat {
       -- LEFT
       ' ',
-      components.line_and_column_buffer(),
-      components.filewritable(),
+      data.line_and_column_buffer(),
+      data.filewritable(),
       '%=',
-      components.current_keys(true),
+      data.current_keys(true),
       '%#StatusLineBlue#', -- Reset hl groups
       ' ',
-      components.search_count(),
+      data.search_count(),
       '%#StatusLine#', -- Reset hl groups
 
       -- CENTER
       '%=',
-      components.filepath(),
+      data.filepath(),
       '%#StatusLineBlue#',
-      components.filename(),
+      data.filename(),
       '%#StatusLine#', -- Reset hl groups
 
       -- RIGHT
       '%=',
       '%#StatusLineBlue#',
-      components.modified_buffer(),
+      data.modified_buffer(),
       '%#StatusLine#', -- Reset hl groups
-      components.vcs(),
+      data.vcs(),
       ' ',
    }
 end

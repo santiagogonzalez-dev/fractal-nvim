@@ -1,5 +1,5 @@
-local utils = require 'csj.utils'
 local M = {}
+local utils = require 'csj.utils'
 
 -- Component for the statusline.
 ---@return string
@@ -168,7 +168,7 @@ end
 --    end)
 -- end
 
--- Return the column number of the cursor line
+-- Return the column number of the cursor line.
 ---@return integer
 function M.current_line_lenght() return #vim.api.nvim_win_get_cursor(0) end
 
@@ -176,13 +176,13 @@ function M.modified_buffer()
    -- TODO(santigo-zero): Add filetype detection
    local is_modified = vim.api.nvim_eval_statusline('%m', {}).str
    if is_modified == '' then
-      return ' '
+      return ''
    else
       return ' '
    end
 end
 
--- Get the last 5 keys.
+-- Get the last 5 pressed keys.
 ---@param as_string boolean @ true to return a string, false to return a table.
 ---@return string|table
 function M.current_keys(as_string)
