@@ -2,16 +2,20 @@ local M = {}
 local utils = require 'csj.utils'
 
 -- Set a colorscheme or notify if there's something wrong with it
----@param name string
+---@param colorscheme_name string
 ---@return boolean
-M.colorscheme = function(name)
+function M.colorscheme(colorscheme_name)
    -- Comprobation that `name` is a valid string
-   if name == '' or name == nil or name == vim.NIL then
+   if
+      colorscheme_name == ''
+      or colorscheme_name == nil
+      or colorscheme_name == vim.NIL
+   then
       vim.notify 'The string for setting up the colorcheme might be wrong, check you user_settings.json'
       return false
    end
 
-   local ok, _ = pcall(vim.cmd.colorscheme, name)
+   local ok, _ = pcall(vim.cmd.colorscheme, colorscheme_name)
    if not ok then
       vim.notify 'Could not find the colorscheme, check your settings.json'
       return false
@@ -23,7 +27,7 @@ end
 
 -- Apply settings using the settings from user.opts
 ---@param opts table
-M.opts = function(opts)
+function M.opts(opts)
    for k, v in pairs(opts) do
       vim.opt[k] = v
    end
@@ -33,7 +37,7 @@ end
 -- cursor position.
 ---@param mode boolean
 ---@return boolean
-M.session = function(mode)
+function M.session(mode)
    if not mode then return false end
 
    -- Setup the initial load and maintain some settings between buffers
@@ -77,7 +81,7 @@ M.session = function(mode)
    return true
 end
 
-M.conditionals = function(mode)
+function M.conditionals(mode)
    if not mode then return false end
 
    local function run_comprobations()
@@ -106,7 +110,7 @@ end
 -- `./lua/modules` k is the name of the module and v is a boolean
 ---@param modules table @ Table containing the modules to be loaded
 ---@return boolean
-M.modules = function(modules)
+function M.modules(modules)
    if not modules then return false end
 
    for k, v in pairs(modules) do

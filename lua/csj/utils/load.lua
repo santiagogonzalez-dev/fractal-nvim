@@ -1,7 +1,7 @@
 local M = {}
 local utils = require 'csj.utils'
 
-M.disable = function()
+function M.disable()
    -- Builtin plugins and providers.
    vim.opt.loadplugins = false -- TODO(santigo-zero): Netrw doesn't work with this enabled.
 
@@ -51,7 +51,7 @@ M.disable = function()
    return true
 end
 
-M.enable = function()
+function M.enable()
    -- Load runtime files.
    -- TODO(santigo-zero): use vim.opt.runtimepath:append
    vim.api.nvim_command 'runtime! plugin/**/*.vim'
@@ -70,7 +70,7 @@ M.enable = function()
 end
 
 -- Trigger autocommands because we are lazyloading.
-M.late_autocmds = function()
+function M.late_autocmds()
    -- We can't use skeletons without doing this comprobation if we load neovim
    -- using the `csjneovim.lua`.
    if utils.readable(vim.fn.expand '%:p') then

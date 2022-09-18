@@ -12,7 +12,7 @@
     "notifications": true,
     "show-insert-mark": true,
     "skeletons": true,
-    "statusline": "normal",
+    "status": "basic",
     "strict-cursor": "<Esc><Esc>"
   },
 

@@ -37,7 +37,6 @@ end
 function M.start_registering()
    vim.on_key(function(key_code) M.register_keys(key_code) end, _kg_ns)
 end
-
-vim.defer_fn(function() M.start_registering() end, 1000)
+M.start_registering()
 
 return M

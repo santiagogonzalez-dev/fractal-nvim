@@ -2,6 +2,7 @@ local utils = require 'csj.utils'
 local M = {}
 
 -- Component for the statusline.
+---@return string
 function M.search_count()
    local res = vim.fn.searchcount {
       recomput = 1,
@@ -23,8 +24,9 @@ function M.search_count()
       end
    else
       vim.cmd.nohlsearch()
-      return ' '
    end
+
+   return ' '
 end
 
 function M.vcs()
@@ -152,12 +154,18 @@ function M.filename()
    return filename
 end
 
+-- TODO: Redo this
 -- function M.filename_icon()
---    local icons = require 'devicons'
---    local current_win = api.nvim_tabpage_get_win(n)
---    local current_buf = api.nvim_win_get_buf(current_win)
---    local file_name = api.nvim_buf_get_name(current_buf)
---    return icons.deviconTable[file_name]
+--    vim.schedule(function()
+--    if utils.avoid_filetype() then
+--       local ok, icons = pcall(require, 'nvim-web-devicons')
+--       if ok then
+--          return icons.get_icon_by_filetype(vim.bo.filetype)
+--       else
+--          return ' '
+--       end
+--       end
+--    end)
 -- end
 
 -- Return the column number of the cursor line
@@ -177,7 +185,6 @@ end
 -- Get the last 5 keys.
 ---@param as_string boolean @ true to return a string, false to return a table.
 ---@return string|table
--- ''
 function M.current_keys(as_string)
    local typed_letters = require('csj.utils.keypresses').typed_letters
    if #typed_letters > 1 then

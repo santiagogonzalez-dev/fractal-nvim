@@ -2,43 +2,20 @@ local utils = {}
 
 -- Protected require, notifies if there's an error loading a module
 ---@return boolean|string|number @ Either nil or the value of require()
-utils.prequire = function(package)
+function utils.prequire(package)
    local status, lib = pcall(require, package)
    if status then
       return lib
    else
-      vim.schedule(function()
-         -- If you don't schedule this and you are using the notifications module
-         -- the errors will still show up on the terminal
-         vim.notify(
-            'Failed to require "' .. package .. '" from ' .. vim.log.levels.WARN
-         )
-         -- vim.notify('Failed to require "' .. package .. '" from ' .. debug.getinfo(2).source)
-         -- This ^^ one will print the error in the terminal even when using the
-         -- notification module
-      end)
+      local notify_on_error = require('csj.modules.notifications').notify_send
+      notify_on_error(string.format('Failed to require "%s"', package))
       return false
    end
 end
 
--- Wrapper for setting highlights groups
----@param mode string|table
----@param table table
----@return nil
-utils.set_hl = function(mode, table)
-   -- Highlights
-   if type(mode) == 'table' then
-      for _, groups in pairs(mode) do
-         vim.api.nvim_set_hl(0, groups, table)
-      end
-   else
-      vim.api.nvim_set_hl(0, mode, table)
-   end
-end
-
----@return boolean
-utils.not_interfere_on_float = function()
-   -- Do not open floating windows if there's already one open
+-- Do not open floating windows if there's already one open
+---@return boolean @ Returns false if there's a floating window open.
+function utils.not_interfere_on_float()
    for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
       if vim.api.nvim_win_get_config(winid).zindex then
          vim.notify(
@@ -57,7 +34,7 @@ end
 -- in this table first.
 ---@param function_pointer function
 ---@param ... any
-utils.wrap = function(function_pointer, ...)
+function utils.wrap(function_pointer, ...)
    local params = { ... }
 
    return function() function_pointer(unpack(params)) end
@@ -66,13 +43,14 @@ end
 -- Simple wrapper to check if a str is empty
 ---@param str string
 ---@return string|boolean @ Either an empty string or false
-utils.is_empty = function(str) return str == '' or str == nil end
+function utils.is_empty(str) return str == '' or str == nil end
 
 -- Check if the working directory is under git managment
 ---@return boolean
-utils.is_git = function()
+function utils.is_git()
    local is_git =
       vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
+
    if is_git:match 'true' then
       vim.cmd.doautocmd 'User IsGit'
       return true
@@ -85,7 +63,7 @@ end
 ---@param T table
 ---@param element any
 ---@return boolean
-utils.present_in_table = function(T, element)
+function utils.present_in_table(T, element)
    if T[element] ~= nil then
       return true
    else
@@ -109,28 +87,31 @@ utils.AVOID_FILETYPES = {
 }
 
 ---@return boolean @ If the filetype of the buffer is in the list
---`utils.AVOID_FILETYPES` this function will return true.
-utils.avoid_filetype = function()
+-- `utils.AVOID_FILETYPES` this function will return true.
+function utils.avoid_filetype()
    return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
 end
 
 -- Highlight utils.
-utils.get_fg_hl = function(hl_group)
+-- TODO(santigo-zero): Move this to a standalone file.
+function utils.get_fg_hl(hl_group)
    return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
 end
-utils.get_bg_hl = function(hl_group)
+function utils.get_bg_hl(hl_group)
    return vim.api.nvim_get_hl_by_name(hl_group, true).background
 end
 
 -- Get json, converts the file to lua table.
-utils.get_json = function(path)
+---@param path string
+---@return table
+function utils.get_json(path)
    return vim.json.decode(table.concat(vim.fn.readfile(path), '\n'))
 end
 
 -- Check if a plugin is installed.
 -- utils.is_installed('opt/packer.nvim') utils.is_installed('start/packer.nvim')
 ---@return boolean
-utils.is_installed = function(plugin_name)
+function utils.is_installed(plugin_name)
    local plugin_path = string.format(
       '%s/site/pack/packer/%s',
       vim.fn.stdpath 'data',
@@ -143,7 +124,7 @@ end
 -- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
-utils.string_indentation = function(indented_string)
+function utils.string_indentation(indented_string)
    return #indented_string - #string.match(indented_string, '^%s*(.*)')
 end
 
@@ -151,7 +132,7 @@ end
 -- total sum of all this values.
 ---@param T table @ This list should be like { first = 1, second = 2 }
 ---@return integer @ And the total sum of all the elements is going to be 3
-utils.sum_elements = function(T)
+function utils.sum_elements(T)
    local total_elements = 0
 
    for _, value in pairs(T) do
@@ -164,12 +145,8 @@ end
 -- Return true if the file is exists or is readable, else return false.
 ---@param filename string
 ---@return boolean
-utils.readable = function(filename)
-   if vim.fn.filereadable(filename) == 0 then -- Skeletons.
-      return false
-   else
-      return true
-   end
+function utils.readable(filename)
+   return true and vim.fn.filereadable(filename) == 1
 end
 
 return utils

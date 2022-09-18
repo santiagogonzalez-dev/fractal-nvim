@@ -12,9 +12,9 @@ M.get = function()
    return table.concat {
       -- LEFT
       ' ',
-      -- '',
       components.line_and_column_buffer(),
       components.filewritable(),
+      '%=',
       components.current_keys(true),
       '%#StatusLineBlue#', -- Reset hl groups
       ' ',
@@ -26,7 +26,6 @@ M.get = function()
       components.filepath(),
       '%#StatusLineBlue#',
       components.filename(),
-      -- components.filename_icon(),
       '%#StatusLine#', -- Reset hl groups
 
       -- RIGHT
@@ -53,13 +52,13 @@ function M.setup(mode)
       vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
       -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
       vim.opt.statusline =
-         '%{%v:lua.require("csj.modules.statusline").hide_completely()%}'
-   elseif mode == 'normal' then
+         '%{%v:lua.require("csj.modules.status").hide_completely()%}'
+   elseif mode == 'basic' then
       vim.opt.laststatus = 3
       vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
          callback = function()
             vim.opt.statusline =
-               '%{%v:lua.require("csj.modules.statusline").get()%}'
+               '%{%v:lua.require("csj.modules.status").get()%}'
          end,
       })
 

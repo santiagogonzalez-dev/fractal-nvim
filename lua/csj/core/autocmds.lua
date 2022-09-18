@@ -1,4 +1,5 @@
 -- Session managment
+local utils = require 'csj.utils'
 local session_opts = vim.api.nvim_create_augroup('session_opts', {})
 
 -- Check if any file has changed when Vim is focused
@@ -30,23 +31,20 @@ local first_load = vim.api.nvim_create_augroup('first_load', {})
 vim.api.nvim_create_autocmd('UIEnter', {
    desc = 'Print the output of flag --startuptime startuptime.txt',
    group = first_load,
-   pattern = 'init.lua',
+   pattern = '*.lua',
    once = true,
-   callback = function()
-      vim.defer_fn(
-         function()
-            return vim.fn.filereadable 'startuptime.txt' == 1
-               and vim.cmd ':!tail -n3 startuptime.txt'
-               and vim.fn.delete 'startuptime.txt'
-         end,
-         1000
-      )
-   end,
+   callback = utils.wrap(vim.defer_fn, function()
+      if utils.readable 'startuptime.txt' then
+         vim.cmd ':!tail -n3 startuptime.txt'
+         vim.fn.delete 'startuptime.txt'
+      end
+   end, 3000),
 })
 
 -- Globals
 local buffer_settings = vim.api.nvim_create_augroup('buffer_settings', {})
 
+-- Quit with q in this filetypes
 vim.api.nvim_create_autocmd('FileType', {
    desc = 'Quit with q in this filetypes',
    group = buffer_settings,
@@ -56,11 +54,11 @@ vim.api.nvim_create_autocmd('FileType', {
       'man',
       'netrw',
       'qf',
-      'startuptime',
    },
    callback = function() vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 }) end,
 })
 
+-- Quit! with q! in this filetypes
 vim.api.nvim_create_autocmd('FileType', {
    desc = 'Quit! with q! in this filetypes',
    group = buffer_settings,
@@ -115,9 +113,10 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = session_opts,
-   callback = function()
-      pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 })
-   end,
+   callback = utils.wrap(
+      vim.highlight.on_yank,
+      { higroup = 'Visual', timeout = 600 }
+   ),
 })
 
 -- Disable mouse in insert mode
