@@ -8,11 +8,11 @@
     "buffer-switch": false,
     "folds": true,
     "gutter": true,
-    "netrw": false,
+    "netrw": true,
     "notifications": true,
     "show-insert-mark": true,
     "skeletons": true,
-    "statusline": "hide-completely",
+    "statusline": "normal",
     "strict-cursor": "<Esc><Esc>"
   },
 

@@ -2,19 +2,24 @@ local utils = require 'csj.utils'
 local M = {}
 
 -- Component for the statusline.
----@return string
 function M.search_count()
-   local res = vim.fn.searchcount { recomput = 1, maxcount = 1000 }
+   local res = vim.fn.searchcount {
+      recomput = 1,
+      maxcount = 1000,
+   }
 
-   if res.total ~= nil and res.total > 0 then
-      return string.format(
-         ' %s/%d  %s ',
-         -- ' %s/%d %s ',
-         res.current,
-         res.total,
-         vim.fn.getreg '/'
-      )
+   if vim.endswith(M.current_keys(true), 'n') or vim.endswith(M.current_keys(true), 'N') then
+      if res.total ~= nil and res.total > 0 then
+         return string.format(
+            ' %s/%d %s',
+            -- ' %s/%d %s ',
+            res.current,
+            res.total,
+            vim.fn.getreg '/'
+         )
+      end
    else
+      vim.cmd.nohlsearch()
       return ' '
    end
 end
@@ -22,9 +27,7 @@ end
 function M.vcs()
    -- Requires gitsigns.nvim
    local git_info = vim.b.gitsigns_status_dict
-   if not git_info or git_info.head == '' then
-      return ''
-   end
+   if not git_info or git_info.head == '' then return '' end
 
    vim.api.nvim_set_hl(
       0,
@@ -43,15 +46,11 @@ function M.vcs()
    local changed = git_info.changed and ('%#StatusLineGitSignsChange#~' .. git_info.changed .. ' ') or ''
    local removed = git_info.removed and ('%#StatusLineGitSignsDelete#-' .. git_info.removed .. ' ') or ''
 
-   if git_info.added == 0 then
-      added = ''
-   end
-   if git_info.changed == 0 then
-      changed = ''
-   end
-   if git_info.removed == 0 then
-      removed = ''
-   end
+   if git_info.added == 0 then added = '' end
+
+   if git_info.changed == 0 then changed = '' end
+
+   if git_info.removed == 0 then removed = '' end
 
    return table.concat {
       ' ',
@@ -125,9 +124,7 @@ end
 function M.filepath()
    -- Return the filepath without the name of the file
    local filepath = vim.fn.fnamemodify(vim.fn.expand '%', ':~:.:h')
-   if filepath == '' or filepath == '.' then
-      return ' '
-   end
+   if filepath == '' or filepath == '.' then return ' ' end
 
    if vim.bo.filetype == 'lua' then
       -- For lua use . as a separator instead of /
@@ -141,9 +138,7 @@ end
 function M.filename()
    local filename = vim.fn.expand '%:t'
    -- local filename = vim.api.nvim_eval_statusline('%t', {}).str
-   if filename == '' then
-      return ' '
-   end
+   if filename == '' then return ' ' end
 
    return filename
 end
@@ -158,9 +153,7 @@ end
 
 -- Return the column number of the cursor line
 ---@return integer
-function M.current_line_lenght()
-   return #vim.api.nvim_win_get_cursor(0)
-end
+function M.current_line_lenght() return #vim.api.nvim_win_get_cursor(0) end
 
 function M.modified_buffer()
    -- TODO(santigo-zero): Add filetype detection
@@ -169,6 +162,19 @@ function M.modified_buffer()
       return ' '
    else
       return ' '
+   end
+end
+
+-- Get the last 5 keys.
+---@param as_string boolean @ true to return a string, false to return a table.
+---@return string|table
+-- ''
+function M.current_keys(as_string)
+   local typed_letters = require('csj.utils.keypresses').typed_letters
+   if #typed_letters > 1 then
+      return as_string and string.format('  %s', table.concat(typed_letters)) or typed_letters
+   else
+      return ' '
    end
 end
 

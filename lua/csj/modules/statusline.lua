@@ -15,6 +15,7 @@ M.get = function()
       -- '',
       components.line_and_column_buffer(),
       components.filewritable(),
+      components.current_keys(true),
       '%#StatusLineBlue#', -- Reset hl groups
       ' ',
       components.search_count(),
@@ -45,9 +46,9 @@ M.hide_completely = function()
 end
 
 function M.setup(mode)
+   vim.opt.cmdheight = 0
    if mode == 'hide-completely' then
       vim.opt.laststatus = 0
-      vim.opt.cmdheight = 0
       vim.opt.ruler = false
       vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
       -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })

@@ -45,14 +45,14 @@ vim.opt.fillchars:append {
 }
 
 vim.opt.listchars:append {
-   eol = '↴', -- ↪ ↲ ⏎ 
+   -- eol = '↴', -- ↪ ↲ ⏎ 
    -- space = '·',
    -- tab = '-->',
    extends = '◣',
    nbsp = '␣',
    precedes = '◢',
    tab = '!·',
-   leadmultispace = '!·',
+   leadmultispace = '!··',
    trail = '█', -- · ␣
 }
 
@@ -81,19 +81,3 @@ end)
 
 vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 require 'plugins'
-
--- TODO(santigo-zero):
--- -- This is run after neovim loads, it checks if you started neovim into
--- -- an empty buffer and if you did it opens projects.nvim with telescope.
--- vim.api.nvim_create_autocmd('UIEnter', {
---   callback = function()
---     if vim.bo.filetype ~= '' then -- Check if the buffer has a filetype
---       return
---     end
---     -- If it doesn't we check if it's empty
---     if vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == '' then
---       vim.cmd.PackerLoad('telescope.nvim')
---       vim.cmd.Telescope('projects')
---     end
---   end,
--- })

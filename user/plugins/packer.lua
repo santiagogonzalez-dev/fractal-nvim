@@ -307,11 +307,12 @@ function M.list_plugins()
       use {
          'mfussenegger/nvim-dap',
          event = 'User LoadPlugins',
-      }
-
-      use {
-         'rcarriga/nvim-dap-ui',
-         event = 'User LoadPlugins',
+         requires = {
+            {
+               'rcarriga/nvim-dap-ui',
+               event = 'User LoadPlugins',
+            },
+         },
          config = function()
             require 'plugins.dap'
          end,
@@ -355,6 +356,26 @@ function M.list_plugins()
       }
 
       use 'santigo-zero/jetjbp.nvim'
+
+      use {
+         'zbirenbaum/neodim',
+         event = 'LspAttach',
+         config = function()
+            require('neodim').setup {
+               alpha = 0.75,
+               blend_color = '#000000',
+               update_in_insert = {
+                  enable = true,
+                  delay = 100,
+               },
+               hide = {
+                  virtual_text = true,
+                  signs = true,
+                  underline = true,
+               },
+            }
+         end,
+      }
 
       return packer
    end)

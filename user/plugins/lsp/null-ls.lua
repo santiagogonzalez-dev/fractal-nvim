@@ -11,8 +11,8 @@ local completion = null.builtins.completion
 null.setup {
    sources = {
       actions.gitsigns,
-      -- actions.eslint,
-      -- diag.eslint,
+      actions.eslint,
+      diag.eslint,
       actions.shellcheck,
       diag.shellcheck,
       format.stylua,
@@ -57,7 +57,6 @@ null.setup {
             'py310',
          },
       },
-      format.google_java_format,
       diag.flake8.with {
          prefer_local = '.venv/bin',
          extra_args = { '--max-line-lenth', '88' },

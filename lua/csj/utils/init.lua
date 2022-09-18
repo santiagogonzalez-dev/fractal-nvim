@@ -79,7 +79,7 @@ utils.is_git = function()
    end
 end
 
--- Checks if an `element` is present in table `T`.
+-- Checks if an elemen `element` is present in table `T`.
 ---@param T table
 ---@param element any
 ---@return boolean
