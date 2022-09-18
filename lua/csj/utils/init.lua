@@ -51,8 +51,8 @@ function utils.is_git()
    local is_git =
       vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
 
-   if is_git:match 'true' then
-      vim.cmd.doautocmd 'User IsGit'
+   if is_git:match('true') then
+      vim.cmd.doautocmd('User IsGit')
       return true
    else
       return false
@@ -114,7 +114,7 @@ end
 function utils.is_installed(plugin_name)
    local plugin_path = string.format(
       '%s/site/pack/packer/%s',
-      vim.fn.stdpath 'data',
+      vim.fn.stdpath('data'),
       plugin_name
    )
    -- print(plugin_path)
@@ -142,11 +142,37 @@ function utils.sum_elements(T)
    return total_elements
 end
 
--- Return true if the file is exists or is readable, else return false.
+-- Wrapper around `vim.fn.filereadable`.
 ---@param filename string
----@return boolean
-function utils.readable(filename)
-   return true and vim.fn.filereadable(filename) == 1
+---@param as_string? boolean
+---@return boolean|string
+function utils.readable(filename, as_string)
+   if not as_string then return true and vim.fn.filereadable(filename) == 1 end
+
+   if vim.fn.filereadable(filename) == 1 then
+      return 'readable'
+   else
+      return 'inexistent or is a directory'
+   end
+end
+
+-- Wrapper around `vim.fn.filewritable`.
+---@param filename string
+---@param as_string? boolean
+---@return integer|string
+function utils.writable(filename, as_string)
+   local result = vim.fn.filewritable(filename)
+   if not as_string then return result end
+
+   if result == 1 then
+      return 'writable'
+   elseif result == 2 then
+      return 'writable directory'
+   elseif result == 0 then
+      return 'inexistent or is not writable'
+   else
+      return ''
+   end
 end
 
 return utils

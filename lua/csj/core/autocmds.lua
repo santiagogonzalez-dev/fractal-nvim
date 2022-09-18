@@ -1,5 +1,5 @@
 -- Session managment
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 local session_opts = vim.api.nvim_create_augroup('session_opts', {})
 
 -- Check if any file has changed when Vim is focused
@@ -21,7 +21,7 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
    desc = 'Create directories before saving a buffer, should come by default',
    group = session_opts,
-   callback = function() return vim.fn.mkdir(vim.fn.expand '%:p:h', 'p') end,
+   callback = function() return vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p') end,
 })
 
 -- First load
@@ -34,9 +34,9 @@ vim.api.nvim_create_autocmd('UIEnter', {
    pattern = '*.lua',
    once = true,
    callback = utils.wrap(vim.defer_fn, function()
-      if utils.readable 'startuptime.txt' then
-         vim.cmd ':!tail -n3 startuptime.txt'
-         vim.fn.delete 'startuptime.txt'
+      if utils.readable('startuptime.txt') then
+         vim.cmd(':!tail -n3 startuptime.txt')
+         vim.fn.delete('startuptime.txt')
       end
    end, 3000),
 })
@@ -96,7 +96,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
    callback = function()
       if not vim.o.binary and vim.o.filetype ~= 'diff' then
          local current_view = vim.fn.winsaveview()
-         vim.cmd [[keeppatterns %s/\s\+$//e]]
+         vim.cmd([[keeppatterns %s/\s\+$//e]])
          return vim.fn.winrestview(current_view)
       end
    end,
@@ -120,7 +120,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Disable mouse in insert mode
-local mouse_original_value = vim.api.nvim_get_option 'mouse'
+local mouse_original_value = vim.api.nvim_get_option('mouse')
 vim.api.nvim_create_autocmd('InsertEnter', {
    desc = 'Disable mouse in insert mode',
    group = session_opts,
