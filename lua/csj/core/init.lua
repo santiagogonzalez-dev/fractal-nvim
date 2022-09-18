@@ -7,11 +7,11 @@ do
    local notify_on_error = require('csj.modules.notifications').notify_send
    local config_path = vim.fn.stdpath 'config' -- "${XDG_CONFIG_HOME}/nvim"
 
-   local user_settings_table = string.format('%s%s', config_path, '/user/settings.json')
-   if not utils.readable(user_settings_table) then
+   local settings = string.format('%s%s', config_path, '/user/settings.json')
+   if not utils.readable(settings) then
       notify_on_error 'CSJNeovim is not able to locate `settings.json`.'
    else
-      local ok, user = pcall(utils.get_json, user_settings_table) -- Get user prefs.
+      local ok, user = pcall(utils.get_json, settings) -- Get user settings.
       if not ok then
          notify_on_error 'CSJNeovim is not able to read `settings.json` properly.'
       else

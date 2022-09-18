@@ -53,7 +53,8 @@ function M.setup(user_table_mappings)
       return false
    end
 
-   local mappings = vim.tbl_deep_extend('keep', user_table_mappings, M.default_conf)
+   local mappings =
+      vim.tbl_deep_extend('keep', user_table_mappings, M.default_conf)
    vim.keymap.set('n', mappings.buffer_next, M.buffer_next)
    vim.keymap.set('n', mappings.buffer_prev, M.buffer_prev)
    return true

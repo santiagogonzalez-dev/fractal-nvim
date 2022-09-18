@@ -51,8 +51,10 @@ function M.setup()
    }
 
    vim.diagnostic.config(config)
-   vim.lsp.handlers['textDocument/hover'] =
-      vim.lsp.with(vim.lsp.handlers.hover, { focusable = true, border = 'rounded' })
+   vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+      vim.lsp.handlers.hover,
+      { focusable = true, border = 'rounded' }
+   )
    vim.lsp.handlers['textDocument/signatureHelp'] =
       vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded ' })
 end
@@ -60,7 +62,8 @@ end
 function M.highlight_word_under_cursor(client, bufnr)
    -- For now this only uses LSP
    if client.server_capabilities.documentHighlightProvider then
-      local highlight_word = vim.api.nvim_create_augroup('lsp_document_highlight', {})
+      local highlight_word =
+         vim.api.nvim_create_augroup('lsp_document_highlight', {})
       vim.api.nvim_clear_autocmds {
          buffer = bufnr,
          group = 'lsp_document_highlight',

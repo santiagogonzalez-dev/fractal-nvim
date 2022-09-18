@@ -12,7 +12,9 @@ vim.api.nvim_create_autocmd('FocusGained', {
 vim.api.nvim_create_autocmd('FileChangedShellPost', {
    desc = 'Actions when the file is changed outside of Neovim',
    group = session_opts,
-   callback = function() vim.notify('File changed, reloading the buffer', vim.log.levels.WARN) end,
+   callback = function()
+      vim.notify('File changed, reloading the buffer', vim.log.levels.WARN)
+   end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -113,7 +115,9 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = session_opts,
-   callback = function() pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 }) end,
+   callback = function()
+      pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 })
+   end,
 })
 
 -- Disable mouse in insert mode

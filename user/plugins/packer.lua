@@ -1,5 +1,9 @@
 local M = {}
-local packer_compiled_path = string.format('%s%s', vim.fn.stdpath 'config', '/user/plugins/packer_compiled.lua')
+local packer_compiled_path = string.format(
+   '%s%s',
+   vim.fn.stdpath 'config',
+   '/user/plugins/packer_compiled.lua'
+)
 local packer
 
 function M.packer_load()
@@ -11,7 +15,8 @@ function M.packer() return packer end
 
 function M.check_packer()
    local packer_installed = require('csj.utils').is_installed 'opt/packer.nvim'
-   local plugins_dir = string.format('%s%s', vim.fn.stdpath 'data', '/site/pack/packer') -- /home/user/.local/share/nvim/site/pack/packer
+   local plugins_dir =
+      string.format('%s%s', vim.fn.stdpath 'data', '/site/pack/packer') -- /home/user/.local/share/nvim/site/pack/packer
    if not packer_installed then
       vim.fn.delete(packer_compiled_path) -- Delete the packer_compiled
 
@@ -109,12 +114,17 @@ function M.list_plugins()
                   local U = require 'Comment.utils'
                   local location = nil
                   if ctx.ctype == U.ctype.blockwise then
-                     location = require('ts_context_commentstring.utils').get_cursor_location()
-                  elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-                     location = require('ts_context_commentstring.utils').get_visual_start_location()
+                     location =
+                        require('ts_context_commentstring.utils').get_cursor_location()
+                  elseif
+                     ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V
+                  then
+                     location =
+                        require('ts_context_commentstring.utils').get_visual_start_location()
                   end
                   return require('ts_context_commentstring.internal').calculate_commentstring {
-                     key = ctx.ctype == U.ctype.linewise and '__default' or '__multiline',
+                     key = ctx.ctype == U.ctype.linewise and '__default'
+                        or '__multiline',
                      location = location,
                   }
                end,
@@ -157,7 +167,10 @@ function M.list_plugins()
          event = 'User LoadPlugins',
          run = ':TSUpdate',
          requires = {
-            { 'JoosepAlviste/nvim-ts-context-commentstring', after = 'Comment.nvim' },
+            {
+               'JoosepAlviste/nvim-ts-context-commentstring',
+               after = 'Comment.nvim',
+            },
             {
                'nvim-treesitter/playground',
                cmd = { 'TSHighlightCapturesUnderCursor', 'TSPlaygroundToggle' },
@@ -270,8 +283,16 @@ function M.list_plugins()
                show_end_of_line = true,
                show_trailing_blankline_indent = false,
             }
-            vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { link = 'Whitespace' }) -- All the lines
-            vim.api.nvim_set_hl(0, 'IndentBlanklineContextChar', { link = 'Function' }) -- Current place
+            vim.api.nvim_set_hl(
+               0,
+               'IndentBlanklineChar',
+               { link = 'Whitespace' }
+            ) -- All the lines
+            vim.api.nvim_set_hl(
+               0,
+               'IndentBlanklineContextChar',
+               { link = 'Function' }
+            ) -- Current place
          end,
       }
 

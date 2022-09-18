@@ -10,7 +10,9 @@ utils.prequire = function(package)
       vim.schedule(function()
          -- If you don't schedule this and you are using the notifications module
          -- the errors will still show up on the terminal
-         vim.notify('Failed to require "' .. package .. '" from ' .. vim.log.levels.WARN)
+         vim.notify(
+            'Failed to require "' .. package .. '" from ' .. vim.log.levels.WARN
+         )
          -- vim.notify('Failed to require "' .. package .. '" from ' .. debug.getinfo(2).source)
          -- This ^^ one will print the error in the terminal even when using the
          -- notification module
@@ -39,7 +41,10 @@ utils.not_interfere_on_float = function()
    -- Do not open floating windows if there's already one open
    for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
       if vim.api.nvim_win_get_config(winid).zindex then
-         vim.notify('There is a floating window open already', vim.log.levels.WARN)
+         vim.notify(
+            'There is a floating window open already',
+            vim.log.levels.WARN
+         )
          return false
       end
    end
@@ -66,7 +71,8 @@ utils.is_empty = function(str) return str == '' or str == nil end
 -- Check if the working directory is under git managment
 ---@return boolean
 utils.is_git = function()
-   local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
+   local is_git =
+      vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
    if is_git:match 'true' then
       vim.cmd.doautocmd 'User IsGit'
       return true
@@ -104,20 +110,32 @@ utils.AVOID_FILETYPES = {
 
 ---@return boolean @ If the filetype of the buffer is in the list
 --`utils.AVOID_FILETYPES` this function will return true.
-utils.avoid_filetype = function() return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype) end
+utils.avoid_filetype = function()
+   return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
+end
 
 -- Highlight utils.
-utils.get_fg_hl = function(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).foreground end
-utils.get_bg_hl = function(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).background end
+utils.get_fg_hl = function(hl_group)
+   return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
+end
+utils.get_bg_hl = function(hl_group)
+   return vim.api.nvim_get_hl_by_name(hl_group, true).background
+end
 
 -- Get json, converts the file to lua table.
-utils.get_json = function(path) return vim.json.decode(table.concat(vim.fn.readfile(path), '\n')) end
+utils.get_json = function(path)
+   return vim.json.decode(table.concat(vim.fn.readfile(path), '\n'))
+end
 
 -- Check if a plugin is installed.
 -- utils.is_installed('opt/packer.nvim') utils.is_installed('start/packer.nvim')
 ---@return boolean
 utils.is_installed = function(plugin_name)
-   local plugin_path = string.format('%s/site/pack/packer/%s', vim.fn.stdpath 'data', plugin_name)
+   local plugin_path = string.format(
+      '%s/site/pack/packer/%s',
+      vim.fn.stdpath 'data',
+      plugin_name
+   )
    -- print(plugin_path)
    return vim.fn.isdirectory(plugin_path) ~= 0
 end
@@ -125,8 +143,9 @@ end
 -- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
-utils.string_indentation =
-   function(indented_string) return #indented_string - #string.match(indented_string, '^%s*(.*)') end
+utils.string_indentation = function(indented_string)
+   return #indented_string - #string.match(indented_string, '^%s*(.*)')
+end
 
 -- This function takes the value of each elements in a table and returns the
 -- total sum of all this values.

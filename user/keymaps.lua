@@ -13,15 +13,15 @@ for _, almost in ipairs(dead_keys) do -- Make dead keys
 end
 
 local break_points = {
-   ',',
-   '.',
    '!',
-   '?',
-   '<Space>',
-   '_',
+   ',',
    '-',
-   '=',
+   '.',
    '<CR>',
+   '<Space>',
+   '=',
+   '?',
+   '_',
 }
 
 for _, b in pairs(break_points) do -- Undo break points
@@ -71,8 +71,18 @@ vim.keymap.set('n', '<Leader>ee', ':Lexplore! %:p:h<CR>', {
    desc = 'Open NetRW in the dir of the buffer',
 })
 
-vim.keymap.set('n', '<C-n>', vim.cmd.bnext, { desc = 'Switch to next buffer', silent = true })
-vim.keymap.set('n', '<C-p>', vim.cmd.bprevious, { desc = 'Switch to prev buffer', silent = true })
+vim.keymap.set(
+   'n',
+   '<C-n>',
+   vim.cmd.bnext,
+   { desc = 'Switch to next buffer', silent = true }
+)
+vim.keymap.set(
+   'n',
+   '<C-p>',
+   vim.cmd.bprevious,
+   { desc = 'Switch to prev buffer', silent = true }
+)
 
 vim.g.last_accessed_buffer = false
 vim.keymap.set('n', 'g<Tab>', function()
@@ -85,8 +95,18 @@ vim.keymap.set('n', 'g<Tab>', function()
    end
 end, { desc = 'Switch between two buffers' })
 
-vim.keymap.set('n', '<Leader>ps', vim.cmd.PackerSync, { desc = 'Packer: PackerSync' })
-vim.keymap.set('n', '<Leader>pc', '<CMD>PackerCompile profile=true<CR>', { desc = 'Packer: PackerCompile' })
+vim.keymap.set(
+   'n',
+   '<Leader>ps',
+   vim.cmd.PackerSync,
+   { desc = 'Packer: PackerSync' }
+)
+vim.keymap.set(
+   'n',
+   '<Leader>pc',
+   '<CMD>PackerCompile profile=true<CR>',
+   { desc = 'Packer: PackerCompile' }
+)
 
 vim.keymap.set('n', "'", '`', { desc = "Swap ' with `" })
 vim.keymap.set('n', '`', "'", { desc = "Swap ` with '" })
@@ -95,7 +115,12 @@ vim.keymap.set({ 'n', 'v', 'x' }, ';', ':', { desc = 'Swap ; with :' })
 vim.keymap.set({ 'n', 'v', 'x' }, ':', ';', { desc = 'Swap : with ;' })
 
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Center J' })
-vim.keymap.set('n', 'K', 'i<CR><ESC>', { desc = 'Normal <CR> behaviour, opposite to J' })
+vim.keymap.set(
+   'n',
+   'K',
+   'i<CR><ESC>',
+   { desc = 'Normal <CR> behaviour, opposite to J' }
+)
 
 vim.keymap.set('n', '<A-n>', vim.cmd.nohlsearch, {
    desc = 'Disable highlight',
@@ -105,7 +130,12 @@ vim.keymap.set({ 'n', 'v' }, '$', 'g_', {
    desc = 'Better $, behaves as expected',
 })
 
-vim.keymap.set('n', 'gvp', "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true })
+vim.keymap.set(
+   'n',
+   'gvp',
+   "'`[' . strpart(getregtype(), 0, 1) . '`]'",
+   { expr = true }
+)
 
 vim.keymap.set('n', 'cg*', '*Ncgn', {
    desc = 'Find and replace next match of the word under cursor',
@@ -160,8 +190,18 @@ end, {
 
 vim.keymap.set('n', '<C-Up>', ':resize +1<CR>', { desc = 'Resize windows' })
 vim.keymap.set('n', '<C-Down>', ':resize -1<CR>', { desc = 'Resize windows' })
-vim.keymap.set('n', '<C-Left>', ':vertical resize +1<CR>', { desc = 'Resize windows' })
-vim.keymap.set('n', '<C-Right>', ':vertical resize -1<CR>', { desc = 'Resize windows' })
+vim.keymap.set(
+   'n',
+   '<C-Left>',
+   ':vertical resize +1<CR>',
+   { desc = 'Resize windows' }
+)
+vim.keymap.set(
+   'n',
+   '<C-Right>',
+   ':vertical resize -1<CR>',
+   { desc = 'Resize windows' }
+)
 
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', {
    desc = 'Move current block of text up and down',
@@ -197,7 +237,9 @@ vim.keymap.set({ 'v', 'x', 'o' }, '<Space>', 'zf', {
 vim.keymap.set('n', '#', '*Nzv', {
    desc = 'Better #',
 })
-vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], { desc = 'Better #' })
+vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], {
+   desc = 'Better #',
+})
 
 vim.keymap.set({ 'v', 'x' }, '<', '<gv', {
    desc = 'Keep visual selection after shifting codeblock',
@@ -232,18 +274,14 @@ vim.keymap.set('c', 'wqa', vim.cmd.wqa, {
 vim.api.nvim_create_autocmd('FileType', {
    pattern = 'qf',
    callback = function()
-      vim.keymap.set(
-         'n',
-         '<C-]>',
-         function() vim.cmd ':cn' end,
-         { buffer = 0, desc = 'Go to next item in quickfix list' }
-      )
+      vim.keymap.set('n', '<C-]>', function() vim.cmd ':cn' end, {
+         buffer = 0,
+         desc = 'Go to next item in quickfix list',
+      })
 
-      vim.keymap.set(
-         'n',
-         '<C-[>',
-         function() vim.cmd ':cp' end,
-         { buffer = 0, desc = 'Go to previous item in quickfix list' }
-      )
+      vim.keymap.set('n', '<C-[>', function() vim.cmd ':cp' end, {
+         buffer = 0,
+         desc = 'Go to previous item in quickfix list',
+      })
    end,
 })

@@ -8,7 +8,10 @@ function M.search_count()
       maxcount = 1000,
    }
 
-   if vim.endswith(M.current_keys(true), 'n') or vim.endswith(M.current_keys(true), 'N') then
+   if
+      vim.endswith(M.current_keys(true), 'n')
+      or vim.endswith(M.current_keys(true), 'N')
+   then
       if res.total ~= nil and res.total > 0 then
          return string.format(
             ' %s/%d %s',
@@ -42,9 +45,15 @@ function M.vcs()
       bg = utils.get_bg_hl 'StatusLine',
       fg = utils.get_fg_hl 'GitSignsDelete',
    })
-   local added = git_info.added and ('%#StatusLineGitSignsAdd#+' .. git_info.added .. ' ') or ''
-   local changed = git_info.changed and ('%#StatusLineGitSignsChange#~' .. git_info.changed .. ' ') or ''
-   local removed = git_info.removed and ('%#StatusLineGitSignsDelete#-' .. git_info.removed .. ' ') or ''
+   local added = git_info.added
+         and ('%#StatusLineGitSignsAdd#+' .. git_info.added .. ' ')
+      or ''
+   local changed = git_info.changed
+         and ('%#StatusLineGitSignsChange#~' .. git_info.changed .. ' ')
+      or ''
+   local removed = git_info.removed
+         and ('%#StatusLineGitSignsDelete#-' .. git_info.removed .. ' ')
+      or ''
 
    if git_info.added == 0 then added = '' end
 
@@ -172,7 +181,8 @@ end
 function M.current_keys(as_string)
    local typed_letters = require('csj.utils.keypresses').typed_letters
    if #typed_letters > 1 then
-      return as_string and string.format('  %s', table.concat(typed_letters)) or typed_letters
+      return as_string and string.format('  %s', table.concat(typed_letters))
+         or typed_letters
    else
       return ' '
    end

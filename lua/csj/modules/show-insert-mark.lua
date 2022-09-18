@@ -6,7 +6,11 @@ local _ns_sim = vim.api.nvim_create_namespace '_ns_sim' -- Namespace
 
 -- Generate highlight groups
 vim.api.nvim_set_hl(0, 'SIM', { link = 'TSVariableBuiltin' })
-vim.api.nvim_set_hl(0, 'SIMReversed', { bg = utils.get_fg_hl 'SIM', fg = utils.get_bg_hl 'CursorLineNr' })
+vim.api.nvim_set_hl(
+   0,
+   'SIMReversed',
+   { bg = utils.get_fg_hl 'SIM', fg = utils.get_bg_hl 'CursorLineNr' }
+)
 
 -- DESCRIPTION: This module shows a sign in the last place you went into insert
 -- mode, so the user just has to think in terms of gi or `i and maybe `` and `.

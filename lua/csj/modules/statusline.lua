@@ -52,11 +52,15 @@ function M.setup(mode)
       vim.opt.ruler = false
       vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
       -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
-      vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").hide_completely()%}'
+      vim.opt.statusline =
+         '%{%v:lua.require("csj.modules.statusline").hide_completely()%}'
    elseif mode == 'normal' then
       vim.opt.laststatus = 3
       vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
-         callback = function() vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").get()%}' end,
+         callback = function()
+            vim.opt.statusline =
+               '%{%v:lua.require("csj.modules.statusline").get()%}'
+         end,
       })
 
       vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {
