@@ -11,7 +11,7 @@ do
    if not utils.readable(user_settings_table) then
       notify_on_error 'CSJNeovim is not able to locate `settings.json`.'
    else
-      local ok, user = utils.get_json(user_settings_table) -- Get user prefs.
+      local ok, user = pcall(utils.get_json, user_settings_table) -- Get user prefs.
       if not ok then
          notify_on_error 'CSJNeovim is not able to read `settings.json` properly.'
       else

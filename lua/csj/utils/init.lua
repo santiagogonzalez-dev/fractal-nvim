@@ -122,7 +122,7 @@ end
 
 -- Get json, converts the file to lua table.
 utils.get_json = function(path)
-   return pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
+   return vim.json.decode(table.concat(vim.fn.readfile(path), '\n'))
 end
 
 -- Check if a plugin is installed.
