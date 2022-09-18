@@ -74,6 +74,7 @@ end
 ---@return string
 function M.position_with_icons()
    return table.concat({
+      '%l',
       M.line_with_icons(),
       M.column_with_icons(),
    })
@@ -93,7 +94,7 @@ function M.line_with_icons()
    local chars = { ' ', ' ', ' ' }
    local line_ratio = current_line / total_lines
    local index = math.ceil(line_ratio * #chars)
-   return table.concat({ '%l', chars[index] })
+   return chars[index]
 end
 
 function M.column_with_icons()
