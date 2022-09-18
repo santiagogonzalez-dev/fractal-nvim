@@ -49,24 +49,22 @@ function M.display_mark()
 end
 
 function M.hide_mark(id_extmark)
-   if not id_extmark then
-      return
-   end
+   if not id_extmark then return end
    vim.api.nvim_buf_del_extmark(0, _ns_sim, id_extmark)
 end
 
-local _ag_sim = vim.api.nvim_create_augroup('show_insert_mark', {})
-vim.api.nvim_create_autocmd('InsertLeave', {
-   group = _ag_sim,
-   callback = function()
-      local sim_extmark_id = M.display_mark()
-      vim.api.nvim_create_autocmd('InsertEnter', {
-         group = _ag_sim,
-         callback = function()
-            M.hide_mark(sim_extmark_id)
-         end,
-      })
-   end,
-})
+function M.setup()
+   local _ag_sim = vim.api.nvim_create_augroup('show_insert_mark', {})
+   vim.api.nvim_create_autocmd('InsertLeave', {
+      group = _ag_sim,
+      callback = function()
+         local sim_extmark_id = M.display_mark()
+         vim.api.nvim_create_autocmd('InsertEnter', {
+            group = _ag_sim,
+            callback = function() M.hide_mark(sim_extmark_id) end,
+         })
+      end,
+   })
+end
 
 return M

@@ -16,13 +16,9 @@ M.default_conf = {
    buffer_recent = '<A-Tab>',
 }
 
-function M.buffer_next()
-   return false
-end
+function M.buffer_next() return false end
 
-function M.buffer_prev()
-   return false
-end
+function M.buffer_prev() return false end
 
 -- Check that the buffer is valid before commiting it to the M.buffer table
 ---@param bufnr string
@@ -79,13 +75,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
       -- Check each buffer that the user opens
       vim.api.nvim_create_autocmd('BufWinEnter', {
-         callback = function()
-            M.validate_buffer(vim.api.nvim_get_current_buf())
-         end,
+         callback = function() M.validate_buffer(vim.api.nvim_get_current_buf()) end,
       })
    end,
 })
-
 
 -- local M = {}
 

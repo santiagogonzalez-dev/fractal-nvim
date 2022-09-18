@@ -55,17 +55,13 @@ end
 utils.wrap = function(function_pointer, ...)
    local params = { ... }
 
-   return function()
-      function_pointer(unpack(params))
-   end
+   return function() function_pointer(unpack(params)) end
 end
 
 -- Simple wrapper to check if a str is empty
 ---@param str string
 ---@return string|boolean @ Either an empty string or false
-utils.is_empty = function(str)
-   return str == '' or str == nil
-end
+utils.is_empty = function(str) return str == '' or str == nil end
 
 -- Check if the working directory is under git managment
 ---@return boolean
@@ -108,22 +104,14 @@ utils.AVOID_FILETYPES = {
 
 ---@return boolean @ If the filetype of the buffer is in the list
 --`utils.AVOID_FILETYPES` this function will return true.
-utils.avoid_filetype = function()
-   return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
-end
+utils.avoid_filetype = function() return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype) end
 
 -- Highlight utils.
-utils.get_fg_hl = function(hl_group)
-   return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
-end
-utils.get_bg_hl = function(hl_group)
-   return vim.api.nvim_get_hl_by_name(hl_group, true).background
-end
+utils.get_fg_hl = function(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).foreground end
+utils.get_bg_hl = function(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).background end
 
 -- Get json, converts the file to lua table.
-utils.get_json = function(path)
-   return vim.json.decode(table.concat(vim.fn.readfile(path), '\n'))
-end
+utils.get_json = function(path) return vim.json.decode(table.concat(vim.fn.readfile(path), '\n')) end
 
 -- Check if a plugin is installed.
 -- utils.is_installed('opt/packer.nvim') utils.is_installed('start/packer.nvim')
@@ -137,9 +125,8 @@ end
 -- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
-utils.string_indentation = function(indented_string)
-   return #indented_string - #string.match(indented_string, '^%s*(.*)')
-end
+utils.string_indentation =
+   function(indented_string) return #indented_string - #string.match(indented_string, '^%s*(.*)') end
 
 -- This function takes the value of each elements in a table and returns the
 -- total sum of all this values.

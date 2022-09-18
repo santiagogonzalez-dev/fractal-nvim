@@ -34,9 +34,7 @@ end
 ---@param mode boolean
 ---@return boolean
 M.session = function(mode)
-   if not mode then
-      return false
-   end
+   if not mode then return false end
 
    -- Setup the initial load and maintain some settings between buffers
    local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
@@ -63,9 +61,7 @@ M.session = function(mode)
       desc = 'Load buffer view and cursor position',
       group = save_sessions,
       callback = function()
-         if not utils.avoid_filetype() then
-            point_restore()
-         end
+         if not utils.avoid_filetype() then point_restore() end
          -- return utils.avoid_filetype() and point_restore()
       end,
    })
@@ -74,9 +70,7 @@ M.session = function(mode)
       desc = 'Save the view of the buffer',
       group = save_sessions,
       callback = function()
-         if not utils.avoid_filetype() then
-            return vim.cmd.mkview()
-         end
+         if not utils.avoid_filetype() then return vim.cmd.mkview() end
       end,
    })
 
@@ -84,9 +78,7 @@ M.session = function(mode)
 end
 
 M.conditionals = function(mode)
-   if not mode then
-      return false
-   end
+   if not mode then return false end
 
    local function run_comprobations()
       -- Conditionals
@@ -100,9 +92,7 @@ M.conditionals = function(mode)
          -- comprobation each time you change of directory
          vim.api.nvim_create_autocmd('DirChanged', {
             group = conditionals,
-            callback = function()
-               return utils.is_git()
-            end,
+            callback = function() return utils.is_git() end,
          })
       end
    end
@@ -114,33 +104,16 @@ end
 
 -- List of modules to be loaded, they can be found under
 -- `./lua/modules` k is the name of the module and v is a boolean
----@param T table @ Table containing the modules to be loaded
+---@param modules table @ Table containing the modules to be loaded
 ---@return boolean
-M.modules = function(T)
-   if T == nil or T == vim.NIL then
-      return false
-   end
+M.modules = function(modules)
+   if not modules then return false end
 
-   for k, v in pairs(T) do
-      local module_path = string.format('csj.modules.%s', k)
-      -- local status
-
-      if type(v) == 'boolean' and v then
-         -- If the v for the module are just booleans call the module
-         -- status = utils.prequire(module_path)
-         utils.prequire(module_path)
-      elseif type(v) == 'table' or type(v) == 'string' then
-         -- In the other hand if the v for the module are tables/strings call
-         -- the setups for each module.
-         local lib = utils.prequire(module_path)
-         if lib then
-            -- status = lib.setup(v)
-            lib.setup(v)
-         end
+   for k, v in pairs(modules) do
+      if v then
+         local lib = utils.prequire(string.format('csj.modules.%s', k))
+         if lib then lib.setup(v) end
       end
-      -- if status then
-      --    vim.pretty_print(string.format('%s %s   ', '   Module loaded ->', k))
-      -- end
    end
    return true
 end

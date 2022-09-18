@@ -7,9 +7,7 @@ function M.packer_load()
    packer = require 'packer'
 end
 
-function M.packer()
-   return packer
-end
+function M.packer() return packer end
 
 function M.check_packer()
    local packer_installed = require('csj.utils').is_installed 'opt/packer.nvim'
@@ -56,9 +54,7 @@ function M.list_plugins()
       use {
          'kylechui/nvim-surround',
          event = 'User LoadPlugins',
-         config = function()
-            require('nvim-surround').setup()
-         end,
+         config = function() require('nvim-surround').setup() end,
       }
 
       -- Accelerated jk
@@ -189,9 +185,7 @@ function M.list_plugins()
                end,
             },
          },
-         config = function()
-            require 'plugins.treesitter'
-         end,
+         config = function() require 'plugins.treesitter' end,
       }
 
       -- GitSigns
@@ -199,9 +193,7 @@ function M.list_plugins()
          'lewis6991/gitsigns.nvim',
          event = 'User IsGit',
          requires = 'nvim-lua/plenary.nvim',
-         config = function()
-            require 'plugins.gitsigns'
-         end,
+         config = function() require 'plugins.gitsigns' end,
       }
 
       -- Telescope
@@ -228,9 +220,7 @@ function M.list_plugins()
       use {
          'neovim/nvim-lspconfig',
          event = 'User LoadPlugins',
-         config = function()
-            require 'plugins.lsp'
-         end,
+         config = function() require 'plugins.lsp' end,
       }
 
       -- Mason
@@ -249,9 +239,7 @@ function M.list_plugins()
       use {
          'jose-elias-alvarez/null-ls.nvim',
          opt = true,
-         config = function()
-            require 'plugins.lsp.null-ls'
-         end,
+         config = function() require 'plugins.lsp.null-ls' end,
       }
 
       -- Completion, snippets
@@ -268,9 +256,7 @@ function M.list_plugins()
             'hrsh7th/cmp-cmdline',
             'L3MON4D3/LuaSnip',
          },
-         config = function()
-            require 'plugins.cmp'
-         end,
+         config = function() require 'plugins.cmp' end,
       }
 
       -- Indent blankline
@@ -298,9 +284,7 @@ function M.list_plugins()
                char = '│',
                virtcolumn = '',
             }
-            vim.schedule(function()
-               vim.cmd.VirtColumnRefresh()
-            end)
+            vim.schedule(function() vim.cmd.VirtColumnRefresh() end)
          end,
       }
 
@@ -313,9 +297,7 @@ function M.list_plugins()
                event = 'User LoadPlugins',
             },
          },
-         config = function()
-            require 'plugins.dap'
-         end,
+         config = function() require 'plugins.dap' end,
       }
 
       use {
@@ -327,9 +309,7 @@ function M.list_plugins()
             vim.api.nvim_create_autocmd('LspAttach', {
                group = 'LspAttach_inlayhints',
                callback = function(args)
-                  if not (args.data and args.data.client_id) then
-                     return
-                  end
+                  if not (args.data and args.data.client_id) then return end
 
                   local bufnr = args.buf
                   local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -342,17 +322,13 @@ function M.list_plugins()
       use {
          'santigo-zero/right-corner-diagnostics.nvim',
          event = 'LspAttach',
-         config = function()
-            require('rcd').setup { position = 'bottom' }
-         end,
+         config = function() require('rcd').setup { position = 'bottom' } end,
       }
 
       use {
          'NvChad/nvim-colorizer.lua',
          event = 'BufEnter',
-         config = function()
-            require('colorizer').setup()
-         end,
+         config = function() require('colorizer').setup() end,
       }
 
       use 'santigo-zero/jetjbp.nvim'

@@ -56,9 +56,7 @@ function M.setup(mode)
    elseif mode == 'normal' then
       vim.opt.laststatus = 3
       vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
-         callback = function()
-            vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").get()%}'
-         end,
+         callback = function() vim.opt.statusline = '%{%v:lua.require("csj.modules.statusline").get()%}' end,
       })
 
       vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {

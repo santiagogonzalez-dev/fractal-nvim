@@ -5,16 +5,12 @@ vim.opt_local.cmdheight = 1 -- more space in the neovim command line for display
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not status_cmp_ok then
-   return
-end
+if not status_cmp_ok then return end
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 local status, jdtls = pcall(require, 'jdtls')
-if not status then
-   return
-end
+if not status then return end
 
 local home = os.getenv 'HOME'
 WORKSPACE_PATH = string.format('%s%s', home, '/workspace/')
@@ -29,9 +25,7 @@ local root_markers = {
    'build.gradle',
 }
 local root_dir = require('jdtls.setup').find_root(root_markers)
-if root_dir == '' then
-   return
-end
+if root_dir == '' then return end
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true

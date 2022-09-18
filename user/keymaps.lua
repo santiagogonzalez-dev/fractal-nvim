@@ -128,16 +128,21 @@ vim.keymap.set('n', 'dD', '0D', {
 
 vim.keymap.set('n', '^^', '0', { desc = 'Better ^' })
 
-vim.keymap.set('n', 'gx', function()
-   vim.fn.jobstart({
-      'xdg-open',
-      vim.fn.expand('<cfile>', nil, nil),
-   }, {
-      detach = true,
-   })
-end, {
-   desc = 'Better gx',
-})
+vim.keymap.set(
+   'n',
+   'gx',
+   function()
+      vim.fn.jobstart({
+         'xdg-open',
+         vim.fn.expand('<cfile>', nil, nil),
+      }, {
+         detach = true,
+      })
+   end,
+   {
+      desc = 'Better gx',
+   }
+)
 
 vim.keymap.set('n', 'dd', function()
    if vim.api.nvim_get_current_line():match '^%s*$' then
@@ -227,12 +232,18 @@ vim.keymap.set('c', 'wqa', vim.cmd.wqa, {
 vim.api.nvim_create_autocmd('FileType', {
    pattern = 'qf',
    callback = function()
-      vim.keymap.set('n', '<C-]>', function()
-         vim.cmd ':cn'
-      end, { buffer = 0, desc = 'Go to next item in quickfix list' })
+      vim.keymap.set(
+         'n',
+         '<C-]>',
+         function() vim.cmd ':cn' end,
+         { buffer = 0, desc = 'Go to next item in quickfix list' }
+      )
 
-      vim.keymap.set('n', '<C-[>', function()
-         vim.cmd ':cp'
-      end, { buffer = 0, desc = 'Go to previous item in quickfix list' })
+      vim.keymap.set(
+         'n',
+         '<C-[>',
+         function() vim.cmd ':cp' end,
+         { buffer = 0, desc = 'Go to previous item in quickfix list' }
+      )
    end,
 })

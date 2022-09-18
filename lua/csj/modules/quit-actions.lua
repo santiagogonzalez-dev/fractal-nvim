@@ -63,9 +63,7 @@ function M.actions()
       -- buffer or quit neovim altogether.
       vim.ui.select({ 'Close the current and only buffer', 'Quit neovim' }, {
          prompt = 'What do you want to do?',
-         format_item = function(item)
-            return string.format('%s%s', '-> ', item)
-         end,
+         format_item = function(item) return string.format('%s%s', '-> ', item) end,
       }, function(_, choice)
          if choice == 1 then
             return vim.cmd.bd()
@@ -79,17 +77,17 @@ end
 ---@param mapping string
 ---@return boolean
 function M.setup(mapping)
-   if type(mapping) ~= 'string' then
-      return false
-   end
+   if type(mapping) ~= 'string' then return false end
 
-   vim.schedule(function()
-      vim.keymap.set('n', mapping, M.actions, {
-         desc = [[Mapping associated with CSJNeovim module: quit-actions.
+   vim.schedule(
+      function()
+         vim.keymap.set('n', mapping, M.actions, {
+            desc = [[Mapping associated with CSJNeovim module: quit-actions.
                  Check the module at csj.modules.quit-actions
                  for an in-depth description of the module.]],
-      })
-   end)
+         })
+      end
+   )
    return true
 end
 

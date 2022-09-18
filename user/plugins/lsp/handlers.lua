@@ -69,17 +69,13 @@ function M.highlight_word_under_cursor(client, bufnr)
       vim.api.nvim_create_autocmd('CursorHold', {
          group = highlight_word,
          buffer = bufnr,
-         callback = function()
-            vim.lsp.buf.document_highlight()
-         end,
+         callback = function() vim.lsp.buf.document_highlight() end,
       })
 
       vim.api.nvim_create_autocmd('CursorMoved', {
          group = highlight_word,
          buffer = bufnr,
-         callback = function()
-            vim.lsp.buf.clear_references()
-         end,
+         callback = function() vim.lsp.buf.clear_references() end,
       })
    end
 end
@@ -97,9 +93,7 @@ M.on_attach = function(client, bufnr)
 end
 
 local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not status_ok then
-   return
-end
+if not status_ok then return end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true

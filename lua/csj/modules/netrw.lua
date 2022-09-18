@@ -1,3 +1,4 @@
+local M = {}
 local utils = require 'csj.utils'
 
 -- NetRW config.
@@ -26,16 +27,12 @@ vim.g.netrw_localcopydircmd = 'cp -r' -- Enable recursive copy of directories
 vim.g.netrw_localmkdir = 'mkdir -p' -- Enable recursive creation of directories
 vim.g.netrw_localrmdir = 'rm -r' -- Enable recursive removal of directories and files
 
-utils.set_hl('netrwMarkFile', { link = 'Search' }) -- Highlight marked files in the same way search matches are
+vim.api.nvim_set_hl(0, 'netrwMarkFile', { link = 'Search' }) -- Highlight marked files in the same way search matches are
 
-local function draw_icons()
-   if vim.bo.filetype ~= 'netrw' then
-      return
-   end
+function M.draw_icons()
+   if vim.bo.filetype ~= 'netrw' then return end
    local is_devicons_available, devicons = pcall(require, 'nvim-web-devicons')
-   if not is_devicons_available then
-      return
-   end
+   if not is_devicons_available then return end
    local default_signs = {
       netrw_dir = {
          text = '',
@@ -95,9 +92,7 @@ local function draw_icons()
 
             -- If filetype is still nil after manually setting extensions
             -- for unknown filetypes then let's use 'default'
-            if not filetype then
-               filetype = 'default'
-            end
+            if not filetype then filetype = 'default' end
 
             local icon, icon_highlight = devicons.get_icon(line, filetype, { default = '' })
             sign_name = 'netrw_' .. filetype
@@ -114,15 +109,15 @@ local function draw_icons()
    end
 end
 
-vim.api.nvim_create_autocmd('FileType', {
-   pattern = 'netrw',
-   callback = function()
-      return draw_icons()
-   end,
-})
+function M.setup()
+   vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'netrw',
+      callback = function() return M.draw_icons() end,
+   })
 
-vim.api.nvim_create_autocmd('TextChanged', {
-   callback = function()
-      return draw_icons()
-   end,
-})
+   vim.api.nvim_create_autocmd('TextChanged', {
+      callback = function() return M.draw_icons() end,
+   })
+end
+
+return M

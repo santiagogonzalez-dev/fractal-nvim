@@ -12,17 +12,13 @@ vim.api.nvim_create_autocmd('FocusGained', {
 vim.api.nvim_create_autocmd('FileChangedShellPost', {
    desc = 'Actions when the file is changed outside of Neovim',
    group = session_opts,
-   callback = function()
-      vim.notify('File changed, reloading the buffer', vim.log.levels.WARN)
-   end,
+   callback = function() vim.notify('File changed, reloading the buffer', vim.log.levels.WARN) end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
    desc = 'Create directories before saving a buffer, should come by default',
    group = session_opts,
-   callback = function()
-      return vim.fn.mkdir(vim.fn.expand '%:p:h', 'p')
-   end,
+   callback = function() return vim.fn.mkdir(vim.fn.expand '%:p:h', 'p') end,
 })
 
 -- First load
@@ -35,11 +31,14 @@ vim.api.nvim_create_autocmd('UIEnter', {
    pattern = 'init.lua',
    once = true,
    callback = function()
-      vim.defer_fn(function()
-         return vim.fn.filereadable 'startuptime.txt' == 1
-            and vim.cmd ':!tail -n3 startuptime.txt'
-            and vim.fn.delete 'startuptime.txt'
-      end, 1000)
+      vim.defer_fn(
+         function()
+            return vim.fn.filereadable 'startuptime.txt' == 1
+               and vim.cmd ':!tail -n3 startuptime.txt'
+               and vim.fn.delete 'startuptime.txt'
+         end,
+         1000
+      )
    end,
 })
 
@@ -57,27 +56,21 @@ vim.api.nvim_create_autocmd('FileType', {
       'qf',
       'startuptime',
    },
-   callback = function()
-      vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 })
-   end,
+   callback = function() vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 }) end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
    desc = 'Quit! with q! in this filetypes',
    group = buffer_settings,
    pattern = 'TelescopePrompt',
-   callback = function()
-      vim.keymap.set('n', 'q', ':q!<CR>', { buffer = 0 })
-   end,
+   callback = function() vim.keymap.set('n', 'q', ':q!<CR>', { buffer = 0 }) end,
 })
 
 -- Make the cursorline appear only on the active focused window/pan
 vim.api.nvim_create_autocmd('UIEnter', {
    group = buffer_settings,
    callback = function()
-      if not vim.opt.cursorcolumn:get() then
-         return
-      end
+      if not vim.opt.cursorcolumn:get() then return end
 
       vim.api.nvim_create_autocmd('WinEnter', {
          group = buffer_settings,
@@ -120,9 +113,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = session_opts,
-   callback = function()
-      pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 })
-   end,
+   callback = function() pcall(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 }) end,
 })
 
 -- Disable mouse in insert mode
@@ -130,15 +121,11 @@ local mouse_original_value = vim.api.nvim_get_option 'mouse'
 vim.api.nvim_create_autocmd('InsertEnter', {
    desc = 'Disable mouse in insert mode',
    group = session_opts,
-   callback = function()
-      vim.opt.mouse = ''
-   end,
+   callback = function() vim.opt.mouse = '' end,
 })
 
 vim.api.nvim_create_autocmd('InsertLeave', {
    desc = 'Restore default values for mouse',
    group = session_opts,
-   callback = function()
-      vim.opt.mouse = mouse_original_value
-   end,
+   callback = function() vim.opt.mouse = mouse_original_value end,
 })

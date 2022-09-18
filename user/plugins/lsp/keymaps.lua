@@ -2,9 +2,12 @@ local M = {}
 local utils = require 'csj.utils'
 
 function M.keymaps(bufnr)
-   vim.keymap.set({ 'n', 'v', 'x' }, '<Leader>ls', function()
-      return vim.lsp.stop_client(vim.lsp.get_active_clients())
-   end, { buffer = bufnr, desc = 'Stop the LS' })
+   vim.keymap.set(
+      { 'n', 'v', 'x' },
+      '<Leader>ls',
+      function() return vim.lsp.stop_client(vim.lsp.get_active_clients()) end,
+      { buffer = bufnr, desc = 'Stop the LS' }
+   )
 
    vim.keymap.set(
       { 'v', 'x' },
@@ -21,9 +24,12 @@ function M.keymaps(bufnr)
       vim.cmd 'loadview'
    end, { buffer = bufnr, desc = 'Format the file' })
 
-   vim.keymap.set({ 'v', 'x' }, '<Leader><Leader>f', function()
-      vim.lsp.buf.range_formatting()
-   end, { buffer = bufnr, desc = 'Range formatting the file' })
+   vim.keymap.set(
+      { 'v', 'x' },
+      '<Leader><Leader>f',
+      function() vim.lsp.buf.range_formatting() end,
+      { buffer = bufnr, desc = 'Range formatting the file' }
+   )
 
    vim.api.nvim_create_user_command('Format', function()
       vim.cmd 'mkview'
@@ -59,9 +65,7 @@ function M.keymaps(bufnr)
       end
    end, { buffer = bufnr, desc = 'Toggle diagnostics' })
 
-   vim.keymap.set('n', 'gl', function()
-      return utils.not_interfere_on_float() and vim.lsp.buf.hover()
-   end, {
+   vim.keymap.set('n', 'gl', function() return utils.not_interfere_on_float() and vim.lsp.buf.hover() end, {
       buffer = bufnr,
       desc = 'Show a description of the word under cursor',
    })

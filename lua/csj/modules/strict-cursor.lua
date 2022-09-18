@@ -61,14 +61,10 @@ end
 
 vim.g.strict_cursor = true
 function M.setup(disables_mode)
-   if type(disables_mode) ~= 'string' then
-      return false
-   end
+   if type(disables_mode) ~= 'string' then return false end
 
    M.toggle()
-   vim.keymap.set('n', disables_mode, function()
-      M.toggle()
-   end)
+   vim.keymap.set('n', disables_mode, function() M.toggle() end)
 end
 
 return M
