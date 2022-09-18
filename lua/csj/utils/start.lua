@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 
 -- Set a colorscheme or notify if there's something wrong with it
 ---@param colorscheme_name string
@@ -11,13 +11,13 @@ function M.colorscheme(colorscheme_name)
       or colorscheme_name == nil
       or colorscheme_name == vim.NIL
    then
-      vim.notify 'The string for setting up the colorcheme might be wrong, check you user_settings.json'
+      vim.notify('The string for setting up the colorcheme might be wrong, check you user_settings.json')
       return false
    end
 
    local ok, _ = pcall(vim.cmd.colorscheme, colorscheme_name)
    if not ok then
-      vim.notify 'Could not find the colorscheme, check your settings.json'
+      vim.notify('Could not find the colorscheme, check your settings.json')
       return false
    else
       vim.cmd.redraw()
@@ -54,7 +54,7 @@ function M.session(mode)
       if line <= vim.api.nvim_buf_line_count(0) then
          vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
          if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
-            return vim.cmd.normal 'zo'
+            return vim.cmd.normal('zo')
          end
       end
    end

@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 
 -- TODO(santigo-zero): FIXME before using
 -- Maybe use output from `:buffers` to populate quickfix list
@@ -49,7 +49,7 @@ end
 
 function M.setup(user_table_mappings)
    if type(user_table_mappings) ~= 'table' then
-      vim.notify 'Error loading buffer-switch module'
+      vim.notify('Error loading buffer-switch module')
       return false
    end
 

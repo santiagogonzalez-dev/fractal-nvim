@@ -5,7 +5,7 @@ local dap_ui_status_ok, dapui = pcall(require, 'dapui')
 if not dap_ui_status_ok then return end
 
 -- dapui.setup()
-dapui.setup {
+dapui.setup({
    icons = { expanded = '▾', collapsed = '▸' },
    mappings = {
       -- Use a table to apply multiple mappings
@@ -18,7 +18,7 @@ dapui.setup {
    },
    -- Expand lines larger than the window
    -- Requires >= 0.7
-   expand_lines = vim.fn.has 'nvim-0.7',
+   expand_lines = vim.fn.has('nvim-0.7'),
    -- Layouts define sections of the screen to place windows.
    -- The position can be "left", "right", "top" or "bottom".
    -- The size specifies the height/width depending on position. It can be an Int
@@ -59,7 +59,7 @@ dapui.setup {
    render = {
       max_type_length = nil, -- Can be integer or nil.
    },
-}
+})
 
 vim.fn.sign_define(
    'DapBreakpoint',
@@ -67,8 +67,8 @@ vim.fn.sign_define(
 )
 
 dap.listeners.after.event_initialized['dapui_config'] =
-   function() dapui.open {} end
+   function() dapui.open({}) end
 dap.listeners.before.event_terminated['dapui_config'] =
-   function() dapui.close {} end
+   function() dapui.close({}) end
 dap.listeners.before.event_exited['dapui_config'] =
-   function() dapui.close {} end
+   function() dapui.close({}) end

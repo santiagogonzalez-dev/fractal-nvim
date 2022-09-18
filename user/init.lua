@@ -1,15 +1,15 @@
-require 'keymaps'
+require('keymaps')
 -- require('plugins')
 
 -- Settings for non-visible characters
-vim.opt.fillchars:append {
+vim.opt.fillchars:append({
    eob = ' ', -- Don't show the ~ at the eof
    -- Separator between the cmdline messages and the buffer window, doesn't work
    -- with vim.opt.cmdheight = 0
    msgsep = '🮑',
-}
+})
 
-vim.opt.fillchars:append {
+vim.opt.fillchars:append({
 
    -- horiz = '━',
    -- horizup = '┻',
@@ -42,9 +42,9 @@ vim.opt.fillchars:append {
    -- vertleft = ' ',
    -- vertright = ' ',
    -- verthoriz = ' ',
-}
+})
 
-vim.opt.listchars:append {
+vim.opt.listchars:append({
    -- eol = '↴', -- ↪ ↲ ⏎ 
    -- space = '·',
    -- tab = '-->',
@@ -54,7 +54,7 @@ vim.opt.listchars:append {
    tab = '!·',
    leadmultispace = '!··',
    trail = '█', -- · ␣
-}
+})
 
 -- Ensure this settings persist in all buffers
 function _G.all_buffers_settings()
@@ -80,4 +80,4 @@ vim.schedule(function()
 end)
 
 vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
-require 'plugins'
+require('plugins')

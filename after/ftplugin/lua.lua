@@ -16,7 +16,7 @@ local function dir_separator()
    -- Look at package.config for directory separator string (it's the first line)
    if package.config then
       return string.match(package.config, '^[^\n]')
-   elseif vim.fn.has 'win32' == 1 then
+   elseif vim.fn.has('win32') == 1 then
       return '\\'
    else
       return '/'
@@ -78,9 +78,9 @@ vim.opt_local.includeexpr = 'v:lua.Find_required_path(v:fname)'
 
 -- There's a non-visible character at cchar= so watch out.
 vim.schedule(function()
-   vim.cmd [[syntax match hidechars '\'' conceal " cchar= ]]
-   vim.cmd [[syntax match hidechars '\"' conceal " cchar= ]]
-   vim.cmd [[syntax match hidechars '\[\[' conceal " cchar= ]]
-   vim.cmd [[syntax match hidechars '\]\]' conceal " cchar= ]]
+   vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
+   vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
+   vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
+   vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
    -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
 end)

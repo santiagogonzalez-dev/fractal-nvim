@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 
 -- NetRW config.
 vim.g.netrw_banner = 0 -- Toggle the banner
@@ -63,7 +63,7 @@ function M.draw_icons()
    end
 
    local cur_line_nr = 1
-   local total_lines = vim.fn.line '$'
+   local total_lines = vim.fn.line('$')
    while cur_line_nr <= total_lines do
       -- Set default sign
       local sign_name = 'netrw_file'
@@ -76,17 +76,17 @@ function M.draw_icons()
          -- without doing nothing more
          cur_line_nr = cur_line_nr + 1
       else
-         if line:find '/$' then
+         if line:find('/$') then
             sign_name = 'netrw_dir'
-         elseif line:find '@%s+-->' then
+         elseif line:find('@%s+-->') then
             sign_name = 'netrw_link'
-         elseif line:find '*$' then
-            sign_name:find 'netrw_exec'
+         elseif line:find('*$') then
+            sign_name:find('netrw_exec')
          else
-            local filetype = line:match '^.*%.(.*)'
-            if not filetype and line:find 'LICENSE' then
+            local filetype = line:match('^.*%.(.*)')
+            if not filetype and line:find('LICENSE') then
                filetype = 'md'
-            elseif line:find 'rc$' then
+            elseif line:find('rc$') then
                filetype = 'conf'
             end
 

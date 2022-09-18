@@ -132,7 +132,7 @@ function folds.setup()
    -- vim.opt.foldmethod = 'expr'
    -- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
-   vim.opt.fillchars:append {
+   vim.opt.fillchars:append({
       fold = ' ', -- Filling foldtext
       foldclose = '⯆',
       -- foldsep = '🮍',
@@ -140,7 +140,7 @@ function folds.setup()
       foldopen = '⯈',
       -- foldclose = '',
       -- foldopen = '▎',
-   }
+   })
 end
 
 return folds

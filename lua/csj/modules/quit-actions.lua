@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 
 M.del_normal_bufs_with_exception = function(current_buf)
    local buflist = vim.api.nvim_list_bufs()

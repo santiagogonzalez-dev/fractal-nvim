@@ -27,9 +27,9 @@ return {
          },
          workspace = {
             library = {
-               [vim.fn.expand '$VIMRUNTIME/lua'] = true,
-               [vim.fn.stdpath 'config' .. '/lua'] = true,
-               [vim.fn.stdpath 'config' .. '/user'] = true,
+               [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+               [vim.fn.stdpath('config') .. '/lua'] = true,
+               [vim.fn.stdpath('config') .. '/user'] = true,
             },
          },
          telemetry = {

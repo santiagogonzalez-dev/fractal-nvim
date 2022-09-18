@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 
 function M.keymaps(bufnr)
    vim.keymap.set(
@@ -24,9 +24,9 @@ function M.keymaps(bufnr)
 
    -- Formatting
    vim.keymap.set('n', '<Leader><Leader>f', function()
-      vim.cmd 'mkview'
-      vim.lsp.buf.format { async = false }
-      vim.cmd 'loadview'
+      vim.cmd('mkview')
+      vim.lsp.buf.format({ async = false })
+      vim.cmd('loadview')
    end, { buffer = bufnr, desc = 'Format the file' })
 
    vim.keymap.set(
@@ -37,9 +37,9 @@ function M.keymaps(bufnr)
    )
 
    vim.api.nvim_create_user_command('Format', function()
-      vim.cmd 'mkview'
-      vim.lsp.buf.format { async = false }
-      vim.cmd 'loadview'
+      vim.cmd('mkview')
+      vim.lsp.buf.format({ async = false })
+      vim.cmd('loadview')
    end, {})
 
    -- Diagnostics

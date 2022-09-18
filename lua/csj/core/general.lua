@@ -5,13 +5,13 @@ vim.opt.shiftwidth = tab_lenght / 2 -- Size of a > or < when indenting
 vim.opt.tabstop = tab_lenght -- Tab length
 
 -- Cursor settings
-vim.opt.guicursor:append 'v:hor50'
-vim.opt.guicursor:append 'i-ci-ve:ver25'
-vim.opt.guicursor:append 'r-cr-o:hor20'
+vim.opt.guicursor:append('v:hor50')
+vim.opt.guicursor:append('i-ci-ve:ver25')
+vim.opt.guicursor:append('r-cr-o:hor20')
 -- vim.opt.guicursor = ''
 
 -- Search files recursively
-vim.opt.path:append '**'
+vim.opt.path:append('**')
 
 vim.opt.showcmd = false
 
@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd('Filetype', {
    callback = function()
       if (vim.opt.lines:get() * 4) < vim.opt.columns:get() then
          if not vim.w.help_is_moved or vim.w.help_is_moved ~= 'right' then
-            vim.cmd.wincmd 'L'
+            vim.cmd.wincmd('L')
             vim.w.help_is_moved = 'right'
          end
       end

@@ -8,14 +8,14 @@ local M = {}
 function M.find_fullpath(extension)
    return string.format(
       '%s%s%s',
-      vim.fn.stdpath 'config',
+      vim.fn.stdpath('config'),
       '/user/skeletons/skeleton',
       extension
    )
 end
 
 function M.define_extension()
-   local buffer_extension = vim.fn.expand('%f'):match '^.+(%..+)$'
+   local buffer_extension = vim.fn.expand('%f'):match('^.+(%..+)$')
 
    if buffer_extension == nil then
       buffer_extension = string.format('.%s', vim.bo.filetype)
@@ -37,7 +37,7 @@ function M.setup()
             vim.cmd('0r' .. get_full_path) -- Read the file
             vim.fn.deletebufline(
                vim.api.nvim_get_current_buf(),
-               vim.fn.line '$'
+               vim.fn.line('$')
             ) -- And delete the empty line
          end
       end,

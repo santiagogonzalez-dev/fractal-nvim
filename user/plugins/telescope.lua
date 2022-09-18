@@ -1,13 +1,13 @@
 local status_ok, telescope = pcall(require, 'telescope')
 if not status_ok then return end
 
-local previewers = require 'telescope.previewers'
-local previewers_utils = require 'telescope.previewers.utils'
+local previewers = require('telescope.previewers')
+local previewers_utils = require('telescope.previewers.utils')
 
 -- Themes
-local clean_dropdown = require('telescope.themes').get_dropdown {
+local clean_dropdown = require('telescope.themes').get_dropdown({
    previewer = false,
-} -- Dropdown Theme
+}) -- Dropdown Theme
 
 local function project_files()
    local opts = vim.deepcopy(clean_dropdown)
@@ -15,7 +15,7 @@ local function project_files()
    if not ok then return require('telescope.builtin').find_files(opts) end
 end
 
-telescope.setup {
+telescope.setup({
    defaults = {
       vimgrep_arguments = {
          'rg',
@@ -67,9 +67,9 @@ telescope.setup {
       sorting_strategy = 'ascending',
       winblend = 9,
    },
-}
+})
 
-telescope.load_extension 'projects'
+telescope.load_extension('projects')
 
 vim.keymap.set(
    'n',

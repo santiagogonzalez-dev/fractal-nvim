@@ -1,5 +1,5 @@
 local M = {}
-local data = require 'csj.utils.data'
+local data = require('csj.utils.data')
 
 -- TODO(santigo-zero): Generate hl groups
 -- do
@@ -9,7 +9,7 @@ local data = require 'csj.utils.data'
 -- end
 
 function M.get()
-   return table.concat {
+   return table.concat({
       -- ' ',
       data.position_with_icons(),
       data.buffer_status(),
@@ -30,7 +30,7 @@ function M.get()
       '%#StatusLine#', -- Reset hl groups
       data.vcs(),
       -- ' ',
-   }
+   })
 end
 
 function M.hide_completely()

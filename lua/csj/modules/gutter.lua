@@ -50,7 +50,7 @@ function gutter.setup()
    gutter.only_numbers_cmdline()
    gutter.only_numbers_focused_window()
    gutter.disable_on_insert()
-   vim.cmd.redraw { bang = true }
+   vim.cmd.redraw({ bang = true })
 end
 
 -- TODO(santigo-zero): Maybe notify if the user have both relativenumber and

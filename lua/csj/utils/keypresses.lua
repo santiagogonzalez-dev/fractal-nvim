@@ -2,7 +2,7 @@
 
 local M = {}
 -- local utils = require 'csj.utils'
-local _kg_ns = vim.api.nvim_create_namespace 'keypresses_global'
+local _kg_ns = vim.api.nvim_create_namespace('keypresses_global')
 
 M.typed_letters = {}
 

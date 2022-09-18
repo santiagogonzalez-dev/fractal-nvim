@@ -64,10 +64,10 @@ function M.highlight_word_under_cursor(client, bufnr)
    if client.server_capabilities.documentHighlightProvider then
       local highlight_word =
          vim.api.nvim_create_augroup('lsp_document_highlight', {})
-      vim.api.nvim_clear_autocmds {
+      vim.api.nvim_clear_autocmds({
          buffer = bufnr,
          group = 'lsp_document_highlight',
-      }
+      })
 
       vim.api.nvim_create_autocmd('CursorHold', {
          group = highlight_word,
@@ -87,7 +87,7 @@ M.on_attach = function(client, bufnr)
    if client.name == 'jdt.ls' then
       vim.lsp.codelens.refresh()
       if JAVA_DAP_ACTIVE then
-         require('jdtls').setup_dap { hotcodereplace = 'auto' }
+         require('jdtls').setup_dap({ hotcodereplace = 'auto' })
          require('jdtls.dap').setup_dap_main_class_configs()
       end
    end

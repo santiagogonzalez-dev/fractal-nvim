@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 
 -- DESCRIPTION: Makes the cursor behave almost like if you were using tabs
 -- instead of spaces for indentation, so the cursor jumps instead of moving

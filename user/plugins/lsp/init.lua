@@ -5,8 +5,8 @@ end
 
 local packer = require('plugins.packer').packer()
 
-packer.loader 'mason.nvim'
-packer.loader 'mason-lspconfig.nvim'
+packer.loader('mason.nvim')
+packer.loader('mason-lspconfig.nvim')
 
 local SERVERS = {
    'bashls',
@@ -23,10 +23,10 @@ local SERVERS = {
    'tsserver',
 }
 
-require('mason-lspconfig').setup {
+require('mason-lspconfig').setup({
    ensure_installed = SERVERS,
    automatic_installation = false,
-}
+})
 
 require('mason').setup()
 
@@ -45,5 +45,5 @@ end
 
 require('plugins.lsp.handlers').setup()
 
-packer.loader 'null-ls.nvim'
-require 'plugins.lsp.null-ls'
+packer.loader('null-ls.nvim')
+require('plugins.lsp.null-ls')

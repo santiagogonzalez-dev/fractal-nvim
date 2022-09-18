@@ -1,7 +1,7 @@
 local status_ok, gitsigns = pcall(require, 'gitsigns')
 if not status_ok then return end
 
-gitsigns.setup {
+gitsigns.setup({
    signs = {
       add = {
          hl = 'GitSignsAdd',
@@ -93,10 +93,14 @@ gitsigns.setup {
       map('n', '<leader>hu', gitsigns.undo_stage_hunk)
       map('n', '<leader>hR', gitsigns.reset_buffer)
       map('n', '<leader>hp', gitsigns.preview_hunk)
-      map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end)
+      map(
+         'n',
+         '<leader>hb',
+         function() gitsigns.blame_line({ full = true }) end
+      )
       map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
       map('n', '<leader>hd', gitsigns.diffthis)
-      map('n', '<leader>hD', function() gitsigns.diffthis '~' end)
+      map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
       map('n', '<leader>td', gitsigns.toggle_deleted)
 
       -- Text object
@@ -108,6 +112,6 @@ gitsigns.setup {
       map('n', 'ghk', gitsigns.prev_hunk)
       map('n', 'ghp', gitsigns.preview_hunk)
    end,
-}
+})
 
 return gitsigns

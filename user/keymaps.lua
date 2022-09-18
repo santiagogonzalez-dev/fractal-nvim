@@ -175,7 +175,7 @@ vim.keymap.set(
 )
 
 vim.keymap.set('n', 'dd', function()
-   if vim.api.nvim_get_current_line():match '^%s*$' then
+   if vim.api.nvim_get_current_line():match('^%s*$') then
       -- vim.notify('Not overriding the yank register', vim.log.levels.WARN)
       return '"_dd'
    else
@@ -274,12 +274,12 @@ vim.keymap.set('c', 'wqa', vim.cmd.wqa, {
 vim.api.nvim_create_autocmd('FileType', {
    pattern = 'qf',
    callback = function()
-      vim.keymap.set('n', '<C-]>', function() vim.cmd ':cn' end, {
+      vim.keymap.set('n', '<C-]>', function() vim.cmd(':cn') end, {
          buffer = 0,
          desc = 'Go to next item in quickfix list',
       })
 
-      vim.keymap.set('n', '<C-[>', function() vim.cmd ':cp' end, {
+      vim.keymap.set('n', '<C-[>', function() vim.cmd(':cp') end, {
          buffer = 0,
          desc = 'Go to previous item in quickfix list',
       })

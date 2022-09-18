@@ -1,34 +1,34 @@
 local M = {}
 local packer_compiled_path = string.format(
    '%s%s',
-   vim.fn.stdpath 'config',
+   vim.fn.stdpath('config'),
    '/user/plugins/packer_compiled.lua'
 )
 local packer
 
 function M.packer_load()
-   vim.cmd.packadd 'packer.nvim'
-   packer = require 'packer'
+   vim.cmd.packadd('packer.nvim')
+   packer = require('packer')
 end
 
 function M.packer() return packer end
 
 function M.check_packer()
-   local packer_installed = require('csj.utils').is_installed 'opt/packer.nvim'
+   local packer_installed = require('csj.utils').is_installed('opt/packer.nvim')
    local plugins_dir =
-      string.format('%s%s', vim.fn.stdpath 'data', '/site/pack/packer') -- /home/user/.local/share/nvim/site/pack/packer
+      string.format('%s%s', vim.fn.stdpath('data'), '/site/pack/packer') -- /home/user/.local/share/nvim/site/pack/packer
    if not packer_installed then
       vim.fn.delete(packer_compiled_path) -- Delete the packer_compiled
 
       -- Clone packer
-      vim.fn.system {
+      vim.fn.system({
          'git',
          'clone',
          '--depth',
          '1',
          'https://github.com/wbthomason/packer.nvim',
          plugins_dir .. '/opt/packer.nvim',
-      }
+      })
 
       -- vim.notify 'Installing packer.nvim, open neovim again and run :PackerSync'
       M.packer_load()
@@ -38,51 +38,51 @@ function M.check_packer()
 end
 
 function M.init_packer()
-   packer.init {
+   packer.init({
       compile_path = packer_compiled_path, -- Path for packer_compiled.lua
       git = { clone_timeout = 360 },
       display = {
          open_fn = function()
-            return require('packer.util').float { border = 'rounded' } -- Have packer use a popup window
+            return require('packer.util').float({ border = 'rounded' }) -- Have packer use a popup window
          end,
       },
-   }
+   })
 end
 
 function M.list_plugins()
    return packer.startup(function(use)
-      use { 'wbthomason/packer.nvim', opt = true } -- Packer
-      use { 'nvim-lua/plenary.nvim', module = 'plenary' } -- Plenary
-      use 'kyazdani42/nvim-web-devicons'
+      use({ 'wbthomason/packer.nvim', opt = true }) -- Packer
+      use({ 'nvim-lua/plenary.nvim', module = 'plenary' }) -- Plenary
+      use('kyazdani42/nvim-web-devicons')
 
       -- Surround
-      use {
+      use({
          'kylechui/nvim-surround',
          event = 'User LoadPlugins',
          config = function() require('nvim-surround').setup() end,
-      }
+      })
 
       -- Accelerated jk
-      use {
+      use({
          'rainbowhxch/accelerated-jk.nvim',
          keys = { 'j', 'k', 'w', 'b', '+', '-' },
          config = function()
-            require('accelerated-jk').setup {
+            require('accelerated-jk').setup({
                enable_deceleration = true,
                acceleration_motions = { 'w', 'b', '+', '-' },
-            }
+            })
             vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', {})
             vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', {})
          end,
-      }
+      })
 
       -- Project
-      use {
+      use({
          'ahmedkhalf/project.nvim',
          module = 'project',
          opt = true,
          config = function()
-            require('project_nvim').setup {
+            require('project_nvim').setup({
                detection_methods = { 'lsp', 'pattern' },
                patterns = {
                   '.git',
@@ -92,16 +92,16 @@ function M.list_plugins()
                   'wezterm.lua',
                },
                show_hidden = true, -- Show hidden files in telescope when searching for files in a project
-            }
+            })
          end,
-      }
+      })
 
       -- Comment
-      use {
+      use({
          'numToStr/Comment.nvim',
          keys = { 'gcc', 'gc', 'gcb', 'gb' },
          config = function()
-            require('Comment').setup {
+            require('Comment').setup({
                padding = true,
                sticky = true,
                ignore = '^$',
@@ -111,7 +111,7 @@ function M.list_plugins()
                   extended = true,
                },
                pre_hook = function(ctx)
-                  local U = require 'Comment.utils'
+                  local U = require('Comment.utils')
                   local location = nil
                   if ctx.ctype == U.ctype.blockwise then
                      location =
@@ -122,23 +122,23 @@ function M.list_plugins()
                      location =
                         require('ts_context_commentstring.utils').get_visual_start_location()
                   end
-                  return require('ts_context_commentstring.internal').calculate_commentstring {
+                  return require('ts_context_commentstring.internal').calculate_commentstring({
                      key = ctx.ctype == U.ctype.linewise and '__default'
                         or '__multiline',
                      location = location,
-                  }
+                  })
                end,
-            }
-            require 'Comment.ft'({ 'dosini', 'zsh', 'help' }, { '#%s' })
+            })
+            require('Comment.ft')({ 'dosini', 'zsh', 'help' }, { '#%s' })
          end,
-      }
+      })
 
       -- Autopairs
-      use {
+      use({
          'windwp/nvim-autopairs',
          event = 'InsertEnter',
          config = function()
-            require('nvim-autopairs').setup {
+            require('nvim-autopairs').setup({
                check_ts = true,
                ts_config = {
                   javascript = { 'template_string' },
@@ -157,12 +157,12 @@ function M.list_plugins()
                   highlight = 'Search',
                   highlight_grey = 'IncSearch',
                },
-            }
+            })
          end,
-      }
+      })
 
       -- Treesitter
-      use {
+      use({
          'nvim-treesitter/nvim-treesitter',
          event = 'User LoadPlugins',
          run = ':TSUpdate',
@@ -175,7 +175,7 @@ function M.list_plugins()
                'nvim-treesitter/nvim-treesitter-textobjects',
                after = 'nvim-treesitter',
                config = function()
-                  require('nvim-treesitter.configs').setup {
+                  require('nvim-treesitter.configs').setup({
                      textobjects = {
                         select = {
                            enable = true,
@@ -207,14 +207,14 @@ function M.list_plugins()
                            include_surrounding_whitespace = false,
                         },
                      },
-                  }
+                  })
                end,
             },
             {
                'nvim-treesitter/playground',
                cmd = { 'TSHighlightCapturesUnderCursor', 'TSPlaygroundToggle' },
                config = function()
-                  require('nvim-treesitter.configs').setup {
+                  require('nvim-treesitter.configs').setup({
                      playground = {
                         enable = true,
                         disable = {},
@@ -233,23 +233,23 @@ function M.list_plugins()
                            show_help = '?',
                         },
                      },
-                  }
+                  })
                end,
             },
          },
-         config = function() require 'plugins.treesitter' end,
-      }
+         config = function() require('plugins.treesitter') end,
+      })
 
       -- GitSigns
-      use {
+      use({
          'lewis6991/gitsigns.nvim',
          event = 'User IsGit',
          requires = 'nvim-lua/plenary.nvim',
-         config = function() require 'plugins.gitsigns' end,
-      }
+         config = function() require('plugins.gitsigns') end,
+      })
 
       -- Telescope
-      use {
+      use({
          'nvim-telescope/telescope.nvim',
          module = 'telescope',
          keys = {
@@ -263,39 +263,39 @@ function M.list_plugins()
          },
          requires = 'nvim-lua/plenary.nvim',
          config = function()
-            vim.cmd 'PackerLoad project.nvim'
-            require 'plugins.telescope'
+            vim.cmd('PackerLoad project.nvim')
+            require('plugins.telescope')
          end,
-      }
+      })
 
       -- LSP
-      use {
+      use({
          'neovim/nvim-lspconfig',
          event = 'User LoadPlugins',
-         config = function() require 'plugins.lsp' end,
-      }
+         config = function() require('plugins.lsp') end,
+      })
 
       -- Mason
-      use {
+      use({
          'williamboman/mason.nvim',
          opt = true,
-      }
+      })
 
       -- Mason Lsp Installer
-      use {
+      use({
          'williamboman/mason-lspconfig.nvim',
          opt = true,
-      }
+      })
 
       -- Null-LS
-      use {
+      use({
          'jose-elias-alvarez/null-ls.nvim',
          opt = true,
-         config = function() require 'plugins.lsp.null-ls' end,
-      }
+         config = function() require('plugins.lsp.null-ls') end,
+      })
 
       -- Completion, snippets
-      use {
+      use({
          'hrsh7th/nvim-cmp',
          requires = {
             'saadparwaiz1/cmp_luasnip',
@@ -308,20 +308,20 @@ function M.list_plugins()
             'hrsh7th/cmp-cmdline',
             'L3MON4D3/LuaSnip',
          },
-         config = function() require 'plugins.cmp' end,
-      }
+         config = function() require('plugins.cmp') end,
+      })
 
       -- Indent blankline
-      use {
+      use({
          'lukas-reineke/indent-blankline.nvim',
          event = 'User LoadPlugins',
          config = function()
-            require('indent_blankline').setup {
+            require('indent_blankline').setup({
                show_current_context = true,
                show_current_context_start = false,
                show_end_of_line = true,
                show_trailing_blankline_indent = false,
-            }
+            })
             vim.api.nvim_set_hl(
                0,
                'IndentBlanklineChar',
@@ -333,22 +333,22 @@ function M.list_plugins()
                { link = 'Function' }
             ) -- Current place
          end,
-      }
+      })
 
       -- Virtual colorcolumn
-      use {
+      use({
          'lukas-reineke/virt-column.nvim',
          event = 'User LoadPlugins',
          config = function()
-            require('virt-column').setup {
+            require('virt-column').setup({
                char = '│',
                virtcolumn = '',
-            }
+            })
             vim.schedule(function() vim.cmd.VirtColumnRefresh() end)
          end,
-      }
+      })
 
-      use {
+      use({
          'mfussenegger/nvim-dap',
          event = 'User LoadPlugins',
          requires = {
@@ -357,10 +357,10 @@ function M.list_plugins()
                event = 'User LoadPlugins',
             },
          },
-         config = function() require 'plugins.dap' end,
-      }
+         config = function() require('plugins.dap') end,
+      })
 
-      use {
+      use({
          'lvimuser/lsp-inlayhints.nvim',
          event = 'User LoadPlugins',
          config = function()
@@ -377,27 +377,27 @@ function M.list_plugins()
                end,
             })
          end,
-      }
+      })
 
-      use {
+      use({
          'santigo-zero/right-corner-diagnostics.nvim',
          event = 'LspAttach',
-         config = function() require('rcd').setup { position = 'bottom' } end,
-      }
+         config = function() require('rcd').setup({ position = 'bottom' }) end,
+      })
 
-      use {
+      use({
          'NvChad/nvim-colorizer.lua',
          event = 'BufEnter',
          config = function() require('colorizer').setup() end,
-      }
+      })
 
-      use 'santigo-zero/jetjbp.nvim'
+      use('santigo-zero/jetjbp.nvim')
 
-      use {
+      use({
          'zbirenbaum/neodim',
          event = 'LspAttach',
          config = function()
-            require('neodim').setup {
+            require('neodim').setup({
                alpha = 0.75,
                blend_color = '#000000',
                update_in_insert = {
@@ -409,9 +409,9 @@ function M.list_plugins()
                   signs = true,
                   underline = true,
                },
-            }
+            })
          end,
-      }
+      })
 
       return packer
    end)

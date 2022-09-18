@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'csj.utils'
+local utils = require('csj.utils')
 
 function M.disable()
    -- Builtin plugins and providers.
@@ -43,9 +43,9 @@ function M.disable()
    vim.g.loaded_perl_provider = builtins
 
    -- Disable temporarily syntax, ftplugin and shadafile.
-   vim.cmd.syntax 'off'
-   vim.cmd.filetype 'off'
-   vim.cmd.filetype 'plugin indent off'
+   vim.cmd.syntax('off')
+   vim.cmd.filetype('off')
+   vim.cmd.filetype('plugin indent off')
    vim.opt.shadafile = 'NONE'
 
    return true
@@ -54,17 +54,17 @@ end
 function M.enable()
    -- Load runtime files.
    -- TODO(santigo-zero): use vim.opt.runtimepath:append
-   vim.api.nvim_command 'runtime! plugin/**/*.vim'
-   vim.api.nvim_command 'runtime! plugin/**/*.lua'
+   vim.api.nvim_command('runtime! plugin/**/*.vim')
+   vim.api.nvim_command('runtime! plugin/**/*.lua')
 
    -- Syntax and ftplugin.
-   vim.cmd.syntax 'on'
-   vim.cmd.filetype 'on'
-   vim.cmd.filetype 'plugin indent on'
+   vim.cmd.syntax('on')
+   vim.cmd.filetype('on')
+   vim.cmd.filetype('plugin indent on')
 
    -- Shadafile.
    vim.opt.shadafile = ''
-   vim.cmd.rshada { bang = true } -- Read shadafile.
+   vim.cmd.rshada({ bang = true }) -- Read shadafile.
 
    return true
 end
@@ -73,9 +73,9 @@ end
 function M.late_autocmds()
    -- We can't use skeletons without doing this comprobation if we load neovim
    -- using the `csjneovim.lua`.
-   if utils.readable(vim.fn.expand '%:p') then
+   if utils.readable(vim.fn.expand('%:p')) then
       -- vim.cmd.e()
-      vim.cmd.filetype 'detect' -- Load ftplugin.
+      vim.cmd.filetype('detect') -- Load ftplugin.
    else
       vim.api.nvim_exec_autocmds('BufNewFile', {})
    end

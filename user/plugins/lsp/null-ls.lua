@@ -6,7 +6,7 @@ local diag = null.builtins.diagnostics
 local actions = null.builtins.code_actions
 local completion = null.builtins.completion
 
-null.setup {
+null.setup({
    sources = {
       actions.gitsigns,
       actions.eslint,
@@ -14,7 +14,7 @@ null.setup {
       actions.shellcheck,
       diag.shellcheck,
       format.stylua,
-      format.prettier.with {
+      format.prettier.with({
          prefer_local = 'node_modules/.bin',
          command = 'prettier',
          filetypes = {
@@ -42,8 +42,8 @@ null.setup {
             '--print-width',
             '80',
          },
-      },
-      format.black.with {
+      }),
+      format.black.with({
          prefer_local = '.venv/bin',
          extra_args = {
             -- '--fast',
@@ -54,11 +54,11 @@ null.setup {
             '--target-version',
             'py310',
          },
-      },
-      diag.flake8.with {
+      }),
+      diag.flake8.with({
          prefer_local = '.venv/bin',
          extra_args = { '--max-line-lenth', '88' },
-      },
+      }),
       completion.spell,
    },
-}
+})

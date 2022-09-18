@@ -3,4 +3,4 @@
 
 require('plugins.packer').setup()
 pcall(require, 'plugins.packer_compiled')
-vim.cmd.doautocmd 'User LoadPlugins'
+vim.cmd.doautocmd('User LoadPlugins')

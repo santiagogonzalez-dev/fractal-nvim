@@ -1,6 +1,6 @@
 local M = {}
-local utils = require 'csj.utils'
-local _ns_sim = vim.api.nvim_create_namespace '_ns_sim' -- Namespace
+local utils = require('csj.utils')
+local _ns_sim = vim.api.nvim_create_namespace('_ns_sim') -- Namespace
 
 -- TODO(santigo-zero): Avoid showing the mark in certain filetypes
 
@@ -9,7 +9,7 @@ vim.api.nvim_set_hl(0, 'SIM', { link = 'TSVariableBuiltin' })
 vim.api.nvim_set_hl(
    0,
    'SIMReversed',
-   { bg = utils.get_fg_hl 'SIM', fg = utils.get_bg_hl 'CursorLineNr' }
+   { bg = utils.get_fg_hl('SIM'), fg = utils.get_bg_hl('CursorLineNr') }
 )
 
 -- DESCRIPTION: This module shows a sign in the last place you went into insert

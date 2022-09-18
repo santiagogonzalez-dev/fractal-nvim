@@ -1,7 +1,7 @@
 local status_ok, treesitter = pcall(require, 'nvim-treesitter.configs')
 if not status_ok then return end
 
-treesitter.setup {
+treesitter.setup({
    ensure_installed = 'all',
    -- ensure_installed = {
    --    'bash',
@@ -69,4 +69,4 @@ treesitter.setup {
          scope_incremental = 'gns', -- Select the entire group  of nodes including the braces
       },
    },
-}
+})

@@ -1,21 +1,21 @@
 -- Default settings.
-require 'csj.core.general'
-require 'csj.core.autocmds'
+require('csj.core.general')
+require('csj.core.autocmds')
 
 do
-   local utils = require 'csj.utils'
+   local utils = require('csj.utils')
    local notify_on_error = require('csj.modules.notifications').notify_send
-   local config_path = vim.fn.stdpath 'config' -- "${XDG_CONFIG_HOME}/nvim"
+   local config_path = vim.fn.stdpath('config') -- "${XDG_CONFIG_HOME}/nvim"
 
    local settings = string.format('%s%s', config_path, '/user/settings.json')
    if not utils.readable(settings) then
-      notify_on_error 'CSJNeovim is not able to locate `settings.json`.'
+      notify_on_error('CSJNeovim is not able to locate `settings.json`.')
    else
       local ok, user = pcall(utils.get_json, settings) -- Get user settings.
       if not ok then
-         notify_on_error 'CSJNeovim is not able to read `settings.json` properly.'
+         notify_on_error('CSJNeovim is not able to read `settings.json` properly.')
       else
-         local start = require 'csj.utils.start'
+         local start = require('csj.utils.start')
 
          start.colorscheme(user.colorscheme) -- Apply colorscheme.
          start.conditionals(user.conditionals) -- Conditions for requiring.
@@ -27,17 +27,17 @@ do
 
    local user_init = string.format('%s%s', config_path, '/user/init.lua')
    if not utils.readable(user_init) then
-      notify_on_error 'CSJNeovim is not able to find an `init.lua` for user.'
+      notify_on_error('CSJNeovim is not able to find an `init.lua` for user.')
    else
       -- Add `./user` to lua path, do this before calling user's `init.lua`.
-      package.path = table.concat {
+      package.path = table.concat({
          package.path,
          ';',
          config_path,
          '/user/?.lua;',
          config_path,
          '/user/?/init.lua;',
-      }
+      })
 
       dofile(user_init) -- User's `init.lua`.
    end
