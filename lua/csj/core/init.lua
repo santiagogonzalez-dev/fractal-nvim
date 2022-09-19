@@ -4,38 +4,40 @@ require('csj.core.autocmds')
 
 do
    local utils = require('csj.utils')
-   local notify_on_error = require('csj.modules.notifications').notify_send
-   local config_path = vim.fn.stdpath('config') -- "${XDG_CONFIG_HOME}/nvim"
+   local desktop_notify = require('csj.modules.notifications').notify_send
 
-   local settings = string.format('%s%s', config_path, '/user/settings.json')
+   -- "${XDG_CONFIG_HOME}/nvim" basically where this repo is going to be cloned.
+   local CONF = vim.fn.stdpath('config')
+
+   local settings = string.format('%s%s', CONF, '/user/settings.json')
    if not utils.readable(settings) then
-      notify_on_error('CSJNeovim is not able to locate `settings.json`.')
+      desktop_notify('CSJNeovim is not able to locate `settings.json`.')
    else
-      local ok, user = pcall(utils.get_json, settings) -- Get user settings.
+      local ok, USER = pcall(utils.get_json, settings) -- Get user settings.
       if not ok then
-         notify_on_error('CSJNeovim is not able to read `settings.json` properly.')
+         desktop_notify('CSJNeovim is not able to read `settings.json` properly.')
       else
          local start = require('csj.utils.start')
 
-         start.colorscheme(user.colorscheme) -- Apply colorscheme.
-         start.conditionals(user.conditionals) -- Conditions for requiring.
-         start.modules(user.modules) -- Load modules specified by the user.
-         start.session(user.restore) -- Restore position, folds and searches.
-         start.opts(user.opts) -- Set global settings defined by the user.
+         start.colorscheme(USER.colorscheme) -- Apply colorscheme.
+         start.conditionals(USER.conditionals) -- Conditions for requiring.
+         start.modules(USER.modules) -- Load modules specified by the user.
+         start.session(USER.restore) -- Restore position, folds and searches.
+         start.opts(USER.opts) -- Set global settings defined by the user.
       end
    end
 
-   local user_init = string.format('%s%s', config_path, '/user/init.lua')
+   local user_init = string.format('%s%s', CONF, '/user/init.lua')
    if not utils.readable(user_init) then
-      notify_on_error('CSJNeovim is not able to find an `init.lua` for user.')
+      desktop_notify('CSJNeovim is not able to find an `init.lua` for user.')
    else
       -- Add `./user` to lua path, do this before calling user's `init.lua`.
       package.path = table.concat({
          package.path,
          ';',
-         config_path,
+         CONF,
          '/user/?.lua;',
-         config_path,
+         CONF,
          '/user/?/init.lua;',
       })
 
