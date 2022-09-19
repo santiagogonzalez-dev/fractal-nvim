@@ -15,7 +15,9 @@ do
    else
       local ok, USER = pcall(utils.get_json, settings) -- Get user settings.
       if not ok then
-         desktop_notify('CSJNeovim is not able to read `settings.json` properly.')
+         desktop_notify(
+            'CSJNeovim is not able to read `settings.json` properly.'
+         )
       else
          local start = require('csj.utils.start')
 

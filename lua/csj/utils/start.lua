@@ -11,7 +11,9 @@ function M.colorscheme(colorscheme_name)
       or colorscheme_name == nil
       or colorscheme_name == vim.NIL
    then
-      vim.notify('The string for setting up the colorcheme might be wrong, check you user_settings.json')
+      vim.notify(
+         'The string for setting up the colorcheme might be wrong, check you user_settings.json'
+      )
       return false
    end
 
