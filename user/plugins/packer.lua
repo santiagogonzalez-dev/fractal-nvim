@@ -348,6 +348,7 @@ function M.list_plugins()
          end,
       })
 
+      -- DAP
       use({
          'mfussenegger/nvim-dap',
          event = 'User LoadPlugins',
@@ -360,6 +361,7 @@ function M.list_plugins()
          config = function() require('plugins.dap') end,
       })
 
+      -- LSP Inlay Hints
       use({
          'lvimuser/lsp-inlayhints.nvim',
          event = 'User LoadPlugins',
@@ -379,20 +381,24 @@ function M.list_plugins()
          end,
       })
 
+      -- Right Corner Diagnostics
       use({
          'santigo-zero/right-corner-diagnostics.nvim',
          event = 'LspAttach',
          config = function() require('rcd').setup({ position = 'bottom' }) end,
       })
 
+      -- Colorizer
       use({
          'NvChad/nvim-colorizer.lua',
          event = 'BufEnter',
          config = function() require('colorizer').setup() end,
       })
 
+      -- JetJBP
       use('santigo-zero/jetjbp.nvim')
 
+      -- Neodim
       use({
          'zbirenbaum/neodim',
          event = 'LspAttach',
