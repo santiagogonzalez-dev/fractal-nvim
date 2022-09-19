@@ -268,6 +268,81 @@ function M.list_plugins()
          end,
       })
 
+      -- Right Corner Diagnostics
+      use({
+         'santigo-zero/right-corner-diagnostics.nvim',
+         event = 'LspAttach',
+         config = function() require('rcd').setup({ position = 'bottom' }) end,
+      })
+
+      -- Colorizer
+      use({
+         'NvChad/nvim-colorizer.lua',
+         event = 'BufEnter',
+         config = function() require('colorizer').setup() end,
+      })
+
+      -- JetJBP
+      use('santigo-zero/jetjbp.nvim')
+
+      -- Neodim
+      use({
+         'zbirenbaum/neodim',
+         event = 'LspAttach',
+         config = function()
+            require('neodim').setup({
+               alpha = 0.75,
+               blend_color = '#000000',
+               update_in_insert = {
+                  enable = true,
+                  delay = 100,
+               },
+               hide = {
+                  virtual_text = true,
+                  signs = true,
+                  underline = true,
+               },
+            })
+         end,
+      })
+
+      -- Indent blankline
+      use({
+         'lukas-reineke/indent-blankline.nvim',
+         event = 'User LoadPlugins',
+         config = function()
+            require('indent_blankline').setup({
+               show_current_context = true,
+               show_current_context_start = false,
+               show_end_of_line = true,
+               show_trailing_blankline_indent = false,
+            })
+            vim.api.nvim_set_hl(
+               0,
+               'IndentBlanklineChar',
+               { link = 'Whitespace' }
+            ) -- All the lines
+            vim.api.nvim_set_hl(
+               0,
+               'IndentBlanklineContextChar',
+               { link = 'Function' }
+            ) -- Current place
+         end,
+      })
+
+      -- Virtual colorcolumn
+      use({
+         'lukas-reineke/virt-column.nvim',
+         event = 'User LoadPlugins',
+         config = function()
+            require('virt-column').setup({
+               char = '│',
+               virtcolumn = '',
+            })
+            vim.schedule(function() vim.cmd.VirtColumnRefresh() end)
+         end,
+      })
+
       -- LSP
       use({
          'neovim/nvim-lspconfig',
@@ -311,43 +386,6 @@ function M.list_plugins()
          config = function() require('plugins.cmp') end,
       })
 
-      -- Indent blankline
-      use({
-         'lukas-reineke/indent-blankline.nvim',
-         event = 'User LoadPlugins',
-         config = function()
-            require('indent_blankline').setup({
-               show_current_context = true,
-               show_current_context_start = false,
-               show_end_of_line = true,
-               show_trailing_blankline_indent = false,
-            })
-            vim.api.nvim_set_hl(
-               0,
-               'IndentBlanklineChar',
-               { link = 'Whitespace' }
-            ) -- All the lines
-            vim.api.nvim_set_hl(
-               0,
-               'IndentBlanklineContextChar',
-               { link = 'Function' }
-            ) -- Current place
-         end,
-      })
-
-      -- Virtual colorcolumn
-      use({
-         'lukas-reineke/virt-column.nvim',
-         event = 'User LoadPlugins',
-         config = function()
-            require('virt-column').setup({
-               char = '│',
-               virtcolumn = '',
-            })
-            vim.schedule(function() vim.cmd.VirtColumnRefresh() end)
-         end,
-      })
-
       -- DAP
       use({
          'mfussenegger/nvim-dap',
@@ -359,6 +397,12 @@ function M.list_plugins()
             },
          },
          config = function() require('plugins.dap') end,
+      })
+
+      -- JDTLS
+      use({
+         'mfussenegger/nvim-jdtls',
+         event = 'User LoadPlugins',
       })
 
       -- LSP Inlay Hints
@@ -377,44 +421,6 @@ function M.list_plugins()
                   local client = vim.lsp.get_client_by_id(args.data.client_id)
                   require('lsp-inlayhints').on_attach(client, bufnr)
                end,
-            })
-         end,
-      })
-
-      -- Right Corner Diagnostics
-      use({
-         'santigo-zero/right-corner-diagnostics.nvim',
-         event = 'LspAttach',
-         config = function() require('rcd').setup({ position = 'bottom' }) end,
-      })
-
-      -- Colorizer
-      use({
-         'NvChad/nvim-colorizer.lua',
-         event = 'BufEnter',
-         config = function() require('colorizer').setup() end,
-      })
-
-      -- JetJBP
-      use('santigo-zero/jetjbp.nvim')
-
-      -- Neodim
-      use({
-         'zbirenbaum/neodim',
-         event = 'LspAttach',
-         config = function()
-            require('neodim').setup({
-               alpha = 0.75,
-               blend_color = '#000000',
-               update_in_insert = {
-                  enable = true,
-                  delay = 100,
-               },
-               hide = {
-                  virtual_text = true,
-                  signs = true,
-                  underline = true,
-               },
             })
          end,
       })

@@ -31,16 +31,23 @@ require('mason-lspconfig').setup({
 require('mason').setup()
 
 for _, server in pairs(SERVERS) do
+   server = vim.split(server, '@')[1]
+
    local opts = {
       on_attach = require('plugins.lsp.handlers').on_attach,
       capabilities = require('plugins.lsp.handlers').capabilities,
    }
+
+   if server == 'jdtls' then
+      goto continue
+   end
 
    local has_opts, custom_opts =
       pcall(require, string.format('%s.%s', 'plugins.lsp.settings', server))
    if has_opts then opts = vim.tbl_deep_extend('force', custom_opts, opts) end
 
    lspconfig[server].setup(opts)
+   ::continue::
 end
 
 require('plugins.lsp.handlers').setup()
