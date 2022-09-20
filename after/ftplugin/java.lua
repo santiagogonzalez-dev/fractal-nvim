@@ -14,7 +14,7 @@ if not status then return end
 
 -- Determine OS
 local HOME = os.getenv('HOME')
-WORKSPACE_PATH = string.format('%s/workspace/', HOME)
+WORKSPACE_PATH = string.format('%s/.cache/jdtls/workspace/', HOME)
 if vim.fn.has('mac') == 1 then
    CONFIG = 'mac'
 elseif vim.fn.has('unix') == 1 then
