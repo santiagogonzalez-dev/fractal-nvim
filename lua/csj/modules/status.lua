@@ -40,7 +40,6 @@ function M.hide_completely()
 end
 
 function M.setup(mode)
-   vim.opt.cmdheight = 0
    if mode == 'hide-completely' then
       -- vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
       -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
@@ -48,6 +47,7 @@ function M.setup(mode)
          '%{%v:lua.require("csj.modules.status").hide_completely()%}'
       vim.opt.laststatus = 0
       vim.opt.ruler = false
+      vim.opt.cmdheight = 0
    elseif mode == 'basic' then
       vim.opt.laststatus = 3
       vim.opt.statusline = '%{%v:lua.require("csj.modules.status").get()%}'
