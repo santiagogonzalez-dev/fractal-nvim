@@ -425,7 +425,20 @@ function M.list_plugins()
          end,
       })
 
-      return packer
+      -- Semantic Tokens
+      use({
+         'theHamsta/nvim-semantic-tokens',
+         event = 'User LoadPlugins',
+         config = function()
+            require('nvim-semantic-tokens').setup({
+               preset = 'default',
+               highlighters = {
+                  require('nvim-semantic-tokens.table-highlighter'),
+               },
+            })
+         end,
+      })
+
    end)
 end
 
