@@ -1,3 +1,5 @@
+local utils = require('csj.utils')
+
 local dead_keys = {
    '<BS>',
    '<CR>',
@@ -151,12 +153,30 @@ vim.keymap.set({ 'n', 'x', 'o' }, 'N', '"nN"[v:searchforward]', {
    desc = 'N is always previous',
 })
 
-vim.keymap.set('n', 'dD', '0D', {
-   desc = [[Middle point between cc or S and dd, since this will clear the line
-   without deleting it nor entering insert mode]],
+vim.keymap.set('n', 'dD', function()
+   local indentation = utils.string_indentation(vim.api.nvim_get_current_line())
+      + 1
+   vim.api.nvim_feedkeys('0D', 'n', 'v:false')
+   vim.api.nvim_feedkeys(string.format('%s|', indentation), 'n', 'v:false')
+end, {
+   desc = 'Middle ground between dd and S or cc',
 })
 
-vim.keymap.set('n', '^^', '0', { desc = 'Better ^' })
+vim.keymap.set(
+   { 'n', 'v', 'x' },
+   '<Leader>p',
+   '"_dP',
+   { desc = 'Paste without overriding the paste register' }
+)
+
+vim.keymap.set(
+   'n',
+   'y<Leader>',
+   'yy',
+   { desc = 'Use leader key, avoid double taps' }
+)
+
+vim.keymap.set('n', '^^', '0', { desc = 'Extend ^' })
 
 vim.keymap.set(
    'n',
@@ -174,28 +194,33 @@ vim.keymap.set(
    }
 )
 
-vim.keymap.set('n', 'dd', function()
-   if vim.api.nvim_get_current_line():match('^%s*$') then
-      -- vim.notify('Not overriding the yank register', vim.log.levels.WARN)
-      return '"_dd'
-   else
-      return 'dd'
-   end
-end, {
-   desc = 'Better dd, does not override the yank register if it is a blank line',
-   noremap = true,
-   expr = true,
-   nowait = true,
+vim.keymap.set(
+   'n',
+   'dd',
+   function() return vim.api.nvim_get_current_line():match('^%s*$') and '"_dd' or 'dd' end,
+   {
+      desc = 'If the line is blank(empty, or whitespace) do not override the delete register',
+      noremap = true,
+      expr = true,
+      nowait = false,
+   }
+)
+
+vim.keymap.set('n', '<C-Up>', ':resize +1<CR>', {
+   desc = 'Resize windows',
 })
 
-vim.keymap.set('n', '<C-Up>', ':resize +1<CR>', { desc = 'Resize windows' })
-vim.keymap.set('n', '<C-Down>', ':resize -1<CR>', { desc = 'Resize windows' })
+vim.keymap.set('n', '<C-Down>', ':resize -1<CR>', {
+   desc = 'Resize windows',
+})
+
 vim.keymap.set(
    'n',
    '<C-Left>',
    ':vertical resize +1<CR>',
    { desc = 'Resize windows' }
 )
+
 vim.keymap.set(
    'n',
    '<C-Right>',
@@ -274,12 +299,12 @@ vim.keymap.set('c', 'wqa', vim.cmd.wqa, {
 vim.api.nvim_create_autocmd('FileType', {
    pattern = 'qf',
    callback = function()
-      vim.keymap.set('n', '<C-]>', function() vim.cmd(':cn') end, {
+      vim.keymap.set('n', '<C-]>', function() return ':cn' end, {
          buffer = 0,
          desc = 'Go to next item in quickfix list',
       })
 
-      vim.keymap.set('n', '<C-[>', function() vim.cmd(':cp') end, {
+      vim.keymap.set('n', '<C-[>', function() return ':cp' end, {
          buffer = 0,
          desc = 'Go to previous item in quickfix list',
       })
