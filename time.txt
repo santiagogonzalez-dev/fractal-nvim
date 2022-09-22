@@ -1,0 +1,47 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.006  000.006: --- NVIM STARTING ---
+000.098  000.091: event init
+000.171  000.074: early init
+000.201  000.029: locale set
+000.232  000.031: init first window
+000.445  000.213: inits 1
+000.454  000.009: window checked
+000.487  000.033: parsing arguments
+000.889  000.049  000.049: require('vim.shared')
+000.979  000.041  000.041: require('vim._meta')
+000.981  000.090  000.049: require('vim._editor')
+000.982  000.163  000.024: require('vim._init_packages')
+000.983  000.333: init lua interpreter
+001.031  000.048: expanding arguments
+001.056  000.025: inits 2
+001.443  000.387: init highlight
+001.444  000.001: waiting for UI
+002.276  000.832: done waiting for UI
+002.288  000.012: init screen for UI
+002.414  000.126: init default mappings
+002.425  000.012: init default autocommands
+003.101  000.043  000.043: sourcing /var/home/st/.local/share/nvim/runtime/ftplugin.vim
+003.196  000.021  000.021: sourcing /var/home/st/.local/share/nvim/runtime/indent.vim
+003.429  000.096  000.096: require('csj.utils')
+003.432  000.176  000.080: require('csj.utils.load')
+004.919  000.092  000.092: sourcing /var/home/st/.local/share/nvim/runtime/syntax/nosyntax.vim
+004.996  000.018  000.018: sourcing /var/home/st/.local/share/nvim/runtime/ftoff.vim
+005.083  000.013  000.013: sourcing /var/home/st/.local/share/nvim/runtime/ftplugof.vim
+005.157  000.008  000.008: sourcing /var/home/st/.local/share/nvim/runtime/indoff.vim
+005.189  001.959  001.653: sourcing /home/st/.config/nvim/csjneovim.lua
+005.190  000.741: sourcing vimrc file(s)
+005.200  000.010: inits 3
+005.201  000.001: reading ShaDa
+005.371  000.170: opening buffers
+005.373  000.002: BufEnter autocommands
+005.374  000.001: editing files in windows
+005.376  000.002: VimEnter autocommands
+005.378  000.001: UIEnter autocommands
+005.379  000.001: before starting main loop
+005.778  000.399: first screen update
+005.780  000.002: --- NVIM STARTED ---
