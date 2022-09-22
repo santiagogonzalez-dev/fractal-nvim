@@ -72,14 +72,14 @@ vim.api.nvim_create_autocmd('UIEnter', {
    callback = function()
       if not vim.opt.cursorcolumn:get() then return end
 
-      vim.api.nvim_create_autocmd('WinEnter', {
+      vim.api.nvim_create_autocmd({ 'FocusGained', 'WinEnter' }, {
          group = buffer_settings,
          callback = function()
             vim.opt.cursorline = true
             vim.opt.cursorcolumn = true
          end,
       })
-      vim.api.nvim_create_autocmd('WinLeave', {
+      vim.api.nvim_create_autocmd({ 'FocusLost', 'WinLeave' }, {
          group = buffer_settings,
          callback = function()
             vim.opt.cursorline = false
