@@ -10,7 +10,7 @@ If you want a deferred startup of neovim you can start it using the provided
 nvim -u ${XDG_CONFIG_HOME}/nvim/csjneovim.lua
 ```
 
-And that's how we get this [startup times](./time.txt)
+And that's how we get this [startup times](./time.txt).
 
 ## Config
 
