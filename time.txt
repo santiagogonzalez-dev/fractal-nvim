@@ -4,44 +4,44 @@ times in msec
  clock   self+sourced   self:  sourced script
  clock   elapsed:              other lines
 
-000.006  000.006: --- NVIM STARTING ---
-000.098  000.091: event init
-000.171  000.074: early init
-000.201  000.029: locale set
-000.232  000.031: init first window
-000.445  000.213: inits 1
-000.454  000.009: window checked
-000.487  000.033: parsing arguments
-000.889  000.049  000.049: require('vim.shared')
-000.979  000.041  000.041: require('vim._meta')
-000.981  000.090  000.049: require('vim._editor')
-000.982  000.163  000.024: require('vim._init_packages')
-000.983  000.333: init lua interpreter
-001.031  000.048: expanding arguments
-001.056  000.025: inits 2
-001.443  000.387: init highlight
-001.444  000.001: waiting for UI
-002.276  000.832: done waiting for UI
-002.288  000.012: init screen for UI
-002.414  000.126: init default mappings
-002.425  000.012: init default autocommands
-003.101  000.043  000.043: sourcing /var/home/st/.local/share/nvim/runtime/ftplugin.vim
-003.196  000.021  000.021: sourcing /var/home/st/.local/share/nvim/runtime/indent.vim
-003.429  000.096  000.096: require('csj.utils')
-003.432  000.176  000.080: require('csj.utils.load')
-004.919  000.092  000.092: sourcing /var/home/st/.local/share/nvim/runtime/syntax/nosyntax.vim
-004.996  000.018  000.018: sourcing /var/home/st/.local/share/nvim/runtime/ftoff.vim
-005.083  000.013  000.013: sourcing /var/home/st/.local/share/nvim/runtime/ftplugof.vim
-005.157  000.008  000.008: sourcing /var/home/st/.local/share/nvim/runtime/indoff.vim
-005.189  001.959  001.653: sourcing /home/st/.config/nvim/csjneovim.lua
-005.190  000.741: sourcing vimrc file(s)
-005.200  000.010: inits 3
-005.201  000.001: reading ShaDa
-005.371  000.170: opening buffers
-005.373  000.002: BufEnter autocommands
-005.374  000.001: editing files in windows
-005.376  000.002: VimEnter autocommands
-005.378  000.001: UIEnter autocommands
-005.379  000.001: before starting main loop
-005.778  000.399: first screen update
-005.780  000.002: --- NVIM STARTED ---
+000.008  000.008: --- NVIM STARTING ---
+000.108  000.101: event init
+000.188  000.079: early init
+000.328  000.140: locale set
+000.363  000.035: init first window
+000.616  000.253: inits 1
+000.628  000.012: window checked
+000.662  000.033: parsing arguments
+001.150  000.075  000.075: require('vim.shared')
+001.243  000.039  000.039: require('vim._meta')
+001.245  000.091  000.052: require('vim._editor')
+001.246  000.202  000.035: require('vim._init_packages')
+001.248  000.385: init lua interpreter
+001.303  000.054: expanding arguments
+001.333  000.030: inits 2
+001.560  000.227: init highlight
+001.561  000.001: waiting for UI
+002.274  000.713: done waiting for UI
+002.285  000.011: init screen for UI
+002.383  000.098: init default mappings
+002.394  000.011: init default autocommands
+003.054  000.052  000.052: sourcing /var/home/st/.local/share/nvim/runtime/ftplugin.vim
+003.175  000.022  000.022: sourcing /var/home/st/.local/share/nvim/runtime/indent.vim
+003.409  000.095  000.095: require('csj.utils')
+003.411  000.170  000.075: require('csj.utils.load')
+003.539  000.065  000.065: sourcing /var/home/st/.local/share/nvim/runtime/syntax/nosyntax.vim
+003.628  000.017  000.017: sourcing /var/home/st/.local/share/nvim/runtime/ftoff.vim
+003.735  000.013  000.013: sourcing /var/home/st/.local/share/nvim/runtime/ftplugof.vim
+003.839  000.009  000.009: sourcing /var/home/st/.local/share/nvim/runtime/indoff.vim
+003.883  000.667  000.394: sourcing /home/st/.config/nvim/csjneovim.lua
+003.885  000.751: sourcing vimrc file(s)
+003.898  000.013: inits 3
+003.899  000.001: reading ShaDa
+004.176  000.277: opening buffers
+004.179  000.002: BufEnter autocommands
+004.180  000.001: editing files in windows
+004.182  000.002: VimEnter autocommands
+004.183  000.001: UIEnter autocommands
+004.185  000.001: before starting main loop
+004.580  000.395: first screen update
+004.581  000.002: --- NVIM STARTED ---
