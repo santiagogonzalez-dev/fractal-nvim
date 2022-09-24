@@ -79,5 +79,18 @@ vim.schedule(function()
    _G.all_buffers_settings()
 end)
 
+local _enable_spell = vim.api.nvim_create_augroup('_enable_spell', {})
+vim.api.nvim_create_autocmd('InsertEnter', {
+   desc = 'Enable spelling in insert mode',
+   group = _enable_spell,
+   callback = function() vim.opt_local.spell = true end,
+})
+
+vim.api.nvim_create_autocmd('InsertLeave', {
+   desc = 'Disable spelling in insert mode',
+   group = _enable_spell,
+   callback = function() vim.opt_local.spell = false end,
+})
+
 vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 require('plugins')

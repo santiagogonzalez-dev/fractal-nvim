@@ -32,7 +32,7 @@
     "joinspaces": true,
     "lazyredraw": false,
     "list": true,
-    "matchpairs": "(:),{:},[:],<:>,=:;",
+    "matchpairs": "(:),{:},[:],<:>",
     "modeline": false,
     "mousefocus": true,
     "numberwidth": 3,
