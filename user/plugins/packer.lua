@@ -439,6 +439,17 @@ function M.list_plugins()
          end,
       })
 
+      -- Vim bufsurf
+      use({
+         'ton/vim-bufsurf',
+         event = 'User LoadPlugins',
+         config = function()
+            vim.cmd([[
+               nmap ]b <Plug>(buf-surf-forward)
+               nmap [b <Plug>(buf-surf-back)
+            ]])
+         end,
+      })
    end)
 end
 

@@ -48,6 +48,7 @@ function M.setup(mode)
       vim.opt.laststatus = 0
       vim.opt.ruler = false
       vim.opt.cmdheight = 0
+      vim.api.nvim_set_hl(0, 'EndOfBuffer', { link = 'Normal' })
    elseif mode == 'basic' then
       vim.opt.laststatus = 3
       vim.opt.statusline = '%{%v:lua.require("csj.modules.status").get()%}'

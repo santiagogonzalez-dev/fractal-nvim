@@ -3,7 +3,7 @@ local utils = require('csj.utils')
 
 function M.disable()
    -- Builtin plugins and providers.
-   vim.opt.loadplugins = false -- TODO(santigo-zero): Netrw doesn't work with this enabled.
+   vim.opt.loadplugins = false
 
    local builtins = false -- Any other value besides nil disables the plugins.
    vim.g.loaded_2html_plugin = builtins

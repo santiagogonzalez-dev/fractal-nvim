@@ -2,20 +2,18 @@
   "colorscheme": "jetjbp",
   "restore": true,
   "conditionals": true,
-
   "modules": {
     "quit-actions": "<Leader>qq",
-    "buffer-switch": false,
+    "buffer-switch": true,
     "folds": true,
     "gutter": true,
     "netrw": true,
     "notifications": true,
     "show-insert-mark": true,
     "skeletons": true,
-    "status": "basic",
+    "status": "hide-completely",
     "strict-cursor": "<Esc><Esc>"
   },
-
   "opts": {
     "breakindent": true,
     "clipboard": "unnamedplus",
