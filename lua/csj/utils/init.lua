@@ -152,7 +152,7 @@ function utils.readable(filename, as_string)
    if vim.fn.filereadable(filename) == 1 then
       return 'readable'
    else
-      return 'inexistent or is a directory'
+      return 'nonexistent or is a directory'
    end
 end
 
@@ -173,6 +173,11 @@ function utils.writable(filename, as_string)
    else
       return ''
    end
+end
+
+function utils.eval(check, on_fail_msg, callback)
+   return check and callback()
+      or require('csj.modules.notifications').notify_send(on_fail_msg)
 end
 
 return utils

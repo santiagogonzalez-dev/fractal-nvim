@@ -6,17 +6,17 @@
 ;    (#match? @require_call "require")
 ;    )
 ;  (set! "priority" 105)
-;  ; (#set! conceal "R")
-;  (#set! conceal "")
+;  (#set! conceal "R")
+;  ; (#set! conceal "")
 ;  )
 
-; (
-;  (function_call
-;    (identifier) @pairs
-;    (#match? @pairs "pairs")
-;    )
-;  (set! "priority" 105)
-;  )
+(
+ (function_call
+   (identifier) @pairs
+   (#match? @pairs "pairs")
+   )
+ (set! "priority" 105)
+ )
 
 (function_declaration
   (identifier)@function_definition
@@ -66,8 +66,8 @@
 ;    (#eq? @function.builtin "pcall")
 ;    )
 ;  ; (#set! conceal "聯")
-;  ; (#set! conceal "")
-;  (#set! conceal "🛡")
+;  (#set! conceal "")
+;  ; (#set! conceal "🛡")
 ;  )
 
 (
@@ -86,12 +86,12 @@
   (#set! conceal "I")
 )
 
-; (
-;  (identifier) @function
-;  (#eq? @function "utils")
-;  ; (#set! conceal "")
-;  (#set! conceal "U")
-;  )
+(
+ (identifier) @function
+ (#eq? @function "utils")
+ ; (#set! conceal "")
+ (#set! conceal "U")
+ )
 
 (
  (dot_index_expression
