@@ -94,10 +94,4 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 
 vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 
--- Deferred load of plugins
--- TODO(santigo-zero): Do something about csjneovim, maybe even ditch it since
--- this doesn't bug anything and it works okay.
-vim.defer_fn(function()
-   require('plugins')
-   vim.cmd(':e')
-end, 300)
+require('plugins')
