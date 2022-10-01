@@ -1,8 +1,8 @@
 local utils = require('csj.utils')
 
--- Default settings.
+-- Basic settings.
 require('csj.core.general')
-require('csj.core.autocmds')
+require('csj.core.general.autocmds')
 
 -- "${XDG_CONFIG_HOME}/nvim" basically where this repo is going to be cloned.
 local CONF = vim.fn.stdpath('config')
