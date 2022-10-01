@@ -1,13 +1,11 @@
+local utils = require('csj.utils')
+
 -- Default settings.
 require('csj.core.general')
 require('csj.core.autocmds')
 
-local utils = require('csj.utils')
-local notify_send = require('csj.modules.notifications').notify_send
-
 -- "${XDG_CONFIG_HOME}/nvim" basically where this repo is going to be cloned.
 local CONF = vim.fn.stdpath('config')
-
 local settings = string.format('%s%s', CONF, '/user/settings.json')
 local user_init = string.format('%s%s', CONF, '/user/init.lua')
 
