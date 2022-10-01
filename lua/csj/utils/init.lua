@@ -176,10 +176,8 @@ function utils.writable(filename, as_string)
    end
 end
 
--- Simple checking function, `tbl.eval` is going to be checked as a boolean,
--- `tbl.callback` must be a function and is going to be executed if the
--- evaluation is true, in the other hand if `tbl.eval` returns false it will use
--- the notification module with the string stored at `tbl.on_fail_msg`.
+-- Simple checking function, `eval` and `callback` need to return true in order
+-- to avoid `on_fail_msg` getting triggered.
 ---@param tbl {eval: boolean|string, on_fail_msg: string, callback: function}
 ---@return any
 function utils.check(tbl)
