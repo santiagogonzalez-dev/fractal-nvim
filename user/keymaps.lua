@@ -262,9 +262,9 @@ vim.keymap.set({ 'v', 'x', 'o' }, '<Space>', 'zf', {
 vim.keymap.set('n', '#', '*Nzv', {
    desc = 'Better #',
 })
-vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], {
-   desc = 'Better #',
-})
+-- vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], {
+--    desc = 'Better #',
+-- })
 
 vim.keymap.set({ 'v', 'x' }, '<', '<gv', {
    desc = 'Keep visual selection after shifting codeblock',
