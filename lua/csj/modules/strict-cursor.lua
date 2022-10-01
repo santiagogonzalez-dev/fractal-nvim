@@ -11,10 +11,6 @@ local utils = require('csj.utils')
 function M.strict_h_motion()
    local cursor_position = vim.api.nvim_win_get_cursor(0)
 
-   --    if utils.string_indentation(vim.api.nvim_get_current_line()) >= vim.opt.tabstop:get() then
-   -- 		return vim.api.nvim_feedkeys('h', 'n', 'v:false')
-   --    end
-
    if cursor_position[2] == 0 then
       -- The reason why we feed `h` in here is because you could be using
       -- vim.opt.whichwrap with h, making the line jump to the line above
@@ -47,7 +43,6 @@ function M.strict_l_motion()
    local cursor_position = vim.api.nvim_win_get_cursor(0)
 
    if cursor_position[2] < indentation then
-      -- return vim.api.nvim_win_set_cursor(0, { cursor_position[1], cursor_position[2] + vim.bo.tabstop })
       return vim.api.nvim_win_set_cursor(0, { cursor_position[1], indentation })
    else
       return vim.api.nvim_feedkeys('l', 'n', 'v:true')
@@ -69,21 +64,23 @@ function M.toggle()
          { desc = 'Indentation with spaces behaves like tabs' }
       )
       vim.g.strict_cursor = false
-      -- vim.notify('Strict cursor enabled', vim.log.levels.INFO)
    else
       vim.keymap.del('n', 'h')
       vim.keymap.del('n', 'l')
       vim.g.strict_cursor = true
-      -- vim.notify('Strict cursor disabled', vim.log.levels.INFO)
    end
 end
 
 vim.g.strict_cursor = true
+
+---@param disables_mode string
+---@return boolean
 function M.setup(disables_mode)
    if type(disables_mode) ~= 'string' then return false end
 
    M.toggle()
    vim.keymap.set('n', disables_mode, function() M.toggle() end)
+   return true
 end
 
 return M
