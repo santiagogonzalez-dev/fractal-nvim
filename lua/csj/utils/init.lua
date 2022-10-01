@@ -1,4 +1,5 @@
 local utils = {}
+local notify_send = require('csj.modules.notifications').notify_send
 
 -- Protected require, notifies if there's an error loading a module
 ---@return boolean|string|number @ Either nil or the value of require()
@@ -175,9 +176,15 @@ function utils.writable(filename, as_string)
    end
 end
 
-function utils.eval(check, on_fail_msg, callback)
-   return check and callback()
-      or require('csj.modules.notifications').notify_send(on_fail_msg)
+-- Simple checking function, `tbl.eval` is going to be checked as a boolean,
+-- `tbl.callback` must be a function and is going to be executed if the
+-- evaluation is true, in the other hand if `tbl.eval` returns false it will use
+-- the notification module with the string stored at `tbl.on_fail_msg`.
+---@param tbl {eval: boolean|string, on_fail_msg: string, callback: function}
+---@return any
+function utils.check(tbl)
+   return tbl.eval and tbl.callback()
+      or notify_send(tbl.on_fail_msg)
 end
 
 return utils

@@ -9,10 +9,10 @@ local CONF = vim.fn.stdpath('config')
 local settings = string.format('%s%s', CONF, '/user/settings.json')
 local user_init = string.format('%s%s', CONF, '/user/init.lua')
 
-utils.eval(
-   utils.readable(settings),
-   'CSJNeovim is not able to locate `settings.json`.',
-   function()
+utils.check({
+   eval = utils.readable(settings),
+   on_fail_msg = 'CSJNeovim is not able to locate `settings.json`.',
+   callback = function()
       local ok, USER = pcall(utils.get_json, settings) -- Get user settings.
       if not ok then
          return false
@@ -26,13 +26,13 @@ utils.eval(
          start.opts(USER.opts) -- Set global settings defined by the user.
       end
       return true
-   end
-)
+   end,
+})
 
-utils.eval(
-   utils.readable(user_init),
-   'CSJNeovim is not able to find an `init.lua` for user.',
-   function()
+utils.check({
+   eval = utils.readable(user_init),
+   on_fail_msg = 'CSJNeovim is not able to find an `init.lua` for user.',
+   callback = function()
       -- Add `./user` to lua path, do this before calling user's `init.lua`.
       package.path = table.concat({
          package.path,
@@ -45,5 +45,5 @@ utils.eval(
 
       dofile(user_init) -- User's `init.lua`.
       return true
-   end
-)
+   end,
+})
