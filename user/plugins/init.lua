@@ -3,4 +3,12 @@
 
 require('plugins.packer').setup()
 pcall(require, 'plugins.packer_compiled')
-vim.cmd.doautocmd('User LoadPlugins')
+
+vim.api.nvim_create_autocmd('UIEnter', {
+   callback = function()
+      vim.defer_fn(function()
+         vim.cmd.doautocmd('User LoadPlugins')
+         vim.cmd(':e')
+      end, 30)
+   end,
+})

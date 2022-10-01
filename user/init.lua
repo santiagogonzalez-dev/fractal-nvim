@@ -1,5 +1,4 @@
 require('keymaps')
--- require('plugins')
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
@@ -27,21 +26,21 @@ vim.opt.fillchars:append({
    -- vertright = '├',
    -- verthoriz = '┼',
 
-   horiz = '─',
-   horizup = '⯊',
-   horizdown = '⯋',
-   vert = '│',
-   vertleft = '◖',
-   vertright = '◗',
-   verthoriz = '●',
+   -- horiz = '─',
+   -- horizup = '⯊',
+   -- horizdown = '⯋',
+   -- vert = '│',
+   -- vertleft = '◖',
+   -- vertright = '◗',
+   -- verthoriz = '●',
 
-   -- horiz = ' ',
-   -- horizup = ' ',
-   -- horizdown = ' ',
-   -- vert = ' ',
-   -- vertleft = ' ',
-   -- vertright = ' ',
-   -- verthoriz = ' ',
+   horiz = ' ',
+   horizup = ' ',
+   horizdown = ' ',
+   vert = ' ',
+   vertleft = ' ',
+   vertright = ' ',
+   verthoriz = ' ',
 })
 
 vim.opt.listchars:append({
