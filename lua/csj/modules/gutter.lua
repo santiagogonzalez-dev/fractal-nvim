@@ -1,7 +1,8 @@
-local gutter = {}
-
--- TODO(santigo-zero): Add exceptions based on filetypes to not cause any errors
--- DESCRIPTION: An attempt to give the gutter or number column a nicer look
+local gutter = {
+   -- DESCRIPTION: This module tries to extend the functionality of the gutter.
+   -- TODO(santigo-zero): Add exceptions based on filetypes to not cause any
+   -- errors.
+}
 
 -- Enable `relativenumber` after `waiting_time` on startup
 ---@param waiting_time number @ In milliseconds, e.g. 1 second would be 1000

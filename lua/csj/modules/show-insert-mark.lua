@@ -1,4 +1,13 @@
-local M = {}
+local M = {
+   -- DESCRIPTION: The whole point of this module is to reduced the cognitive
+   -- overhead when jumping around.  How many times have you moved to another
+   -- part of the buffer, to yank/delete/surround/paste some code and come back
+   -- to where you were typing using vim motions, the jump list or motion
+   -- plugins? The idea here is to have a clear mark on the line (using virtual
+   -- text and the sign column) for you to just press gi or `` or `. or even
+   -- better, `^, which takes you right to the last position you where in insert
+   -- mode and cuts the amount of typing in half.
+}
 local utils = require('csj.utils')
 local _ns_sim = vim.api.nvim_create_namespace('_ns_sim') -- Namespace
 
@@ -21,20 +30,12 @@ vim.api.nvim_set_hl(
 function M.display_mark()
    local pos_cur = vim.api.nvim_buf_get_mark(0, '^')
 
-   -- return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
-   --   cursorline_hl_group = 'SIMReversed',
-   --   sign_text = ' ',
-   --   sign_hl_group = 'SIM',
-   -- })
-
    -- If the cursor is almost at the end of the line
    if pos_cur[2] >= #vim.api.nvim_get_current_line() - 5 then
       -- Use virtual text at the end of the line
       return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
          virt_text = {
-            -- { '', 'SIM' },
             { ' ', 'SIM' },
-            -- { '', 'SIM' },
          },
          virt_text_pos = 'eol',
          -- virt_text_win_col = #vim.api.nvim_get_current_line(),

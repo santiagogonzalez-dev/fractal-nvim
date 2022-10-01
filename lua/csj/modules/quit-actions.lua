@@ -1,4 +1,10 @@
-local M = {}
+local M = {
+   -- DESCRIPTION: This module provides some functions to delete buffers, when
+   -- you call the setup with a key combination, like `<Leader>qq` and there's
+   -- more than one normal buffer it will wipe all of them except the current
+   -- buffer, if there's just one normal buffer it will ask the user for
+   -- actions, like quitting neovim or just deleting the current buffer.
+}
 local utils = require('csj.utils')
 
 M.del_normal_bufs_with_exception = function(current_buf)

@@ -1,7 +1,8 @@
--- Override notifications. Integrate notifications with your DE/WM. Overrides
--- vim.notify to use notify-send instead.
-
-local M = {}
+local M = {
+   -- DESCRIPTION: Override the builtin way of notifying changes to the user,
+   -- this module overrides vim.notify to use the `notify-send` command instead,
+   -- which makes the notifications "integrate" with your DE/WM in a way.
+}
 
 local log_level_to_urgency = {
    [1] = 'low',

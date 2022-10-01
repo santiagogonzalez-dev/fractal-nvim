@@ -1,4 +1,6 @@
-local M = {}
+local M = {
+   -- DESCRIPTION: An attempt to modernize NetRW.
+}
 local utils = require('csj.utils')
 
 -- NetRW config.

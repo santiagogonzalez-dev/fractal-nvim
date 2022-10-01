@@ -1,7 +1,7 @@
--- Apply a skeleton(template) to new files from users templates
--- TODO(santigo-zero): https://github.com/glepnir/template.nvim
-
-local M = {}
+local M = {
+   -- DESCRIPTION: Apply a skeleton(template) to new files from users templates
+   -- TODO(santigo-zero): https://github.com/glepnir/template.nvim
+}
 
 ---@param extension string
 ---@return string @ This function returns a path

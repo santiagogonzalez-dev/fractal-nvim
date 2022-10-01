@@ -1,6 +1,7 @@
--- Override default icons and settings related to folds.
-
-local folds = {}
+local folds = {
+   -- DESCRIPTION: Override default icons and settings related to folds, this
+   -- includes the text that appears when you close a fold.
+}
 
 -- When a block of code is folded some text appears in the line of the fold,
 -- this function reformats the code to be "smarter"

@@ -1,9 +1,12 @@
-local M = {}
+local M = {
+   -- DESCRIPTION: This module limits the movement of the cursor on the blank
+   -- indentation area of the buffers, to enable it you need to pass a mapping,
+   -- which is a toggle(the module is on by default) and what is going to do is
+   -- make l jump to the first non blank character of the line, and h jump as if
+   -- you where tabbing but backwards, moving your cursor based on indentation
+   -- levels.
+}
 local utils = require('csj.utils')
-
--- DESCRIPTION: Makes the cursor behave almost like if you were using tabs
--- instead of spaces for indentation, so the cursor jumps instead of moving
--- character by character when you move with h and l.
 
 function M.strict_h_motion()
    local cursor_position = vim.api.nvim_win_get_cursor(0)

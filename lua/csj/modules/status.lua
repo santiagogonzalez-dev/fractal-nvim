@@ -1,4 +1,8 @@
-local M = {}
+local M = {
+   -- DESCRIPTION: This module dictates how the statusline is going to behave,
+   -- if you set it up with `hide-completely` you'll not see it, `basic` gives
+   -- you a basic statusline.
+}
 local data = require('csj.utils.data')
 
 -- TODO(santigo-zero): Generate hl groups
