@@ -55,6 +55,7 @@
     "splitright": true,
     "swapfile": false,
     "synmaxcol": 160,
+    "tags": "vim.lsp.tagfunc",
     "textwidth": 80,
     "timeoutlen": 300,
     "undofile": true,

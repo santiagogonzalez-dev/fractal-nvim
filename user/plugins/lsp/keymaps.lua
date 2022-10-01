@@ -81,18 +81,18 @@ function M.keymaps(bufnr)
       }
    )
 
-   vim.keymap.set(
-      'n',
-      '<C-]>',
-      vim.diagnostic.goto_next,
-      { buffer = bufnr, desc = 'Go to next diagnostic' }
-   )
-   vim.keymap.set(
-      'n',
-      '<C-[>',
-      vim.diagnostic.goto_prev,
-      { buffer = bufnr, desc = 'Go to previous diagnostic' }
-   )
+   -- vim.keymap.set(
+   --    'n',
+   --    '<C-]>',
+   --    vim.diagnostic.goto_next,
+   --    { buffer = bufnr, desc = 'Go to next diagnostic' }
+   -- )
+   -- vim.keymap.set(
+   --    'n',
+   --    '<C-[>',
+   --    vim.diagnostic.goto_prev,
+   --    { buffer = bufnr, desc = 'Go to previous diagnostic' }
+   -- )
 
    vim.keymap.set(
       'n',
