@@ -1,4 +1,0 @@
-+ /sbin/ldconfig
-+ '[' -x /usr/bin/systemd-run -a -x /usr/bin/systemctl ']'
-+ /usr/bin/systemd-run /usr/bin/systemctl start man-db-cache-update
-+ :
