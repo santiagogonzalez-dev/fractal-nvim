@@ -8,8 +8,8 @@ vim.g.python3_host_prog = 'python'
 vim.g.python_highlight_all = 1
 
 -- Toggle fstrings in python TODO redo this properly
-local ts_utils = require('nvim-treesitter.ts_utils')
 local toggle_fstring = function()
+   local ts_utils = require('nvim-treesitter.ts_utils')
    local cursor = vim.api.nvim_win_get_cursor(0)
    local node = ts_utils.get_node_at_cursor()
 
