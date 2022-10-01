@@ -58,6 +58,7 @@ function M.list_plugins()
       -- Surround
       use({
          'kylechui/nvim-surround',
+         tag = 'v1.0.0',
          event = 'User LoadPlugins',
          config = function() require('nvim-surround').setup() end,
       })

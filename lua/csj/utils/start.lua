@@ -103,7 +103,11 @@ function M.conditionals(mode)
       end
    end
 
-   vim.schedule(run_comprobations)
+   -- vim.schedule(run_comprobations)
+
+   vim.defer_fn(function ()
+      run_comprobations()
+   end, 300)
 
    return true
 end
