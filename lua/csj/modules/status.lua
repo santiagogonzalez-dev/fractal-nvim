@@ -10,7 +10,6 @@ local data = require('csj.utils.data')
 
 function M.get()
    return table.concat({
-      -- ' ',
       data.position_with_icons(),
       data.buffer_status(),
       '%=',
@@ -29,7 +28,6 @@ function M.get()
       data.modified_buffer(),
       '%#StatusLine#', -- Reset hl groups
       data.vcs(),
-      -- ' ',
    })
 end
 
