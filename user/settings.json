@@ -33,6 +33,7 @@
     "matchpairs": "(:),{:},[:],<:>",
     "modeline": false,
     "mousefocus": true,
+    "mousescroll": "ver:8,hor:8",
     "numberwidth": 3,
     "pumblend": 9,
     "pumheight": 6,
