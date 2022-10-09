@@ -48,11 +48,12 @@ null.setup({
          extra_args = {
             -- '--fast',
             '--quiet',
-            '--skip-string-normalization',
-            '--line-length',
-            '88',
-            '--target-version',
-            'py310',
+            -- '--skip-string-normalization',
+            -- '--line-length',
+            -- '88',
+            -- '--target-version',
+            -- 'py310', -- Create a function that checks the python version
+            -- before settings this up.
          },
       }),
       diag.flake8.with({
