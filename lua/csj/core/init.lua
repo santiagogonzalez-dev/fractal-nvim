@@ -5,7 +5,7 @@ require('csj.core.general')
 require('csj.core.general.autocmds')
 
 local CONF = vim.fn.stdpath('config') -- "${XDG_CONFIG_HOME}/nvim"
-local settings = string.format('%s%s', CONF, '/user/settings.jsonc')
+local settings = string.format('%s%s', CONF, '/user/settings.json')
 local user_init = string.format('%s%s', CONF, '/user/init.lua')
 
 utils.check({
