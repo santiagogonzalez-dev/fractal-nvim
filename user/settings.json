@@ -1,7 +1,7 @@
 {
   "colorscheme": "jetjbp",
-  "restore": true, // Restore the cursor position and view.
-  "conditionals": true, // Trigger user events based on conditions.
+  "restore": true,
+  "conditionals": true,
   "modules": {
     "quit-actions": "<Leader>qq",
     "buffer-switch": true,
