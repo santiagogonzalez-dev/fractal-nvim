@@ -13,17 +13,15 @@ utils.check({
    on_fail_msg = 'Not able to locate `settings.json`.',
    callback = function()
       local ok, USER = pcall(utils.get_json, settings) -- Get user settings.
-      if not ok then
-         return false
-      else
-         local start = require('fractal.utils.start')
+      if not ok then return false end
 
-         start.colorscheme(USER.colorscheme) -- Apply colorscheme.
-         start.conditionals(USER.conditionals) -- Conditions for requiring.
-         start.modules(USER.modules) -- Load modules specified by the user.
-         start.session(USER.restore) -- Restore position, folds and searches.
-         start.opts(USER.opts) -- Set global settings defined by the user.
-      end
+      local start = require('fractal.utils.start')
+
+      start.colorscheme(USER.colorscheme) -- Apply colorscheme.
+      start.conditionals(USER.conditionals) -- Conditions for requiring.
+      start.modules(USER.modules) -- Load modules specified by the user.
+      start.session(USER.restore) -- Restore position, folds and searches.
+      start.opts(USER.opts) -- Set global settings defined by the user.
       return true
    end,
 })
