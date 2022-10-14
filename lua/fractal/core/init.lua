@@ -15,13 +15,13 @@ utils.check({
       local ok, USER = pcall(utils.get_json, settings) -- Get user settings.
       if not ok then return false end
 
-      local start = require('fractal.utils.start')
+      local fctl = require('fractal.configuration')
 
-      start.colorscheme(USER.colorscheme) -- Apply colorscheme.
-      start.conditionals(USER.conditionals) -- Conditions for requiring.
-      start.modules(USER.modules) -- Load modules specified by the user.
-      start.session(USER.restore) -- Restore position, folds and searches.
-      start.opts(USER.opts) -- Set global settings defined by the user.
+      fctl.colorscheme(USER.colorscheme) -- Apply colorscheme.
+      fctl.conditionals(USER.conditionals) -- Conditions for requiring.
+      fctl.modules(USER.modules) -- Load modules specified by the user.
+      fctl.session(USER.restore) -- Restore position, folds and searches.
+      fctl.opts(USER.opts) -- Set global settings defined by the user.
       return true
    end,
 })
