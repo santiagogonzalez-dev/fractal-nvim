@@ -8,8 +8,7 @@ function utils.prequire(package)
    if status then
       return lib
    else
-      local notify_on_error = require('fractal.modules.notifications').notify_send
-      notify_on_error(string.format('Failed to require "%s"', package))
+      notify_send(string.format('Failed to require "%s"', package))
       return false
    end
 end
