@@ -172,7 +172,8 @@ function M.current_keys(as_string)
    as_string = as_string or true
    local typed_letters = require('fractal.utils.keypresses').typed_letters
    if #typed_letters > 1 then
-      return as_string and string.format(' %s   ', table.concat(typed_letters))
+      return as_string
+            and string.format(' %s   ', table.concat(typed_letters))
          or typed_letters
    else
       return ' '

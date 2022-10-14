@@ -1,7 +1,7 @@
 vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
 vim.opt_local.cmdheight = 1
-vim.opt_local.matchpairs:append("=:;")
+vim.opt_local.matchpairs:append('=:;')
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
