@@ -101,11 +101,17 @@ function utils.get_bg_hl(hl_group)
    return vim.api.nvim_get_hl_by_name(hl_group, true).background
 end
 
--- Get json, converts the file to lua table.
+-- Find and return a json in a lua table, if it doesn't find it or it's broken
+-- it will return false.
 ---@param path string
----@return table
+---@return table|false
 function utils.get_json(path)
-   return vim.json.decode(table.concat(vim.fn.readfile(path), '\n'))
+   local find = utils.readable(path)
+   if not find then return false end
+
+   local ok, LIB =
+      pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
+   return ok and LIB or false
 end
 
 -- Check if a plugin is installed.
@@ -175,12 +181,14 @@ function utils.writable(filename, as_string)
    end
 end
 
--- Simple checking function, `eval` and `callback` need to return true in order
--- to avoid `on_fail_msg` getting triggered.
----@param tbl {eval: boolean|string, on_fail_msg: string, callback: function}
+-- This function evaluates the output of `eval`, which is going to be the output
+-- of a function for true and it runs the `callback`, in case of fail it will
+-- notify `on_fail_msg` to the user.
+---@param tbl {eval: any, on_fail_msg: string, callback: function}
 ---@return any
 function utils.check(tbl)
-   return tbl.eval and tbl.callback()
+   -- stylua: ignore
+   return tbl.eval and tbl.callback(tbl.eval)
       or notify_send(tbl.on_fail_msg)
 end
 
