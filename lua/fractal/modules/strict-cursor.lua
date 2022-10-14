@@ -6,7 +6,7 @@ local M = {
    -- you where tabbing but backwards, moving your cursor based on indentation
    -- levels.
 }
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 
 function M.strict_h_motion()
    local cursor_position = vim.api.nvim_win_get_cursor(0)

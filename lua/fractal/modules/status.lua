@@ -3,7 +3,7 @@ local M = {
    -- if you set it up with `hide-completely` you'll not see it, `basic` gives
    -- you a basic statusline.
 }
-local data = require('csj.utils.data')
+local data = require('fractal.utils.data')
 
 -- TODO(santigo-zero): Generate hl groups
 -- do
@@ -46,18 +46,18 @@ function M.setup(mode)
       -- vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
       -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
       vim.opt.statusline =
-         '%{%v:lua.require("csj.modules.status").hide_completely()%}'
+         '%{%v:lua.require("fractal.modules.status").hide_completely()%}'
       vim.opt.laststatus = 0
       vim.opt.ruler = false
       vim.opt.cmdheight = 0
       vim.api.nvim_set_hl(0, 'EndOfBuffer', { link = 'Normal' })
    elseif mode == 'basic' then
       vim.opt.laststatus = 3
-      vim.opt.statusline = '%{%v:lua.require("csj.modules.status").get()%}'
+      vim.opt.statusline = '%{%v:lua.require("fractal.modules.status").get()%}'
       vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
          callback = function()
             vim.opt.statusline =
-               '%{%v:lua.require("csj.modules.status").get()%}'
+               '%{%v:lua.require("fractal.modules.status").get()%}'
          end,
       })
 

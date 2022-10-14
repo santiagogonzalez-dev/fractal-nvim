@@ -1,1 +1,1 @@
-require('csj.core')
+require('fractal.core')

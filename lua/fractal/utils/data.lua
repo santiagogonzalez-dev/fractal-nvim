@@ -1,5 +1,5 @@
 local M = {}
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 
 -- Component for the statusline.
 ---@return string
@@ -170,7 +170,7 @@ end
 ---@return string|table
 function M.current_keys(as_string)
    as_string = as_string or true
-   local typed_letters = require('csj.utils.keypresses').typed_letters
+   local typed_letters = require('fractal.utils.keypresses').typed_letters
    if #typed_letters > 1 then
       return as_string and string.format(' %s   ', table.concat(typed_letters))
          or typed_letters

@@ -1,5 +1,5 @@
 local M = {}
--- local utils = require('csj.utils')
+-- local utils = require('fractal.utils')
 
 -- TODO(santigo-zero): FIXME before using
 -- Maybe use output from `:buffers` to populate quickfix list

@@ -1,5 +1,5 @@
 -- Session managment
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 local session_opts = vim.api.nvim_create_augroup('session_opts', {})
 
 -- Check if any file has changed when Vim is focused

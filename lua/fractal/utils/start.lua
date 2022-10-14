@@ -1,5 +1,5 @@
 local M = {}
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 
 -- Set a colorscheme or notify if there's something wrong with it
 ---@param colorscheme_name string
@@ -121,7 +121,7 @@ function M.modules(modules)
 
    for k, v in pairs(modules) do
       if v then
-         local lib = utils.prequire(string.format('csj.modules.%s', k))
+         local lib = utils.prequire(string.format('fractal.modules.%s', k))
          if lib then lib.setup(v) end
       end
    end

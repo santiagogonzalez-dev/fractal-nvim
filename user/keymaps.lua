@@ -1,4 +1,4 @@
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 
 local dead_keys = {
    '<BS>',

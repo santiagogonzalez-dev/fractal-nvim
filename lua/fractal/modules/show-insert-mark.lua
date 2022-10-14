@@ -8,7 +8,7 @@ local M = {
    -- better, `^, which takes you right to the last position you where in insert
    -- mode and cuts the amount of typing in half.
 }
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 local _ns_sim = vim.api.nvim_create_namespace('_ns_sim') -- Namespace
 
 -- TODO(santigo-zero): Avoid showing the mark in certain filetypes

@@ -1,8 +1,8 @@
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 
 -- Basic settings.
-require('csj.core.general')
-require('csj.core.general.autocmds')
+require('fractal.core.general')
+require('fractal.core.general.autocmds')
 
 local CONF = vim.fn.stdpath('config') -- "${XDG_CONFIG_HOME}/nvim"
 local settings = string.format('%s%s', CONF, '/user/settings.json')
@@ -16,7 +16,7 @@ utils.check({
       if not ok then
          return false
       else
-         local start = require('csj.utils.start')
+         local start = require('fractal.utils.start')
 
          start.colorscheme(USER.colorscheme) -- Apply colorscheme.
          start.conditionals(USER.conditionals) -- Conditions for requiring.

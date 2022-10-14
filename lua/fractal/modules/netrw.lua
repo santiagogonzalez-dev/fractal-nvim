@@ -1,7 +1,7 @@
 local M = {
    -- DESCRIPTION: An attempt to modernize NetRW.
 }
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 
 -- NetRW config.
 vim.g.netrw_banner = 0 -- Toggle the banner

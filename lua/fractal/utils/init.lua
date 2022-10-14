@@ -1,5 +1,5 @@
 local utils = {}
-local notify_send = require('csj.modules.notifications').notify_send
+local notify_send = require('fractal.modules.notifications').notify_send
 
 -- Protected require, notifies if there's an error loading a module
 ---@return boolean|string|number @ Either nil or the value of require()
@@ -8,7 +8,7 @@ function utils.prequire(package)
    if status then
       return lib
    else
-      local notify_on_error = require('csj.modules.notifications').notify_send
+      local notify_on_error = require('fractal.modules.notifications').notify_send
       notify_on_error(string.format('Failed to require "%s"', package))
       return false
    end

@@ -1,4 +1,4 @@
-# csj-neovim 🏴
+# fractal-neovim 🏴
 This is my personal config, it reads from a json file to enable some modules
 that I wrote and it covers all my basic needs.
 
@@ -32,4 +32,4 @@ basic example:
 There's modules that change the behaviour of the config, for example `"status":
 "hide-completely"` gets ride of the statusline at all, you can figure how
 everything works by searching for `DESCRIPTION` and `setup` in the modules
-located under `./lua/csj/modules/*.lua`.
+located under `./lua/fractal/modules/*.lua`.

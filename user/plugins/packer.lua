@@ -14,7 +14,7 @@ end
 function M.packer() return packer end
 
 function M.check_packer()
-   local packer_installed = require('csj.utils').is_installed('opt/packer.nvim')
+   local packer_installed = require('fractal.utils').is_installed('opt/packer.nvim')
    local plugins_dir =
       string.format('%s%s', vim.fn.stdpath('data'), '/site/pack/packer') -- /home/user/.local/share/nvim/site/pack/packer
    if not packer_installed then

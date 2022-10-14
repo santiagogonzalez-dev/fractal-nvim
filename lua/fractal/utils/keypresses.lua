@@ -1,7 +1,7 @@
 -- https://github.com/tamton-aquib/keys.nvim
 
 local M = {}
--- local utils = require 'csj.utils'
+-- local utils = require 'fractal.utils'
 local _kg_ns = vim.api.nvim_create_namespace('keypresses_global')
 
 M.typed_letters = {}

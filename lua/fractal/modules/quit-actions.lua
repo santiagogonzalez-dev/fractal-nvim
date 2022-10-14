@@ -5,7 +5,7 @@ local M = {
    -- buffer, if there's just one normal buffer it will ask the user for
    -- actions, like quitting neovim or just deleting the current buffer.
 }
-local utils = require('csj.utils')
+local utils = require('fractal.utils')
 
 M.del_normal_bufs_with_exception = function(current_buf)
    local buflist = vim.api.nvim_list_bufs()
@@ -90,7 +90,7 @@ function M.setup(mapping)
       function()
          vim.keymap.set('n', mapping, M.actions, {
             desc = [[Mapping associated with CSJNeovim module: quit-actions.
-                 Check the module at csj.modules.quit-actions
+                 Check the module at fractal.modules.quit-actions
                  for an in-depth description of the module.]],
          })
       end
