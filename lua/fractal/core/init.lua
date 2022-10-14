@@ -16,7 +16,6 @@ utils.check({
       fctl.modules(CFG.modules) -- Load modules specified by the user.
       fctl.session(CFG.restore) -- Restore position, folds and searches.
       fctl.opts(CFG.opts) -- Set global settings defined by the user.
-      return true
    end,
 })
 
