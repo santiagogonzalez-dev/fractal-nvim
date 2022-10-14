@@ -187,9 +187,15 @@ end
 ---@param tbl {eval: any, on_fail_msg: string, callback: function}
 ---@return any
 function utils.check(tbl)
-   -- stylua: ignore
-   return tbl.eval and tbl.callback(tbl.eval)
-      or notify_send(tbl.on_fail_msg)
+   if tbl.eval then
+      if type(tbl.callback) == 'function' then
+         return tbl.callback(tbl.eval)
+      else
+         return tbl.callback
+      end
+   else
+      return notify_send(tbl.on_fail_msg)
+   end
 end
 
 return utils

@@ -20,21 +20,18 @@ utils.check({
    end,
 })
 
+-- Add `./user` to lua path, do this before calling user's `init.lua`.
+package.path = table.concat({
+   package.path,
+   ';',
+   ROOT,
+   '/user/?.lua;',
+   ROOT,
+   '/user/?/init.lua;',
+})
+
 utils.check({
    eval = utils.readable(user_init),
    on_fail_msg = 'Not able to find an `init.lua` for user.',
-   callback = function()
-      -- Add `./user` to lua path, do this before calling user's `init.lua`.
-      package.path = table.concat({
-         package.path,
-         ';',
-         ROOT,
-         '/user/?.lua;',
-         ROOT,
-         '/user/?/init.lua;',
-      })
-
-      dofile(user_init) -- User's `init.lua`.
-      return true
-   end,
+   callback = dofile(user_init),
 })
