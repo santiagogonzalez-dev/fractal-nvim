@@ -1,6 +1,6 @@
 local utils = require('fractal.utils')
 local ROOT = vim.fn.stdpath('config') -- "${XDG_CONFIG_HOME}/nvim"
-local fctl = require('fractal.configuration')
+local fctl = require('fractal.core.configuration')
 local user_init = string.format('%s%s', ROOT, '/user/init.lua')
 
 -- Basic settings.
