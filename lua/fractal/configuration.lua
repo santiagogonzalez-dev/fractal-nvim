@@ -118,10 +118,11 @@ function M.modules(modules)
    if not modules then return false end
 
    for k, v in pairs(modules) do
-      if v then
-         local lib = utils.prequire(string.format('fractal.modules.%s', k))
-         if lib then lib.setup(v) end
-      end
+      if not v then return false end
+      utils.check({
+         eval = utils.prequire(string.format('fractal.modules.%s', k)),
+         callback = function(lib) lib.setup(v) end,
+      })
    end
    return true
 end
