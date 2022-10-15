@@ -4,13 +4,9 @@ local notify_send = require('fractal.modules.notifications').notify_send
 -- Protected require, notifies if there's an error loading a module
 ---@return boolean|string|number @ Either nil or the value of require()
 function utils.prequire(package)
-   local status, lib = pcall(require, package)
-   if status then
-      return lib
-   else
-      notify_send(string.format('Failed to require "%s"', package))
-      return false
-   end
+   local ok, lib = pcall(require, package)
+   if not ok then return false end
+   return lib
 end
 
 -- Do not open floating windows if there's already one open

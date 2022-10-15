@@ -119,8 +119,14 @@ function M.modules(modules)
 
    for k, v in pairs(modules) do
       if v then
+         local mod_path = string.format('fractal.modules.%s', k)
+         local msg = string.format(
+            'Failed to load module %s, check your settings.json',
+            k
+         )
          utils.check({
-            eval = utils.prequire(string.format('fractal.modules.%s', k)),
+            eval = utils.prequire(mod_path),
+            on_fail_msg = msg,
             callback = function(lib) lib.setup(v) end,
          })
       end
