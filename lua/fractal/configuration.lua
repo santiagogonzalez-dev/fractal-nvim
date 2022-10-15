@@ -113,18 +113,18 @@ end
 -- List of modules to be loaded, they can be found under
 -- `./lua/modules` k is the name of the module and v is a boolean
 ---@param modules table @ Table containing the modules to be loaded
----@return boolean
+---@return nil
 function M.modules(modules)
-   if not modules then return false end
+   if not modules then return end
 
    for k, v in pairs(modules) do
-      if not v then return false end
-      utils.check({
-         eval = utils.prequire(string.format('fractal.modules.%s', k)),
-         callback = function(lib) lib.setup(v) end,
-      })
+      if v then
+         utils.check({
+            eval = utils.prequire(string.format('fractal.modules.%s', k)),
+            callback = function(lib) lib.setup(v) end,
+         })
+      end
    end
-   return true
 end
 
 return M
