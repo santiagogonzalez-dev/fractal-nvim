@@ -482,7 +482,7 @@ function M.list_plugins()
       -- JDTLS
       use({
          'mfussenegger/nvim-jdtls',
-         event = 'User LoadPlugins',
+         ft = 'java'
       })
 
       -- LSP Inlay Hints
