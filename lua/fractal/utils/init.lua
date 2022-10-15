@@ -187,14 +187,12 @@ end
 ---@param tbl {eval: any, on_fail_msg: string, callback: function}
 ---@return any
 function utils.check(tbl)
-   if tbl.eval then
-      if type(tbl.callback) == 'function' then
-         return tbl.callback(tbl.eval)
-      else
-         return tbl.callback
-      end
+   if not tbl.eval then return notify_send(tbl.on_fail_msg) end
+
+   if type(tbl.callback) == 'function' then
+      return tbl.callback(tbl.eval)
    else
-      return notify_send(tbl.on_fail_msg)
+      return tbl.callback
    end
 end
 
