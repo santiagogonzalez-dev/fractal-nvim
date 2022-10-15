@@ -1,8 +1,8 @@
-# fractal-neovim 🏴
+# fractal-nvim 🏴
 This is my personal config, it reads from a json file to enable some modules
 that I wrote and it covers all my basic needs.
 
-# Why the name?
+# Why the name fractal-nvim?
 I choose it randomly just like I did with csj-neovim, and I like how it sounds
 🙂.
 
