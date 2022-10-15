@@ -47,7 +47,11 @@ vim.keymap.set('n', '<Leader>Q', '<CMD>bufdo bdelete<CR>', {
    desc = 'Delete all buffers',
 })
 
-vim.keymap.set('n', '<Leader>w', vim.cmd.wqall, {
+vim.keymap.set('n', '<Leader>w', vim.cmd.w, {
+   desc = 'Write',
+})
+
+vim.keymap.set('n', '<Leader>wqa', vim.cmd.wqa, {
    desc = 'Write and Quit',
 })
 
@@ -279,10 +283,7 @@ vim.keymap.set({ 'v', 'x' }, '<S-Tab>', '<gv', {
    desc = 'In visual mode use tabs for indentation',
 })
 
-vim.keymap.set('n', '/', '/<C-r>/', {
-   desc = 'Better search',
-})
-vim.keymap.set('n', '//', '/', {
+vim.keymap.set('n', '//', '/<C-r>/', {
    desc = 'Better search',
 })
 
