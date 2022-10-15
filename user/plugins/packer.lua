@@ -55,7 +55,6 @@ function M.list_plugins()
       -- Packer
       use({
          'wbthomason/packer.nvim',
-         commit = '6afb67460283f0e990d35d229fd38fdc04063e0a',
          opt = true,
       })
 
@@ -64,7 +63,6 @@ function M.list_plugins()
       -- Plenary
       use({
          'nvim-lua/plenary.nvim',
-         commit = '4b7e52044bbb84242158d977a50c4cbcd85070c7',
          module = 'plenary',
       })
 
@@ -79,7 +77,6 @@ function M.list_plugins()
       -- Accelerated jk
       use({
          'rainbowhxch/accelerated-jk.nvim',
-         commit = '38bbbf9258aab876906588ea979901ed3ed569c6',
          keys = { 'j', 'k', 'w', 'b', '+', '-' },
          config = function()
             require('accelerated-jk').setup({
@@ -94,7 +91,6 @@ function M.list_plugins()
       -- Project
       use({
          'ahmedkhalf/project.nvim',
-         commit = '628de7e433dd503e782831fe150bb750e56e55d6',
          module = 'project',
          opt = true,
          config = function()
@@ -115,7 +111,6 @@ function M.list_plugins()
       -- Comment
       use({
          'numToStr/Comment.nvim',
-         commit = 'd9cfae1059b62f7eacc09dba181efe4894e3b086',
          keys = {
             'gcc',
             'gc',
@@ -130,7 +125,6 @@ function M.list_plugins()
                mappings = {
                   basic = true,
                   extra = true,
-                  extended = true,
                },
                pre_hook = function(ctx)
                   local U = require('Comment.utils')
@@ -152,13 +146,76 @@ function M.list_plugins()
                end,
             })
             require('Comment.ft')({ 'dosini', 'zsh', 'help' }, { '#%s' })
+            local api = require('Comment.api')
+
+            vim.keymap.set('n', 'g>', api.call('comment.linewise', 'g@'), {
+               expr = true,
+               desc = 'Comment region linewise',
+            })
+            vim.keymap.set(
+               'n',
+               'g>c',
+               api.call('comment.linewise.current', 'g@$'),
+               {
+                  expr = true,
+                  desc = 'Comment current line',
+               }
+            )
+            vim.keymap.set(
+               'n',
+               'g>b',
+               api.call('comment.blockwise.current', 'g@$'),
+               {
+                  expr = true,
+                  desc = 'Comment current block',
+               }
+            )
+
+            vim.keymap.set('n', 'g<', api.call('uncomment.linewise', 'g@'), {
+               expr = true,
+               desc = 'Uncomment region linewise',
+            })
+            vim.keymap.set(
+               'n',
+               'g<c',
+               api.call('uncomment.linewise.current', 'g@$'),
+               {
+                  expr = true,
+                  desc = 'Uncomment current line',
+               }
+            )
+            vim.keymap.set(
+               'n',
+               'g<b',
+               api.call('uncomment.blockwise.current', 'g@$'),
+               {
+                  expr = true,
+                  desc = 'Uncomment current block',
+               }
+            )
+
+            local esc =
+               vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+
+            vim.keymap.set('x', 'g>', function()
+               vim.api.nvim_feedkeys(esc, 'nx', false)
+               api.locked('comment.linewise')(vim.fn.visualmode())
+            end, {
+               desc = 'Comment region linewise (visual)',
+            })
+
+            vim.keymap.set('x', 'g<', function()
+               vim.api.nvim_feedkeys(esc, 'nx', false)
+               api.locked('uncomment.linewise')(vim.fn.visualmode())
+            end, {
+               desc = 'Uncomment region linewise (visual)',
+            })
          end,
       })
 
       -- Autopairs
       use({
          'windwp/nvim-autopairs',
-         commit = 'a5b27c51def41297aaa60272150b6bbeeed6a448',
          event = 'InsertEnter',
          config = function()
             require('nvim-autopairs').setup({
@@ -185,18 +242,15 @@ function M.list_plugins()
       -- Treesitter
       use({
          'nvim-treesitter/nvim-treesitter',
-         commit = 'aebc6cf6bd4675ac86629f516d612ad5288f7868',
          event = 'User LoadPlugins',
          run = ':TSUpdate',
          requires = {
             {
                'JoosepAlviste/nvim-ts-context-commentstring',
-               commit = '4d3a68c41a53add8804f471fcc49bb398fe8de08',
                after = 'Comment.nvim',
             },
             {
                'nvim-treesitter/nvim-treesitter-textobjects',
-               commit = '41e8d8964e5c874d9ce5e37d00a52f37f218502e',
                after = 'nvim-treesitter',
                config = function()
                   require('nvim-treesitter.configs').setup({
@@ -236,7 +290,6 @@ function M.list_plugins()
             },
             {
                'nvim-treesitter/playground',
-               commit = 'e6a0bfaf9b5e36e3a327a1ae9a44a989eae472cf',
                cmd = { 'TSHighlightCapturesUnderCursor', 'TSPlaygroundToggle' },
                config = function()
                   require('nvim-treesitter.configs').setup({
@@ -277,7 +330,6 @@ function M.list_plugins()
       -- Telescope
       use({
          'nvim-telescope/telescope.nvim',
-         commit = '76ea9a898d3307244dce3573392dcf2cc38f340f',
          module = 'telescope',
          keys = {
             '<Leader>gr',
@@ -305,7 +357,6 @@ function M.list_plugins()
       -- Colorizer
       use({
          'NvChad/nvim-colorizer.lua',
-         commit = '9dd7ecde55b06b5114e1fa67c522433e7e59db8b',
          event = 'BufEnter',
          config = function() require('colorizer').setup() end,
       })
@@ -316,7 +367,6 @@ function M.list_plugins()
       -- Neodim
       use({
          'zbirenbaum/neodim',
-         commit = 'cf7e00fde692f1a97ff606a9cff3472d217f677e',
          event = 'LspAttach',
          config = function()
             require('neodim').setup({
@@ -338,7 +388,6 @@ function M.list_plugins()
       -- Indent blankline
       use({
          'lukas-reineke/indent-blankline.nvim',
-         commit = 'db7cbcb40cc00fc5d6074d7569fb37197705e7f6',
          event = 'User LoadPlugins',
          config = function()
             require('indent_blankline').setup({
@@ -377,7 +426,6 @@ function M.list_plugins()
       -- LSP
       use({
          'neovim/nvim-lspconfig',
-         commit = 'af43c300d4134db3550089cd4df6c257e3734689',
          event = 'User LoadPlugins',
          config = function() require('plugins.lsp') end,
       })
@@ -385,21 +433,18 @@ function M.list_plugins()
       -- Mason
       use({
          'williamboman/mason.nvim',
-         commit = '53e419ce550b1bf37605d48d9f226143590e07ea',
          opt = true,
       })
 
       -- Mason Lsp Installer
       use({
          'williamboman/mason-lspconfig.nvim',
-         commit = '0051870dd728f4988110a1b2d47f4a4510213e31',
          opt = true,
       })
 
       -- Null-LS
       use({
          'jose-elias-alvarez/null-ls.nvim',
-         commit = 'c0c19f32b614b3921e17886c541c13a72748d450',
          opt = true,
          config = function() require('plugins.lsp.null-ls') end,
       })
@@ -424,7 +469,6 @@ function M.list_plugins()
       -- DAP
       use({
          'mfussenegger/nvim-dap',
-         commit = '0b320f5bd4e5f81e8376f9d9681b5c4ee4483c25',
          event = 'User LoadPlugins',
          requires = {
             {
@@ -438,14 +482,12 @@ function M.list_plugins()
       -- JDTLS
       use({
          'mfussenegger/nvim-jdtls',
-         commit = '75d27daa061458dd5735b5eb5bbc48d3baad1186',
          event = 'User LoadPlugins',
       })
 
       -- LSP Inlay Hints
       use({
          'lvimuser/lsp-inlayhints.nvim',
-         commit = '9bcd6fe25417b7808fe039ab63d4224f2071d24a',
          event = 'User LoadPlugins',
          config = function()
             require('lsp-inlayhints').setup()
@@ -466,7 +508,6 @@ function M.list_plugins()
       -- Semantic Tokens
       use({
          'theHamsta/nvim-semantic-tokens',
-         commit = '7e8dca30692af9c87cc6acb7107b44db0d71eb90',
          event = 'User LoadPlugins',
          config = function()
             require('nvim-semantic-tokens').setup({
