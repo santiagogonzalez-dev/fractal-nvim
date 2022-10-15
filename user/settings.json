@@ -7,7 +7,7 @@
     "folds": true,
     "gutter": true,
     "netrw": true,
-    "notifications": true,
+    "notifications": false,
     "show-insert-mark": true,
     "skeletons": true,
     "status": "hide-completely",
