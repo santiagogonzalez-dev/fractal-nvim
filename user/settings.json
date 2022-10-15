@@ -4,7 +4,6 @@
   "conditionals": true,
   "modules": {
     "quit-actions": "<Leader>qq",
-    "buffer-switch": true,
     "folds": true,
     "gutter": true,
     "netrw": true,
