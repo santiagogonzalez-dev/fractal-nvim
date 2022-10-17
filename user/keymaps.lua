@@ -311,3 +311,10 @@ vim.api.nvim_create_autocmd('FileType', {
       })
    end,
 })
+
+vim.keymap.set(
+   'n',
+   '<Leader>cb',
+   utils.blink_crosshair,
+   { desc = 'Blink the cursor crosshair' }
+)

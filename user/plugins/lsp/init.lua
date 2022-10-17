@@ -19,6 +19,7 @@ local SERVERS = {
    'jdtls',
    'jsonls',
    'pyright',
+   'sqls',
    'sumneko_lua',
    'tsserver',
 }

@@ -77,6 +77,7 @@ vim.api.nvim_create_autocmd('UIEnter', {
          callback = function()
             vim.opt.cursorline = true
             vim.opt.cursorcolumn = true
+            utils.blink_crosshair()
          end,
       })
       vim.api.nvim_create_autocmd({ 'FocusLost', 'WinLeave' }, {
