@@ -65,12 +65,12 @@
   (#set! conceal "I")
 )
 
-(
-  (identifier) @function
-  (#eq? @function "utils")
-  (#set! conceal "")
-  ; (#set! conceal "U")
-)
+; (
+;   (identifier) @function
+;   (#eq? @function "utils")
+;   (#set! conceal "")
+;   ; (#set! conceal "U")
+; )
 
 ; (
 ;   (dot_index_expression
@@ -107,10 +107,10 @@
  (#set! conceal "ﯠ")
  )
 
-(("return" @keyword) (#set! conceal ""))
+; (("return" @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal ""))
 (("not" @keyword) (#set! conceal ""))
-(("for" @repeat) (#set! conceal ""))
+; (("for" @repeat) (#set! conceal ""))
 (("while" @repeat) (#set! conceal "∞"))
 
 ; for -> circle arrow
