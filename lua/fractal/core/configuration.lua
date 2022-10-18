@@ -126,6 +126,8 @@ function M.modules(modules)
          )
          utils.check({
             eval = utils.prequire(mod_path),
+            status = true,
+            status_msg = string.format('Success loading %s', mod_path),
             on_fail_msg = msg,
             callback = function(lib) lib.setup(v) end,
          })
