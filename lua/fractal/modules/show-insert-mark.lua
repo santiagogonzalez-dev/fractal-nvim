@@ -14,7 +14,7 @@ local _ns_sim = vim.api.nvim_create_namespace('_ns_sim') -- Namespace
 -- TODO(santigo-zero): Avoid showing the mark in certain filetypes
 
 -- Generate highlight groups
-vim.api.nvim_set_hl(0, 'SIM', { link = 'TSVariableBuiltin' })
+vim.api.nvim_set_hl(0, 'SIM', { link = '@function' })
 vim.api.nvim_set_hl(
    0,
    'SIMReversed',
