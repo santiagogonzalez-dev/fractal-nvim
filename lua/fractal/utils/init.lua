@@ -82,8 +82,9 @@ utils.AVOID_FILETYPES = {
    quickfix = true,
 }
 
----@return boolean @ If the filetype of the buffer is in the list
----`utils.AVOID_FILETYPES` this function will return true.
+-- If the filetype of the buffer is in the list `utils.AVOID_FILETYPES` this
+-- function will return true.
+---@return boolean
 function utils.avoid_filetype()
    return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
 end
@@ -188,9 +189,7 @@ function utils.check(tbl)
    if not tbl.eval then return notify_send(tbl.on_fail_msg) end
 
    if type(tbl.callback) == 'function' then
-      if tbl.status then
-         table.insert(utils.check_status, tbl.status_msg)
-      end
+      if tbl.status then table.insert(utils.check_status, tbl.status_msg) end
       return tbl.callback(tbl.eval)
    else
       return tbl.callback
