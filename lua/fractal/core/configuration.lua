@@ -2,22 +2,16 @@ local M = {}
 local utils = require('fractal.utils')
 
 -- Set a colorscheme or notify if there's something wrong with it
----@param colorscheme_name string
+---@param name string
 ---@return boolean
-function M.colorscheme(colorscheme_name)
+function M.colorscheme(name)
    -- Comprobation that `name` is a valid string
-   if
-      colorscheme_name == ''
-      or colorscheme_name == nil
-      or colorscheme_name == vim.NIL
-   then
-      vim.notify(
-         'The string for setting up the colorcheme might be wrong, check you user_settings.json'
-      )
+   if name == nil or utils.present_in_table(name, { '', vim.NIL }) then
+      vim.notify('Colorscheme string not valid, check you user_settings.json')
       return false
    end
 
-   local ok, _ = pcall(vim.cmd.colorscheme, colorscheme_name)
+   local ok, _ = pcall(vim.cmd.colorscheme, name)
    if not ok then
       vim.notify('Could not find the colorscheme, check your settings.json')
       return false

@@ -47,7 +47,7 @@ function M.display_mark()
       -- If the cursor is not at the end of the line use a sign instead of virtual text
       return vim.api.nvim_buf_set_extmark(0, _ns_sim, pos_cur[1] - 1, 0, {
          cursorline_hl_group = 'SIM',
-         sign_text = '',
+         sign_text = ' ',
          sign_hl_group = 'SIMReversed',
       })
    end

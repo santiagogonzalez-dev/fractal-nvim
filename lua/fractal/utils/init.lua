@@ -55,11 +55,11 @@ function utils.is_git()
    end
 end
 
--- Checks if an elemen `element` is present in table `T`.
+-- Checks if an element `element` is present in table `T`.
 ---@param T table
 ---@param element any
 ---@return boolean
-function utils.present_in_table(T, element)
+function utils.present_in_table_kv(element, T)
    if T[element] ~= nil then
       return true
    else
@@ -67,26 +67,33 @@ function utils.present_in_table(T, element)
    end
 end
 
+function utils.present_in_table(element, T)
+   for _, value in pairs(T) do
+      if value == element then return true end
+   end
+   return false
+end
+
 -- If there's a filetype that you want to ignore put it in this table and call
 -- the function `utils.avoid_filetype()`, returns true if the filetype of the
 -- buffer is undesirable.
 utils.AVOID_FILETYPES = {
-   NetrwTreeListing = true,
-   TelescopePrompt = true,
-   gitcommit = true,
-   gitdiff = true,
-   help = true,
-   packer = true,
-   startify = true,
-   qf = true,
-   quickfix = true,
+   'NetrwTreeListing',
+   'TelescopePrompt',
+   'gitcommit',
+   'gitdiff',
+   'help',
+   'packer',
+   'startify',
+   'qf',
+   'quickfix',
 }
 
 -- If the filetype of the buffer is in the list `utils.AVOID_FILETYPES` this
 -- function will return true.
 ---@return boolean
 function utils.avoid_filetype()
-   return utils.present_in_table(utils.AVOID_FILETYPES, vim.bo.filetype)
+   return utils.present_in_table(vim.bo.filetype, utils.AVOID_FILETYPES)
 end
 
 -- Highlight utils.
