@@ -3,5 +3,6 @@ vim.filetype.add({
       conf = 'dosini',
       dirs = 'dosini',
       dosinit = 'conf',
+      postcss = 'css',
    },
 })
