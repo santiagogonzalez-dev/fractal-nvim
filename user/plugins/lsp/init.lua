@@ -14,7 +14,7 @@ local SERVERS = {
    'cssmodules_ls',
    'emmet_ls',
    'gopls',
-   'hls',
+   -- 'hls',
    'html',
    'jdtls',
    'jsonls',

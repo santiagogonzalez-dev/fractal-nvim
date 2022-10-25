@@ -93,4 +93,10 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 
 vim.fn.matchadd('ErrorMsg', '\\s\\+$') -- Extra whitespaces will be highlighted
 
+vim.api.nvim_create_user_command(
+   'EvalYankRegister',
+   function() vim.cmd.lua(vim.fn.getreg('"')) end,
+   {}
+)
+
 require('plugins')

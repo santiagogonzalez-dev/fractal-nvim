@@ -68,14 +68,14 @@ vim.keymap.set('n', '<Leader>E', vim.cmd.e, {
    silent = true,
 })
 
-vim.keymap.set('n', '<Leader>e', ':Lexplore!<CR>', {
-   desc = 'Open NetRW',
-   silent = true,
-})
+-- vim.keymap.set('n', '<Leader>e', ':Lexplore!<CR>', {
+--    desc = 'Open NetRW',
+--    silent = true,
+-- })
 
-vim.keymap.set('n', '<Leader>ee', ':Lexplore! %:p:h<CR>', {
-   desc = 'Open NetRW in the dir of the buffer',
-})
+-- vim.keymap.set('n', '<Leader>ee', ':Lexplore! %:p:h<CR>', {
+--    desc = 'Open NetRW in the dir of the buffer',
+-- })
 
 vim.keymap.set(
    'n',
@@ -263,13 +263,6 @@ vim.keymap.set({ 'v', 'x', 'o' }, '<Space>', 'zf', {
    desc = 'Toggle folds with space',
 })
 
-vim.keymap.set('n', '#', '*Nzv', {
-   desc = 'Better #',
-})
--- vim.keymap.set('v', '#', [[y/\V<C-r>=escape(@",'/\')<CR><CR>N]], {
---    desc = 'Better #',
--- })
-
 vim.keymap.set({ 'v', 'x' }, '<', '<gv', {
    desc = 'Keep visual selection after shifting codeblock',
 })
@@ -317,4 +310,11 @@ vim.keymap.set(
    '<Leader>cb',
    utils.blink_crosshair,
    { desc = 'Blink the cursor crosshair' }
+)
+
+vim.keymap.set(
+   'n',
+   '<Leader>e',
+   vim.cmd.EvalYankRegister,
+   { desc = 'Eval whatever it is that the yank register has' }
 )

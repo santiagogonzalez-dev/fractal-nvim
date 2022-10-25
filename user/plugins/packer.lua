@@ -291,6 +291,7 @@ function M.list_plugins()
             {
                'nvim-treesitter/playground',
                cmd = { 'TSHighlightCapturesUnderCursor', 'TSPlaygroundToggle' },
+               keys = '<Leader>tsh',
                config = function()
                   require('nvim-treesitter.configs').setup({
                      playground = {
@@ -312,6 +313,11 @@ function M.list_plugins()
                         },
                      },
                   })
+                  vim.keymap.set(
+                     'n',
+                     '<Leader>tsh',
+                     ':TSHighlightCapturesUnderCursor'
+                  )
                end,
             },
          },
@@ -362,7 +368,10 @@ function M.list_plugins()
       })
 
       -- JetJBP
-      use('santigo-zero/jetjbp.nvim')
+      use({
+         'santigo-zero/jetjbp.nvim',
+         config = function() vim.api.nvim_set_hl(0, '@variable', { fg = '#A5ABD2' }) end,
+      })
 
       -- Neodim
       use({
