@@ -316,7 +316,7 @@ function M.list_plugins()
                   vim.keymap.set(
                      'n',
                      '<Leader>tsh',
-                     ':TSHighlightCapturesUnderCursor'
+                     ':TSHighlightCapturesUnderCursor<CR>'
                   )
                end,
             },
