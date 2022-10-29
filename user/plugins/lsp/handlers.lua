@@ -103,6 +103,20 @@ M.on_attach = function(client, bufnr)
          require('jdtls.dap').setup_dap_main_class_configs()
       end
    end
+
+   -- Write on format
+   vim.api.nvim_create_autocmd('BufWritePre', {
+      pattern = {
+         'css',
+         'html',
+         'js',
+         'lua',
+         'python',
+         'ts',
+      },
+      callback = function() vim.lsp.buf.format({ async = true }) end,
+   })
+
    require('plugins.lsp.keymaps').keymaps(bufnr)
    M.highlight_word_under_cursor(client, bufnr)
 end

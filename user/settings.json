@@ -48,7 +48,7 @@
     "smartcase": true,
     "smartindent": true,
     "softtabstop": -1,
-    "spelllang": "en,cjk,es",
+    "spelllang": "en,cjk",
     "spelloptions": "camel,noplainbuffer",
     "spellsuggest": "best",
     "splitbelow": true,

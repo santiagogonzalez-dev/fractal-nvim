@@ -48,7 +48,7 @@ null.setup({
          extra_args = {
             -- '--fast',
             '--quiet',
-            '--skip-string-normalization',
+            -- '--skip-string-normalization',
             '--line-length',
             '88',
             '--target-version',
