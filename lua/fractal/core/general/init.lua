@@ -23,10 +23,8 @@ vim.g.markdown_fenced_languages = {
    'tsx=typescriptreact',
 }
 
--- Open help and man pages in a vertical split if there's enough space, just
--- like doing `:vert help` instead of `:help`.
 vim.api.nvim_create_autocmd('Filetype', {
-   desc = 'Open pages for man and help in a vertical split',
+   desc = "Open help and man pages in a vertical split if there's not enough space",
    pattern = { 'help', 'man' },
    callback = function()
       if (vim.opt.lines:get() * 4) < vim.opt.columns:get() then
