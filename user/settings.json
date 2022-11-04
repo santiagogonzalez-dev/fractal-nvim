@@ -8,7 +8,7 @@
     "gutter": true,
     "netrw": true,
     "notifications": true,
-    "show-insert-mark": true,
+    "highlight-working-line": true,
     "skeletons": true,
     "status": "hide-completely",
     "strict-cursor": "<Esc><Esc>"
