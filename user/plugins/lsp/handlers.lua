@@ -107,12 +107,12 @@ M.on_attach = function(client, bufnr)
    -- Write on format
    vim.api.nvim_create_autocmd('BufWritePre', {
       pattern = {
-         'css',
-         'html',
-         'js',
-         'lua',
-         'python',
-         'ts',
+         '*.css',
+         '*.html',
+         '*.js',
+         '*.lua',
+         '*.python',
+         '*.ts',
       },
       callback = function() vim.lsp.buf.format({ async = true }) end,
    })

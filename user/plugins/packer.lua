@@ -370,7 +370,7 @@ function M.list_plugins()
       -- JetJBP
       use({
          -- 'santigo-zero/jetjbp.nvim',
-         '~/workspace/repositories/jetjbp.nvim',
+         '~/workspace/repos/jetjbp.nvim',
          config = function() vim.api.nvim_set_hl(0, '@variable', { fg = '#A5ABD2' }) end,
       })
 
@@ -529,17 +529,17 @@ function M.list_plugins()
          end,
       })
 
-      use({
-         'nvim-treesitter/nvim-treesitter-refactor',
-         event = 'User LoadPlugins',
-         config = function()
-            require('nvim-treesitter.configs').setup({
-               refactor = {
-                  highlight_current_scope = { enable = true },
-               },
-            })
-         end,
-      })
+      -- use({
+      --    'nvim-treesitter/nvim-treesitter-refactor',
+      --    event = 'User LoadPlugins',
+      --    config = function()
+      --       require('nvim-treesitter.configs').setup({
+      --          refactor = {
+      --             highlight_current_scope = { enable = true },
+      --          },
+      --       })
+      --    end,
+      -- })
    end)
 end
 
