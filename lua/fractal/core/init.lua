@@ -1,21 +1,22 @@
 local utils = require('fractal.utils')
+local check, get_json, readable = utils.check, utils.get_json, utils.readable
 local ROOT = vim.fn.stdpath('config') -- "${XDG_CONFIG_HOME}/nvim"
-local fctl = require('fractal.core.configuration')
+local fract = require('fractal.core.configuration')
 local user_init = string.format('%s%s', ROOT, '/user/init.lua')
 
 -- Basic settings.
 require('fractal.core.general')
 require('fractal.core.general.autocmds')
 
-utils.check({
-   eval = utils.get_json(string.format('%s%s', ROOT, '/user/settings.json')),
+check({
+   eval = get_json(string.format('%s%s', ROOT, '/user/settings.json')),
    on_fail_msg = 'Not able to locate `settings.json`.',
    callback = function(CFG)
-      fctl.colorscheme(CFG.colorscheme) -- Apply colorscheme.
-      fctl.conditionals(CFG.conditionals) -- Conditions for requiring.
-      fctl.modules(CFG.modules) -- Load modules specified by the user.
-      fctl.session(CFG.restore) -- Restore position, folds and searches.
-      fctl.opts(CFG.opts) -- Set global settings defined by the user.
+      fract.colorscheme(CFG.colorscheme) -- Apply colorscheme.
+      fract.conditionals(CFG.conditionals) -- Conditions for requiring.
+      fract.modules(CFG.modules) -- Load modules specified by the user.
+      fract.session(CFG.restore) -- Restore position, folds and searches.
+      fract.opts(CFG.opts) -- Set global settings defined by the user.
    end,
 })
 
@@ -29,8 +30,8 @@ package.path = table.concat({
    '/user/?/init.lua;',
 })
 
-utils.check({
-   eval = utils.readable(user_init),
+check({
+   eval = readable(user_init),
    on_fail_msg = 'Not able to find an `init.lua` for user.',
    callback = dofile(user_init),
 })
