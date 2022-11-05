@@ -14,8 +14,10 @@ function M.defer(fnc)
 end
 
 function M.main()
-   vim.cmd "runtime! plugin/**/*.vim"
-   vim.cmd "runtime! plugin/**/*.lua"
+   if not vim.opt.loadplugins:get() then
+      vim.cmd "runtime! plugin/**/*.vim"
+      vim.cmd "runtime! plugin/**/*.lua"
+   end
 
    vim.cmd.syntax "on"
    vim.cmd.filetype "on"

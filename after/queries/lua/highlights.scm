@@ -100,6 +100,13 @@
 )
 
 (
+  (dot_index_expression
+  )@variable
+    (#eq? @keyword  "vim.api.nvim_exec_autocmds" )
+  (#set! conceal "")
+)
+
+(
  (dot_index_expression) @function
  (#eq? @function  "vim.api.nvim_create_autocmd" )
  ; (#set! conceal "a")
