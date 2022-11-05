@@ -1,6 +1,6 @@
 column_width = 80
-# indent_type = "Spaces"
-indent_type = "Tabs"
+indent_type = "Spaces"
+# indent_type = "Tabs"
 indent_width = 3
 # quote_style = "AutoPreferSingle"
 quote_style = "AutoPreferDouble"
@@ -10,4 +10,5 @@ line_endings = "Unix"
 call_parentheses = "NoSingleString"
 # call_parentheses = "Always"
 # call_parentheses = "None"
-collapse_simple_statement = "Always" # This makes some functions be one liners
+# collapse_simple_statement = "Always" # This makes some functions be one liners
+collapse_simple_statement = "ConditionalOnly" # This makes some functions be one liners

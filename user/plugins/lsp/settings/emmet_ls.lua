@@ -1,15 +1,15 @@
 return {
-	filetypes = {
-		"javascript",
-		"typescript",
-		"javascriptreact",
-		"typescriptreact",
-		"html",
-		"css",
-		"blade",
-	},
-	single_file_support = true,
-	settings = {},
+   filetypes = {
+      "javascript",
+      "typescript",
+      "javascriptreact",
+      "typescriptreact",
+      "html",
+      "css",
+      "blade",
+   },
+   single_file_support = true,
+   settings = {},
 }
 
 -- https://github.com/pedro757/emmet

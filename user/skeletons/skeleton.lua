@@ -1,7 +1,7 @@
 local M = {}
 
 function M.example()
-	-- code
+   -- code
 end
 
 return M
