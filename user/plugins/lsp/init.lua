@@ -1,56 +1,56 @@
-local status, lspconfig = pcall(require, 'lspconfig')
+local status, lspconfig = pcall(require, "lspconfig")
 if not status then
-   return -- Return if there is any problem with lspconfig
+	return -- Return if there is any problem with lspconfig
 end
 
-local packer = require('plugins.packer').packer()
+local packer = require("plugins.packer").packer()
 
-packer.loader('mason.nvim')
-packer.loader('mason-lspconfig.nvim')
+packer.loader "mason.nvim"
+packer.loader "mason-lspconfig.nvim"
 
 local SERVERS = {
-   'bashls',
-   'cssls',
-   'cssmodules_ls',
-   'emmet_ls',
-   'gopls',
-   -- 'hls',
-   'html',
-   'jdtls',
-   'jsonls',
-   'pyright',
-   'sqls',
-   'sumneko_lua',
-   'tsserver',
+	"bashls",
+	"cssls",
+	"cssmodules_ls",
+	"emmet_ls",
+	"gopls",
+	-- 'hls',
+	"html",
+	"jdtls",
+	"jsonls",
+	"pyright",
+	"sqls",
+	"sumneko_lua",
+	"tsserver",
 }
 
-require('mason-lspconfig').setup({
-   ensure_installed = SERVERS,
-   automatic_installation = false,
+require("mason-lspconfig").setup({
+	ensure_installed = SERVERS,
+	automatic_installation = false,
 })
 
-require('mason').setup()
+require("mason").setup()
 
 for _, server in pairs(SERVERS) do
-   server = vim.split(server, '@')[1]
+	server = vim.split(server, "@")[1]
 
-   local opts = {
-      on_attach = require('plugins.lsp.handlers').on_attach,
-      capabilities = require('plugins.lsp.handlers').capabilities,
-   }
+	local opts = {
+		on_attach = require("plugins.lsp.handlers").on_attach,
+		capabilities = require("plugins.lsp.handlers").capabilities,
+	}
 
-   if server ~= 'jdtls' then
-      local has_opts, custom_opts =
-         pcall(require, string.format('%s.%s', 'plugins.lsp.settings', server))
-      if has_opts then
-         opts = vim.tbl_deep_extend('force', custom_opts, opts)
-      end
+	if server ~= "jdtls" then
+		local has_opts, custom_opts =
+			pcall(require, string.format("%s.%s", "plugins.lsp.settings", server))
+		if has_opts then
+			opts = vim.tbl_deep_extend("force", custom_opts, opts)
+		end
 
-      lspconfig[server].setup(opts)
-   end
+		lspconfig[server].setup(opts)
+	end
 end
 
-require('plugins.lsp.handlers').setup()
+require("plugins.lsp.handlers").setup()
 
-packer.loader('null-ls.nvim')
-require('plugins.lsp.null-ls')
+packer.loader "null-ls.nvim"
+require "plugins.lsp.null-ls"
