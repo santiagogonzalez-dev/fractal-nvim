@@ -86,11 +86,11 @@
   (#set! conceal "襁")
 )
 
-(
-  (dot_index_expression) @function
-    (#eq? @function  "vim.cmd" )
-  (#set! conceal ">")
-)
+; (
+;   (dot_index_expression) @variable
+;     (#eq? @function  "vim.cmd" )
+;   (#set! conceal ">")
+; )
 
 (
   (dot_index_expression

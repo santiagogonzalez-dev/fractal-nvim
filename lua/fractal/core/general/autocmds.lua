@@ -40,7 +40,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
          vim.cmd ":!tail -n3 startuptime.txt"
          vim.fn.delete "startuptime.txt"
       end
-   end, 3000),
+   end, 1000),
 })
 
 -- Globals

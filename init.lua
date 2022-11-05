@@ -1,17 +1,21 @@
-vim.opt.loadplugins = false
+local M = {}
 
-vim.g.ts_highlight_lua = true
+vim.opt.loadplugins = false -- Disable builtin plugins
+vim.g.ts_highlight_lua = true -- Enable treesitter parsers
 
+-- Temporarily disable this settings.
 vim.cmd.syntax "off"
 vim.cmd.filetype "off"
 vim.cmd.filetype "plugin indent off"
 vim.opt.shadafile = "NONE"
 
-vim.schedule(function()
-   if not vim.opt.loadplugins:get() then
-      vim.cmd "runtime! plugin/**/*.vim"
-      vim.cmd "runtime! plugin/**/*.lua"
-   end
+function M.defer(fnc)
+   return vim.defer_fn(fnc, 30)
+end
+
+function M.main()
+   vim.cmd "runtime! plugin/**/*.vim"
+   vim.cmd "runtime! plugin/**/*.lua"
 
    vim.cmd.syntax "on"
    vim.cmd.filetype "on"
@@ -20,21 +24,24 @@ vim.schedule(function()
    vim.opt.shadafile = ""
    vim.cmd.rshada({ bang = true })
 
-   if
-      vim.fn.filereadable(
-         vim.fn.expand(vim.api.nvim_eval_statusline("%F", {}).str)
-      ) == 0
-   then
-      vim.api.nvim_exec_autocmds("BufNewFile", {})
+   if vim.fn.filereadable(vim.fn.expand "%F") == 0 then
+      M.defer(function()
+         vim.api.nvim_exec_autocmds("BufNewFile", {})
+      end)
    else
-      -- vim.cmd.e() -- or vim.cmd.filetype 'detect' -- Load ftplugin.
-      vim.defer_fn(function()
-         vim.cmd.filetype "detect"
-      end, 30)
+      M.defer(function()
+         vim.cmd.filetype "detect" -- Manually call ftplugin.
+      end)
    end
 
-   vim.api.nvim_exec_autocmds("BufEnter", {})
-   vim.api.nvim_exec_autocmds("UIEnter", {})
+   M.defer(function()
+      vim.api.nvim_exec_autocmds("BufEnter", {})
+      vim.api.nvim_exec_autocmds("UIEnter", {})
+   end)
 
    require "fractal.core"
-end)
+end
+
+M.defer(M.main)
+
+return M
