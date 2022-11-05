@@ -99,11 +99,6 @@ M.on_attach = function(client, bufnr)
 
    require("plugins.lsp.keymaps").keymaps(bufnr)
    if client.server_capabilities.documentHighlightProvider then
-  --     vim.cmd [[
-  --   hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-  --   hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-  --   hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-  -- ]]
       vim.api.nvim_create_augroup("lsp_document_highlight", {
          clear = false,
       })

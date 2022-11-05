@@ -116,7 +116,7 @@
 
 ; (("return" @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal ""))
-(("not" @keyword) (#set! conceal ""))
+(("not" @operator) (#set! conceal ""))
 ; (("for" @repeat) (#set! conceal ""))
 (("while" @repeat) (#set! conceal "∞"))
 
