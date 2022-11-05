@@ -72,18 +72,18 @@ function M.keymaps(bufnr)
       desc = "Show a description of the word under cursor",
    })
 
-   -- vim.keymap.set(
-   --    'n',
-   --    '<C-]>',
-   --    vim.diagnostic.goto_next,
-   --    { buffer = bufnr, desc = 'Go to next diagnostic' }
-   -- )
-   -- vim.keymap.set(
-   --    'n',
-   --    '<C-[>',
-   --    vim.diagnostic.goto_prev,
-   --    { buffer = bufnr, desc = 'Go to previous diagnostic' }
-   -- )
+   vim.keymap.set(
+      'n',
+      '<A-]>',
+      vim.diagnostic.goto_next,
+      { buffer = bufnr, desc = 'Go to next diagnostic' }
+   )
+   vim.keymap.set(
+      'n',
+      '<A-[>',
+      vim.diagnostic.goto_prev,
+      { buffer = bufnr, desc = 'Go to previous diagnostic' }
+   )
 
    vim.keymap.set(
       "n",

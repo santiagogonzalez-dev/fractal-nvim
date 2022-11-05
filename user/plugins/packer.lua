@@ -551,20 +551,32 @@ function M.list_plugins()
                   require "nvim-semantic-tokens.table-highlighter",
                },
             })
+            vim.api.nvim_create_autocmd("LspAttach", {
+               callback = function(args)
+                  if args.data == nil then return end
+                  local client = vim.lsp.get_client_by_id(args.data.client_id)
+                  local caps = client.server_capabilities
+                  local bufnr = args.buf
+                  if
+                     caps.semanticTokensProvider
+                     and caps.semanticTokensProvider.full
+                  then
+                     local augroup =
+                        vim.api.nvim_create_augroup("SemanticTokens", {})
+                     vim.api.nvim_create_autocmd("TextChanged", {
+                        group = augroup,
+                        buffer = bufnr,
+                        callback = function()
+                           vim.lsp.buf.semantic_tokens_full()
+                        end,
+                     })
+                     -- fire it first time on load as well
+                     vim.lsp.buf.semantic_tokens_full()
+                  end
+               end,
+            })
          end,
       })
-
-      -- use({
-      --    'nvim-treesitter/nvim-treesitter-refactor',
-      --    event = 'User LoadPlugins',
-      --    config = function()
-      --       require('nvim-treesitter.configs').setup({
-      --          refactor = {
-      --             highlight_current_scope = { enable = true },
-      --          },
-      --       })
-      --    end,
-      -- })
    end)
 end
 

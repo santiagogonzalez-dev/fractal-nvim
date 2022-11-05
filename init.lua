@@ -1,8 +1,8 @@
--- Enable builtin treesitter parsers, this also disables `syntax`.
-vim.g.ts_highlight_lua = true
-
 -- Disable builtins plugins.
 vim.opt.loadplugins = false
+
+-- Enable builtin treesitter parsers, this also disables `syntax`.
+vim.g.ts_highlight_lua = true
 
 -- Temporarily disable this settings.
 vim.cmd.filetype "off"
