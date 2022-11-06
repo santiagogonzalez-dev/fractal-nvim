@@ -73,16 +73,16 @@ function M.keymaps(bufnr)
    })
 
    vim.keymap.set(
-      'n',
-      '<A-]>',
+      "n",
+      "<A-]>",
       vim.diagnostic.goto_next,
-      { buffer = bufnr, desc = 'Go to next diagnostic' }
+      { buffer = bufnr, desc = "Go to next diagnostic" }
    )
    vim.keymap.set(
-      'n',
-      '<A-[>',
+      "n",
+      "<A-[>",
       vim.diagnostic.goto_prev,
-      { buffer = bufnr, desc = 'Go to previous diagnostic' }
+      { buffer = bufnr, desc = "Go to previous diagnostic" }
    )
 
    vim.keymap.set(

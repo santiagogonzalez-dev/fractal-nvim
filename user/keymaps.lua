@@ -55,10 +55,6 @@ vim.keymap.set("n", "<Leader>wqa", vim.cmd.wqa, {
    desc = "Write and Quit",
 })
 
-vim.keymap.set("n", "<Leader>p", '"_diwP', {
-   desc = "Paste under cursor without overwriting the yank register",
-})
-
 vim.keymap.set("n", "<Leader>s", ":luafile %<CR>", {
    desc = "Source lua file",
 })
