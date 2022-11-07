@@ -85,8 +85,8 @@ M.on_attach = function(client, bufnr)
    -- Write on format
    vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = {
-         "*.css",
-         "*.html",
+         -- "*.css",
+         -- "*.html",
          "*.js",
          "*.lua",
          "*.python",
