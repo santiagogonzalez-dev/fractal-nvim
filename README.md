@@ -6,11 +6,11 @@ that I wrote and it covers all my basic needs.
 Most of your configs should go under `./user`, just treat it like the lua
 directory, with the difference that you can clearly differentiate your user
 configs from the modules written by me.  Also do note that your
-`./user/init.lua` will be run after reading your `settings.json`.
+`./user/init.lua` will be run after reading your `fractal.json`.
 
-## settings.json
-The file `./user/settings.json` is an easy way of configuring neovim, this is a
-basic example:
+## fractal.json
+The file `./user/fractal.json` is an easy way of using the modules that I've
+written, this is a basic example:
 
 ```json
 {
@@ -18,18 +18,12 @@ basic example:
   "modules": {
     "notifications": true,
     "status": "hide-completely",
-  },
-  "opts": {
-    "clipboard": "unnamedplus",
-    "cursorcolumn": true,
-    "cursorline": true,
-    "wrap": false
   }
 }
 ```
 
 ## Modules
 There's modules that change the behaviour of the config, for example `"status":
-"hide-completely"` gets ride of the statusline at all, you can figure how
+"hide-completely"` gets rid of the statusline at all, you can figure how
 everything works by searching for `DESCRIPTION` and `setup` in the modules
 located under `./lua/fractal/modules/*.lua`.

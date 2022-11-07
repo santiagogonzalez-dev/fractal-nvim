@@ -9,8 +9,8 @@ require "fractal.core.general"
 require "fractal.core.general.autocmds"
 
 check({
-   eval = get_json(string.format("%s%s", ROOT, "/user/settings.json")),
-   on_fail_msg = "Not able to locate `settings.json`.",
+   eval = get_json(string.format("%s%s", ROOT, "/user/fractal.json")),
+   on_fail_msg = "Not able to locate `fractal.json`.",
    callback = function(CFG)
       fract.colorscheme(CFG.colorscheme) -- Apply colorscheme.
       fract.conditionals(CFG.conditionals) -- Conditions for requiring.
