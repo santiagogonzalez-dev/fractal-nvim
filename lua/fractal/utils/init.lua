@@ -74,7 +74,7 @@ function utils.present_in_table_kv(element, T)
 end
 
 function utils.present_in_table(element, T)
-   map(T , function (_,value )
+   map(T, function(_, value)
       if value == element then
          return true
       end
@@ -155,9 +155,9 @@ end
 function utils.sum_elements(T)
    local total_elements = 0
 
-   for _, value in pairs(T) do
+   map(T, function(_, value)
       total_elements = total_elements + value
-   end
+   end)
 
    return total_elements
 end
