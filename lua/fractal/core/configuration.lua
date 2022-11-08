@@ -21,14 +21,6 @@ function M.colorscheme(name)
    end
 end
 
--- Apply settings using the settings from user.opts
----@param opts table
-function M.opts(opts)
-   for k, v in pairs(opts) do
-      vim.opt[k] = v
-   end
-end
-
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- cursor position.
 ---@param mode boolean

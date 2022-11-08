@@ -16,7 +16,6 @@ check({
       fract.conditionals(CFG.conditionals) -- Conditions for requiring.
       fract.modules(CFG.modules) -- Load modules specified by the user.
       fract.session(CFG.restore) -- Restore position, folds and searches.
-      fract.opts(CFG.opts) -- Set global settings defined by the user.
    end,
 })
 
