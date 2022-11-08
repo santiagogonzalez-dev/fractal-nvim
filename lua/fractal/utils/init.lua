@@ -5,7 +5,9 @@ local notify_send = require("fractal.modules.notifications").notify_send
 ---@return boolean|string|number @ Either nil or the value of require()
 function utils.prequire(package)
    local ok, lib = pcall(require, package)
-   if not ok then return false end
+   if not ok then
+      return false
+   end
    return lib
 end
 
@@ -73,7 +75,9 @@ end
 
 function utils.present_in_table(element, T)
    for _, value in pairs(T) do
-      if value == element then return true end
+      if value == element then
+         return true
+      end
    end
    return false
 end
@@ -115,7 +119,9 @@ end
 ---@return table|false
 function utils.get_json(path)
    local find = utils.readable(path)
-   if not find then return false end
+   if not find then
+      return false
+   end
 
    local ok, LIB =
       pcall(vim.json.decode, table.concat(vim.fn.readfile(path), "\n"))
@@ -161,7 +167,9 @@ end
 ---@param as_string? boolean
 ---@return boolean|string
 function utils.readable(filename, as_string)
-   if not as_string then return true and vim.fn.filereadable(filename) == 1 end
+   if not as_string then
+      return true and vim.fn.filereadable(filename) == 1
+   end
 
    if vim.fn.filereadable(filename) == 1 then
       return "readable"
@@ -176,7 +184,9 @@ end
 ---@return integer|string
 function utils.writable(filename, as_string)
    local result = vim.fn.filewritable(filename)
-   if not as_string then return result end
+   if not as_string then
+      return result
+   end
 
    if result == 1 then
       return "writable"
@@ -198,7 +208,9 @@ function utils.blink_crosshair()
       vim.schedule_wrap(function()
          vim.cmd "set cursorcolumn! cursorline!"
          cnt = cnt + 1
-         if cnt == blink_times then timer:stop() end
+         if cnt == blink_times then
+            timer:stop()
+         end
       end)
    )
 end

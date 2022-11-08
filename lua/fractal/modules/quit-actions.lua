@@ -86,7 +86,9 @@ end
 ---@param mapping string
 ---@return boolean
 function M.setup(mapping)
-   if type(mapping) ~= "string" then return false end
+   if type(mapping) ~= "string" then
+      return false
+   end
 
    vim.schedule(function()
       vim.keymap.set("n", mapping, M.actions, {

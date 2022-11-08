@@ -1,5 +1,4 @@
 local utils = require "fractal.utils"
-local get_json, readable = utils.get_json, utils.readable
 local ROOT = vim.fn.stdpath "config" -- "${XDG_CONFIG_HOME}/nvim"
 local fract = require "fractal.core.configuration"
 
@@ -22,7 +21,7 @@ package.path = table.concat({
 
 local user_init = string.format("%s%s", ROOT, "/user/init.lua")
 fract.check({
-   eval = readable(user_init),
+   eval = utils.readable(user_init),
    on_fail_msg = "Not able to find an `init.lua` for user.",
    callback = dofile(user_init),
 })

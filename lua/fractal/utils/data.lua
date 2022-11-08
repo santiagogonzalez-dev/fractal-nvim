@@ -28,7 +28,9 @@ end
 function M.vcs()
    -- Requires gitsigns.nvim
    local git_info = vim.b.gitsigns_status_dict
-   if not git_info or git_info.head == "" then return "" end
+   if not git_info or git_info.head == "" then
+      return ""
+   end
 
    vim.api.nvim_set_hl(0, "StatusLineGitSignsAdd", {
       bg = utils.get_bg_hl "StatusLine",
@@ -52,11 +54,17 @@ function M.vcs()
          and ("%#StatusLineGitSignsDelete#-" .. git_info.removed .. " ")
       or ""
 
-   if git_info.added == 0 then added = "" end
+   if git_info.added == 0 then
+      added = ""
+   end
 
-   if git_info.changed == 0 then changed = "" end
+   if git_info.changed == 0 then
+      changed = ""
+   end
 
-   if git_info.removed == 0 then removed = "" end
+   if git_info.removed == 0 then
+      removed = ""
+   end
 
    return table.concat({
       " ",
@@ -132,7 +140,9 @@ end
 function M.filepath()
    -- Return the filepath without the name of the file
    local filepath = vim.fn.fnamemodify(vim.fn.expand "%", ":~:.:h")
-   if filepath == "" or filepath == "." then return " " end
+   if filepath == "" or filepath == "." then
+      return " "
+   end
 
    if vim.bo.filetype == "lua" then
       -- For lua use . as a separator instead of /
@@ -146,7 +156,9 @@ end
 function M.filename()
    local filename = vim.fn.expand "%:t"
    -- local filename = vim.api.nvim_eval_statusline('%t', {}).str
-   if filename == "" then return " " end
+   if filename == "" then
+      return " "
+   end
 
    return filename
 end

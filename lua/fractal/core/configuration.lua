@@ -1,7 +1,6 @@
 local M = {}
 local utils = require "fractal.utils"
 local map = require("fractal.utils").map
-local ROOT = vim.fn.stdpath "config" -- "${XDG_CONFIG_HOME}/nvim"
 
 -- Set a colorscheme or notify if there's something wrong with it
 ---@param name string
@@ -28,7 +27,9 @@ end
 ---@param mode boolean
 ---@return boolean
 function M.session(mode)
-   if not mode then return false end
+   if not mode then
+      return false
+   end
 
    -- Setup the initial load and maintain some settings between buffers
    local save_sessions = vim.api.nvim_create_augroup("save_sessions", {})
@@ -55,7 +56,9 @@ function M.session(mode)
       desc = "Load buffer view and cursor position",
       group = save_sessions,
       callback = function()
-         if not utils.avoid_filetype() then point_restore() end
+         if not utils.avoid_filetype() then
+            point_restore()
+         end
          -- return utils.avoid_filetype() and point_restore()
       end,
    })
@@ -64,7 +67,9 @@ function M.session(mode)
       desc = "Save the view of the buffer",
       group = save_sessions,
       callback = function()
-         if not utils.avoid_filetype() then return vim.cmd.mkview() end
+         if not utils.avoid_filetype() then
+            return vim.cmd.mkview()
+         end
       end,
    })
 
@@ -72,7 +77,9 @@ function M.session(mode)
 end
 
 function M.conditionals(mode)
-   if not mode then return false end
+   if not mode then
+      return false
+   end
 
    local function run_comprobations()
       -- Conditionals
@@ -107,7 +114,9 @@ end
 ---@param modules table @ Table containing the modules to be loaded
 ---@return nil
 function M.modules(modules)
-   if not modules then return end
+   if not modules then
+      return
+   end
 
    map(modules, function(key, value)
       if value then
@@ -134,9 +143,13 @@ end
 ---@return any
 function M.check(tbl)
    local notify = require("fractal.modules.notifications").notify_send
-   if not tbl.eval then return notify(tbl.on_fail_msg) end
+   if not tbl.eval then
+      return notify(tbl.on_fail_msg)
+   end
 
-   if type(tbl.callback) == "function" then return tbl.callback(tbl.eval) end
+   if type(tbl.callback) == "function" then
+      return tbl.callback(tbl.eval)
+   end
 
    return tbl.callback
 end

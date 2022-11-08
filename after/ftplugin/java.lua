@@ -6,11 +6,15 @@ vim.opt_local.matchpairs:append "=:;"
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_cmp_ok then return end
+if not status_cmp_ok then
+   return
+end
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
 local status, jdtls = pcall(require, "jdtls")
-if not status then return end
+if not status then
+   return
+end
 
 -- Determine OS
 local HOME = os.getenv "HOME"
@@ -30,7 +34,9 @@ local ROOT_MARKERS = {
    "build.gradle",
 }
 local ROOT_DIR = require("jdtls.setup").find_root(ROOT_MARKERS)
-if ROOT_DIR == "" then return end
+if ROOT_DIR == "" then
+   return
+end
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true

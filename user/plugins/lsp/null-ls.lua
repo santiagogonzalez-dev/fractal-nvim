@@ -1,5 +1,7 @@
 local ok, null = pcall(require, "null-ls")
-if not ok then return end
+if not ok then
+   return
+end
 
 local format = null.builtins.formatting
 local diag = null.builtins.diagnostics

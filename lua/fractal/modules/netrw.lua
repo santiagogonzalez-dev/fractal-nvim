@@ -32,9 +32,13 @@ vim.g.netrw_localrmdir = "rm -r" -- Enable recursive removal of directories and 
 vim.api.nvim_set_hl(0, "netrwMarkFile", { link = "Search" }) -- Highlight marked files in the same way search matches are
 
 function M.draw_icons()
-   if vim.bo.filetype ~= "netrw" then return end
+   if vim.bo.filetype ~= "netrw" then
+      return
+   end
    local is_devicons_available, devicons = pcall(require, "nvim-web-devicons")
-   if not is_devicons_available then return end
+   if not is_devicons_available then
+      return
+   end
    local default_signs = {
       netrw_dir = {
          text = "",
@@ -94,7 +98,9 @@ function M.draw_icons()
 
             -- If filetype is still nil after manually setting extensions
             -- for unknown filetypes then let's use 'default'
-            if not filetype then filetype = "default" end
+            if not filetype then
+               filetype = "default"
+            end
 
             local icon, icon_highlight =
                devicons.get_icon(line, filetype, { default = "" })

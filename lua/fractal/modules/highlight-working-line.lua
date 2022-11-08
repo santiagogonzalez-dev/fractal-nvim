@@ -22,7 +22,9 @@ function M.display_mark()
 end
 
 function M.hide_mark(id)
-   if not id then return end
+   if not id then
+      return
+   end
    vim.api.nvim_buf_del_extmark(0, nm_HWL, id)
 end
 

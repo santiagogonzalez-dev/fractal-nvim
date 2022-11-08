@@ -76,7 +76,9 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("UIEnter", {
    group = buffer_settings,
    callback = function()
-      if not vim.opt.cursorcolumn:get() then return end
+      if not vim.opt.cursorcolumn:get() then
+         return
+      end
 
       vim.api.nvim_create_autocmd({ "FocusGained", "WinEnter" }, {
          group = buffer_settings,

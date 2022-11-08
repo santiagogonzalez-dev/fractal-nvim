@@ -1,5 +1,7 @@
 local status_ok, gitsigns = pcall(require, "gitsigns")
-if not status_ok then return end
+if not status_ok then
+   return
+end
 
 gitsigns.setup({
    signs = {
@@ -75,7 +77,9 @@ gitsigns.setup({
 
       -- Navigation
       map("n", "]c", function()
-         if vim.wo.diff then return "]c" end
+         if vim.wo.diff then
+            return "]c"
+         end
          vim.schedule(function()
             gitsigns.next_hunk()
          end)
@@ -83,7 +87,9 @@ gitsigns.setup({
       end, { expr = true })
 
       map("n", "[c", function()
-         if vim.wo.diff then return "[c" end
+         if vim.wo.diff then
+            return "[c"
+         end
          vim.schedule(function()
             gitsigns.prev_hunk()
          end)

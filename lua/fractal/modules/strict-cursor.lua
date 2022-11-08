@@ -76,7 +76,9 @@ vim.g.strict_cursor = true
 ---@param disables_mode string
 ---@return boolean
 function M.setup(disables_mode)
-   if type(disables_mode) ~= "string" then return false end
+   if type(disables_mode) ~= "string" then
+      return false
+   end
 
    M.toggle()
    vim.keymap.set("n", disables_mode, function()
