@@ -35,3 +35,11 @@ vim.api.nvim_create_autocmd("Filetype", {
       end
    end,
 })
+
+map = function(tbl, func)
+   local T = {}
+   for k, v in pairs(tbl) do
+      T[k] = func(k, v)
+   end
+   return T
+end

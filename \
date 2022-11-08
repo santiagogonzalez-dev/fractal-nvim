@@ -1,5 +1,6 @@
 local M = {}
 local utils = require "fractal.utils"
+local map = require("fractal.utils").map
 
 -- Set a colorscheme or notify if there's something wrong with it
 ---@param name string
@@ -169,6 +170,7 @@ function M.setup(settings)
       on_fail_msg = "There's a problem setting the colorscheme",
    })
 
+   -- M.colorscheme(CONF.colorscheme) -- Apply colorscheme.
    M.conditionals(CONF.conditionals) -- Conditions for requiring.
    M.modules(CONF.modules) -- Load modules specified by the user.
    M.session(CONF.restore) -- Restore position, folds and searches.

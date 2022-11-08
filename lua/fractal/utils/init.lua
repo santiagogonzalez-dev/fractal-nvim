@@ -1,5 +1,5 @@
 local utils = {}
-local notify_send = require("fractal.modules.notifications").notify_send
+-- local notify_send = require("fractal.modules.notifications").notify_send
 
 -- Protected require, notifies if there's an error loading a module
 ---@return boolean|string|number @ Either nil or the value of require()
@@ -14,7 +14,7 @@ end
 -- Do not open floating windows if there's already one open
 ---@return boolean @ Returns false if there's a floating window open.
 function utils.not_interfere_on_float()
-   for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+   map(vim.api.nvim_tabpage_list_wins(0), function(_, winid)
       if vim.api.nvim_win_get_config(winid).zindex then
          vim.notify(
             "There is a floating window open already",
@@ -22,7 +22,7 @@ function utils.not_interfere_on_float()
          )
          return false
       end
-   end
+   end)
 
    return true
 end
@@ -213,14 +213,6 @@ function utils.blink_crosshair()
          end
       end)
    )
-end
-
-function utils.map(tbl, f)
-   local t = {}
-   for k, v in pairs(tbl) do
-      t[k] = f(k, v)
-   end
-   return t
 end
 
 return utils
