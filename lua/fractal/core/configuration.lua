@@ -114,10 +114,8 @@ function M.modules(modules)
             "Failed to load module %s, check your settings.json",
             k
          )
-         utils.check({
+         M.check({
             eval = utils.prequire(mod_path),
-            status = true,
-            status_msg = string.format("Success loading %s", mod_path),
             on_fail_msg = msg,
             callback = function(lib)
                lib.setup(v)
@@ -125,6 +123,23 @@ function M.modules(modules)
          })
       end
    end
+end
+
+-- This function evaluates the output of `eval`, which is going to be the output
+-- of a function for true and it runs the `callback`, in case of fail it will
+-- notify `on_fail_msg` to the user.
+---@param tbl {eval: any, on_fail_msg: string, callback: function }
+---@return any
+function M.check(tbl)
+   if not tbl.eval then
+      return require("fractal.modules.notifications").notify_send(
+         tbl.on_fail_msg
+      )
+   end
+
+   if type(tbl.callback) == "function" then return tbl.callback(tbl.eval) end
+
+   return tbl.callback
 end
 
 return M

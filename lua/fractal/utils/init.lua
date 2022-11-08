@@ -189,24 +189,6 @@ function utils.writable(filename, as_string)
    end
 end
 
-utils.check_status = {}
-
--- This function evaluates the output of `eval`, which is going to be the output
--- of a function for true and it runs the `callback`, in case of fail it will
--- notify `on_fail_msg` to the user.
----@param tbl {eval: any, on_fail_msg: string, callback: function, status: boolean, status_msg: string}
----@return any
-function utils.check(tbl)
-   if not tbl.eval then return notify_send(tbl.on_fail_msg) end
-
-   if type(tbl.callback) == "function" then
-      if tbl.status then table.insert(utils.check_status, tbl.status_msg) end
-      return tbl.callback(tbl.eval)
-   else
-      return tbl.callback
-   end
-end
-
 local timer = vim.loop.new_timer()
 function utils.blink_crosshair()
    local cnt, blink_times = 0, 8

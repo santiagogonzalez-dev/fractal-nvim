@@ -1,5 +1,5 @@
 local utils = require "fractal.utils"
-local check, get_json, readable = utils.check, utils.get_json, utils.readable
+local get_json, readable = utils.get_json, utils.readable
 local ROOT = vim.fn.stdpath "config" -- "${XDG_CONFIG_HOME}/nvim"
 local fract = require "fractal.core.configuration"
 
@@ -8,9 +8,10 @@ require "fractal.core.general"
 require "fractal.core.general.autocmds"
 
 local fract_settings = string.format("%s%s", ROOT, "/user/fractal.json")
-check({
+fract.check({
    eval = get_json(fract_settings),
    on_fail_msg = "Not able to locate `fractal.json`.",
+   -- TODO(santigo-zero): Remove this, just use utils.check
    callback = function(CFG)
       fract.colorscheme(CFG.colorscheme) -- Apply colorscheme.
       fract.conditionals(CFG.conditionals) -- Conditions for requiring.
@@ -30,7 +31,7 @@ package.path = table.concat({
 })
 
 local user_init = string.format("%s%s", ROOT, "/user/init.lua")
-check({
+fract.check({
    eval = readable(user_init),
    on_fail_msg = "Not able to find an `init.lua` for user.",
    callback = dofile(user_init),
