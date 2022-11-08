@@ -250,6 +250,13 @@ function M.list_plugins()
          run = ":TSUpdate",
          requires = {
             {
+               "nvim-treesitter/nvim-treesitter-context",
+               after = "nvim-treesitter",
+               config = function()
+                  require("treesitter-context").setup()
+               end,
+            },
+            {
                "JoosepAlviste/nvim-ts-context-commentstring",
                after = "Comment.nvim",
             },
