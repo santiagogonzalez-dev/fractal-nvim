@@ -114,15 +114,22 @@
  (#set! conceal "ﯠ")
  )
 
-; (("return" @keyword) (#set! conceal ""))
+(("return" @keyword) (#set! conceal ""))
+(("then" @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal ""))
 (("not" @operator) (#set! conceal ""))
 ; (("for" @repeat) (#set! conceal ""))
 (("while" @repeat) (#set! conceal "∞"))
+; TODO(santigo-zero): Do I want to use these?
+; (("==" @operator) (#set! conceal ""))
+; (("<=" @operator) (#set! conceal ""))
+; ((">=" @operator) (#set! conceal ""))
+; (("~=" @operator) (#set! conceal ""))
 
-; for -> circle arrow
-(
-  (break_statement)@keyword
-  (#eq? @keyword  "break" )
-  (#set! conceal "")
-)
+; ; for -> circle arrow
+; (
+;   (break_statement)@keyword
+;   (#eq? @keyword  "break" )
+;   ; (#set! conceal "")
+;   (#set! conceal "")
+; )
