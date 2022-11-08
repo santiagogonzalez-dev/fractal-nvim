@@ -10,9 +10,9 @@ local dead_keys = {
    "<Up>",
 }
 
-for _, almost in ipairs(dead_keys) do -- Make dead keys
-   vim.keymap.set({ "n", "v", "x" }, almost, "<Nop>")
-end
+map(dead_keys, function(_, value)
+   vim.keymap.set({ "n", "v", "x" }, value, "<Nop>")
+end)
 
 local break_points = {
    "!",
@@ -26,9 +26,9 @@ local break_points = {
    "_",
 }
 
-for _, b in pairs(break_points) do -- Undo break points
-   vim.keymap.set("i", b, string.format("%s%s", b, "<C-g>u"))
-end
+map(break_points, function(_, value)
+   vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u"))
+end)
 
 -- Remap space as leader key
 vim.g.mapleader = ","
