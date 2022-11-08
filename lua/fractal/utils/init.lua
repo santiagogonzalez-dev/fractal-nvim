@@ -74,11 +74,11 @@ function utils.present_in_table_kv(element, T)
 end
 
 function utils.present_in_table(element, T)
-   for _, value in pairs(T) do
+   map(T , function (_,value )
       if value == element then
          return true
       end
-   end
+   end)
    return false
 end
 
