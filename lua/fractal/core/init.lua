@@ -7,18 +7,8 @@ local fract = require "fractal.core.configuration"
 require "fractal.core.general"
 require "fractal.core.general.autocmds"
 
-local fract_settings = string.format("%s%s", ROOT, "/user/fractal.json")
-fract.check({
-   eval = get_json(fract_settings),
-   on_fail_msg = "Not able to locate `fractal.json`.",
-   -- TODO(santigo-zero): Remove this, just use utils.check
-   callback = function(CFG)
-      fract.colorscheme(CFG.colorscheme) -- Apply colorscheme.
-      fract.conditionals(CFG.conditionals) -- Conditions for requiring.
-      fract.modules(CFG.modules) -- Load modules specified by the user.
-      fract.session(CFG.restore) -- Restore position, folds and searches.
-   end,
-})
+local settings = string.format("%s%s", ROOT, "/user/fractal.json")
+require("fractal.core.configuration").setup(settings)
 
 -- Add `./user` to lua path, do this before calling user's `init.lua`.
 package.path = table.concat({

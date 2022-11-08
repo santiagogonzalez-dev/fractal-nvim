@@ -1,6 +1,7 @@
 local M = {}
 local utils = require "fractal.utils"
 local map = require("fractal.utils").map
+local ROOT = vim.fn.stdpath "config" -- "${XDG_CONFIG_HOME}/nvim"
 
 -- Set a colorscheme or notify if there's something wrong with it
 ---@param name string
@@ -129,18 +130,37 @@ end
 -- This function evaluates the output of `eval`, which is going to be the output
 -- of a function for true and it runs the `callback`, in case of fail it will
 -- notify `on_fail_msg` to the user.
----@param tbl {eval: any, on_fail_msg: string, callback: function }
+---@param tbl {desc: string, eval: any, on_fail_msg: string, callback: function }
 ---@return any
 function M.check(tbl)
-   if not tbl.eval then
-      return require("fractal.modules.notifications").notify_send(
-         tbl.on_fail_msg
-      )
-   end
+   local notify = require("fractal.modules.notifications").notify_send
+   if not tbl.eval then return notify(tbl.on_fail_msg) end
 
    if type(tbl.callback) == "function" then return tbl.callback(tbl.eval) end
 
    return tbl.callback
+end
+
+function M.setup(settings)
+   local CONF = M.check({
+      eval = utils.get_json(settings),
+      desc = "Get user settings in a lua table from fractal.json",
+      on_fail_msg = "Not able to locate `fractal.json`.",
+      callback = function(CONF)
+         return CONF
+      end,
+   })
+
+   M.check({
+      eval = pcall(vim.cmd.colorscheme, CONF.colorscheme),
+      desc = "Set colorscheme",
+      on_fail_msg = "There's a problem setting the colorscheme",
+   })
+
+   -- M.colorscheme(CONF.colorscheme) -- Apply colorscheme.
+   M.conditionals(CONF.conditionals) -- Conditions for requiring.
+   M.modules(CONF.modules) -- Load modules specified by the user.
+   M.session(CONF.restore) -- Restore position, folds and searches.
 end
 
 return M
