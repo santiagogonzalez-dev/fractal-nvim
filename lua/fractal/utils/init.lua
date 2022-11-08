@@ -203,4 +203,12 @@ function utils.blink_crosshair()
    )
 end
 
+function utils.map(tbl, f)
+   local t = {}
+   for k, v in pairs(tbl) do
+      t[k] = f(k, v)
+   end
+   return t
+end
+
 return utils

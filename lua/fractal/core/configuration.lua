@@ -1,5 +1,6 @@
 local M = {}
 local utils = require "fractal.utils"
+local map = require("fractal.utils").map
 
 -- Set a colorscheme or notify if there's something wrong with it
 ---@param name string
@@ -107,22 +108,22 @@ end
 function M.modules(modules)
    if not modules then return end
 
-   for k, v in pairs(modules) do
-      if v then
-         local mod_path = string.format("fractal.modules.%s", k)
+   map(modules, function(key, value)
+      if value then
+         local mod_path = string.format("fractal.modules.%s", key)
          local msg = string.format(
-            "Failed to load module %s, check your settings.json",
-            k
+            "Failed to load module %s, check your fractal.json",
+            key
          )
          M.check({
             eval = utils.prequire(mod_path),
             on_fail_msg = msg,
             callback = function(lib)
-               lib.setup(v)
+               lib.setup(value)
             end,
          })
       end
-   end
+   end)
 end
 
 -- This function evaluates the output of `eval`, which is going to be the output
