@@ -74,12 +74,13 @@ function utils.present_in_table_kv(element, T)
 end
 
 function utils.present_in_table(element, T)
-   for _, value in pairs(T) do
+   local val = false
+   map(T, function(_, value)
       if value == element then
-         return true
+         val = true
       end
-   end
-   return false
+   end)
+   return val
 end
 
 -- If there's a filetype that you want to ignore put it in this table and call
