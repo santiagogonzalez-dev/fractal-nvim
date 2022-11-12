@@ -58,7 +58,6 @@ function M.session(mode)
          if not utils.avoid_filetype() then
             point_restore()
          end
-         -- return utils.avoid_filetype() and point_restore()
       end,
    })
 
