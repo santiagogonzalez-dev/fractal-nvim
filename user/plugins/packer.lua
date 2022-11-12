@@ -95,8 +95,6 @@ function M.list_plugins()
       -- Project
       use({
          "ahmedkhalf/project.nvim",
-         module = "project",
-         opt = true,
          config = function()
             require("project_nvim").setup({
                detection_methods = { "lsp", "pattern" },
@@ -363,7 +361,7 @@ function M.list_plugins()
          },
          requires = "nvim-lua/plenary.nvim",
          config = function()
-            vim.cmd "PackerLoad project.nvim"
+            -- vim.cmd "PackerLoad project.nvim"
             require "plugins.telescope"
          end,
       })
