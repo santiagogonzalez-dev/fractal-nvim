@@ -2,7 +2,7 @@ local utils = require "fractal.utils"
 local ROOT = vim.fn.stdpath "config" -- "${XDG_CONFIG_HOME}/nvim"
 local fract = require "fractal.core.configuration"
 
--- Basic settings.
+-- General settings and other global commands like map.
 require "fractal.core.general"
 require "fractal.core.general.autocmds"
 
