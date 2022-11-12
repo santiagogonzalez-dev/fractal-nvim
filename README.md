@@ -15,6 +15,7 @@ written, this is a basic example:
 ```json
 {
   "colorscheme": "jetjbp",
+  "restore": false,
   "modules": {
     "notifications": true,
     "status": "hide-completely",
