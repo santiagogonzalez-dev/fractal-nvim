@@ -86,6 +86,19 @@ vim.keymap.set(
    { desc = "Switch to prev buffer", silent = true }
 )
 
+vim.keymap.set(
+   "n",
+   "<Tab>",
+   vim.cmd.bnext,
+   { desc = "Switch to next buffer", silent = true }
+)
+vim.keymap.set(
+   "n",
+   "<S-Tab>",
+   vim.cmd.bprevious,
+   { desc = "Switch to prev buffer", silent = true }
+)
+
 vim.g.last_accessed_buffer = false
 vim.keymap.set("n", "g<Tab>", function()
    if vim.g.last_accessed_buffer == false then

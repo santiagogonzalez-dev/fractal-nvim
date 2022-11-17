@@ -11,8 +11,8 @@ local completion = null.builtins.completion
 null.setup({
    sources = {
       actions.gitsigns,
-      actions.eslint,
-      diag.eslint,
+      -- actions.eslint,
+      -- diag.eslint,
       actions.shellcheck,
       diag.shellcheck,
       format.stylua,

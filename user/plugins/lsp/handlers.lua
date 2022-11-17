@@ -82,21 +82,6 @@ M.on_attach = function(client, bufnr)
       end
    end
 
-   -- Write on format
-   vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = {
-         -- "*.css",
-         -- "*.html",
-         "*.js",
-         "*.lua",
-         "*.python",
-         "*.ts",
-      },
-      callback = function()
-         vim.lsp.buf.format({ async = true })
-      end,
-   })
-
    require("plugins.lsp.keymaps").keymaps(bufnr)
    if client.server_capabilities.documentHighlightProvider then
       vim.api.nvim_create_augroup("lsp_document_highlight", {
