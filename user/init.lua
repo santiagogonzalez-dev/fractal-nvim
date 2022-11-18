@@ -51,7 +51,7 @@ vim.opt.listchars:append({
    extends = "◣",
    nbsp = "␣",
    precedes = "◢",
-   tab = "!·",
+   -- tab = "!·",
    -- leadmultispace = "!··",
    trail = "█", -- · ␣
 })
