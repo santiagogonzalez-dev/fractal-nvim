@@ -90,11 +90,9 @@ vim.opt_local.include =
    [=[\v<((do|load)file|require)\s*\(?['"]\zs[^'"]+\ze['"]]=]
 vim.opt_local.includeexpr = "v:lua.Find_required_path(v:fname)"
 
--- There's a non-visible character at cchar= so watch out.
-vim.schedule(function()
+vim.defer_fn(function()
    vim.cmd [[syntax match hidechars '\'' conceal " cchar= ]]
    vim.cmd [[syntax match hidechars '\"' conceal " cchar= ]]
    vim.cmd [[syntax match hidechars '\[\[' conceal " cchar= ]]
    vim.cmd [[syntax match hidechars '\]\]' conceal " cchar= ]]
-   -- vim.cmd([[syntax match hidechars '{}' conceal cchar=]])
-end)
+end, 600)

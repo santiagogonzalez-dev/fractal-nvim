@@ -3,11 +3,6 @@ if not status then
    return -- Return if there is any problem with lspconfig
 end
 
-local packer = require("plugins.packer").packer()
-
-packer.loader "mason.nvim"
-packer.loader "mason-lspconfig.nvim"
-
 local SERVERS = {
    "bashls",
    "cssls",
@@ -52,5 +47,4 @@ end
 
 require("plugins.lsp.handlers").setup()
 
-packer.loader "null-ls.nvim"
 require "plugins.lsp.null-ls"

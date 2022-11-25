@@ -7,7 +7,7 @@ return {
       "html",
       "css",
       "blade",
-      "svelte"
+      "svelte",
    },
    single_file_support = true,
    settings = {},

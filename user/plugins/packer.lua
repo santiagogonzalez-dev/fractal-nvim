@@ -72,7 +72,6 @@ function M.list_plugins()
       use({
          "kylechui/nvim-surround",
          tag = "v1.0.0",
-         event = "User LoadPlugins",
          config = function()
             require("nvim-surround").setup()
          end,
@@ -244,7 +243,6 @@ function M.list_plugins()
       -- Treesitter
       use({
          "nvim-treesitter/nvim-treesitter",
-         event = "User LoadPlugins",
          run = ":TSUpdate",
          requires = {
             {
@@ -418,7 +416,6 @@ function M.list_plugins()
       -- Indent blankline
       use({
          "lukas-reineke/indent-blankline.nvim",
-         event = "User LoadPlugins",
          config = function()
             require("indent_blankline").setup({
                show_current_context = true,
@@ -443,7 +440,6 @@ function M.list_plugins()
       use({
          "lukas-reineke/virt-column.nvim",
          tag = "v1.5.4",
-         event = "User LoadPlugins",
          config = function()
             require("virt-column").setup({
                char = "│",
@@ -458,7 +454,6 @@ function M.list_plugins()
       -- LSP
       use({
          "neovim/nvim-lspconfig",
-         event = "User LoadPlugins",
          config = function()
             require "plugins.lsp"
          end,
@@ -467,19 +462,16 @@ function M.list_plugins()
       -- Mason
       use({
          "williamboman/mason.nvim",
-         opt = true,
       })
 
       -- Mason Lsp Installer
       use({
          "williamboman/mason-lspconfig.nvim",
-         opt = true,
       })
 
       -- Null-LS
       use({
          "jose-elias-alvarez/null-ls.nvim",
-         opt = true,
          config = function()
             require "plugins.lsp.null-ls"
          end,
@@ -507,11 +499,9 @@ function M.list_plugins()
       -- DAP
       use({
          "mfussenegger/nvim-dap",
-         event = "User LoadPlugins",
          requires = {
             {
                "rcarriga/nvim-dap-ui",
-               event = "User LoadPlugins",
             },
          },
          config = function()
@@ -528,7 +518,6 @@ function M.list_plugins()
       -- LSP Inlay Hints
       use({
          "lvimuser/lsp-inlayhints.nvim",
-         event = "User LoadPlugins",
          config = function()
             require("lsp-inlayhints").setup()
             vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
@@ -550,7 +539,6 @@ function M.list_plugins()
       -- Semantic Tokens
       use({
          "theHamsta/nvim-semantic-tokens",
-         event = "User LoadPlugins",
          config = function()
             require("nvim-semantic-tokens").setup({
                preset = "default",
