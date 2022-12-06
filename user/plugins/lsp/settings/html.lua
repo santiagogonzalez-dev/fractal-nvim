@@ -4,11 +4,16 @@ return {
    -- cmd = { 'html-languageserver', '--stdio' },
    settings = {},
    init_options = {
-      configurationSection = { "html", "css", "javascript" },
+      configurationSection = { "svelte", "html", "css", "javascript" },
       embeddedLanguages = {
          css = true,
          javascript = true,
+         svelte = true,
       },
       provideFormatter = true,
+   },
+
+   filetypes = {
+      "svelte",
    },
 }

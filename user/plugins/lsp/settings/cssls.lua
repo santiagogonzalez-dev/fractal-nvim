@@ -13,4 +13,9 @@ return {
          validate = true,
       },
    },
+
+   filetypes = {
+      "svelte",
+      "css",
+   },
 }

@@ -367,7 +367,7 @@ function M.list_plugins()
       -- Right Corner Diagnostics
       use({
          -- 'santigo-zero/right-corner-diagnostics.nvim',
-         "~/workspace/repos/right-corner-diagnostics.nvim",
+         "~/workspace/repositories/right-corner-diagnostics.nvim",
          event = "LspAttach",
          config = function()
             require("rcd").setup({ position = "bottom" })
@@ -386,10 +386,14 @@ function M.list_plugins()
       -- JetJBP
       use({
          -- 'santigo-zero/jetjbp.nvim',
-         "~/workspace/repos/jetjbp.nvim",
+         "~/workspace/repositories/jetjbp.nvim",
          config = function()
             vim.api.nvim_set_hl(0, "@variable", { fg = "#74749C" })
          end,
+      })
+
+      use({
+         'folke/tokyonight.nvim'
       })
 
       -- Neodim
