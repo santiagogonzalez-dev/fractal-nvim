@@ -1,14 +1,17 @@
 # fractal-nvim 🏴
+
 This is my personal config, it reads from a json file to enable some modules
 that I wrote and it covers all my basic needs.
 
 ## Config
+
 Most of your configs should go under `./user`, just treat it like the lua
 directory, with the difference that you can clearly differentiate your user
-configs from the modules written by me.  Also do note that your
+configs from the modules written by me. Also do note that your
 `./user/init.lua` will be run after reading your `fractal.json`.
 
 ## fractal.json
+
 The file `./user/fractal.json` is an easy way of using the modules that I've
 written, this is a basic example:
 
@@ -17,12 +20,13 @@ written, this is a basic example:
   "colorscheme": "jetjbp",
   "modules": {
     "notifications": true,
-    "status": "hide-completely",
+    "status": "hide-completely"
   }
 }
 ```
 
 ## Modules
+
 There's modules that change the behaviour of the config, for example `"status":
 "hide-completely"` gets rid of the statusline at all, you can figure how
 everything works by searching for `DESCRIPTION` and `setup` in the modules
