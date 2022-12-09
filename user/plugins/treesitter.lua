@@ -4,21 +4,21 @@ if not status_ok then
 end
 
 treesitter.setup({
-   -- ensure_installed = 'all',
-   ensure_installed = {
-      "bash",
-      "comment",
-      "java",
-      "javascript",
-      "json",
-      "markdown",
-      "markdown_inline",
-      "python",
-      "query",
-      "toml",
-      "typescript",
-      "yaml",
-   },
+   ensure_installed = "all",
+   -- ensure_installed = {
+   --    "bash",
+   --    "comment",
+   --    "java",
+   --    "javascript",
+   --    "json",
+   --    "markdown",
+   --    "markdown_inline",
+   --    "python",
+   --    "query",
+   --    "toml",
+   --    "typescript",
+   --    "yaml",
+   -- },
    auto_install = true,
    sync_install = false,
    highlight = {
@@ -40,9 +40,14 @@ treesitter.setup({
    },
    indent = {
       enable = true,
-      disable = { "yaml", "python" },
+      disable = {
+         "yaml",
+         "python",
+      },
    },
-   autopairs = { enable = true },
+   autopairs = {
+      enable = true,
+   },
    autotag = {
       enable = true,
       filetypes = {

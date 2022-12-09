@@ -392,10 +392,6 @@ function M.list_plugins()
          end,
       })
 
-      use({
-         'folke/tokyonight.nvim'
-      })
-
       -- Neodim
       use({
          "zbirenbaum/neodim",
@@ -536,19 +532,6 @@ function M.list_plugins()
                   local client = vim.lsp.get_client_by_id(args.data.client_id)
                   require("lsp-inlayhints").on_attach(client, bufnr)
                end,
-            })
-         end,
-      })
-
-      -- Semantic Tokens
-      use({
-         "theHamsta/nvim-semantic-tokens",
-         config = function()
-            require("nvim-semantic-tokens").setup({
-               preset = "default",
-               highlighters = {
-                  require "nvim-semantic-tokens.table-highlighter",
-               },
             })
          end,
       })
