@@ -5,4 +5,10 @@ vim.filetype.add({
       dosinit = "conf",
       postcss = "css",
    },
+   filename = {
+      ['package.json'] = 'jsonc',
+      ['tsconfig.json'] = 'jsonc',
+
+      ['.prettierignore'] = 'dosini',
+   },
 })
