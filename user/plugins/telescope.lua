@@ -37,7 +37,7 @@ telescope.setup({
       path_display = { "smart" },
       set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
       color_devicons = true,
-      prompt_prefix = "",
+      prompt_prefix = " ",
       selection_caret = " ",
       entry_prefix = "  ",
       selection_strategy = "reset",

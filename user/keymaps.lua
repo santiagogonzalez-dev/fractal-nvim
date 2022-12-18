@@ -323,3 +323,5 @@ vim.keymap.set(
    vim.cmd.EvalYankRegister,
    { desc = "Eval whatever it is that the yank register has" }
 )
+
+vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>")
