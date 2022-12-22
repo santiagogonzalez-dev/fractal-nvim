@@ -6,7 +6,7 @@ end
 local format = null.builtins.formatting
 local diag = null.builtins.diagnostics
 local actions = null.builtins.code_actions
-local completion = null.builtins.completion
+-- local completion = null.builtins.completion
 
 null.setup({
    sources = {
