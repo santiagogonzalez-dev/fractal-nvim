@@ -17,6 +17,7 @@ local plugins = {
    { "kyazdani42/nvim-web-devicons", lazy = true },
    { "nvim-lua/plenary.nvim", lazy = true },
 
+   -- Surround
    {
       "kylechui/nvim-surround",
       config = function()
@@ -24,6 +25,7 @@ local plugins = {
       end,
    },
 
+   -- Accelerated jk
    {
       "rainbowhxch/accelerated-jk.nvim",
       keys = {
@@ -44,8 +46,10 @@ local plugins = {
       end,
    },
 
+   -- Project
    {
       "ahmedkhalf/project.nvim",
+      module = true,
       config = function()
          require("project_nvim").setup({
             detection_methods = { "lsp", "pattern" },
@@ -61,6 +65,7 @@ local plugins = {
       end,
    },
 
+   -- Comment
    {
       "numToStr/Comment.nvim",
       keys = {
@@ -154,6 +159,7 @@ local plugins = {
       end,
    },
 
+   -- Autopairs
    {
       "windwp/nvim-autopairs",
       event = "InsertEnter",
@@ -179,9 +185,10 @@ local plugins = {
       end,
    },
 
+   -- Treesitter
    {
       "nvim-treesitter/nvim-treesitter",
-      -- run = ":TSUpdate",
+      run = ":TSUpdate",
       dependencies = {
          {
             "nvim-treesitter/nvim-treesitter-context",
@@ -269,6 +276,7 @@ local plugins = {
       end,
    },
 
+   -- Git Signs
    {
       "lewis6991/gitsigns.nvim",
       event = "User IsGit",
@@ -277,9 +285,9 @@ local plugins = {
       end,
    },
 
+   -- Telescope
    {
       "nvim-telescope/telescope.nvim",
-      module = "telescope",
       keys = {
          "<Leader>gr",
          "<Leader>t/",
@@ -295,9 +303,10 @@ local plugins = {
       end,
    },
 
+   -- Right Corner Diagnostics
    {
-      url='santigo-zero/right-corner-diagnostics.nvim',
-      dir="~/workspace/repositories/right-corner-diagnostics.nvim",
+      url = "santigo-zero/right-corner-diagnostics.nvim",
+      dir = "~/workspace/repositories/right-corner-diagnostics.nvim",
       dev = true,
       event = "LspAttach",
       config = function()
@@ -305,6 +314,7 @@ local plugins = {
       end,
    },
 
+   -- Colorizer
    {
       "NvChad/nvim-colorizer.lua",
       event = "BufEnter",
@@ -313,9 +323,10 @@ local plugins = {
       end,
    },
 
+   -- JetJBP colorscheme
    {
-      url='santigo-zero/jetjbp.nvim',
-      dir="~/workspace/repositories/jetjbp.nvim",
+      url = "santigo-zero/jetjbp.nvim",
+      dir = "~/workspace/repositories/jetjbp.nvim",
       dev = true,
       lazy = true,
       config = function()
@@ -323,8 +334,10 @@ local plugins = {
       end,
    },
 
+   -- Indent Blankline
    {
       "lukas-reineke/indent-blankline.nvim",
+      event = 'VimEnter',
       config = function()
          require("indent_blankline").setup({
             show_current_context = true,
@@ -341,9 +354,9 @@ local plugins = {
       end,
    },
 
+   -- Virt Column
    {
       "lukas-reineke/virt-column.nvim",
-      tag = "v1.5.4",
       config = function()
          require("virt-column").setup({
             char = "│",
@@ -355,6 +368,7 @@ local plugins = {
       end,
    },
 
+   -- LSP Config
    {
       "neovim/nvim-lspconfig",
       config = function()
@@ -362,22 +376,25 @@ local plugins = {
       end,
    },
 
+   -- Mason
    {
       "williamboman/mason.nvim",
    },
 
+   -- Mason LSP Config
    {
       "williamboman/mason-lspconfig.nvim",
    },
 
+   -- Null-LS
    {
       "jose-elias-alvarez/null-ls.nvim",
-      lazy=true,
       config = function()
          require "plugins.lsp.null-ls"
       end,
    },
 
+   -- Completion
    {
       "hrsh7th/nvim-cmp",
       dependencies = {
@@ -396,18 +413,16 @@ local plugins = {
       end,
    },
 
+   -- Dap
    {
       "mfussenegger/nvim-dap",
-      dependencies = {
-         {
-            "rcarriga/nvim-dap-ui",
-         },
-      },
+      dependencies = { "rcarriga/nvim-dap-ui" },
       config = function()
          require "plugins.dap"
       end,
    },
 
+   -- LSP Inlayhints
    {
       "lvimuser/lsp-inlayhints.nvim",
       config = function()
@@ -419,7 +434,6 @@ local plugins = {
                if not (args.data and args.data.client_id) then
                   return
                end
-
                local bufnr = args.buf
                local client = vim.lsp.get_client_by_id(args.data.client_id)
                require("lsp-inlayhints").on_attach(client, bufnr)
