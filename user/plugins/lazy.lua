@@ -68,12 +68,12 @@ local plugins = {
    -- Comment
    {
       "numToStr/Comment.nvim",
-      keys = {
-         "gcc",
-         "gc",
-         "gcb",
-         "gb",
-      },
+      -- keys = {
+      --    "gcc",
+      --    "gc",
+      --    "gcb",
+      --    "gb",
+      -- },
       config = function()
          require("Comment").setup({
             padding = true,

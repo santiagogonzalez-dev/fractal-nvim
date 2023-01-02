@@ -33,7 +33,7 @@ local kind_icons = {
    Constructor = " ", -- 
    Field = " ", -- ﰠ
    Variable = " ",
-   Class = " ", -- ﴯ
+   Class = "ﴯ ", -- 
    Property = " ", -- ﰠ
    Unit = " ",
    Value = " ",
@@ -46,7 +46,7 @@ local kind_icons = {
    Folder = " ",
    EnumMember = " ",
    Constant = " ",
-   Struct = " ", -- ﯟ   פּ
+   Struct = " ", -- ﯟ   פּ
    Event = " ",
    Operator = " ",
    TypeParameter = " ",
@@ -79,11 +79,11 @@ cmp.setup({
          -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
          vim_item.kind = string.format("%s", kind_icons[vim_item.kind]) -- This concatonates the icons with the name of the item kind
          vim_item.menu = ({
-            luasnip = "Snippet",
-            nvim_lsp = "LSP",
             nvim_lua = "NVIM_LUA",
+            nvim_lsp = "LSP",
             path = "Path",
             buffer = "Buffer",
+            luasnip = "Snippet",
          })[entry.source.name]
          return vim_item
       end,
@@ -132,8 +132,8 @@ cmp.setup({
       }),
    }),
    sources = cmp.config.sources({
-      { name = "nvim_lsp" },
       { name = "nvim_lua" },
+      { name = "nvim_lsp" },
       { name = "luasnip" },
       { name = "nvim_lsp_signature_help" },
       { name = "path" },

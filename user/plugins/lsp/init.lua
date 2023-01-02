@@ -45,4 +45,9 @@ for _, server in pairs(SERVERS) do
    end
 end
 
+require("lspconfig").svelte.setup({
+   cmd = { "svelteserver", "--stdio" },
+   filetypes = { "svelte" },
+})
+
 require("plugins.lsp.handlers").setup()
