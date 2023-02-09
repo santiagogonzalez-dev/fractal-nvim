@@ -182,6 +182,14 @@ local plugins = {
       end,
    },
 
+   -- Impatient
+   {
+      "lewis6991/impatient.nvim",
+      config = function()
+         require "impatient"
+      end,
+   },
+
    -- Telescope
    {
       "nvim-telescope/telescope.nvim",
