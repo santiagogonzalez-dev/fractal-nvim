@@ -2,8 +2,6 @@ require "keymaps"
 require "settings"
 require "plugins"
 
--- vim.cmd.colorscheme "jetjbp"
-
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
    eob = "␃",
@@ -11,7 +9,6 @@ vim.opt.fillchars:append({
 })
 
 vim.opt.fillchars:append({
-
    -- horiz = '━',
    -- horizup = '┻',
    -- horizdown = '┳',
@@ -73,19 +70,11 @@ vim.schedule(function()
 end)
 
 local _enable_spell = vim.api.nvim_create_augroup("_enable_spell", {})
-vim.api.nvim_create_autocmd("InsertEnter", {
+vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave" }, {
    desc = "Enable spelling in insert mode",
    group = _enable_spell,
    callback = function()
-      vim.opt_local.spell = true
-   end,
-})
-
-vim.api.nvim_create_autocmd("InsertLeave", {
-   desc = "Disable spelling in insert mode",
-   group = _enable_spell,
-   callback = function()
-      vim.opt_local.spell = false
+      vim.opt_local.spell = not vim.opt_local.spell:get()
    end,
 })
 
