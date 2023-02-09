@@ -3,9 +3,8 @@ require "settings"
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
-   eob = " ", -- Don't show the ~ at the eof
-   -- Separator between the cmdline messages and the buffer window, doesn't work
-   -- with vim.opt.cmdheight = 0
+   -- Separator between the cmdline messages and the buffer window, doesn't 
+	-- work with vim.opt.cmdheight = 0
    msgsep = "🮑",
 })
 
@@ -101,5 +100,3 @@ vim.fn.matchadd("ErrorMsg", "\\s\\+$") -- Extra whitespaces will be highlighted
 vim.api.nvim_create_user_command("EvalYankRegister", function()
    vim.cmd.lua(vim.fn.getreg '"')
 end, {})
-
-require "plugins"
