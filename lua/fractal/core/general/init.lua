@@ -1,4 +1,4 @@
-require('fractal.core.general.autocmds')
+require "fractal.core.general.autocmds"
 
 -- Default tab size, this is not applied if you specified a different one in
 -- ftplugin

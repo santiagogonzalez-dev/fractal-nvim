@@ -1,11 +1,12 @@
 require "keymaps"
 require "settings"
+require "plugins"
+
+-- vim.cmd.colorscheme "jetjbp"
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
-   -- Separator between the cmdline messages and the buffer window, doesn't 
-	-- work with vim.opt.cmdheight = 0
-   msgsep = "🮑",
+   msgsep = "🮑", -- Separator for cmdline
 })
 
 vim.opt.fillchars:append({
@@ -25,14 +26,6 @@ vim.opt.fillchars:append({
    -- vertleft = '┤',
    -- vertright = '├',
    -- verthoriz = '┼',
-
-   -- horiz = '─',
-   -- horizup = '⯊',
-   -- horizdown = '⯋',
-   -- vert = '│',
-   -- vertleft = '◖',
-   -- vertright = '◗',
-   -- verthoriz = '●',
 
    horiz = " ",
    horizup = " ",
@@ -95,7 +88,8 @@ vim.api.nvim_create_autocmd("InsertLeave", {
    end,
 })
 
-vim.fn.matchadd("ErrorMsg", "\\s\\+$") -- Extra whitespaces will be highlighted
+-- Extra whitespaces will be highlighted
+vim.fn.matchadd("ErrorMsg", "\\s\\+$")
 
 vim.api.nvim_create_user_command("EvalYankRegister", function()
    vim.cmd.lua(vim.fn.getreg '"')
