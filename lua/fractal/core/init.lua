@@ -17,3 +17,5 @@ dofile(user_init)
 
 local settings = string.format("%s%s", ROOT, "/user/fractal.json")
 require("fractal.core.configuration").setup(settings)
+
+pcall(require, 'impatient')
