@@ -6,6 +6,7 @@ require "plugins"
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
+   eob = "␃",
    msgsep = "🮑", -- Separator for cmdline
 })
 

@@ -189,8 +189,6 @@ vim.keymap.set(
    { desc = "Use leader key, avoid double taps" }
 )
 
-vim.keymap.set("n", "^^", "0", { desc = "Extend ^" })
-
 vim.keymap.set("n", "gx", function()
    vim.fn.jobstart({
       "xdg-open",
