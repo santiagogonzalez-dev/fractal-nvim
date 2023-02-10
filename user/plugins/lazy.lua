@@ -86,6 +86,7 @@ local plugins = {
    {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
+      event = "User FractalEnd",
       dependencies = {
          {
             "nvim-treesitter/nvim-treesitter-context",
@@ -179,14 +180,6 @@ local plugins = {
       event = "User IsGit",
       config = function()
          require "plugins.gitsigns"
-      end,
-   },
-
-   -- Impatient
-   {
-      "lewis6991/impatient.nvim",
-      config = function()
-         require "impatient"
       end,
    },
 

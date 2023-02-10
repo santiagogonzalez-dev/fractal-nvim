@@ -15,7 +15,5 @@ package.path = table.concat({
 local user_init = string.format("%s%s", ROOT, "/user/init.lua")
 dofile(user_init)
 
-pcall(require, 'impatient')
-
 local settings = string.format("%s%s", ROOT, "/user/fractal.json")
 require("fractal.core.configuration").setup(settings)

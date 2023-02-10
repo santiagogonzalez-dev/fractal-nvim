@@ -153,24 +153,16 @@ function M.check(tbl)
 end
 
 function M.setup(settings)
-   local CONF = M.check({
-      eval = utils.get_json(settings),
-      desc = "Get user settings in a lua table from fractal.json",
-      on_fail_msg = "Not able to locate `fractal.json`.",
-      callback = function(CONF)
-         return CONF
-      end,
-   })
-
-   M.check({
-      desc = "Set colorscheme",
-      eval = pcall(vim.cmd.colorscheme, CONF.colorscheme),
-      on_fail_msg = "There's a problem setting the colorscheme",
-   })
+   local CONF = utils.get_json(settings)
+   vim.cmd.colorscheme(CONF.colorscheme)
 
    M.conditionals(CONF.conditionals) -- Conditions for requiring.
    M.modules(CONF.modules) -- Load modules specified by the user.
    M.session(CONF.restore) -- Restore position, folds and searches.
+
+   vim.defer_fn(function()
+      vim.cmd.doautocmd "User FractalEnd"
+   end, 500)
 end
 
 return M

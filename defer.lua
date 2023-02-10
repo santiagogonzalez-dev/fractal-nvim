@@ -10,7 +10,7 @@ vim.opt.shadafile = "NONE"
 vim.g.ts_highlight_lua = true
 
 -- PROFILING: About profiling, all the settings before this comment are going
--- to be run first, then everything under `plugins`, then `after/plugins`, and
+-- to be run first, then everything under `./plugins`, then `./after/plugins`, and
 -- lastly the main function will be scheduled and run so that we defer the load
 -- of the config.
 vim.schedule(function()
@@ -24,25 +24,6 @@ vim.schedule(function()
    vim.cmd.filetype "plugin indent on"
    vim.opt.shadafile = ""
    vim.cmd.rshada({ bang = true })
-
-   local buf_curr_path = vim.fn.expand "%F"
-   local utils = require "fractal.utils"
-   if not utils.readable(buf_curr_path) then
-      -- Manually trigger autocmd, necessary for skeletons.
-      vim.defer_fn(function()
-         vim.api.nvim_exec_autocmds("BufNewFile", {})
-      end, 0)
-   else
-      -- Manually call ftplugin.
-      vim.defer_fn(function()
-         vim.cmd.filetype "detect"
-      end, 0)
-   end
-
-   vim.defer_fn(function()
-      vim.api.nvim_exec_autocmds("BufEnter", {})
-      vim.api.nvim_exec_autocmds("UIEnter", {})
-   end, 0)
 
    require "fractal.core"
 end)
