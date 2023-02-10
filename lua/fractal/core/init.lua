@@ -16,4 +16,5 @@ local user_init = string.format("%s%s", ROOT, "/user/init.lua")
 dofile(user_init)
 
 local settings = string.format("%s%s", ROOT, "/user/fractal.json")
-require("fractal.core.configuration").setup(settings)
+local config = require "fractal.utils".get_json(settings)
+require("fractal.core.configuration").setup(config)

@@ -152,13 +152,12 @@ function M.check(tbl)
    return tbl.callback
 end
 
-function M.setup(settings)
-   local CONF = utils.get_json(settings)
-   vim.cmd.colorscheme(CONF.colorscheme)
+function M.setup(config)
+   vim.cmd.colorscheme(config.colorscheme)
 
-   M.conditionals(CONF.conditionals) -- Conditions for requiring.
-   M.modules(CONF.modules) -- Load modules specified by the user.
-   M.session(CONF.restore) -- Restore position, folds and searches.
+   M.conditionals(config.conditionals) -- Conditions for requiring.
+   M.modules(config.modules) -- Load modules specified by the user.
+   M.session(config.restore) -- Restore position, folds and searches.
 
    vim.defer_fn(function()
       vim.cmd.doautocmd "User FractalEnd"
