@@ -2,7 +2,7 @@ local M = {}
 local utils = require "fractal.utils"
 
 -- Restore session: Folds, view of the window, marks, command line history, and
--- cursor position.
+-- Cursor position.
 ---@param mode boolean
 ---@return boolean
 function M.restore_session(mode)
@@ -54,6 +54,8 @@ function M.restore_session(mode)
    return true
 end
 
+---@param mode boolean
+---@return boolean
 function M.conditionals(mode)
    if not mode then
       return false
@@ -88,10 +90,10 @@ end
 -- List of modules to be loaded, they can be found under
 -- `./lua/modules` k is the name of the module and v is a boolean
 ---@param modules table @ Table containing the modules to be loaded
----@return nil
+---@return boolean
 function M.modules(modules)
    if not modules then
-      return
+      return false
    end
 
    map(modules, function(key, value)
@@ -110,6 +112,8 @@ function M.modules(modules)
          })
       end
    end)
+
+   return true
 end
 
 -- This function evaluates the output of `eval`, which is going to be the output
