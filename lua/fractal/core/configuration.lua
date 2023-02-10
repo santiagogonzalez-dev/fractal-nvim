@@ -1,31 +1,11 @@
 local M = {}
 local utils = require "fractal.utils"
 
--- Set a colorscheme or notify if there's something wrong with it
----@param name string
----@return boolean
-function M.colorscheme(name)
-   -- Comprobation that `name` is a valid string
-   if name == nil or utils.present_in_table(name, { "", vim.NIL }) then
-      vim.notify "Colorscheme string not valid, check you user_settings.json"
-      return false
-   end
-
-   local ok, _ = pcall(vim.cmd.colorscheme, name)
-   if not ok then
-      vim.notify "Could not find the colorscheme, check your settings.json"
-      return false
-   else
-      vim.cmd.redraw()
-      return true
-   end
-end
-
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- cursor position.
 ---@param mode boolean
 ---@return boolean
-function M.session(mode)
+function M.restore_session(mode)
    if not mode then
       return false
    end
@@ -98,11 +78,9 @@ function M.conditionals(mode)
       end
    end
 
-   -- vim.schedule(run_comprobations)
-
    vim.defer_fn(function()
       run_comprobations()
-   end, 300)
+   end, 3000)
 
    return true
 end
@@ -153,15 +131,16 @@ function M.check(tbl)
 end
 
 function M.setup(config)
+   -- Conditions for loading sequentially and for lazyloading.
+   M.conditionals(config.conditionals)
+   -- Load fractal modules specified by the user.
+   M.modules(config.modules)
+   M.restore_session(config.restore)
+
    vim.cmd.colorscheme(config.colorscheme)
-
-   M.conditionals(config.conditionals) -- Conditions for requiring.
-   M.modules(config.modules) -- Load modules specified by the user.
-   M.session(config.restore) -- Restore position, folds and searches.
-
    vim.defer_fn(function()
       vim.cmd.doautocmd "User FractalEnd"
-   end, 60)
+   end, 300)
 end
 
 return M
