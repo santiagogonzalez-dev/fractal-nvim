@@ -14,17 +14,7 @@ map(dead_keys, function(_, value)
    vim.keymap.set({ "n", "v", "x" }, value, "<Nop>")
 end)
 
-local break_points = {
-   "!",
-   ",",
-   "-",
-   ".",
-   "<CR>",
-   "<Space>",
-   "=",
-   "?",
-   "_",
-}
+local break_points = { "!", ",", "-", ".", "<CR>", "<Space>", "=", "?", "_" }
 
 map(break_points, function(_, value)
    vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u"))
@@ -33,45 +23,6 @@ end)
 -- Remap space as leader key
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
-
--- Simple keymappings
-vim.keymap.set("n", "<Leader>u", vim.cmd.update, {
-   desc = "Update the file",
-})
-
-vim.keymap.set("n", "<Leader>q", vim.cmd.quitall, {
-   desc = "Quit neovim",
-})
-
-vim.keymap.set("n", "<Leader>Q", "<CMD>bufdo bdelete<CR>", {
-   desc = "Delete all buffers",
-})
-
-vim.keymap.set("n", "<Leader>w", vim.cmd.w, {
-   desc = "Write",
-})
-
-vim.keymap.set("n", "<Leader>wqa", vim.cmd.wqa, {
-   desc = "Write and Quit",
-})
-
-vim.keymap.set("n", "<Leader>s", ":luafile %<CR>", {
-   desc = "Source lua file",
-})
-
-vim.keymap.set("n", "<Leader>E", vim.cmd.e, {
-   desc = "Reedit the buffer",
-   silent = true,
-})
-
--- vim.keymap.set('n', '<Leader>e', ':Lexplore!<CR>', {
---    desc = 'Open NetRW',
---    silent = true,
--- })
-
--- vim.keymap.set('n', '<Leader>ee', ':Lexplore! %:p:h<CR>', {
---    desc = 'Open NetRW in the dir of the buffer',
--- })
 
 vim.keymap.set(
    "n",

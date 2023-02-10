@@ -86,11 +86,12 @@
   (#set! conceal "襁")
 )
 
-; (
-;   (dot_index_expression) @variable
-;     (#eq? @function  "vim.cmd" )
-;   (#set! conceal ">")
-; )
+(
+  (dot_index_expression
+  )@keyword
+    (#eq? @keyword "vim.cmd" )
+  (#set! conceal "")
+)
 
 (
   (dot_index_expression
@@ -109,8 +110,6 @@
 (
  (dot_index_expression) @function
  (#eq? @function  "vim.api.nvim_create_autocmd" )
- ; (#set! conceal "a")
- ; (#set! conceal "🪝")
  (#set! conceal "ﯠ")
  )
 
@@ -118,13 +117,13 @@
 (("then" @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal ""))
 (("not" @operator) (#set! conceal ""))
-; (("for" @repeat) (#set! conceal ""))
+(("if" @conditional) (#set! conceal ""))
+(("for" @repeat) (#set! conceal ""))
 (("while" @repeat) (#set! conceal "∞"))
-; TODO(santigo-zero): Do I want to use these?
-; (("==" @operator) (#set! conceal ""))
-; (("<=" @operator) (#set! conceal ""))
-; ((">=" @operator) (#set! conceal ""))
-; (("~=" @operator) (#set! conceal ""))
+(("==" @operator) (#set! conceal ""))
+(("<=" @operator) (#set! conceal ""))
+((">=" @operator) (#set! conceal ""))
+(("~=" @operator) (#set! conceal ""))
 
 ; ; for -> circle arrow
 ; (

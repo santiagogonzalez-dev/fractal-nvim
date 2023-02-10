@@ -162,7 +162,7 @@ function M.setup(settings)
 
    vim.defer_fn(function()
       vim.cmd.doautocmd "User FractalEnd"
-   end, 500)
+   end, 60)
 end
 
 return M

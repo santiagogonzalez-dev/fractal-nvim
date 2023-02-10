@@ -3,7 +3,7 @@
   "restore": true,
   "conditionals": true,
   "modules": {
-    "quit-actions": "<Leader>qq",
+    "quit-actions": "<Leader>Q",
     "folds": true,
     "gutter": true,
     "netrw": true,
