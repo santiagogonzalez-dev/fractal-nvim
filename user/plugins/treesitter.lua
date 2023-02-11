@@ -9,20 +9,6 @@ vim.g.ts_highlight_lua = true
 
 treesitter.setup({
    ensure_installed = "all",
-   -- ensure_installed = {
-   --    "bash",
-   --    "comment",
-   --    "java",
-   --    "javascript",
-   --    "json",
-   --    "markdown",
-   --    "markdown_inline",
-   --    "python",
-   --    "query",
-   --    "toml",
-   --    "typescript",
-   --    "yaml",
-   -- },
    auto_install = true,
    sync_install = false,
    highlight = {
@@ -40,7 +26,7 @@ treesitter.setup({
    },
    context_commentstring = {
       enable = true,
-      enable_autocmd = true,
+      enable_autocmd = false,
    },
    indent = {
       enable = true,

@@ -3,7 +3,6 @@ if not status_ok then
    return
 end
 
-local previewers = require "telescope.previewers"
 local previewers_utils = require "telescope.previewers.utils"
 
 telescope.setup({

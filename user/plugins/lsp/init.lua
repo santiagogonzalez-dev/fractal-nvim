@@ -8,14 +8,11 @@ local SERVERS = {
    "cssls",
    "cssmodules_ls",
    "emmet_ls",
-   "gopls",
-   -- 'hls',
    "html",
-   "jdtls",
    "jsonls",
    "pyright",
-   "sqls",
    "sumneko_lua",
+   "svelte",
    "tsserver",
 }
 
@@ -44,10 +41,5 @@ for _, server in pairs(SERVERS) do
       lspconfig[server].setup(opts)
    end
 end
-
-require("lspconfig").svelte.setup({
-   cmd = { "svelteserver", "--stdio" },
-   filetypes = { "svelte" },
-})
 
 require("plugins.lsp.handlers").setup()

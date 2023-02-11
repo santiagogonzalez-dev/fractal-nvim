@@ -37,6 +37,11 @@ local plugins = {
       end,
    },
 
+   {
+      "lukas-reineke/indent-blankline.nvim",
+      event = "User FractalEnd",
+   },
+
    -- Project
    {
       "ahmedkhalf/project.nvim",
@@ -54,6 +59,12 @@ local plugins = {
             show_hidden = true, -- Show hidden files in telescope when searching for files in a project
          })
       end,
+   },
+   {
+      'numToStr/Comment.nvim',
+      config = function()
+         require('Comment').setup()
+      end
    },
 
    -- Autopairs
@@ -208,6 +219,47 @@ local plugins = {
       lazy = true,
       config = function()
          vim.api.nvim_set_hl(0, "@variable", { fg = "#74749C" })
+      end,
+   },
+
+   {
+      "neovim/nvim-lspconfig",
+      config = function()
+         require "plugins.lsp"
+      end,
+   },
+
+   {
+      "williamboman/mason.nvim",
+   },
+
+   {
+      "williamboman/mason-lspconfig.nvim",
+   },
+
+   {
+      "jose-elias-alvarez/null-ls.nvim",
+      lazy=true,
+      config = function()
+         require "plugins.lsp.null-ls"
+      end,
+   },
+
+   {
+      "hrsh7th/nvim-cmp",
+      dependencies = {
+         "saadparwaiz1/cmp_luasnip",
+         "rafamadriz/friendly-snippets",
+         "hrsh7th/cmp-nvim-lsp",
+         "hrsh7th/cmp-nvim-lua",
+         "hrsh7th/cmp-buffer",
+         "hrsh7th/cmp-nvim-lsp-signature-help",
+         "hrsh7th/cmp-path",
+         "hrsh7th/cmp-cmdline",
+         "L3MON4D3/LuaSnip",
+      },
+      config = function()
+         require "plugins.cmp"
       end,
    },
 }
