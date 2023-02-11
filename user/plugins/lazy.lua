@@ -38,9 +38,28 @@ local plugins = {
       end,
    },
 
+   -- Indent Blankline
    {
       "lukas-reineke/indent-blankline.nvim",
       event = "User FractalEnd",
+      config = function()
+         require("indent_blankline").setup({
+            show_current_context = true,
+            show_current_context_start = false,
+            show_end_of_line = true,
+            show_trailing_blankline_indent = false,
+         })
+         -- vim.api.nvim_set_hl(
+         --    0,
+         --    "IndentBlanklineChar",
+         --    { link = "Whitespace" }
+         -- ) -- All the lines
+         -- vim.api.nvim_set_hl(
+         --    0,
+         --    "IndentBlanklineContextChar",
+         --    { link = "Function" }
+         -- ) -- Current place
+      end,
    },
 
    -- Project
@@ -270,6 +289,14 @@ local plugins = {
       },
       config = function()
          require "plugins.cmp"
+      end,
+   },
+
+   -- Impatient
+   {
+      "lewis6991/impatient.nvim",
+      config = function()
+         require("impatient").enable_profile()
       end,
    },
 }
