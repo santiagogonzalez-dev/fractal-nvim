@@ -18,6 +18,7 @@ local plugins = {
    -- Surround
    {
       "kylechui/nvim-surround",
+      event = "User FractalEnd",
       config = function()
          require("nvim-surround").setup()
       end,
@@ -61,10 +62,11 @@ local plugins = {
       end,
    },
    {
-      'numToStr/Comment.nvim',
+      "numToStr/Comment.nvim",
+      event = "User FractalEnd",
       config = function()
-         require('Comment').setup()
-      end
+         require("Comment").setup()
+      end,
    },
 
    -- Autopairs
@@ -222,6 +224,7 @@ local plugins = {
       end,
    },
 
+   -- Nvim lspconfig
    {
       "neovim/nvim-lspconfig",
       config = function()
@@ -229,24 +232,31 @@ local plugins = {
       end,
    },
 
+   -- Mason
    {
       "williamboman/mason.nvim",
+      event = "User FractalEnd",
    },
 
+   -- Mason lspconfig
    {
       "williamboman/mason-lspconfig.nvim",
+      event = "User FractalEnd",
    },
 
+   -- Null LS
    {
       "jose-elias-alvarez/null-ls.nvim",
-      lazy=true,
+      event = "User FractalEnd",
       config = function()
          require "plugins.lsp.null-ls"
       end,
    },
 
+   -- CMP
    {
       "hrsh7th/nvim-cmp",
+      event = "InsertEnter",
       dependencies = {
          "saadparwaiz1/cmp_luasnip",
          "rafamadriz/friendly-snippets",

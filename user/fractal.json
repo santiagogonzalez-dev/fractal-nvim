@@ -7,7 +7,7 @@
     "folds": true,
     "gutter": true,
     "netrw": true,
-    "notifications": true,
+    "notifications": false,
     "highlight-working-line": true,
     "skeletons": true,
     "status": "basic",
