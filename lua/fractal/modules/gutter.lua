@@ -6,11 +6,11 @@ end
 
 function M.get()
    return table.concat({
-      '%s',
+      "%s",
       M.conditional_for_numbers(),
       "%=",
       "%C",
-      " "
+      " ",
    })
 end
 
