@@ -85,15 +85,18 @@ vim.api.nvim_create_user_command("EvalYankRegister", function()
    vim.cmd.lua(vim.fn.getreg '"')
 end, {})
 
-vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost", "InsertLeave" }, {
-   callback = function()
-      if
-         vim.bo.modified
-         and not vim.bo.readonly
-         and vim.fn.expand "%" ~= ""
-         and vim.bo.buftype == ""
-      then
-         vim.api.nvim_command "silent update"
-      end
-   end,
-})
+vim.api.nvim_create_autocmd(
+   { "WinLeave", "BufLeave", "FocusLost", "InsertLeave" },
+   {
+      callback = function()
+         if
+            vim.bo.modified
+            and not vim.bo.readonly
+            and vim.fn.expand "%" ~= ""
+            and vim.bo.buftype == ""
+         then
+            vim.api.nvim_command "silent update"
+         end
+      end,
+   }
+)
