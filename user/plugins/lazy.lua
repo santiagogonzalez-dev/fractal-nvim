@@ -320,6 +320,19 @@ local plugins = {
          require("impatient").enable_profile()
       end,
    },
+
+   -- Colorizer
+   {
+      "NvChad/nvim-colorizer.lua",
+      event = "BufRead",
+      config = function()
+         require("colorizer").setup()
+         require("colorizer").attach_to_buffer(
+            0,
+            { mode = "background", css = true, svelte = true }
+         )
+      end,
+   },
 }
 
 require("lazy").setup(plugins)

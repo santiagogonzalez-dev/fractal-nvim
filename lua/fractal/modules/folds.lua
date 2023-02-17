@@ -32,7 +32,7 @@ function folds.setup()
    -- Fold settings
    vim.opt.jumpoptions = "stack,view"
    vim.opt.foldtext = 'v:lua.require("fractal.modules.folds").foldtext_header()'
-   vim.opt.foldcolumn = "auto" -- Folds column
+   vim.opt.foldcolumn = "auto:3" -- Folds column
    vim.opt.foldmethod = "manual"
    -- vim.opt.foldmethod = "expr"
    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
