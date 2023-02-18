@@ -274,3 +274,11 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>")
+
+vim.keymap.set("n", "<Leader>tc", function()
+   if vim.opt_local.conceallevel:get() == 2 then
+      vim.opt_local.conceallevel = 0
+   else
+      vim.opt_local.conceallevel = 2
+   end
+end)

@@ -100,3 +100,12 @@ vim.api.nvim_create_autocmd(
       end,
    }
 )
+
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--    callback = function()
+--       vim.cmd [[syntax match hidechars '\'' conceal " cchar= ]]
+--       vim.cmd [[syntax match hidechars '\"' conceal " cchar= ]]
+--       vim.cmd [[syntax match hidechars '\[\[' conceal " cchar= ]]
+--       vim.cmd [[syntax match hidechars '\]\]' conceal " cchar= ]]
+--    end,
+-- })
