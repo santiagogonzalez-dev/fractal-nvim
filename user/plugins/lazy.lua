@@ -329,7 +329,7 @@ local plugins = {
          require("colorizer").setup()
          require("colorizer").attach_to_buffer(
             0,
-            { mode = "background", css = true, svelte = true }
+            { mode = "virtualtext", css = true, svelte = true }
          )
       end,
    },
