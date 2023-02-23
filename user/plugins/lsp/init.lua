@@ -16,12 +16,12 @@ local SERVERS = {
    "tsserver",
 }
 
+require("mason").setup()
+
 require("mason-lspconfig").setup({
    ensure_installed = SERVERS,
    automatic_installation = false,
 })
-
-require("mason").setup()
 
 for _, server in pairs(SERVERS) do
    server = vim.split(server, "@")[1]
