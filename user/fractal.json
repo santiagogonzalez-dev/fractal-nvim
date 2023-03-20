@@ -7,8 +7,8 @@
     "folds": true,
     "gutter": true,
     "netrw": true,
-    "notifications": false,
-    "highlight-working-line": true,
+    "notifications": true,
+    "highlight-working-line": false,
     "skeletons": true,
     "status": "basic",
     "strict-cursor": true
