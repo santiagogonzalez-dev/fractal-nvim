@@ -82,7 +82,7 @@ function M.conditionals(mode)
 
    vim.defer_fn(function()
       run_comprobations()
-   end, 3000)
+   end, 1000)
 
    return true
 end
