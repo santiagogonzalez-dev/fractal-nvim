@@ -17,6 +17,7 @@ fi
 
 # Check if the current working directory is the same as INSTALL_DIR
 if [ "$(pwd)" != "$INSTALL_DIR" ]; then
+  git clone --depth=1 git@github.com:santigo-zero/fractal-nvim.git "${INSTALL_DIR}"
   git clone --depth=1 https://github.com/neovim/neovim "${INSTALL_DIR}/neovim"
   cd "${INSTALL_DIR}" || exit 3
 else
