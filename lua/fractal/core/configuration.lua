@@ -1,5 +1,5 @@
 local M = {}
-local utils = require "fractal.utils"
+local utils = require 'fractal.utils'
 
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- Cursor position.
@@ -11,7 +11,7 @@ function M.restore_session(mode)
    end
 
    -- Setup the initial load and maintain some settings between buffers
-   local save_sessions = vim.api.nvim_create_augroup("save_sessions", {})
+   local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
 
    local point_restore = function()
       pcall(vim.cmd.loadview) -- Load the view for the opened buffer
@@ -24,15 +24,15 @@ function M.restore_session(mode)
       if line <= vim.api.nvim_buf_line_count(0) then
          vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
          if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
-            return vim.cmd.normal "zo"
+            return vim.cmd.normal 'zo'
          end
       end
    end
 
    point_restore()
 
-   vim.api.nvim_create_autocmd("BufWinEnter", {
-      desc = "Load buffer view and cursor position",
+   vim.api.nvim_create_autocmd('BufWinEnter', {
+      desc = 'Load buffer view and cursor position',
       group = save_sessions,
       callback = function()
          if not utils.avoid_filetype() then
@@ -41,8 +41,8 @@ function M.restore_session(mode)
       end,
    })
 
-   vim.api.nvim_create_autocmd("BufWinLeave", {
-      desc = "Save the view of the buffer",
+   vim.api.nvim_create_autocmd('BufWinLeave', {
+      desc = 'Save the view of the buffer',
       group = save_sessions,
       callback = function()
          if not utils.avoid_filetype() then
@@ -63,7 +63,7 @@ function M.conditionals(mode)
 
    local function run_comprobations()
       -- Conditionals
-      local conditionals = vim.api.nvim_create_augroup("conditionals", {})
+      local conditionals = vim.api.nvim_create_augroup('conditionals', {})
       -- Run a comprobation for git, if the file is under git control there's no
       -- need to create an autocommand
       if utils.is_git() then
@@ -71,7 +71,7 @@ function M.conditionals(mode)
       else
          -- If the current buffer wasn't under git version control run the
          -- comprobation each time you change of directory
-         vim.api.nvim_create_autocmd("DirChanged", {
+         vim.api.nvim_create_autocmd('DirChanged', {
             group = conditionals,
             callback = function()
                return utils.is_git()
@@ -98,9 +98,9 @@ function M.modules(modules)
 
    map(modules, function(key, value)
       if value then
-         local mod_path = string.format("fractal.modules.%s", key)
+         local mod_path = string.format('fractal.modules.%s', key)
          local msg = string.format(
-            "Failed to load module %s, check your fractal.json",
+            'Failed to load module %s, check your fractal.json',
             key
          )
          M.check({
@@ -122,12 +122,12 @@ end
 ---@param tbl {desc: string, eval: any, on_fail_msg: string, callback: function }
 ---@return any
 function M.check(tbl)
-   local notify = require("fractal.modules.notifications").notify_send
+   local notify = require('fractal.modules.notifications').notify_send
    if not tbl.eval then
       return notify(tbl.on_fail_msg)
    end
 
-   if type(tbl.callback) == "function" then
+   if type(tbl.callback) == 'function' then
       return tbl.callback(tbl.eval)
    end
 
@@ -143,7 +143,7 @@ function M.setup(config)
 
    vim.cmd.colorscheme(config.colorscheme)
    vim.defer_fn(function()
-      vim.cmd.doautocmd "User FractalEnd"
+      vim.cmd.doautocmd 'User FractalEnd'
    end, 300)
 end
 

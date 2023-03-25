@@ -1,16 +1,16 @@
 local M = {}
 
 function M.conditional_for_numbers()
-   return "%{v:relnum?v:relnum:v:lnum} "
+   return '%{v:relnum?v:relnum:v:lnum} '
 end
 
 function M.get()
    return table.concat({
-      "%s",
+      '%s',
       M.conditional_for_numbers(),
-      "%=",
-      "%C",
-      " ",
+      '%=',
+      '%C',
+      ' ',
    })
 end
 

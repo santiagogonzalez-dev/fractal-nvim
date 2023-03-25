@@ -2,16 +2,16 @@
 
 local M = {}
 -- local utils = require 'fractal.utils'
-local _kg_ns = vim.api.nvim_create_namespace "keypresses_global"
+local _kg_ns = vim.api.nvim_create_namespace 'keypresses_global'
 
 M.typed_letters = {}
 
 local spec_table = {
-   [9] = " ",
-   [13] = "<CR>",
-   [27] = "<ESC>",
-   [32] = "␣",
-   [127] = " ",
+   [9] = ' ',
+   [13] = '<CR>',
+   [27] = '<ESC>',
+   [32] = '␣',
+   [127] = ' ',
 }
 
 local function traduce(key)

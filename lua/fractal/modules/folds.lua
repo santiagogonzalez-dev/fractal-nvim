@@ -8,8 +8,8 @@ local folds = {
 ---@return string
 function folds.foldtext_header()
    local AVOID = {
-      import = "imports",
-      from = "imports",
+      import = 'imports',
+      from = 'imports',
    }
    local header_fold =
       vim.api.nvim_buf_get_lines(0, vim.v.foldstart - 1, vim.v.foldstart, false)
@@ -19,10 +19,10 @@ function folds.foldtext_header()
          return header -- For example instead of seeing "from pathlib import Path" we just see "imports"
       else
          local clean_string = header_fold[1]
-            :gsub("%(%)", "")
-            :gsub("%{", "")
-            :gsub("%=", "")
-            :gsub("%:", " ")
+            :gsub('%(%)', '')
+            :gsub('%{', '')
+            :gsub('%=', '')
+            :gsub('%:', ' ')
          return clean_string
       end
    end
@@ -30,17 +30,17 @@ end
 
 function folds.setup()
    -- Fold settings
-   vim.opt.jumpoptions = "stack,view"
+   vim.opt.jumpoptions = 'stack,view'
    vim.opt.foldtext = 'v:lua.require("fractal.modules.folds").foldtext_header()'
-   vim.opt.foldcolumn = "auto:3" -- Folds column
-   vim.opt.foldmethod = "manual"
+   vim.opt.foldcolumn = 'auto:3' -- Folds column
+   vim.opt.foldmethod = 'manual'
    -- vim.opt.foldmethod = "expr"
-   vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+   vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
    vim.opt.fillchars:append({
-      fold = "─",
-      foldclose = "⌤",
-      foldopen = "⌃",
+      fold = '─',
+      foldclose = '⌤',
+      foldopen = '⌃',
    })
 end
 

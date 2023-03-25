@@ -1,4 +1,4 @@
-local status_ok, gitsigns = pcall(require, "gitsigns")
+local status_ok, gitsigns = pcall(require, 'gitsigns')
 if not status_ok then
    return
 end
@@ -6,34 +6,34 @@ end
 gitsigns.setup({
    signs = {
       add = {
-         hl = "GitSignsAdd",
-         text = "▎",
-         numhl = "GitSignsAddNr",
-         linehl = "GitSignsAddLn",
+         hl = 'GitSignsAdd',
+         text = '▎',
+         numhl = 'GitSignsAddNr',
+         linehl = 'GitSignsAddLn',
       },
       change = {
-         hl = "GitSignsChange",
-         text = "▎",
-         numhl = "GitSignsChangeNr",
-         linehl = "GitSignsChangeLn",
+         hl = 'GitSignsChange',
+         text = '▎',
+         numhl = 'GitSignsChangeNr',
+         linehl = 'GitSignsChangeLn',
       },
       delete = {
-         hl = "GitSignsDelete",
-         text = "契",
-         numhl = "GitSignsDeleteNr",
-         linehl = "GitSignsDeleteLn",
+         hl = 'GitSignsDelete',
+         text = '契',
+         numhl = 'GitSignsDeleteNr',
+         linehl = 'GitSignsDeleteLn',
       },
       topdelete = {
-         hl = "GitSignsDelete",
-         text = "契",
-         numhl = "GitSignsDeleteNr",
-         linehl = "GitSignsDeleteLn",
+         hl = 'GitSignsDelete',
+         text = '契',
+         numhl = 'GitSignsDeleteNr',
+         linehl = 'GitSignsDeleteLn',
       },
       changedelete = {
-         hl = "GitSignsChange",
-         text = "~",
-         numhl = "GitSignsChangeNr",
-         linehl = "GitSignsChangeLn",
+         hl = 'GitSignsChange',
+         text = '~',
+         numhl = 'GitSignsChangeNr',
+         linehl = 'GitSignsChangeLn',
       },
    },
    signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`
@@ -48,7 +48,7 @@ gitsigns.setup({
    current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
    current_line_blame_opts = {
       virt_text = true,
-      virt_text_pos = "eol", -- eol, overlay, right_align
+      virt_text_pos = 'eol', -- eol, overlay, right_align
       delay = 6000,
       ignore_whitespace = false,
    },
@@ -59,9 +59,9 @@ gitsigns.setup({
    max_file_length = 90000,
    preview_config = {
       -- Options passed to nvim_open_win
-      border = "rounded",
-      style = "minimal",
-      relative = "cursor",
+      border = 'rounded',
+      style = 'minimal',
+      relative = 'cursor',
       row = 0,
       col = 1,
    },
@@ -76,51 +76,51 @@ gitsigns.setup({
       end
 
       -- Navigation
-      map("n", "]c", function()
+      map('n', ']c', function()
          if vim.wo.diff then
-            return "]c"
+            return ']c'
          end
          vim.schedule(function()
             gitsigns.next_hunk()
          end)
-         return "<Ignore>"
+         return '<Ignore>'
       end, { expr = true })
 
-      map("n", "[c", function()
+      map('n', '[c', function()
          if vim.wo.diff then
-            return "[c"
+            return '[c'
          end
          vim.schedule(function()
             gitsigns.prev_hunk()
          end)
-         return "<Ignore>"
+         return '<Ignore>'
       end, { expr = true })
 
       -- Actions
-      map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
-      map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>")
-      map("n", "<leader>hS", gitsigns.stage_buffer)
-      map("n", "<leader>hu", gitsigns.undo_stage_hunk)
-      map("n", "<leader>hR", gitsigns.reset_buffer)
-      map("n", "<leader>hp", gitsigns.preview_hunk)
-      map("n", "<leader>hb", function()
+      map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+      map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+      map('n', '<leader>hS', gitsigns.stage_buffer)
+      map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+      map('n', '<leader>hR', gitsigns.reset_buffer)
+      map('n', '<leader>hp', gitsigns.preview_hunk)
+      map('n', '<leader>hb', function()
          gitsigns.blame_line({ full = true })
       end)
-      map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
-      map("n", "<leader>hd", gitsigns.diffthis)
-      map("n", "<leader>hD", function()
-         gitsigns.diffthis "~"
+      map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
+      map('n', '<leader>hd', gitsigns.diffthis)
+      map('n', '<leader>hD', function()
+         gitsigns.diffthis '~'
       end)
-      map("n", "<leader>td", gitsigns.toggle_deleted)
+      map('n', '<leader>td', gitsigns.toggle_deleted)
 
       -- Text object
-      map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+      map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 
-      map("n", "ghr", gitsigns.reset_hunk)
-      map("n", "ghb", gitsigns.reset_buffer)
-      map("n", "ghj", gitsigns.next_hunk)
-      map("n", "ghk", gitsigns.prev_hunk)
-      map("n", "ghp", gitsigns.preview_hunk)
+      map('n', 'ghr', gitsigns.reset_hunk)
+      map('n', 'ghb', gitsigns.reset_buffer)
+      map('n', 'ghj', gitsigns.next_hunk)
+      map('n', 'ghk', gitsigns.prev_hunk)
+      map('n', 'ghp', gitsigns.preview_hunk)
    end,
 })
 

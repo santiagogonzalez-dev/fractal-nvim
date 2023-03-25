@@ -17,7 +17,7 @@ function utils.not_interfere_on_float()
    map(vim.api.nvim_tabpage_list_wins(0), function(_, winid)
       if vim.api.nvim_win_get_config(winid).zindex then
          vim.notify(
-            "There is a floating window open already",
+            'There is a floating window open already',
             vim.log.levels.WARN
          )
          return false
@@ -44,17 +44,17 @@ end
 ---@param str string
 ---@return string|boolean @ Either an empty string or false
 function utils.is_empty(str)
-   return str == "" or str == nil
+   return str == '' or str == nil
 end
 
 -- Check if the working directory is under git managment
 ---@return boolean
 function utils.is_git()
    local is_git =
-      vim.api.nvim_exec("!git rev-parse --is-inside-work-tree", true)
+      vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
 
-   if is_git:match "true" then
-      vim.cmd.doautocmd "User IsGit"
+   if is_git:match 'true' then
+      vim.cmd.doautocmd 'User IsGit'
       return true
    else
       return false
@@ -87,15 +87,15 @@ end
 -- the function `utils.avoid_filetype()`, returns true if the filetype of the
 -- buffer is undesirable.
 utils.AVOID_FILETYPES = {
-   "NetrwTreeListing",
-   "TelescopePrompt",
-   "gitcommit",
-   "gitdiff",
-   "help",
-   "packer",
-   "startify",
-   "qf",
-   "quickfix",
+   'NetrwTreeListing',
+   'TelescopePrompt',
+   'gitcommit',
+   'gitdiff',
+   'help',
+   'packer',
+   'startify',
+   'qf',
+   'quickfix',
 }
 
 -- If the filetype of the buffer is in the list `utils.AVOID_FILETYPES` this
@@ -125,7 +125,7 @@ function utils.get_json(path)
    end
 
    local ok, LIB =
-      pcall(vim.json.decode, table.concat(vim.fn.readfile(path), "\n"))
+      pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
    return ok and LIB or false
 end
 
@@ -134,8 +134,8 @@ end
 ---@return boolean
 function utils.is_installed(plugin_name)
    local plugin_path = string.format(
-      "%s/site/pack/packer/%s",
-      vim.fn.stdpath "data",
+      '%s/site/pack/packer/%s',
+      vim.fn.stdpath 'data',
       plugin_name
    )
    -- print(plugin_path)
@@ -146,7 +146,7 @@ end
 ---@param indented_string string
 ---@return integer
 function utils.string_indentation(indented_string)
-   return #indented_string - #string.match(indented_string, "^%s*(.*)")
+   return #indented_string - #string.match(indented_string, '^%s*(.*)')
 end
 
 -- This function takes the value of each elements in a table and returns the
@@ -173,9 +173,9 @@ function utils.readable(filename, as_string)
    end
 
    if vim.fn.filereadable(filename) == 1 then
-      return "readable"
+      return 'readable'
    else
-      return "nonexistent or is a directory"
+      return 'nonexistent or is a directory'
    end
 end
 
@@ -190,13 +190,13 @@ function utils.writable(filename, as_string)
    end
 
    if result == 1 then
-      return "writable"
+      return 'writable'
    elseif result == 2 then
-      return "writable directory"
+      return 'writable directory'
    elseif result == 0 then
-      return "inexistent or is not writable"
+      return 'inexistent or is not writable'
    else
-      return ""
+      return ''
    end
 end
 
@@ -207,7 +207,7 @@ function utils.blink_crosshair()
       0,
       100,
       vim.schedule_wrap(function()
-         vim.cmd "set cursorcolumn! cursorline!"
+         vim.cmd 'set cursorcolumn! cursorline!'
          cnt = cnt + 1
          if cnt == blink_times then
             timer:stop()

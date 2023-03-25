@@ -1,2 +1,2 @@
-pcall(require, "impatient")
-require "fractal.core"
+pcall(require, 'impatient')
+require 'fractal.core'

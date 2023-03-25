@@ -1,47 +1,47 @@
 vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
 vim.opt_local.cmdheight = 1
-vim.opt_local.matchpairs:append "=:;"
+vim.opt_local.matchpairs:append '=:;'
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+local status_cmp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not status_cmp_ok then
    return
 end
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
-local status, jdtls = pcall(require, "jdtls")
+local status, jdtls = pcall(require, 'jdtls')
 if not status then
    return
 end
 
 -- Determine OS
-local HOME = os.getenv "HOME"
-WORKSPACE_PATH = string.format("%s/.cache/jdtls/workspace/", HOME)
-if vim.fn.has "mac" == 1 then
-   CONFIG = "mac"
-elseif vim.fn.has "unix" == 1 then
-   CONFIG = "linux"
+local HOME = os.getenv 'HOME'
+WORKSPACE_PATH = string.format('%s/.cache/jdtls/workspace/', HOME)
+if vim.fn.has 'mac' == 1 then
+   CONFIG = 'mac'
+elseif vim.fn.has 'unix' == 1 then
+   CONFIG = 'linux'
 end
 
 -- Find root of project
 local ROOT_MARKERS = {
-   ".git",
-   "mvnw",
-   "gradlew",
-   "pom.xml",
-   "build.gradle",
+   '.git',
+   'mvnw',
+   'gradlew',
+   'pom.xml',
+   'build.gradle',
 }
-local ROOT_DIR = require("jdtls.setup").find_root(ROOT_MARKERS)
-if ROOT_DIR == "" then
+local ROOT_DIR = require('jdtls.setup').find_root(ROOT_MARKERS)
+if ROOT_DIR == '' then
    return
 end
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
 local WORKSPACE_DIR = WORKSPACE_PATH .. project_name
 
@@ -51,13 +51,13 @@ local bundles = {}
 
 if JAVA_DAP_ACTIVE then
    local JAVA_TEST_JAR =
-      string.format("%s/.config/nvim/vscode-java-test/server/*.jar", HOME)
+      string.format('%s/.config/nvim/vscode-java-test/server/*.jar', HOME)
    local JAVA_DEBUG = string.format(
-      "%s/.config/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
+      '%s/.config/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar',
       HOME
    )
-   vim.list_extend(bundles, vim.split(vim.fn.glob(JAVA_TEST_JAR), "\n"))
-   vim.list_extend(bundles, vim.split(vim.fn.glob(JAVA_DEBUG), "\n"))
+   vim.list_extend(bundles, vim.split(vim.fn.glob(JAVA_TEST_JAR), '\n'))
+   vim.list_extend(bundles, vim.split(vim.fn.glob(JAVA_DEBUG), '\n'))
 end
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
@@ -66,30 +66,30 @@ local config = {
    -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
    cmd = {
       -- 💀
-      "java", -- or '/path/to/java11_or_newer/bin/java'
+      'java', -- or '/path/to/java11_or_newer/bin/java'
       -- depends on if `java` is in your $PATH env variable and if it points to the right version.
 
-      "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-      "-Dosgi.bundles.defaultStartLevel=4",
-      "-Declipse.product=org.eclipse.jdt.ls.core.product",
-      "-Dlog.protocol=true",
-      "-Dlog.level=ALL",
+      '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+      '-Dosgi.bundles.defaultStartLevel=4',
+      '-Declipse.product=org.eclipse.jdt.ls.core.product',
+      '-Dlog.protocol=true',
+      '-Dlog.level=ALL',
       string.format(
-         "-javaagent:%s/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+         '-javaagent:%s/.local/share/nvim/mason/packages/jdtls/lombok.jar',
          HOME
       ),
-      "-Xms1g",
-      "--add-modules=ALL-SYSTEM",
-      "--add-opens",
-      "java.base/java.util=ALL-UNNAMED",
-      "--add-opens",
-      "java.base/java.lang=ALL-UNNAMED",
+      '-Xms1g',
+      '--add-modules=ALL-SYSTEM',
+      '--add-opens',
+      'java.base/java.util=ALL-UNNAMED',
+      '--add-opens',
+      'java.base/java.lang=ALL-UNNAMED',
 
       -- 💀
-      "-jar",
+      '-jar',
       vim.fn.glob(
          string.format(
-            "%s/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
+            '%s/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar',
             HOME
          )
       ),
@@ -98,9 +98,9 @@ local config = {
       -- eclipse.jdt.ls installation                                           the actual version
 
       -- 💀
-      "-configuration",
+      '-configuration',
       string.format(
-         "%s/.local/share/nvim/mason/packages/jdtls/config_%s",
+         '%s/.local/share/nvim/mason/packages/jdtls/config_%s',
          HOME,
          CONFIG
       ),
@@ -109,11 +109,11 @@ local config = {
 
       -- 💀
       -- See `data directory configuration` section in the README
-      "-data",
+      '-data',
       WORKSPACE_DIR,
    },
 
-   on_attach = require("plugins.lsp.handlers").on_attach,
+   on_attach = require('plugins.lsp.handlers').on_attach,
    capabilities = capabilities,
 
    -- 💀
@@ -136,7 +136,7 @@ local config = {
             downloadSources = true,
          },
          configuration = {
-            updateBuildConfiguration = "interactive",
+            updateBuildConfiguration = 'interactive',
          },
          maven = {
             downloadSources = true,
@@ -152,7 +152,7 @@ local config = {
          },
          inlayHints = {
             parameterNames = {
-               enabled = "all", -- literals, all, none
+               enabled = 'all', -- literals, all, none
             },
          },
          format = {
@@ -165,16 +165,16 @@ local config = {
       signatureHelp = { enabled = true },
       completion = {
          favoriteStaticMembers = {
-            "org.hamcrest.MatcherAssert.assertThat",
-            "org.hamcrest.Matchers.*",
-            "org.hamcrest.CoreMatchers.*",
-            "org.junit.jupiter.api.Assertions.*",
-            "java.util.Objects.requireNonNull",
-            "java.util.Objects.requireNonNullElse",
-            "org.mockito.Mockito.*",
+            'org.hamcrest.MatcherAssert.assertThat',
+            'org.hamcrest.Matchers.*',
+            'org.hamcrest.CoreMatchers.*',
+            'org.junit.jupiter.api.Assertions.*',
+            'java.util.Objects.requireNonNull',
+            'java.util.Objects.requireNonNullElse',
+            'org.mockito.Mockito.*',
          },
       },
-      contentProvider = { preferred = "fernflower" },
+      contentProvider = { preferred = 'fernflower' },
       extendedClientCapabilities = extendedClientCapabilities,
       sources = {
          organizeImports = {
@@ -184,7 +184,7 @@ local config = {
       },
       codeGeneration = {
          toString = {
-            template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+            template = '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
          },
          useBlocks = true,
       },

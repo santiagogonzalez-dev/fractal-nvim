@@ -5,7 +5,7 @@ local M = {
    -- buffer, if there's just one normal buffer it will ask the user for
    -- actions, like quitting neovim or just deleting the current buffer.
 }
-local utils = require "fractal.utils"
+local utils = require 'fractal.utils'
 
 M.del_normal_bufs_with_exception = function(current_buf)
    local buflist = vim.api.nvim_list_bufs()
@@ -41,12 +41,12 @@ function M.amount_of_buffers_by_buftype()
       -- Then checks if the buffer `bufname` is load.
       if vim.api.nvim_buf_is_loaded(bufname) then
          -- If it is then we get the buftype of the buffer
-         local buf_type = vim.api.nvim_buf_get_option(bufname, "buftype")
+         local buf_type = vim.api.nvim_buf_get_option(bufname, 'buftype')
 
          -- The `buftype` of a normal buffer is '', so if `buf_type` is empty it
          -- means it's a `normal` buffer, else we keep whatever the type of the
          -- buffer is.
-         buf_type = (buf_type ~= "" and buf_type or "normal")
+         buf_type = (buf_type ~= '' and buf_type or 'normal')
 
          -- And we up +1 that element on the list, this way we can know how many
          -- buffers of the same type there are loaded.
@@ -59,7 +59,7 @@ end
 
 function M.actions()
    local bufs = M.amount_of_buffers_by_buftype()
-   bufs["nofile"] = bufs["nofile"] - bufs["nofile"] -- Ignore nofile buffers
+   bufs['nofile'] = bufs['nofile'] - bufs['nofile'] -- Ignore nofile buffers
 
    if utils.sum_elements(bufs) > 1 then
       -- If there's more than 1 buffer(excluding `nofile` buffers) quit all of
@@ -68,10 +68,10 @@ function M.actions()
    else
       -- If there's only one buffer ask the user to delete it and get an empty
       -- buffer or quit neovim altogether.
-      vim.ui.select({ "Close the current and only buffer", "Quit neovim" }, {
-         prompt = "What do you want to do?",
+      vim.ui.select({ 'Close the current and only buffer', 'Quit neovim' }, {
+         prompt = 'What do you want to do?',
          format_item = function(item)
-            return string.format("%s%s", "-> ", item)
+            return string.format('%s%s', '-> ', item)
          end,
       }, function(_, choice)
          if choice == 1 then
@@ -86,12 +86,12 @@ end
 ---@param mapping string
 ---@return boolean
 function M.setup(mapping)
-   if type(mapping) ~= "string" then
+   if type(mapping) ~= 'string' then
       return false
    end
 
    vim.schedule(function()
-      vim.keymap.set("n", mapping, M.actions, {
+      vim.keymap.set('n', mapping, M.actions, {
          desc = [[Mapping associated with CSJNeovim module: quit-actions.
                  Check the module at fractal.modules.quit-actions
                  for an in-depth description of the module.]],
