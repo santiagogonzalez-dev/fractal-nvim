@@ -22,7 +22,7 @@ if [ "$(pwd)" != "$INSTALL_DIR" ]; then
   cd "${INSTALL_DIR}" || exit 3
 else
   # Try to change to the ./neovim directory or clone the neovim repository
-  cd "./neovim" || git clone --depth=1 https://github.com/neovim/neovim && cd "./neovim"
+  cd "${INSTALL_DIR}/neovim" || git clone --depth=1 https://github.com/neovim/neovim && cd "${INSTALL_DIR}/neovim"
 fi
 
 cd "${INSTALL_DIR}/neovim"
