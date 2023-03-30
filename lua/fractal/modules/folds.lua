@@ -39,8 +39,8 @@ function folds.setup()
 
    vim.opt.fillchars:append({
       fold = '─',
-      foldclose = '⌤',
-      foldopen = '⌃',
+      foldclose = '󰅂',
+      foldopen = '󰅀',
    })
 end
 
