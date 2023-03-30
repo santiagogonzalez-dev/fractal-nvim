@@ -20,11 +20,13 @@ if [ "$(pwd)" != "$INSTALL_DIR" ]; then
   git clone --depth=1 git@github.com:santigo-zero/fractal-nvim.git "${INSTALL_DIR}"
   git clone --depth=1 https://github.com/neovim/neovim "${INSTALL_DIR}/neovim"
   cd "${INSTALL_DIR}" || exit 3
+  git pull
 else
   # Try to change to the ./neovim directory or clone the neovim repository
-  cd "${INSTALL_DIR}/neovim" || git clone --depth=1 https://github.com/neovim/neovim && cd "${INSTALL_DIR}/neovim"
+  cd "${INSTALL_DIR}/neovim" || git clone --depth=1 https://github.com/neovim/neovim && cd "${INSTALL_DIR}/neovim" || exit 4
+  git pull
 fi
 
-cd "${INSTALL_DIR}/neovim"
+cd "${INSTALL_DIR}/neovim" || exit 5
 git pull
 make CMAKE_INSTALL_PREFIX=~/.local/ install
