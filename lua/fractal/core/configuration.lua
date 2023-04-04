@@ -144,7 +144,7 @@ function M.setup(config)
    vim.cmd.colorscheme(config.colorscheme)
    vim.defer_fn(function()
       vim.cmd.doautocmd 'User FractalEnd'
-   end, 300)
+   end, 30)
 end
 
 return M
