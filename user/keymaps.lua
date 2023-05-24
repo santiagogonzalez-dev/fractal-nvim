@@ -276,9 +276,9 @@ vim.keymap.set(
 vim.keymap.set('n', '<Leader>i', '<CMD>Inspect<CR>')
 
 vim.keymap.set('n', '<Leader>tc', function()
-   if vim.opt_local.conceallevel:get() == 2 then
-      vim.opt_local.conceallevel = 0
-   else
-      vim.opt_local.conceallevel = 2
-   end
+   vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 2 and 0 or 2
 end)
+
+vim.keymap.set('c', 'q!', '<CMD>q!<CR>')
+vim.keymap.set('c', 'qa', '<CMD>qa<CR>')
+vim.keymap.set('c', 'wqa', '<CMD>wqa<CR>')

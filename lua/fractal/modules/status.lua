@@ -19,17 +19,14 @@ function M.get()
       data.buffer_status(),
       '%=',
       data.current_keys(),
-      '%#StatusLineBlue#', -- Reset hl groups
       ' ',
       -- data.search_count(),
       '%#StatusLine#', -- Reset hl groups
       '%=',
       -- data.filepath(),
-      '%#StatusLineBlue#',
       data.filename(),
       '%#StatusLine#', -- Reset hl groups
       '%=',
-      '%#StatusLineBlue#',
       data.modified_buffer(),
       '%#StatusLine#', -- Reset hl groups
       data.vcs(),

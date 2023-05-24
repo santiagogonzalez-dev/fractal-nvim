@@ -49,16 +49,6 @@ local plugins = {
             show_end_of_line = true,
             show_trailing_blankline_indent = false,
          })
-         -- vim.api.nvim_set_hl(
-         --    0,
-         --    "IndentBlanklineChar",
-         --    { link = "Whitespace" }
-         -- ) -- All the lines
-         -- vim.api.nvim_set_hl(
-         --    0,
-         --    "IndentBlanklineContextChar",
-         --    { link = "Function" }
-         -- ) -- Current place
       end,
    },
 
@@ -217,6 +207,13 @@ local plugins = {
       lazy = true,
       config = function()
          vim.api.nvim_set_hl(0, '@variable', { fg = '#74749C' })
+      end,
+   },
+
+   {
+      'navarasu/onedark.nvim',
+      config = function()
+         require('onedark').load()
       end,
    },
 

@@ -35,6 +35,7 @@ return {
                [vim.fn.expand '$VIMRUNTIME/lua'] = true,
                [vim.fn.stdpath 'config' .. '/lua'] = true,
                [vim.fn.stdpath 'config' .. '/user'] = true,
+               ['/home/st/.local/share/nvim/mason/packages/lua-lan guage-server/libexec/meta/5393ac01'] = true,
             },
          },
          telemetry = {

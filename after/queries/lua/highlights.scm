@@ -102,6 +102,13 @@
 
 (
   (dot_index_expression
+  )@keyword
+    (#eq? @keyword  "vim.api.nvim_set_hl" )
+  (#set! conceal "󰉼")
+)
+
+(
+  (dot_index_expression
   )@variable
     (#eq? @keyword  "vim.api.nvim_exec_autocmds" )
   (#set! conceal "")
