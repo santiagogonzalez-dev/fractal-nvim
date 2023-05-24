@@ -12,8 +12,7 @@ M.del_normal_bufs_with_exception = function(current_buf)
    for _, buf in ipairs(buflist) do
       if vim.api.nvim_buf_is_valid(buf) then
          if
-            buf
-            ~= current_buf --[[ and vim.api.nvim_buf_get_option(buf, 'buflisted') ]]
+            buf ~= current_buf --[[ and vim.api.nvim_buf_get_option(buf, 'buflisted') ]]
          then
             vim.api.nvim_buf_delete(buf, {})
          end

@@ -16,10 +16,7 @@ end
 function utils.not_interfere_on_float()
    map(vim.api.nvim_tabpage_list_wins(0), function(_, winid)
       if vim.api.nvim_win_get_config(winid).zindex then
-         vim.notify(
-            'There is a floating window open already',
-            vim.log.levels.WARN
-         )
+         vim.notify('There is a floating window open already', vim.log.levels.WARN)
          return false
       end
    end)
@@ -50,8 +47,7 @@ end
 -- Check if the working directory is under git managment
 ---@return boolean
 function utils.is_git()
-   local is_git =
-      vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
+   local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
 
    if is_git:match 'true' then
       vim.cmd.doautocmd 'User IsGit'
@@ -124,8 +120,7 @@ function utils.get_json(path)
       return false
    end
 
-   local ok, LIB =
-      pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
+   local ok, LIB = pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
    return ok and LIB or false
 end
 
@@ -133,11 +128,7 @@ end
 -- utils.is_installed('opt/packer.nvim') utils.is_installed('start/packer.nvim')
 ---@return boolean
 function utils.is_installed(plugin_name)
-   local plugin_path = string.format(
-      '%s/site/pack/packer/%s',
-      vim.fn.stdpath 'data',
-      plugin_name
-   )
+   local plugin_path = string.format('%s/site/pack/packer/%s', vim.fn.stdpath 'data', plugin_name)
    -- print(plugin_path)
    return vim.fn.isdirectory(plugin_path) ~= 0
 end
