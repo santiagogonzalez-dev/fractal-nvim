@@ -176,15 +176,7 @@ local plugins = {
    -- Telescope
    {
       'nvim-telescope/telescope.nvim',
-      keys = {
-         '<Leader>gr',
-         '<Leader>t/',
-         '<Leader>t//',
-         '<Leader>tf',
-         '<Leader>tg',
-         '<Leader>tp',
-         '<Leader>tt',
-      },
+      keys = { '<Leader>gr', '<Leader>t/', '<Leader>t//', '<Leader>tf', '<Leader>tg', '<Leader>tp', '<Leader>tt' },
       config = function()
          require 'plugins.telescope'
       end,
@@ -196,8 +188,48 @@ local plugins = {
       dir = '~/workspace/repositories/jetjbp.nvim',
       dev = true,
       lazy = true,
+      -- config = function()
+      --    vim.api.nvim_set_hl(0, '@variable', { fg = '#74749C' })
+      -- end,
+   },
+
+   {
+      'santigo-zero/right-corner-diagnostics.nvim',
+      lazy = true,
+      event = 'LspAttach',
       config = function()
-         vim.api.nvim_set_hl(0, '@variable', { fg = '#74749C' })
+         -- Recommended:
+         -- NOTE: Apply this settings before calling the `setup()`.
+         vim.diagnostic.config({
+            -- Disable default virtual text since you are using this plugin
+            -- already :)
+            virtual_text = false,
+
+            -- Do not display diagnostics while you are in insert mode, so if you have
+            -- `auto_cmds = true` it will not update the diagnostics while you type.
+            update_in_insert = false,
+         })
+
+         -- Default config:
+         require('rcd').setup({
+            -- Where to render the diagnostics: top or bottom, the latter sitting at
+            -- the bottom line of the buffer, not of the terminal.
+            position = 'bottom',
+
+            -- In order to print the diagnostics we need to use autocommands, you can
+            -- disable this behaviour and call the functions yourself if you think
+            -- your autocmds work better than the default ones with this option:
+            auto_cmds = true,
+         })
+      end,
+   },
+
+   -- color utils
+   {
+      'max397574/colortils.nvim',
+      cmd = 'Colortils',
+      config = function()
+         require('colortils').setup()
       end,
    },
 
@@ -271,7 +303,7 @@ local plugins = {
       event = 'BufRead',
       config = function()
          require('colorizer').setup()
-         require('colorizer').attach_to_buffer(0, { mode = 'virtualtext', css = true, svelte = true })
+         require('colorizer').attach_to_buffer(0, { css = true, svelte = true })
       end,
    },
 }
