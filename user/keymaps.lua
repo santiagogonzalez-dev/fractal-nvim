@@ -1,22 +1,12 @@
 local utils = require 'fractal.utils'
 
-local dead_keys = {
-   '<BS>',
-   '<CR>',
-   '<Down>',
-   '<Left>',
-   '<Right>',
-   '<Space>',
-   '<Up>',
-}
-
-map(dead_keys, function(_, value)
+local dead_keys = vim.iter({ '<BS>', '<CR>', '<Down>', '<Left>', '<Right>', '<Space>', '<Up>' })
+dead_keys:map(function(value)
    vim.keymap.set({ 'n', 'v', 'x' }, value, '<Nop>')
 end)
 
-local break_points = { '!', ',', '-', '.', '<CR>', '<Space>', '=', '?', '_' }
-
-map(break_points, function(_, value)
+local break_points = vim.iter({ '!', ',', '-', '.', '<CR>', '<Space>', '=', '?', '_' })
+break_points:map(function(value)
    vim.keymap.set('i', value, string.format('%s%s', value, '<C-g>u'))
 end)
 
