@@ -120,6 +120,7 @@
  (#set! conceal "ﯠ")
  )
 
+(("return" @keyword.return) (#set! "priority" 130))
 (("return" @keyword) (#set! conceal ""))
 (("then" @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal ""))

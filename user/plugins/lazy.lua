@@ -27,7 +27,7 @@ local plugins = {
    -- Accelerated jk
    {
       'rainbowhxch/accelerated-jk.nvim',
-      keys = { 'j', 'k', 'w', 'b', '+', '-' },
+      keys = { '<C-e>', '<C-y>', 'w', 'b', '+', '-' },
       config = function()
          require('accelerated-jk').setup({
             enable_deceleration = true,
