@@ -47,3 +47,4 @@ vim.opt.showbreak = '↪'
 vim.opt.wrap = false
 vim.opt.showmode = false
 vim.opt.showtabline = 0
+vim.opt.smoothscroll = true
