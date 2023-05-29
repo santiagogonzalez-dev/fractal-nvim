@@ -289,14 +289,6 @@ local plugins = {
       end,
    },
 
-   -- Impatient
-   {
-      'lewis6991/impatient.nvim',
-      config = function()
-         require('impatient').enable_profile()
-      end,
-   },
-
    -- Colorizer
    {
       'NvChad/nvim-colorizer.lua',
