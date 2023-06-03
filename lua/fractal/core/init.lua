@@ -1,7 +1,8 @@
-local ROOT = vim.fn.stdpath 'config' -- "${XDG_CONFIG_HOME}/nvim"
+vim.loader.enable()
 
 require 'fractal.core.general'
 
+local ROOT = vim.fn.stdpath 'config' -- "${XDG_CONFIG_HOME}/nvim"
 -- Add `./user` to lua path, do this before calling user's `init.lua`.
 package.path = table.concat({
    package.path,

@@ -17,7 +17,7 @@ end
 function M.setup()
    vim.opt.number = true
    vim.opt.relativenumber = true
-   vim.opt.numberwidth = 1
+   vim.opt.numberwidth = 3
    -- vim.opt.signcolumn = "number"
    vim.opt.statuscolumn = [[%!v:lua.require('fractal.modules.gutter').get()]]
    -- vim.o.statuscolumn='%s%=%l %C%{v:relnum == 0 ? "⧽" : ""}%{v:relnum == 0 ? "" : "▏"} '
