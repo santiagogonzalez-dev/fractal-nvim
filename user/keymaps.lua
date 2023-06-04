@@ -11,8 +11,8 @@ break_points:map(function(value)
 end)
 
 -- Remap space as leader key
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+vim.g.mapleader = 'x'
+vim.g.maplocalleader = 'x'
 
 vim.keymap.set('n', '<C-n>', vim.cmd.bnext, { desc = 'Switch to next buffer', silent = true })
 vim.keymap.set('n', '<C-p>', vim.cmd.bprevious, { desc = 'Switch to prev buffer', silent = true })
@@ -168,6 +168,9 @@ vim.keymap.set('c', '<C-k>', '<Up>', {
 vim.keymap.set('c', 'wqa', vim.cmd.wqa, {
    desc = 'Write all and quit without hitting <CR>',
 })
+
+vim.keymap.set('n', '<Leader>q', ':q<CR>')
+vim.keymap.set('n', '<Leader>wqa', ':wqa<CR>')
 
 vim.api.nvim_create_autocmd('FileType', {
    pattern = 'qf',
