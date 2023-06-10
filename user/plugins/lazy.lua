@@ -234,6 +234,10 @@ local plugins = {
    },
 
    {
+      'amadeus/vim-convert-color-to',
+   },
+
+   {
       'navarasu/onedark.nvim',
       config = function()
          require('onedark').load()
