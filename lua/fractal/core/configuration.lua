@@ -139,9 +139,9 @@ function M.setup(config)
    M.restore_session(config.restore)
 
    vim.cmd.colorscheme(config.colorscheme)
-   vim.defer_fn(function()
+   -- vim.defer_fn(function()
       vim.cmd.doautocmd 'User FractalEnd'
-   end, 30)
+   -- end, 30)
 end
 
 return M

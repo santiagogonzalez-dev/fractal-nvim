@@ -11,8 +11,8 @@ break_points:map(function(value)
 end)
 
 -- Remap space as leader key
-vim.g.mapleader = 'x'
-vim.g.maplocalleader = 'x'
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 vim.keymap.set('n', '<C-n>', vim.cmd.bnext, { desc = 'Switch to next buffer', silent = true })
 vim.keymap.set('n', '<C-p>', vim.cmd.bprevious, { desc = 'Switch to prev buffer', silent = true })
