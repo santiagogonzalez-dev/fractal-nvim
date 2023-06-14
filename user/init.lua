@@ -1,9 +1,6 @@
 require 'keymaps'
 require 'plugins'
-
-vim.defer_fn(function()
-   require 'settings'
-end, 0)
+require 'settings'
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
