@@ -81,12 +81,17 @@ local plugins = {
                local U = require 'Comment.utils'
                local location = nil
                if ctx.ctype == U.ctype.blockwise then
-                  location = require('ts_context_commentstring.utils').get_cursor_location()
-               elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-                  location = require('ts_context_commentstring.utils').get_visual_start_location()
+                  location =
+                     require('ts_context_commentstring.utils').get_cursor_location()
+               elseif
+                  ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V
+               then
+                  location =
+                     require('ts_context_commentstring.utils').get_visual_start_location()
                end
                return require('ts_context_commentstring.internal').calculate_commentstring({
-                  key = ctx.ctype == U.ctype.linewise and '__default' or '__multiline',
+                  key = ctx.ctype == U.ctype.linewise and '__default'
+                     or '__multiline',
                   location = location,
                })
             end,
@@ -155,7 +160,11 @@ local plugins = {
                      },
                   },
                })
-               vim.keymap.set('n', '<Leader>tsh', ':TSHighlightCapturesUnderCursor<CR>')
+               vim.keymap.set(
+                  'n',
+                  '<Leader>tsh',
+                  ':TSHighlightCapturesUnderCursor<CR>'
+               )
             end,
          },
       },
@@ -176,7 +185,15 @@ local plugins = {
    -- Telescope
    {
       'nvim-telescope/telescope.nvim',
-      keys = { '<Leader>gr', '<Leader>t/', '<Leader>t//', '<Leader>tf', '<Leader>tg', '<Leader>tp', '<Leader>tt' },
+      keys = {
+         '<Leader>gr',
+         '<Leader>t/',
+         '<Leader>t//',
+         '<Leader>tf',
+         '<Leader>tg',
+         '<Leader>tp',
+         '<Leader>tt',
+      },
       config = function()
          require 'plugins.telescope'
       end,

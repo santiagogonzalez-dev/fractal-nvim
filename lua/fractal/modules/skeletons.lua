@@ -6,7 +6,12 @@ local M = {
 ---@param extension string
 ---@return string @ This function returns a path
 function M.find_fullpath(extension)
-   return string.format('%s%s%s', vim.fn.stdpath 'config', '/user/skeletons/skeleton', extension)
+   return string.format(
+      '%s%s%s',
+      vim.fn.stdpath 'config',
+      '/user/skeletons/skeleton',
+      extension
+   )
 end
 
 function M.define_extension()
@@ -32,7 +37,10 @@ function M.setup()
          -- If the skeleton template exists then
          if M.file_exists(get_full_path) then
             vim.cmd('0r' .. get_full_path) -- Read the file
-            vim.fn.deletebufline(vim.api.nvim_get_current_buf(), vim.fn.line '$') -- And delete the empty line
+            vim.fn.deletebufline(
+               vim.api.nvim_get_current_buf(),
+               vim.fn.line '$'
+            ) -- And delete the empty line
          end
       end,
    })

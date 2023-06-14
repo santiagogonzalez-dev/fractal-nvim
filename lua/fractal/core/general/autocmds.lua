@@ -122,7 +122,10 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = session_opts,
-   callback = utils.wrap(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 }),
+   callback = utils.wrap(
+      vim.highlight.on_yank,
+      { higroup = 'Visual', timeout = 600 }
+   ),
 })
 
 -- Disable mouse in insert mode

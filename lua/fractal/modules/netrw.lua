@@ -102,7 +102,8 @@ function M.draw_icons()
                filetype = 'default'
             end
 
-            local icon, icon_highlight = devicons.get_icon(line, filetype, { default = '' })
+            local icon, icon_highlight =
+               devicons.get_icon(line, filetype, { default = '' })
             sign_name = 'netrw_' .. filetype
             vim.fn.sign_define(sign_name, {
                text = icon,

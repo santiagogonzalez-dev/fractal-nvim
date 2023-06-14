@@ -99,7 +99,10 @@ function M.modules(modules)
    map(modules, function(key, value)
       if value then
          local mod_path = string.format('fractal.modules.%s', key)
-         local msg = string.format('Failed to load module %s, check your fractal.json', key)
+         local msg = string.format(
+            'Failed to load module %s, check your fractal.json',
+            key
+         )
          M.check({
             eval = utils.prequire(mod_path),
             on_fail_msg = msg,
@@ -140,7 +143,7 @@ function M.setup(config)
 
    vim.cmd.colorscheme(config.colorscheme)
    -- vim.defer_fn(function()
-      vim.cmd.doautocmd 'User FractalEnd'
+   vim.cmd.doautocmd 'User FractalEnd'
    -- end, 30)
 end
 
