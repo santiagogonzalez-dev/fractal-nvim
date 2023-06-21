@@ -40,3 +40,4 @@ for _, server in pairs(SERVERS) do
 end
 
 require('plugins.lsp.handlers').setup()
+require('plugins.lsp.inlay-hint')

@@ -12,7 +12,7 @@ return {
             paramName = 'Disable', --'All', 'SameLine', 'Disable'
             paramType = true,
             semicolon = 'Disable', -- 'All', 'SameLine', 'Disable'
-            setType = false,
+            setType = true,
          },
          diagnostics = {
             globals = {

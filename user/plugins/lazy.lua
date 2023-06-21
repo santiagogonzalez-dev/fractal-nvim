@@ -244,6 +244,9 @@ local plugins = {
    {
       'neovim/nvim-lspconfig',
       config = function() require('plugins.lsp') end,
+      opts = {
+         inlay_hints = { enabled = true },
+      },
    },
 
    -- Mason
