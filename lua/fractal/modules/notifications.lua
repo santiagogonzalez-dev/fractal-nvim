@@ -19,9 +19,12 @@ function M.notify_send(msg, log_level, opts)
    local timeout = opts.timeout
    local urgency = log_level_to_urgency[log_level] or 'normal'
 
-   local command = { 'notify-send', '-u', urgency, '-i', 'nvim', '-a', 'Neovim' }
+   local command =
+      { 'notify-send', '-u', urgency, '-i', 'nvim', '-a', 'Neovim' }
 
-   if timeout then vim.list_extend(command, { '-t', string.format('%d', timeout * 1000) }) end
+   if timeout then
+      vim.list_extend(command, { '-t', string.format('%d', timeout * 1000) })
+   end
 
    if title then
       vim.list_extend(command, { title, msg })

@@ -13,6 +13,7 @@ null.setup({
       -- diag.eslint,
       actions.shellcheck,
       diag.shellcheck,
+      diag.luacheck,
       format.stylua,
       format.prettier.with({
          prefer_local = 'node_modules/.bin',

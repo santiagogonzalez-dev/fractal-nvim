@@ -40,7 +40,8 @@ function M.setup(mode)
    if mode == 'hide-completely' then
       -- vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
       -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
-      vim.opt.statusline = '%{%v:lua.require("fractal.modules.status").hide_completely()%}'
+      vim.opt.statusline =
+         '%{%v:lua.require("fractal.modules.status").hide_completely()%}'
       vim.opt.laststatus = 0
       vim.opt.ruler = false
       vim.api.nvim_set_hl(0, 'EndOfBuffer', { link = 'Normal' })
@@ -48,7 +49,10 @@ function M.setup(mode)
       vim.opt.laststatus = 3
       vim.opt.statusline = '%{%v:lua.require("fractal.modules.status").get()%}'
       vim.api.nvim_create_autocmd({ 'TabEnter', 'BufEnter', 'WinEnter' }, {
-         callback = function() vim.opt.statusline = '%{%v:lua.require("fractal.modules.status").get()%}' end,
+         callback = function()
+            vim.opt.statusline =
+               '%{%v:lua.require("fractal.modules.status").get()%}'
+         end,
       })
 
       vim.api.nvim_create_autocmd({ 'WinEnter', 'FileType' }, {

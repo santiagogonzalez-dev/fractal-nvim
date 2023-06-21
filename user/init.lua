@@ -79,20 +79,37 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'InsertLeave' }, {
 -- Extra whitespaces will be highlighted
 vim.fn.matchadd('ErrorMsg', '\\s\\+$')
 
-vim.api.nvim_create_user_command('EvalYankRegister', function() vim.cmd.lua(vim.fn.getreg('"')) end, {})
+vim.api.nvim_create_user_command(
+   'EvalYankRegister',
+   function() vim.cmd.lua(vim.fn.getreg('"')) end,
+   {}
+)
 
-vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave', 'FocusLost', 'InsertLeave' }, {
-   callback = function()
-      if vim.bo.modified and not vim.bo.readonly and vim.fn.expand('%') ~= '' and vim.bo.buftype == '' then
-         vim.api.nvim_command('silent update')
-      end
-   end,
-})
+vim.api.nvim_create_autocmd(
+   { 'WinLeave', 'BufLeave', 'FocusLost', 'InsertLeave' },
+   {
+      callback = function()
+         if
+            vim.bo.modified
+            and not vim.bo.readonly
+            and vim.fn.expand('%') ~= ''
+            and vim.bo.buftype == ''
+         then
+            vim.api.nvim_command('silent update')
+         end
+      end,
+   }
+)
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
    desc = 'Auto save',
    callback = function()
-      if vim.bo.modified and not vim.bo.readonly and vim.fn.expand('%') ~= '' and vim.bo.buftype == '' then
+      if
+         vim.bo.modified
+         and not vim.bo.readonly
+         and vim.fn.expand('%') ~= ''
+         and vim.bo.buftype == ''
+      then
          vim.api.nvim_command('silent update')
       end
    end,
@@ -112,7 +129,9 @@ vim.api.nvim_create_user_command('FoldMarkdown', function()
    local next_header = vim.fn.search('^#', 'Wn') -- Search for the next header
 
    -- If a next header is found, fold from current line to the line before the next header
-   if next_header > 0 then vim.cmd(string.format('%d,%dfold', current_line, next_header - 2)) end
+   if next_header > 0 then
+      vim.cmd(string.format('%d,%dfold', current_line, next_header - 2))
+   end
 end, {})
 
 -- vim.api.nvim_create_autocmd('InsertLeave', {
@@ -124,3 +143,10 @@ end, {})
 vim.api.nvim_create_autocmd('BufWritePre', {
    callback = function() vim.lsp.buf.format() end,
 })
+
+vim.keymap.set('n', '<Leader>te', function()
+   vim.ui.input(
+      { prompt = 'Enter value for shiftwidth: ' },
+      function(input) vim.o.shiftwidth = tonumber(input) end
+   )
+end)

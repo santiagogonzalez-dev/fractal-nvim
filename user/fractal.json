@@ -3,14 +3,14 @@
   "restore": true,
   "conditionals": true,
   "modules": {
-    "quit-actions": "<Leader>Q",
+    "quit-actions": false,
     "folds": true,
     "gutter": true,
     "netrw": true,
     "notifications": false,
     "highlight-working-line": false,
     "skeletons": true,
-    "status": "basic",
-    "strict-cursor": true
+    "status": "hide-completely",
+    "strict-cursor": "<Leader>c"
   }
 }
