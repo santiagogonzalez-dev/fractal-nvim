@@ -2,6 +2,7 @@ stds.nvim = {
    globals = {
       vim = { fields = { 'g', 'opt' } },
       map = { fields = { 'function' } },
+      bit = { fields = { 'band' } },
    },
    read_globals = {
       'vim',

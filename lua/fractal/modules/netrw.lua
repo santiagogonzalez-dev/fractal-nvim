@@ -29,7 +29,8 @@ vim.g.netrw_localcopydircmd = 'cp -r' -- Enable recursive copy of directories
 vim.g.netrw_localmkdir = 'mkdir -p' -- Enable recursive creation of directories
 vim.g.netrw_localrmdir = 'rm -r' -- Enable recursive removal of directories and files
 
-vim.api.nvim_set_hl(0, 'netrwMarkFile', { link = 'Search' }) -- Highlight marked files in the same way search matches are
+-- Highlight marked files in the same way search matches are
+vim.api.nvim_set_hl(0, 'netrwMarkFile', { link = 'Search' })
 
 function M.draw_icons()
    if vim.bo.filetype ~= 'netrw' then return end

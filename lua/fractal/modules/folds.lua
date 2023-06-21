@@ -15,17 +15,16 @@ function folds.foldtext_header()
       vim.api.nvim_buf_get_lines(0, vim.v.foldstart - 1, vim.v.foldstart, false)
 
    for key, header in pairs(AVOID) do
-      if header_fold[1]:match(key) then
-         return header -- For example instead of seeing "from pathlib import Path" we just see "imports"
-      else
-         local clean_string = header_fold[1]
-            :gsub('%(%)', '')
-            :gsub('%{', '')
-            :gsub('%=', '')
-            :gsub('%:', ' ')
-         return clean_string
-      end
+      if header_fold[1]:match(key) then return header end
    end
+
+   local clean_string = header_fold[1]
+      :gsub('%(%)', '')
+      :gsub('%{', '')
+      :gsub('%=', '')
+      :gsub('%:', ' ')
+
+   return clean_string
 end
 
 function folds.setup()
