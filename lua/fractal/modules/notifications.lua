@@ -35,8 +35,6 @@ function M.notify_send(msg, log_level, opts)
    vim.fn.system(command)
 end
 
-function M.setup()
-   vim.notify = M.notify_send
-end
+function M.setup() vim.notify = M.notify_send end
 
 return M

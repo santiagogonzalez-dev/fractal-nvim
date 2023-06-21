@@ -5,7 +5,7 @@ local M = {
    -- buffer, if there's just one normal buffer it will ask the user for
    -- actions, like quitting neovim or just deleting the current buffer.
 }
-local utils = require 'fractal.utils'
+local utils = require('fractal.utils')
 
 M.del_normal_bufs_with_exception = function(current_buf)
    local buflist = vim.api.nvim_list_bufs()
@@ -70,9 +70,7 @@ function M.actions()
       -- buffer or quit neovim altogether.
       vim.ui.select({ 'Close the current and only buffer', 'Quit neovim' }, {
          prompt = 'What do you want to do?',
-         format_item = function(item)
-            return string.format('%s%s', '-> ', item)
-         end,
+         format_item = function(item) return string.format('%s%s', '-> ', item) end,
       }, function(_, choice)
          if choice == 1 then
             return vim.cmd.bd()
@@ -86,17 +84,17 @@ end
 ---@param mapping string
 ---@return boolean
 function M.setup(mapping)
-   if type(mapping) ~= 'string' then
-      return false
-   end
+   if type(mapping) ~= 'string' then return false end
 
-   vim.schedule(function()
-      vim.keymap.set('n', mapping, M.actions, {
-         desc = [[Mapping associated with CSJNeovim module: quit-actions.
+   vim.schedule(
+      function()
+         vim.keymap.set('n', mapping, M.actions, {
+            desc = [[Mapping associated with CSJNeovim module: quit-actions.
                  Check the module at fractal.modules.quit-actions
                  for an in-depth description of the module.]],
-      })
-   end)
+         })
+      end
+   )
    return true
 end
 

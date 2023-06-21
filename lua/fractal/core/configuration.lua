@@ -1,14 +1,12 @@
 local M = {}
-local utils = require 'fractal.utils'
+local utils = require('fractal.utils')
 
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- Cursor position.
 ---@param mode boolean
 ---@return boolean
 function M.restore_session(mode)
-   if not mode then
-      return false
-   end
+   if not mode then return false end
 
    -- Setup the initial load and maintain some settings between buffers
    local save_sessions = vim.api.nvim_create_augroup('save_sessions', {})
@@ -24,7 +22,7 @@ function M.restore_session(mode)
       if line <= vim.api.nvim_buf_line_count(0) then
          vim.api.nvim_win_set_cursor(0, { line, col }) -- Set the position
          if vim.fn.foldclosed(line) ~= -1 then -- And check if there's a closed fold
-            return vim.cmd.normal 'zo'
+            return vim.cmd.normal('zo')
          end
       end
    end
@@ -35,9 +33,7 @@ function M.restore_session(mode)
       desc = 'Load buffer view and cursor position',
       group = save_sessions,
       callback = function()
-         if not utils.avoid_filetype() then
-            point_restore()
-         end
+         if not utils.avoid_filetype() then point_restore() end
       end,
    })
 
@@ -45,9 +41,7 @@ function M.restore_session(mode)
       desc = 'Save the view of the buffer',
       group = save_sessions,
       callback = function()
-         if not utils.avoid_filetype() then
-            return vim.cmd.mkview()
-         end
+         if not utils.avoid_filetype() then return vim.cmd.mkview() end
       end,
    })
 
@@ -57,9 +51,7 @@ end
 ---@param mode boolean
 ---@return boolean
 function M.conditionals(mode)
-   if not mode then
-      return false
-   end
+   if not mode then return false end
 
    local function run_comprobations()
       -- Conditionals
@@ -73,16 +65,12 @@ function M.conditionals(mode)
          -- comprobation each time you change of directory
          vim.api.nvim_create_autocmd('DirChanged', {
             group = conditionals,
-            callback = function()
-               return utils.is_git()
-            end,
+            callback = function() return utils.is_git() end,
          })
       end
    end
 
-   vim.defer_fn(function()
-      run_comprobations()
-   end, 1000)
+   vim.defer_fn(function() run_comprobations() end, 1000)
 
    return true
 end
@@ -92,9 +80,7 @@ end
 ---@param modules table @ Table containing the modules to be loaded
 ---@return boolean
 function M.modules(modules)
-   if not modules then
-      return false
-   end
+   if not modules then return false end
 
    map(modules, function(key, value)
       if value then
@@ -106,9 +92,7 @@ function M.modules(modules)
          M.check({
             eval = utils.prequire(mod_path),
             on_fail_msg = msg,
-            callback = function(lib)
-               lib.setup(value)
-            end,
+            callback = function(lib) lib.setup(value) end,
          })
       end
    end)
@@ -123,28 +107,17 @@ end
 ---@return any
 function M.check(tbl)
    local notify = require('fractal.modules.notifications').notify_send
-   if not tbl.eval then
-      return notify(tbl.on_fail_msg)
-   end
-
-   if type(tbl.callback) == 'function' then
-      return tbl.callback(tbl.eval)
-   end
-
+   if not tbl.eval then return notify(tbl.on_fail_msg) end
+   if type(tbl.callback) == 'function' then return tbl.callback(tbl.eval) end
    return tbl.callback
 end
 
 function M.setup(config)
-   -- Conditions for loading sequentially and for lazyloading.
-   M.conditionals(config.conditionals)
-   -- Load fractal modules specified by the user.
-   M.modules(config.modules)
+   M.conditionals(config.conditionals) -- Conditions for sequential and lazy loading.
+   M.modules(config.modules) -- Load fractal modules specified by the user.
    M.restore_session(config.restore)
-
    vim.cmd.colorscheme(config.colorscheme)
-   -- vim.defer_fn(function()
-   vim.cmd.doautocmd 'User FractalEnd'
-   -- end, 30)
+   vim.cmd.doautocmd('User FractalEnd')
 end
 
 return M

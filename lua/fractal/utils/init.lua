@@ -5,9 +5,7 @@ local utils = {}
 ---@return boolean|string|number @ Either nil or the value of require()
 function utils.prequire(package)
    local ok, lib = pcall(require, package)
-   if not ok then
-      return false
-   end
+   if not ok then return false end
    return lib
 end
 
@@ -35,17 +33,13 @@ end
 function utils.wrap(function_pointer, ...)
    local params = { ... }
 
-   return function()
-      function_pointer(unpack(params))
-   end
+   return function() function_pointer(unpack(params)) end
 end
 
 -- Simple wrapper to check if a str is empty
 ---@param str string
 ---@return string|boolean @ Either an empty string or false
-function utils.is_empty(str)
-   return str == '' or str == nil
-end
+function utils.is_empty(str) return str == '' or str == nil end
 
 -- Check if the working directory is under git managment
 ---@return boolean
@@ -53,8 +47,8 @@ function utils.is_git()
    local is_git =
       vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
 
-   if is_git:match 'true' then
-      vim.cmd.doautocmd 'User IsGit'
+   if is_git:match('true') then
+      vim.cmd.doautocmd('User IsGit')
       return true
    else
       return false
@@ -76,9 +70,7 @@ end
 function utils.present_in_table(element, T)
    local val = false
    map(T, function(_, value)
-      if value == element then
-         val = true
-      end
+      if value == element then val = true end
    end)
    return val
 end
@@ -120,9 +112,7 @@ end
 ---@return table|false
 function utils.get_json(path)
    local find = utils.readable(path)
-   if not find then
-      return false
-   end
+   if not find then return false end
 
    local ok, LIB =
       pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
@@ -135,7 +125,7 @@ end
 function utils.is_installed(plugin_name)
    local plugin_path = string.format(
       '%s/site/pack/packer/%s',
-      vim.fn.stdpath 'data',
+      vim.fn.stdpath('data'),
       plugin_name
    )
    -- print(plugin_path)
@@ -156,27 +146,17 @@ end
 function utils.sum_elements(T)
    local total_elements = 0
 
-   map(T, function(_, value)
-      total_elements = total_elements + value
-   end)
+   map(T, function(_, value) total_elements = total_elements + value end)
 
    return total_elements
 end
 
--- Wrapper around `vim.fn.filereadable`.
----@param filename string
----@param as_string? boolean
----@return boolean|string
-function utils.readable(filename, as_string)
-   if not as_string then
-      return true and vim.fn.filereadable(filename) == 1
-   end
-
-   if vim.fn.filereadable(filename) == 1 then
-      return 'readable'
-   else
-      return 'nonexistent or is a directory'
-   end
+function utils.readable(filepath)
+   local stat = vim.uv.fs_stat(filepath)
+   return stat
+      and stat.type == 'file'
+      and stat.mode
+      and bit.band(stat.mode, 292) > 0
 end
 
 -- Wrapper around `vim.fn.filewritable`.
@@ -185,9 +165,7 @@ end
 ---@return integer|string
 function utils.writable(filename, as_string)
    local result = vim.fn.filewritable(filename)
-   if not as_string then
-      return result
-   end
+   if not as_string then return result end
 
    if result == 1 then
       return 'writable'
@@ -207,11 +185,9 @@ function utils.blink_crosshair()
       0,
       100,
       vim.schedule_wrap(function()
-         vim.cmd 'set cursorcolumn! cursorline!'
+         vim.cmd('set cursorcolumn! cursorline!')
          cnt = cnt + 1
-         if cnt == blink_times then
-            timer:stop()
-         end
+         if cnt == blink_times then timer:stop() end
       end)
    )
 end

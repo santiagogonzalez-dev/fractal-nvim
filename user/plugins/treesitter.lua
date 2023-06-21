@@ -1,7 +1,5 @@
 local status_ok, treesitter = pcall(require, 'nvim-treesitter.configs')
-if not status_ok then
-   return
-end
+if not status_ok then return end
 
 -- Enable bundled treesitter parsers, this also turns off `syntax`.
 -- https://github.com/neovim/neovim/issues/14090#issuecomment-1237820552

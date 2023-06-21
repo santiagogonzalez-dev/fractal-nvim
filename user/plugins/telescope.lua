@@ -1,9 +1,7 @@
 local status_ok, telescope = pcall(require, 'telescope')
-if not status_ok then
-   return
-end
+if not status_ok then return end
 
-local previewers_utils = require 'telescope.previewers.utils'
+local previewers_utils = require('telescope.previewers.utils')
 
 telescope.setup({
    defaults = {
@@ -40,7 +38,7 @@ telescope.setup({
    },
 })
 
-telescope.load_extension 'projects'
+telescope.load_extension('projects')
 
 vim.keymap.set(
    'n',

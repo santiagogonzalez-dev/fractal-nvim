@@ -8,7 +8,7 @@ local M = {
    -- around will become simpler and easier, without the need of complex motion
    -- plugins.
 }
-local nm_HWL = vim.api.nvim_create_namespace 'HWL' -- Namespace
+local nm_HWL = vim.api.nvim_create_namespace('HWL') -- Namespace
 
 -- TODO(santigo-zero): Avoid showing the mark in certain filetypes
 
@@ -22,9 +22,7 @@ function M.display_mark()
 end
 
 function M.hide_mark(id)
-   if not id then
-      return
-   end
+   if not id then return end
    vim.api.nvim_buf_del_extmark(0, nm_HWL, id)
 end
 
@@ -36,9 +34,7 @@ function M.setup()
          local id = M.display_mark()
          vim.api.nvim_create_autocmd('InsertEnter', {
             group = ag_HWL,
-            callback = function()
-               M.hide_mark(id)
-            end,
+            callback = function() M.hide_mark(id) end,
          })
       end,
    })

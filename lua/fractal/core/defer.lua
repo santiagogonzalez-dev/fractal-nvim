@@ -1,8 +1,8 @@
 -- require "fractal.core.not"
 
 -- Temporarily disable ftplugin and shadafile.
-vim.cmd.filetype 'off'
-vim.cmd.filetype 'plugin indent off'
+vim.cmd.filetype('off')
+vim.cmd.filetype('plugin indent off')
 vim.opt.shadafile = 'NONE'
 
 -- PROFILING: About profiling, all the settings before this comment are going
@@ -11,28 +11,27 @@ vim.opt.shadafile = 'NONE'
 -- of the config.
 vim.schedule(function()
    if not vim.opt.loadplugins:get() then
-      vim.cmd 'runtime! plugin/**/*.vim'
-      vim.cmd 'runtime! plugin/**/*.lua'
+      vim.cmd('runtime! plugin/**/*.vim')
+      vim.cmd('runtime! plugin/**/*.lua')
    end
 
    -- Enable filetype settings and shadafile.
-   vim.cmd.filetype 'on'
-   vim.cmd.filetype 'plugin indent on'
+   vim.cmd.filetype('on')
+   vim.cmd.filetype('plugin indent on')
    vim.opt.shadafile = ''
    vim.cmd.rshada({ bang = true })
 
-   local buf_curr_path = vim.fn.expand '%F'
-   local utils = require 'fractal.utils'
+   local buf_curr_path = vim.fn.expand('%F')
+   local utils = require('fractal.utils')
    if not utils.readable(buf_curr_path) then
       -- Manually trigger autocmd, necessary for skeletons.
-      vim.defer_fn(function()
-         vim.api.nvim_exec_autocmds('BufNewFile', {})
-      end, 0)
+      vim.defer_fn(
+         function() vim.api.nvim_exec_autocmds('BufNewFile', {}) end,
+         0
+      )
    else
       -- Manually call ftplugin.
-      vim.defer_fn(function()
-         vim.cmd.filetype 'detect'
-      end, 0)
+      vim.defer_fn(function() vim.cmd.filetype('detect') end, 0)
    end
 
    vim.defer_fn(function()
@@ -40,5 +39,5 @@ vim.schedule(function()
       vim.api.nvim_exec_autocmds('UIEnter', {})
    end, 0)
 
-   require 'fractal.core'
+   require('fractal.core')
 end)

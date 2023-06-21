@@ -6,7 +6,7 @@ local M = {
    -- you where tabbing but backwards, moving your cursor based on indentation
    -- levels.
 }
-local utils = require 'fractal.utils'
+local utils = require('fractal.utils')
 
 function M.strict_h_motion()
    local cursor_position = vim.api.nvim_win_get_cursor(0)
@@ -76,14 +76,10 @@ vim.g.strict_cursor = true
 ---@param disables_mode string
 ---@return boolean
 function M.setup(disables_mode)
-   if type(disables_mode) ~= 'string' then
-      return false
-   end
+   if type(disables_mode) ~= 'string' then return false end
 
    M.toggle()
-   vim.keymap.set('n', disables_mode, function()
-      M.toggle()
-   end)
+   vim.keymap.set('n', disables_mode, function() M.toggle() end)
    return true
 end
 

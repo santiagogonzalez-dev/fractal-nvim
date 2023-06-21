@@ -1,3 +1,4 @@
+local readable = require('fractal.utils').readable
 local tab_lenght = 3
 vim.opt_local.tabstop = tab_lenght
 vim.opt_local.shiftwidth = tab_lenght
@@ -16,7 +17,7 @@ local function dir_separator()
    -- Look at package.config for directory separator string (it's the first line)
    if package.config then
       return string.match(package.config, '^[^\n]')
-   elseif vim.fn.has 'win32' == 1 then
+   elseif vim.fn.has('win32') == 1 then
       return '\\'
    else
       return '/'
@@ -29,9 +30,7 @@ local function include_paths(fname, ext)
    ext = ext or 'lua'
    local paths = string.gsub(package.path, '%?', fname)
    for path in split(paths, '%;') do
-      if vim.fn.filereadable(path) == 1 then
-         return path
-      end
+      if readable(path) then return path end
    end
 end
 
@@ -45,14 +44,10 @@ local function include_rtpaths(fname, ext)
    for _, path in ipairs(rtpaths) do
       -- Look on runtime path for 'lua/*.lua' files
       local path1 = table.concat({ path, ext, modfile }, sep)
-      if vim.fn.filereadable(path1) == 1 then
-         return path1
-      end
+      if readable(path1) then return path1 end
       -- Look on runtime path for 'lua/*/init.lua' files
       local path2 = table.concat({ path, ext, fname, initfile }, sep)
-      if vim.fn.filereadable(path2) == 1 then
-         return path2
-      end
+      if readable(path2) then return path2 end
    end
 end
 
@@ -65,24 +60,16 @@ function Find_required_path(module)
    local f
    ---- First search for lua modules
    f = include_paths(fname, 'lua')
-   if f then
-      return f
-   end
+   if f then return f end
    -- This part is just for nvim modules
    f = include_rtpaths(fname, 'lua')
-   if f then
-      return f
-   end
+   if f then return f end
    ---- Now search for Fennel modules
    f = include_paths(fname, 'fnl')
-   if f then
-      return f
-   end
+   if f then return f end
    -- This part is just for nvim modules
    f = include_rtpaths(fname, 'fnl')
-   if f then
-      return f
-   end
+   if f then return f end
 end
 
 -- Set options to open require with gf.

@@ -1,4 +1,4 @@
-local utils = require 'fractal.utils'
+local utils = require('fractal.utils')
 
 local dead_keys = vim.iter({
    '<BS>',
@@ -9,15 +9,17 @@ local dead_keys = vim.iter({
    '<Space>',
    '<Up>',
 })
-dead_keys:map(function(value)
-   vim.keymap.set({ 'n', 'v', 'x' }, value, '<Nop>')
-end)
+dead_keys:map(
+   function(value) vim.keymap.set({ 'n', 'v', 'x' }, value, '<Nop>') end
+)
 
 local break_points =
    vim.iter({ '!', ',', '-', '.', '<CR>', '<Space>', '=', '?', '_' })
-break_points:map(function(value)
-   vim.keymap.set('i', value, string.format('%s%s', value, '<C-g>u'))
-end)
+break_points:map(
+   function(value)
+      vim.keymap.set('i', value, string.format('%s%s', value, '<C-g>u'))
+   end
+)
 
 -- Remap space as leader key
 vim.g.mapleader = ','
@@ -139,25 +141,35 @@ vim.keymap.set(
    { desc = 'Use leader key, avoid double taps' }
 )
 
-vim.keymap.set('n', 'gx', function()
-   vim.fn.jobstart({
-      'xdg-open',
-      vim.fn.expand('<cfile>', nil, nil),
-   }, {
-      detach = true,
-   })
-end, {
-   desc = 'Better gx',
-})
+vim.keymap.set(
+   'n',
+   'gx',
+   function()
+      vim.fn.jobstart({
+         'xdg-open',
+         vim.fn.expand('<cfile>', nil, nil),
+      }, {
+         detach = true,
+      })
+   end,
+   {
+      desc = 'Better gx',
+   }
+)
 
-vim.keymap.set('n', 'dd', function()
-   return vim.api.nvim_get_current_line():match '^%s*$' and '"_dd' or 'dd'
-end, {
-   desc = 'If the line is blank(empty, or whitespace) do not override the delete register',
-   noremap = true,
-   expr = true,
-   nowait = false,
-})
+vim.keymap.set(
+   'n',
+   'dd',
+   function()
+      return vim.api.nvim_get_current_line():match('^%s*$') and '"_dd' or 'dd'
+   end,
+   {
+      desc = 'If the line is blank(empty, or whitespace) do not override the delete register',
+      noremap = true,
+      expr = true,
+      nowait = false,
+   }
+)
 
 vim.keymap.set('n', '<C-Up>', ':resize +1<CR>', {
    desc = 'Resize windows',
@@ -245,16 +257,12 @@ vim.keymap.set('n', '<Leader>wqa', ':wqa<CR>')
 vim.api.nvim_create_autocmd('FileType', {
    pattern = 'qf',
    callback = function()
-      vim.keymap.set('n', '<C-]>', function()
-         return ':cn'
-      end, {
+      vim.keymap.set('n', '<C-]>', function() return ':cn' end, {
          buffer = 0,
          desc = 'Go to next item in quickfix list',
       })
 
-      vim.keymap.set('n', '<C-[>', function()
-         return ':cp'
-      end, {
+      vim.keymap.set('n', '<C-[>', function() return ':cp' end, {
          buffer = 0,
          desc = 'Go to previous item in quickfix list',
       })
@@ -277,9 +285,14 @@ vim.keymap.set(
 
 vim.keymap.set('n', '<Leader>i', '<CMD>Inspect<CR>')
 
-vim.keymap.set('n', '<Leader>tc', function()
-   vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 2 and 0 or 2
-end)
+vim.keymap.set(
+   'n',
+   '<Leader>tc',
+   function()
+      vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 2 and 0
+         or 2
+   end
+)
 
 vim.keymap.set('c', 'q!', '<CMD>q!<CR>')
 vim.keymap.set('c', 'qa', '<CMD>qa<CR>')

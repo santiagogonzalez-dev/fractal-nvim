@@ -1,5 +1,6 @@
--- Session managment
-local utils = require 'fractal.utils'
+local wrap = require('fractal.utils').wrap
+local blink_crosshair = require('fractal.utils').blink_crosshair
+local readable = require('fractal.utils').readable
 local session_opts = vim.api.nvim_create_augroup('session_opts', {})
 
 -- Check if any file has changed when Vim is focused
@@ -21,9 +22,7 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
    desc = 'Create directories before saving a buffer, should come by default',
    group = session_opts,
-   callback = function()
-      return vim.fn.mkdir(vim.fn.expand '%:p:h', 'p')
-   end,
+   callback = function() return vim.fn.mkdir(vim.fn.expand('%:p:h'), 'p') end,
 })
 
 -- First load
@@ -35,10 +34,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
    group = first_load,
    pattern = '*.lua',
    once = true,
-   callback = utils.wrap(vim.defer_fn, function()
-      if utils.readable 'startuptime.txt' then
-         vim.cmd ':!tail -n3 startuptime.txt'
-         vim.fn.delete 'startuptime.txt'
+   callback = wrap(vim.defer_fn, function()
+      if readable('startuptime.txt') then
+         vim.cmd(':!tail -n3 startuptime.txt')
+         vim.fn.delete('startuptime.txt')
       end
    end, 1000),
 })
@@ -50,13 +49,7 @@ local buffer_settings = vim.api.nvim_create_augroup('buffer_settings', {})
 vim.api.nvim_create_autocmd('FileType', {
    desc = 'Quit with q in this filetypes',
    group = buffer_settings,
-   pattern = {
-      'help',
-      'lspinfo',
-      'man',
-      'netrw',
-      'qf',
-   },
+   pattern = { 'help', 'lspinfo', 'man', 'netrw', 'qf' },
    callback = function()
       vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 })
    end,
@@ -67,25 +60,21 @@ vim.api.nvim_create_autocmd('FileType', {
    desc = 'Quit! with q! in this filetypes',
    group = buffer_settings,
    pattern = 'TelescopePrompt',
-   callback = function()
-      vim.keymap.set('n', 'q', ':q!<CR>', { buffer = 0 })
-   end,
+   callback = function() vim.keymap.set('n', 'q', ':q!<CR>', { buffer = 0 }) end,
 })
 
 -- Make the cursorline appear only on the active focused window/pan
 vim.api.nvim_create_autocmd('UIEnter', {
    group = buffer_settings,
    callback = function()
-      if not vim.opt.cursorcolumn:get() then
-         return
-      end
+      if not vim.opt.cursorcolumn:get() then return end
 
       vim.api.nvim_create_autocmd({ 'FocusGained', 'WinEnter' }, {
          group = buffer_settings,
          callback = function()
             vim.opt.cursorline = true
             vim.opt.cursorcolumn = true
-            utils.blink_crosshair()
+            blink_crosshair()
          end,
       })
       vim.api.nvim_create_autocmd({ 'FocusLost', 'WinLeave' }, {
@@ -105,7 +94,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
    callback = function()
       if not vim.o.binary and vim.o.filetype ~= 'diff' then
          local current_view = vim.fn.winsaveview()
-         vim.cmd [[keeppatterns %s/\s\+$//e]]
+         vim.cmd([[keeppatterns %s/\s\+$//e]])
          return vim.fn.winrestview(current_view)
       end
    end,
@@ -122,26 +111,22 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = session_opts,
-   callback = utils.wrap(
+   callback = wrap(
       vim.highlight.on_yank,
       { higroup = 'Visual', timeout = 600 }
    ),
 })
 
 -- Disable mouse in insert mode
-local mouse_original_value = vim.api.nvim_get_option 'mouse'
+local mouse_original_value = vim.api.nvim_get_option('mouse')
 vim.api.nvim_create_autocmd('InsertEnter', {
    desc = 'Disable mouse in insert mode',
    group = session_opts,
-   callback = function()
-      vim.opt.mouse = ''
-   end,
+   callback = function() vim.opt.mouse = '' end,
 })
 
 vim.api.nvim_create_autocmd('InsertLeave', {
    desc = 'Restore default values for mouse',
    group = session_opts,
-   callback = function()
-      vim.opt.mouse = mouse_original_value
-   end,
+   callback = function() vim.opt.mouse = mouse_original_value end,
 })

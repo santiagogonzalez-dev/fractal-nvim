@@ -1,7 +1,7 @@
 local M = {
    -- DESCRIPTION: An attempt to modernize NetRW.
 }
-local utils = require 'fractal.utils'
+local utils = require('fractal.utils')
 
 -- NetRW config.
 vim.g.netrw_banner = 0 -- Toggle the banner
@@ -32,13 +32,9 @@ vim.g.netrw_localrmdir = 'rm -r' -- Enable recursive removal of directories and 
 vim.api.nvim_set_hl(0, 'netrwMarkFile', { link = 'Search' }) -- Highlight marked files in the same way search matches are
 
 function M.draw_icons()
-   if vim.bo.filetype ~= 'netrw' then
-      return
-   end
+   if vim.bo.filetype ~= 'netrw' then return end
    local is_devicons_available, devicons = pcall(require, 'nvim-web-devicons')
-   if not is_devicons_available then
-      return
-   end
+   if not is_devicons_available then return end
    local default_signs = {
       netrw_dir = {
          text = '',
@@ -69,7 +65,7 @@ function M.draw_icons()
    end
 
    local cur_line_nr = 1
-   local total_lines = vim.fn.line '$'
+   local total_lines = vim.fn.line('$')
    while cur_line_nr <= total_lines do
       -- Set default sign
       local sign_name = 'netrw_file'
@@ -82,25 +78,23 @@ function M.draw_icons()
          -- without doing nothing more
          cur_line_nr = cur_line_nr + 1
       else
-         if line:find '/$' then
+         if line:find('/$') then
             sign_name = 'netrw_dir'
-         elseif line:find '@%s+-->' then
+         elseif line:find('@%s+-->') then
             sign_name = 'netrw_link'
-         elseif line:find '*$' then
-            sign_name:find 'netrw_exec'
+         elseif line:find('*$') then
+            sign_name:find('netrw_exec')
          else
-            local filetype = line:match '^.*%.(.*)'
-            if not filetype and line:find 'LICENSE' then
+            local filetype = line:match('^.*%.(.*)')
+            if not filetype and line:find('LICENSE') then
                filetype = 'md'
-            elseif line:find 'rc$' then
+            elseif line:find('rc$') then
                filetype = 'conf'
             end
 
             -- If filetype is still nil after manually setting extensions
             -- for unknown filetypes then let's use 'default'
-            if not filetype then
-               filetype = 'default'
-            end
+            if not filetype then filetype = 'default' end
 
             local icon, icon_highlight =
                devicons.get_icon(line, filetype, { default = '' })
@@ -121,15 +115,11 @@ end
 function M.setup()
    vim.api.nvim_create_autocmd('FileType', {
       pattern = 'netrw',
-      callback = function()
-         return M.draw_icons()
-      end,
+      callback = function() return M.draw_icons() end,
    })
 
    vim.api.nvim_create_autocmd('TextChanged', {
-      callback = function()
-         return M.draw_icons()
-      end,
+      callback = function() return M.draw_icons() end,
    })
 end
 

@@ -1,5 +1,5 @@
 local M = {}
-local utils = require 'fractal.utils'
+local utils = require('fractal.utils')
 
 -- Component for the statusline.
 ---@return string
@@ -14,7 +14,7 @@ function M.search_count()
             -- ' %s/%d %s ',
             res.current,
             res.total,
-            vim.fn.getreg '/'
+            vim.fn.getreg('/')
          )
       end
    else
@@ -27,21 +27,19 @@ end
 function M.vcs()
    -- Requires gitsigns.nvim
    local git_info = vim.b.gitsigns_status_dict
-   if not git_info or git_info.head == '' then
-      return ''
-   end
+   if not git_info or git_info.head == '' then return '' end
 
    vim.api.nvim_set_hl(0, 'StatusLineGitSignsAdd', {
-      bg = utils.get_bg_hl 'StatusLine',
-      fg = utils.get_fg_hl 'GitSignsAdd',
+      bg = utils.get_bg_hl('StatusLine'),
+      fg = utils.get_fg_hl('GitSignsAdd'),
    })
    vim.api.nvim_set_hl(0, 'StatusLineGitSignsChange', {
-      bg = utils.get_bg_hl 'StatusLine',
-      fg = utils.get_fg_hl 'GitSignsChange',
+      bg = utils.get_bg_hl('StatusLine'),
+      fg = utils.get_fg_hl('GitSignsChange'),
    })
    vim.api.nvim_set_hl(0, 'StatusLineGitSignsDelete', {
-      bg = utils.get_bg_hl 'StatusLine',
-      fg = utils.get_fg_hl 'GitSignsDelete',
+      bg = utils.get_bg_hl('StatusLine'),
+      fg = utils.get_fg_hl('GitSignsDelete'),
    })
    local added = git_info.added
          and ('%#StatusLineGitSignsAdd#+' .. git_info.added .. ' ')
@@ -53,17 +51,11 @@ function M.vcs()
          and ('%#StatusLineGitSignsDelete#-' .. git_info.removed .. ' ')
       or ''
 
-   if git_info.added == 0 then
-      added = ''
-   end
+   if git_info.added == 0 then added = '' end
 
-   if git_info.changed == 0 then
-      changed = ''
-   end
+   if git_info.changed == 0 then changed = '' end
 
-   if git_info.removed == 0 then
-      removed = ''
-   end
+   if git_info.removed == 0 then removed = '' end
 
    return table.concat({
       ' ',
@@ -89,8 +81,8 @@ end
 
 function M.line_with_icons()
    -- Icon representing the line number position
-   local current_line = vim.fn.line '.'
-   local total_lines = vim.fn.line '$' -- == tonumber(vim.api.nvim_eval_statusline('%L', {}).str)
+   local current_line = vim.fn.line('.')
+   local total_lines = vim.fn.line('$') -- == tonumber(vim.api.nvim_eval_statusline('%L', {}).str)
 
    if vim.api.nvim_eval_statusline('%P', {}).str == 'All' then
       return ' '
@@ -106,8 +98,8 @@ end
 
 function M.column_with_icons()
    -- Represent cursor column and lenght of the line
-   local line_lenght = vim.fn.col '$' - 1
-   local cursor_column = vim.fn.col '.' -- == tonumber(vim.api.nvim_eval_statusline('%c', {}).str)
+   local line_lenght = vim.fn.col('$') - 1
+   local cursor_column = vim.fn.col('.') -- == tonumber(vim.api.nvim_eval_statusline('%c', {}).str)
 
    if line_lenght == cursor_column then
       return cursor_column, '␊'
@@ -121,7 +113,7 @@ end
 -- Returns an icons representing the status of the current buffer.
 ---@return string
 function M.buffer_status()
-   local fmode = utils.writable(vim.fn.expand '%:F', true)
+   local fmode = utils.writable(vim.fn.expand('%:F'), true)
 
    if fmode == 'inexistent or is not writable' then
       return ' '
@@ -138,10 +130,8 @@ end
 ---@return string @ Returns a path like `/home/user/.config/nvim`
 function M.filepath()
    -- Return the filepath without the name of the file
-   local filepath = vim.fn.fnamemodify(vim.fn.expand '%', ':~:.:h')
-   if filepath == '' or filepath == '.' then
-      return ' '
-   end
+   local filepath = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')
+   if filepath == '' or filepath == '.' then return ' ' end
 
    if vim.bo.filetype == 'lua' then
       -- For lua use . as a separator instead of /
@@ -153,20 +143,16 @@ function M.filepath()
 end
 
 function M.filename()
-   local filename = vim.fn.expand '%:t'
+   local filename = vim.fn.expand('%:t')
    -- local filename = vim.api.nvim_eval_statusline('%t', {}).str
-   if filename == '' then
-      return ' '
-   end
+   if filename == '' then return ' ' end
 
    return filename
 end
 
 -- Return the column number of the cursor line.
 ---@return integer
-function M.current_line_lenght()
-   return #vim.api.nvim_win_get_cursor(0)
-end
+function M.current_line_lenght() return #vim.api.nvim_win_get_cursor(0) end
 
 function M.modified_buffer()
    -- TODO(santigo-zero): Add filetype detection

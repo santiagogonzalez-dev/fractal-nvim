@@ -1,6 +1,6 @@
-require 'keymaps'
-require 'plugins'
-require 'settings'
+require('keymaps')
+require('plugins')
+require('settings')
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
@@ -73,17 +73,17 @@ local _enable_spell = vim.api.nvim_create_augroup('_enable_spell', {})
 vim.api.nvim_create_autocmd({ 'InsertEnter', 'InsertLeave' }, {
    desc = 'Enable spelling in insert mode',
    group = _enable_spell,
-   callback = function()
-      vim.opt_local.spell = not vim.opt_local.spell:get()
-   end,
+   callback = function() vim.opt_local.spell = not vim.opt_local.spell:get() end,
 })
 
 -- Extra whitespaces will be highlighted
 vim.fn.matchadd('ErrorMsg', '\\s\\+$')
 
-vim.api.nvim_create_user_command('EvalYankRegister', function()
-   vim.cmd.lua(vim.fn.getreg '"')
-end, {})
+vim.api.nvim_create_user_command(
+   'EvalYankRegister',
+   function() vim.cmd.lua(vim.fn.getreg('"')) end,
+   {}
+)
 
 vim.api.nvim_create_autocmd(
    { 'WinLeave', 'BufLeave', 'FocusLost', 'InsertLeave' },
@@ -92,10 +92,10 @@ vim.api.nvim_create_autocmd(
          if
             vim.bo.modified
             and not vim.bo.readonly
-            and vim.fn.expand '%' ~= ''
+            and vim.fn.expand('%') ~= ''
             and vim.bo.buftype == ''
          then
-            vim.api.nvim_command 'silent update'
+            vim.api.nvim_command('silent update')
          end
       end,
    }
@@ -107,10 +107,10 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
       if
          vim.bo.modified
          and not vim.bo.readonly
-         and vim.fn.expand '%' ~= ''
+         and vim.fn.expand('%') ~= ''
          and vim.bo.buftype == ''
       then
-         vim.api.nvim_command 'silent update'
+         vim.api.nvim_command('silent update')
       end
    end,
 })
@@ -123,3 +123,23 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
 --       vim.cmd [[syntax match hidechars '\]\]' conceal " cchar= ]]
 --    end,
 -- })
+
+vim.api.nvim_create_user_command('FoldMarkdown', function()
+   local current_line = vim.fn.line('.') -- Get current line number
+   local next_header = vim.fn.search('^#', 'Wn') -- Search for the next header
+
+   -- If a next header is found, fold from current line to the line before the next header
+   if next_header > 0 then
+      vim.cmd(string.format('%d,%dfold', current_line, next_header - 2))
+   end
+end, {})
+
+-- vim.api.nvim_create_autocmd('InsertLeave', {
+--    callback = function()
+--       vim.lsp.buf.format({ async = true })
+--    end,
+-- })
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+   callback = function() vim.lsp.buf.format() end,
+})

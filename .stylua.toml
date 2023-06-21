@@ -7,8 +7,13 @@ quote_style = "AutoPreferSingle"
 # no_call_parentheses = false
 line_endings = "Unix"
 # call_parentheses = "NoSingleTable"
-call_parentheses = "NoSingleString"
-# call_parentheses = "Always"
+# call_parentheses = "NoSingleString"
+call_parentheses = "Always"
 # call_parentheses = "None"
-# collapse_simple_statement = "Always" # This makes some functions be one liners
-# collapse_simple_statement = "ConditionalOnly" # This makes some functions be one liners
+collapse_simple_statement = "Always" # This makes some functions be one liners
+# collapse_simple_statement = "ConditionalOnly"
+# collapse_simple_statement = "Never"
+# collapse_simple_statement = "FunctionOnly"
+
+[sort_requires]
+enabled = true

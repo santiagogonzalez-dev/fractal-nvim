@@ -1,4 +1,4 @@
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
    vim.fn.system({
       'git',
@@ -19,9 +19,7 @@ local plugins = {
    {
       'kylechui/nvim-surround',
       event = 'User FractalEnd',
-      config = function()
-         require('nvim-surround').setup()
-      end,
+      config = function() require('nvim-surround').setup() end,
    },
 
    -- Accelerated jk
@@ -78,7 +76,7 @@ local plugins = {
       config = function()
          require('Comment').setup({
             pre_hook = function(ctx)
-               local U = require 'Comment.utils'
+               local U = require('Comment.utils')
                local location = nil
                if ctx.ctype == U.ctype.blockwise then
                   location =
@@ -168,18 +166,14 @@ local plugins = {
             end,
          },
       },
-      config = function()
-         require 'plugins.treesitter'
-      end,
+      config = function() require('plugins.treesitter') end,
    },
 
    -- Git Signs
    {
       'lewis6991/gitsigns.nvim',
       event = 'User IsGit',
-      config = function()
-         require 'plugins.gitsigns'
-      end,
+      config = function() require('plugins.gitsigns') end,
    },
 
    -- Telescope
@@ -194,9 +188,7 @@ local plugins = {
          '<Leader>tp',
          '<Leader>tt',
       },
-      config = function()
-         require 'plugins.telescope'
-      end,
+      config = function() require('plugins.telescope') end,
    },
 
    -- JetJBP colorscheme
@@ -245,9 +237,7 @@ local plugins = {
    {
       'max397574/colortils.nvim',
       cmd = 'Colortils',
-      config = function()
-         require('colortils').setup()
-      end,
+      config = function() require('colortils').setup() end,
    },
 
    {
@@ -256,17 +246,13 @@ local plugins = {
 
    {
       'navarasu/onedark.nvim',
-      config = function()
-         require('onedark').load()
-      end,
+      config = function() require('onedark').load() end,
    },
 
    -- Nvim lspconfig
    {
       'neovim/nvim-lspconfig',
-      config = function()
-         require 'plugins.lsp'
-      end,
+      config = function() require('plugins.lsp') end,
    },
 
    -- Mason
@@ -285,9 +271,7 @@ local plugins = {
    {
       'jose-elias-alvarez/null-ls.nvim',
       event = 'User FractalEnd',
-      config = function()
-         require 'plugins.lsp.null-ls'
-      end,
+      config = function() require('plugins.lsp.null-ls') end,
    },
 
    -- CMP
@@ -305,9 +289,7 @@ local plugins = {
          'hrsh7th/cmp-cmdline',
          'L3MON4D3/LuaSnip',
       },
-      config = function()
-         require 'plugins.cmp'
-      end,
+      config = function() require('plugins.cmp') end,
    },
 
    -- Colorizer

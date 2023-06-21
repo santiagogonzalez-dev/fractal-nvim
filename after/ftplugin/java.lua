@@ -1,27 +1,23 @@
 vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
 vim.opt_local.cmdheight = 1
-vim.opt_local.matchpairs:append '=:;'
+vim.opt_local.matchpairs:append('=:;')
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not status_cmp_ok then
-   return
-end
+if not status_cmp_ok then return end
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
 local status, jdtls = pcall(require, 'jdtls')
-if not status then
-   return
-end
+if not status then return end
 
 -- Determine OS
-local HOME = os.getenv 'HOME'
+local HOME = os.getenv('HOME')
 WORKSPACE_PATH = string.format('%s/.cache/jdtls/workspace/', HOME)
-if vim.fn.has 'mac' == 1 then
+if vim.fn.has('mac') == 1 then
    CONFIG = 'mac'
-elseif vim.fn.has 'unix' == 1 then
+elseif vim.fn.has('unix') == 1 then
    CONFIG = 'linux'
 end
 
@@ -34,9 +30,7 @@ local ROOT_MARKERS = {
    'build.gradle',
 }
 local ROOT_DIR = require('jdtls.setup').find_root(ROOT_MARKERS)
-if ROOT_DIR == '' then
-   return
-end
+if ROOT_DIR == '' then return end
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
@@ -211,9 +205,15 @@ local config = {
 -- or attaches to an existing client & server depending on the `root_dir`.
 jdtls.start_or_attach(config)
 
-vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
-vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
-vim.cmd "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()"
+vim.cmd(
+   "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
+)
+vim.cmd(
+   "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
+)
+vim.cmd(
+   "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()"
+)
 -- vim.cmd "command! -buffer JdtJol lua require('jdtls').jol()"
-vim.cmd "command! -buffer JdtBytecode lua require('jdtls').javap()"
+vim.cmd("command! -buffer JdtBytecode lua require('jdtls').javap()")
 -- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
