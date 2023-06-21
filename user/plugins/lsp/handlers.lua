@@ -2,30 +2,17 @@ local M = {}
 
 function M.setup()
    local signs = {
-      {
-         name = 'DiagnosticSignError',
-         text = ' ',
-         texthl = 'DiagnosticSignError',
-      },
-      {
-         name = 'DiagnosticSignWarn',
-         text = ' ',
-         texthl = 'DiagnosticSignWarn',
-      },
-      {
-         name = 'DiagnosticSignHint',
-         text = ' ',
-         texthl = 'DiagnosticSignInfo',
-      },
-      {
-         name = 'DiagnosticSignInfo',
-         text = ' ',
-         texthl = 'DiagnosticSignHint',
-      },
+      { name = 'DiagnosticSignError', icon = ' ' },
+      { name = 'DiagnosticSignWarn', icon = ' ' },
+      { name = 'DiagnosticSignHint', icon = ' ' },
+      { name = 'DiagnosticSignInfo', icon = ' ' },
    }
 
    for _, sign in ipairs(signs) do
-      vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text })
+      vim.fn.sign_define(sign.name, {
+         texthl = sign.name,
+         text = sign.icon,
+      })
    end
 
    local config = {
@@ -69,7 +56,11 @@ M.on_attach = function(client, bufnr)
    end
 
    require('plugins.lsp.keymaps').keymaps(bufnr)
-   if client.server_capabilities.documentHighlightProvider then
+   if
+      client.name ~= 'cssls'
+      and client.name ~= 'html'
+      and client.server_capabilities.documentHighlightProvider
+   then
       vim.api.nvim_create_augroup('lsp_document_highlight', {
          clear = false,
       })

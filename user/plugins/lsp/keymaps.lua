@@ -52,8 +52,9 @@ function M.keymaps(bufnr)
 
    vim.keymap.set('n', 'gll', function()
       if utils.not_interfere_on_float() then -- If there is not a floating window present
+         -- Try to open diagnostics under the cursor
          local diags =
-            vim.diagnostic.open_float(nil, { focus = false, scope = 'cursor' }) -- Try to open diagnostics under the cursor
+            vim.diagnostic.open_float(nil, { focus = false, scope = 'cursor' })
          if not diags then -- If there's no diagnostic under the cursor show diagnostics of the entire line
             vim.diagnostic.open_float()
          end

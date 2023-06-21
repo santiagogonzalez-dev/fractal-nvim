@@ -72,11 +72,7 @@ end
 -- Position of the cursor, batteries included.
 ---@return string
 function M.position_with_icons()
-   return table.concat({
-      '%l',
-      M.line_with_icons(),
-      M.column_with_icons(),
-   })
+   return '%l' .. M.line_with_icons() .. M.column_with_icons()
 end
 
 function M.line_with_icons()

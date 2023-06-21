@@ -1,6 +1,6 @@
 local M = {
    -- DESCRIPTION: This module dictates how the statusline is going to behave,
-   -- if you set it up with `hide-completely` you'll not see it, `basic` gives
+   -- if you set it up with `hide` you'll not see it, `basic` gives
    -- you a basic statusline.
 }
 
@@ -37,7 +37,7 @@ end
 
 function M.setup(mode)
    vim.opt.cmdheight = 0
-   if mode == 'hide-completely' then
+   if mode == 'hide' then
       -- vim.api.nvim_set_hl(0, 'StatusLine', { link = 'Normal' })
       -- vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'Normal' })
       vim.opt.statusline =

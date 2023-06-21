@@ -5,7 +5,7 @@ vim.opt_local.matchpairs:append('=:;')
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-local status_cmp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+local status_cmp_ok, _ = pcall(require, 'cmp_nvim_lsp')
 if not status_cmp_ok then return end
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 

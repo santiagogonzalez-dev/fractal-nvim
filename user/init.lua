@@ -115,14 +115,14 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
    end,
 })
 
--- vim.api.nvim_create_autocmd("BufEnter", {
---    callback = function()
---       vim.cmd [[syntax match hidechars '\'' conceal " cchar= ]]
---       vim.cmd [[syntax match hidechars '\"' conceal " cchar= ]]
---       vim.cmd [[syntax match hidechars '\[\[' conceal " cchar= ]]
---       vim.cmd [[syntax match hidechars '\]\]' conceal " cchar= ]]
---    end,
--- })
+vim.api.nvim_create_autocmd('BufEnter', {
+   callback = function()
+      vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
+      vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
+      vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
+      vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
+   end,
+})
 
 vim.api.nvim_create_user_command('FoldMarkdown', function()
    local current_line = vim.fn.line('.') -- Get current line number
@@ -141,7 +141,7 @@ end, {})
 -- })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-   callback = function() vim.lsp.buf.format() end,
+   command = 'Format',
 })
 
 vim.keymap.set('n', '<Leader>te', function()
