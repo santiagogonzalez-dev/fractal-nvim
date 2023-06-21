@@ -22,16 +22,10 @@ vim.schedule(function()
    vim.cmd.rshada({ bang = true })
 
    local buf_curr_path = vim.fn.expand('%F')
-   local utils = require('fractal.utils')
-   if not utils.readable(buf_curr_path) then
-      -- Manually trigger autocmd, necessary for skeletons.
-      vim.defer_fn(
-         function() vim.api.nvim_exec_autocmds('BufNewFile', {}) end,
-         0
-      )
+   if not require('fractal.utils').readable(buf_curr_path) then
+      vim.defer_fn(function() vim.api.nvim_exec_autocmds('BufNewFile', {}) end, 0)
    else
-      -- Manually call ftplugin.
-      vim.defer_fn(function() vim.cmd.filetype('detect') end, 0)
+      vim.defer_fn(function() vim.cmd.filetype('detect') end, 0) -- Manually call ftplugin.
    end
 
    vim.defer_fn(function()

@@ -44,8 +44,7 @@ JAVA_DAP_ACTIVE = true
 local bundles = {}
 
 if JAVA_DAP_ACTIVE then
-   local JAVA_TEST_JAR =
-      string.format('%s/.config/nvim/vscode-java-test/server/*.jar', HOME)
+   local JAVA_TEST_JAR = string.format('%s/.config/nvim/vscode-java-test/server/*.jar', HOME)
    local JAVA_DEBUG = string.format(
       '%s/.config/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar',
       HOME
@@ -68,10 +67,7 @@ local config = {
       '-Declipse.product=org.eclipse.jdt.ls.core.product',
       '-Dlog.protocol=true',
       '-Dlog.level=ALL',
-      string.format(
-         '-javaagent:%s/.local/share/nvim/mason/packages/jdtls/lombok.jar',
-         HOME
-      ),
+      string.format('-javaagent:%s/.local/share/nvim/mason/packages/jdtls/lombok.jar', HOME),
       '-Xms1g',
       '--add-modules=ALL-SYSTEM',
       '--add-opens',
@@ -82,10 +78,7 @@ local config = {
       -- 💀
       '-jar',
       vim.fn.glob(
-         string.format(
-            '%s/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar',
-            HOME
-         )
+         string.format('%s/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar', HOME)
       ),
       -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
       -- Must point to the                                                     Change this to
@@ -93,11 +86,7 @@ local config = {
 
       -- 💀
       '-configuration',
-      string.format(
-         '%s/.local/share/nvim/mason/packages/jdtls/config_%s',
-         HOME,
-         CONFIG
-      ),
+      string.format('%s/.local/share/nvim/mason/packages/jdtls/config_%s', HOME, CONFIG),
       -- Must point to the                      Change to one of `linux`, `win` or `mac`
       -- eclipse.jdt.ls installation            Depending on your system.
 
@@ -211,9 +200,7 @@ vim.cmd(
 vim.cmd(
    "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
 )
-vim.cmd(
-   "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()"
-)
+vim.cmd("command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()")
 -- vim.cmd "command! -buffer JdtJol lua require('jdtls').jol()"
 vim.cmd("command! -buffer JdtBytecode lua require('jdtls').javap()")
 -- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"

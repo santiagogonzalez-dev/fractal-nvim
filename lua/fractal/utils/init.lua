@@ -14,10 +14,7 @@ end
 function utils.not_interfere_on_float()
    map(vim.api.nvim_tabpage_list_wins(0), function(_, winid)
       if vim.api.nvim_win_get_config(winid).zindex then
-         vim.notify(
-            'There is a floating window open already',
-            vim.log.levels.WARN
-         )
+         vim.notify('There is a floating window open already', vim.log.levels.WARN)
          return false
       end
    end)
@@ -44,8 +41,7 @@ function utils.is_empty(str) return str == '' or str == nil end
 -- Check if the working directory is under git managment
 ---@return boolean
 function utils.is_git()
-   local is_git =
-      vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
+   local is_git = vim.api.nvim_exec('!git rev-parse --is-inside-work-tree', true)
 
    if is_git:match('true') then
       vim.cmd.doautocmd('User IsGit')
@@ -93,18 +89,12 @@ utils.AVOID_FILETYPES = {
 -- If the filetype of the buffer is in the list `utils.AVOID_FILETYPES` this
 -- function will return true.
 ---@return boolean
-function utils.avoid_filetype()
-   return utils.present_in_table(vim.bo.filetype, utils.AVOID_FILETYPES)
-end
+function utils.avoid_filetype() return utils.present_in_table(vim.bo.filetype, utils.AVOID_FILETYPES) end
 
 -- Highlight utils.
 -- TODO(santigo-zero): Move this to a standalone file.
-function utils.get_fg_hl(hl_group)
-   return vim.api.nvim_get_hl_by_name(hl_group, true).foreground
-end
-function utils.get_bg_hl(hl_group)
-   return vim.api.nvim_get_hl_by_name(hl_group, true).background
-end
+function utils.get_fg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).foreground end
+function utils.get_bg_hl(hl_group) return vim.api.nvim_get_hl_by_name(hl_group, true).background end
 
 -- Find and return a json in a lua table, if it doesn't find it or it's broken
 -- it will return false.
@@ -114,8 +104,7 @@ function utils.get_json(path)
    local find = utils.readable(path)
    if not find then return false end
 
-   local ok, LIB =
-      pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
+   local ok, LIB = pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
    return ok and LIB or false
 end
 
@@ -123,11 +112,7 @@ end
 -- utils.is_installed('opt/packer.nvim') utils.is_installed('start/packer.nvim')
 ---@return boolean
 function utils.is_installed(plugin_name)
-   local plugin_path = string.format(
-      '%s/site/pack/packer/%s',
-      vim.fn.stdpath('data'),
-      plugin_name
-   )
+   local plugin_path = string.format('%s/site/pack/packer/%s', vim.fn.stdpath('data'), plugin_name)
    -- print(plugin_path)
    return vim.fn.isdirectory(plugin_path) ~= 0
 end
@@ -135,9 +120,7 @@ end
 -- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
-function utils.string_indentation(indented_string)
-   return #indented_string - #string.match(indented_string, '^%s*(.*)')
-end
+function utils.string_indentation(indented_string) return #indented_string - #string.match(indented_string, '^%s*(.*)') end
 
 -- This function takes the value of each elements in a table and returns the
 -- total sum of all this values.
@@ -153,10 +136,7 @@ end
 
 function utils.readable(filepath)
    local stat = vim.uv.fs_stat(filepath)
-   return stat
-      and stat.type == 'file'
-      and stat.mode
-      and bit.band(stat.mode, 292) > 0
+   return stat and stat.type == 'file' and stat.mode and bit.band(stat.mode, 292) > 0
 end
 
 -- Wrapper around `vim.fn.filewritable`.

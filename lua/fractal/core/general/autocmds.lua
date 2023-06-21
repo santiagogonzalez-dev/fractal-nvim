@@ -14,9 +14,7 @@ vim.api.nvim_create_autocmd('FocusGained', {
 vim.api.nvim_create_autocmd('FileChangedShellPost', {
    desc = 'Actions when the file is changed outside of Neovim',
    group = session_opts,
-   callback = function()
-      vim.notify('File changed, reloading the buffer', vim.log.levels.WARN)
-   end,
+   callback = function() vim.notify('File changed, reloading the buffer', vim.log.levels.WARN) end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -50,9 +48,7 @@ vim.api.nvim_create_autocmd('FileType', {
    desc = 'Quit with q in this filetypes',
    group = buffer_settings,
    pattern = { 'help', 'lspinfo', 'man', 'netrw', 'qf' },
-   callback = function()
-      vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 })
-   end,
+   callback = function() vim.keymap.set('n', 'q', '<CMD>close<CR>', { buffer = 0 }) end,
 })
 
 -- Quit! with q! in this filetypes
@@ -111,10 +107,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight on yank',
    group = session_opts,
-   callback = wrap(
-      vim.highlight.on_yank,
-      { higroup = 'Visual', timeout = 600 }
-   ),
+   callback = wrap(vim.highlight.on_yank, { higroup = 'Visual', timeout = 600 }),
 })
 
 -- Disable mouse in insert mode
