@@ -14,6 +14,7 @@ local SERVERS = {
    'lua_ls',
    'svelte',
    'tsserver',
+   'marksman',
 }
 
 require('mason').setup()
