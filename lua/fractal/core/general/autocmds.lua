@@ -1,6 +1,7 @@
 local wrap = require('fractal.utils').wrap
 local blink_crosshair = require('fractal.utils').blink_crosshair
 local readable = require('fractal.utils').readable
+
 local session_opts = vim.api.nvim_create_augroup('session_opts', {})
 
 vim.api.nvim_create_autocmd('Filetype', {

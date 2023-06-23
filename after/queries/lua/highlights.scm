@@ -80,58 +80,58 @@
 ;   (#set! conceal "U")
 ; )
 
-(
-  (dot_index_expression) @keyword
-    (#eq? @keyword  "vim.keymap.set" )
-  (#set! conceal "襁")
-)
+; (
+;   (dot_index_expression) @keyword
+;     (#eq? @keyword  "vim.keymap.set" )
+;   (#set! conceal "襁")
+; )
 
-(
-  (dot_index_expression
-  )@keyword
-    (#eq? @keyword "vim.cmd" )
-  (#set! conceal "")
-)
+; (
+;   (dot_index_expression
+;   )@keyword
+;     (#eq? @keyword "vim.cmd" )
+;   (#set! conceal "")
+; )
 
-(
-  (dot_index_expression
-  )@keyword
-    (#eq? @keyword  "vim.keymap.set" )
-  (#set! conceal "")
-)
+; (
+;   (dot_index_expression
+;   )@keyword
+;     (#eq? @keyword  "vim.keymap.set" )
+;   (#set! conceal "")
+; )
 
-(
-  (dot_index_expression
-  )@keyword
-    (#eq? @keyword  "vim.api.nvim_set_hl" )
-  (#set! conceal "󰉼")
-)
+; (
+;   (dot_index_expression
+;   )@keyword
+;     (#eq? @keyword  "vim.api.nvim_set_hl" )
+;   (#set! conceal "󰉼")
+; )
 
-(
-  (dot_index_expression
-  )@variable
-    (#eq? @keyword  "vim.api.nvim_exec_autocmds" )
-  (#set! conceal "")
-)
+; (
+;   (dot_index_expression
+;   )@variable
+;     (#eq? @keyword  "vim.api.nvim_exec_autocmds" )
+;   (#set! conceal "")
+; )
 
-(
- (dot_index_expression) @function
- (#eq? @function  "vim.api.nvim_create_autocmd" )
- (#set! conceal "ﯠ")
- )
+; (
+;  (dot_index_expression) @function
+;  (#eq? @function  "vim.api.nvim_create_autocmd" )
+;  (#set! conceal "ﯠ")
+;  )
 
 (("return" @keyword.return) (#set! "priority" 130))
-(("return" @keyword) (#set! conceal ""))
-(("then" @keyword) (#set! conceal ""))
+; (("return" @keyword) (#set! conceal ""))
+; (("then" @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal ""))
-(("not" @operator) (#set! conceal ""))
-(("if" @conditional) (#set! conceal ""))
-(("for" @repeat) (#set! conceal ""))
-(("while" @repeat) (#set! conceal "∞"))
-(("==" @operator) (#set! conceal ""))
-(("<=" @operator) (#set! conceal ""))
-((">=" @operator) (#set! conceal ""))
-(("~=" @operator) (#set! conceal ""))
+; (("not" @operator) (#set! conceal ""))
+; (("if" @conditional) (#set! conceal ""))
+; (("for" @repeat) (#set! conceal ""))
+; (("while" @repeat) (#set! conceal "∞"))
+; (("==" @operator) (#set! conceal ""))
+; (("<=" @operator) (#set! conceal ""))
+; ((">=" @operator) (#set! conceal ""))
+; (("~=" @operator) (#set! conceal ""))
 
 ; ; for -> circle arrow
 ; (

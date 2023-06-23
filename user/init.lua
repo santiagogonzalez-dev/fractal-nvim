@@ -115,14 +115,14 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
    end,
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-   callback = function()
-      vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
-      vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
-      vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
-      vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
-   end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--    callback = function()
+--       vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
+--       vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
+--       vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
+--       vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
+--    end,
+-- })
 
 vim.api.nvim_create_user_command('FoldMarkdown', function()
    local current_line = vim.fn.line('.') -- Get current line number
@@ -144,9 +144,26 @@ vim.api.nvim_create_autocmd('BufWritePre', {
    command = 'Format',
 })
 
-vim.keymap.set('n', '<Leader>te', function()
-   vim.ui.input(
-      { prompt = 'Enter value for shiftwidth: ' },
-      function(input) vim.o.shiftwidth = tonumber(input) end
-   )
-end)
+local function tabOut()
+   local closers = { ')', ']', '}', '>', "'", '"', '`', ',' }
+   local line = vim.api.nvim_get_current_line()
+   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+   local after = line:sub(col + 1, -1)
+   local closer_col = #after + 1
+   local closer_i = nil
+   for i, closer in ipairs(closers) do
+      local cur_index, _ = after:find(closer)
+      if cur_index and (cur_index < closer_col) then
+         closer_col = cur_index
+         closer_i = i
+      end
+   end
+
+   if closer_i then
+      vim.api.nvim_win_set_cursor(0, { row, col + closer_col })
+   else
+      vim.api.nvim_win_set_cursor(0, { row, col + 1 })
+   end
+end
+
+vim.keymap.set('i', '<C-l>', tabOut, { noremap = true, silent = true })

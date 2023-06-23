@@ -7,7 +7,6 @@ vim.opt.spellsuggest = 'best'
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.swapfile = false
-vim.opt.foldopen = vim.opt.foldopen - 'search'
 vim.opt.synmaxcol = 160
 vim.opt.conceallevel = 2
 vim.opt.timeoutlen = 600
