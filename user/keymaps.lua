@@ -76,6 +76,7 @@ vim.keymap.set(
 )
 
 vim.keymap.set('n', "'", '`', { desc = "Swap ' with `" })
+vim.keymap.set('n', "''", '`^')
 vim.keymap.set('n', '`', "'", { desc = "Swap ` with '" })
 
 vim.keymap.set({ 'n', 'v', 'x' }, ';', ':', { desc = 'Swap ; with :' })
