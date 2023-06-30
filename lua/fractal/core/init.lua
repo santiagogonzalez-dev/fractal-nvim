@@ -9,11 +9,11 @@ require('fractal.core.general.autocmds')
 
 -- Include ./user files in the path
 package.path = package.path
-   .. ';'
-   .. ROOT
-   .. '/user/?.lua;'
-   .. ROOT
-   .. '/user/?/init.lua;'
+	.. ';'
+	.. ROOT
+	.. '/user/?.lua;'
+	.. ROOT
+	.. '/user/?/init.lua;'
 
 dofile(ROOT .. '/user/init.lua') -- Require ./user/init.lua
 

@@ -1,7 +1,7 @@
 vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.expandtab = true
-vim.opt.spelllang = 'en,cjk'
+vim.opt.spelllang = 'en,es,de,cjk'
 vim.opt.spelloptions = 'camel,noplainbuffer'
 vim.opt.spellsuggest = 'best'
 vim.opt.splitbelow = true

@@ -7,9 +7,9 @@ vim.opt.tabstop = 4 -- Tab length
 ---@param func function
 ---@return table
 map = function(tbl, func)
-   local T = {}
-   for k, v in pairs(tbl) do
-      T[k] = func(k, v)
-   end
-   return T
+	local T = {}
+	for k, v in pairs(tbl) do
+		T[k] = func(k, v)
+	end
+	return T
 end
