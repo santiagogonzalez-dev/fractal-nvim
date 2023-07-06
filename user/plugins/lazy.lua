@@ -189,7 +189,7 @@ local plugins = {
 	-- JetJBP colorscheme
 	{
 		-- url = "santigo-zero/jetjbp.nvim",
-		dir = '~/workspace/repositories/jetjbp.nvim',
+		dir = '~/workspace/repos/jetjbp.nvim',
 		dev = true,
 		lazy = true,
 		-- config = function()

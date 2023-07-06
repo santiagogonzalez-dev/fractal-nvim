@@ -37,45 +37,38 @@ vim.opt.fillchars:append({
 
 vim.opt.listchars:append({
 	-- eol = '↴', -- ↪ ↲ ⏎ 
-	space = '·',
+	-- space = '·',
 	extends = '◣',
 	nbsp = '␣',
 	precedes = '◢',
 	multispace = '󱦰  ',
 	tab = '󱦰  ',
-	leadmultispace = '!··',
+	leadmultispace = '󱦰   ',
 	trail = '█', -- · ␣
 })
 
 -- Ensure this settings persist in all buffers
-function _G.all_buffers_settings()
-	vim.opt.iskeyword = '@,48-57,192-255'
+-- function _G.all_buffers_settings()
+vim.opt.iskeyword = '@,48-57,192-255'
 
-	vim.opt.formatoptions = vim.opt.formatoptions
-		+ 'r' -- If the line is a comment insert another one below when hitting <CR>
-		+ 'c' -- Wrap comments at the char defined in textwidth
-		+ 'q' -- Allow formatting comments with gq
-		+ 'j' -- Remove comment leader when joining lines when possible
-		- 'o' -- Don't continue comments after o/O
-		- 'l' -- Format in insert mode if the line is longer than textwidth
+vim.opt.formatoptions = vim.opt.formatoptions
+	+ 'r' -- If the line is a comment insert another one below when hitting <CR>
+	+ 'c' -- Wrap comments at the char defined in textwidth
+	+ 'q' -- Allow formatting comments with gq
+	+ 'j' -- Remove comment leader when joining lines when possible
+	- 'o' -- Don't continue comments after o/O
+	- 'l' -- Format in insert mode if the line is longer than textwidth
 
-	vim.opt.cpoptions = vim.opt.cpoptions + 'n' -- Show `showbreak` icon in the number column
-end
+vim.opt.cpoptions = vim.opt.cpoptions + 'n' -- Show `showbreak` icon in the number column
+-- end
 
-vim.schedule(function()
-	vim.api.nvim_create_autocmd({ 'UIEnter', 'BufEnter' }, {
-		group = 'session_opts',
-		callback = _G.all_buffers_settings,
-	})
-	_G.all_buffers_settings()
-end)
-
-local _enable_spell = vim.api.nvim_create_augroup('_enable_spell', {})
-vim.api.nvim_create_autocmd({ 'InsertEnter', 'InsertLeave' }, {
-	desc = 'Enable spelling in insert mode',
-	group = _enable_spell,
-	callback = function() vim.opt_local.spell = not vim.opt_local.spell:get() end,
-})
+-- vim.schedule(function()
+-- 	vim.api.nvim_create_autocmd({ 'UIEnter', 'BufEnter' }, {
+-- 		group = 'session_opts',
+-- 		callback = _G.all_buffers_settings,
+-- 	})
+-- 	_G.all_buffers_settings()
+-- end)
 
 -- Extra whitespaces will be highlighted
 vim.fn.matchadd('ErrorMsg', '\\s\\+$')
@@ -141,9 +134,9 @@ end, {})
 --    end,
 -- })
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-	command = 'Format',
-})
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+-- 	command = 'Format',
+-- })
 
 local function tabOut()
 	local closers = { ')', ']', '}', '>', "'", '"', '`', ',' }

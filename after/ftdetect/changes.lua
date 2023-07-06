@@ -1,6 +1,7 @@
 vim.filetype.add({
 	extension = {
 		conf = 'dosini',
+		config = 'dosini',
 		dirs = 'dosini',
 		dosinit = 'conf',
 		postcss = 'css',
