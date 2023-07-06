@@ -8,8 +8,8 @@ local folds = {
 ---@return string
 function folds.foldtext_header()
 	local AVOID = {
-		import = 'imports',
-		from = 'imports',
+		import = "imports",
+		from = "imports",
 	}
 	local header_fold =
 		vim.api.nvim_buf_get_lines(0, vim.v.foldstart - 1, vim.v.foldstart, false)
@@ -19,28 +19,28 @@ function folds.foldtext_header()
 	end
 
 	local clean_string = header_fold[1]
-		:gsub('%(%)', '')
-		:gsub('%{', '')
-		:gsub('%=', '')
-		:gsub('%:', ' ')
+		:gsub("%(%)", "")
+		:gsub("%{", "")
+		:gsub("%=", "")
+		:gsub("%:", " ")
 
 	return clean_string
 end
 
 function folds.setup()
 	-- Fold settings
-	vim.opt.jumpoptions = 'stack,view'
+	vim.opt.jumpoptions = "stack,view"
 	vim.wo.foldtext = 'v:lua.require("fractal.modules.folds").foldtext_header()'
-	vim.wo.foldcolumn = 'auto:3' -- Folds column
-	vim.wo.foldmethod = 'manual'
+	vim.wo.foldcolumn = "auto:3" -- Folds column
+	vim.wo.foldmethod = "manual"
 	-- vim.opt.foldmethod = 'expr'
 	-- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-	vim.opt.foldopen = vim.opt.foldopen - 'search'
+	vim.opt.foldopen = vim.opt.foldopen - "search"
 
 	vim.opt.fillchars:append({
-		fold = '─',
-		foldclose = '󰅂',
-		foldopen = '󰅀',
+		fold = "─",
+		foldclose = "󰅂",
+		foldopen = "󰅀",
 	})
 end
 

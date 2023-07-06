@@ -15,7 +15,7 @@ return {
 	},
 
 	filetypes = {
-		'svelte',
-		'css',
+		"svelte",
+		"css",
 	},
 }

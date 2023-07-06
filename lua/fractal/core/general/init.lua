@@ -1,4 +1,4 @@
-require('fractal.core.general.autocmds')
+require("fractal.core.general.autocmds")
 
 -- Default tab size
 vim.opt.shiftwidth = 2 -- Size of a > or < when indenting

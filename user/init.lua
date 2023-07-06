@@ -1,12 +1,12 @@
-require('keymaps')
-require('plugins')
+require("keymaps")
+require("plugins")
 -- require('settings')
-vim.defer_fn(function() require('settings') end, 00)
+vim.defer_fn(function() require("settings") end, 00)
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
-	eob = '␃',
-	msgsep = '🮑', -- Separator for cmdline
+	eob = "␃",
+	msgsep = "🮑", -- Separator for cmdline
 })
 
 vim.opt.fillchars:append({
@@ -18,13 +18,13 @@ vim.opt.fillchars:append({
 	-- vertright = '┣',
 	-- verthoriz = '╋',
 
-	horiz = '─',
-	horizup = '┴',
-	horizdown = '┬',
-	vert = '│',
-	vertleft = '┤',
-	vertright = '├',
-	verthoriz = '┼',
+	horiz = "─",
+	horizup = "┴",
+	horizdown = "┬",
+	vert = "│",
+	vertleft = "┤",
+	vertright = "├",
+	verthoriz = "┼",
 
 	-- horiz = ' ',
 	-- horizup = ' ',
@@ -38,28 +38,28 @@ vim.opt.fillchars:append({
 vim.opt.listchars:append({
 	-- eol = '↴', -- ↪ ↲ ⏎ 
 	-- space = '·',
-	extends = '◣',
-	nbsp = '␣',
-	precedes = '◢',
-	multispace = '󱦰  ',
-	tab = '󱦰  ',
-	leadmultispace = '󱦰   ',
-	trail = '█', -- · ␣
+	extends = "◣",
+	nbsp = "␣",
+	precedes = "◢",
+	multispace = "󱦰  ",
+	tab = "󱦰  ",
+	leadmultispace = "󱦰   ",
+	trail = "█", -- · ␣
 })
 
 -- Ensure this settings persist in all buffers
 -- function _G.all_buffers_settings()
-vim.opt.iskeyword = '@,48-57,192-255'
+vim.opt.iskeyword = "@,48-57,192-255"
 
 vim.opt.formatoptions = vim.opt.formatoptions
-	+ 'r' -- If the line is a comment insert another one below when hitting <CR>
-	+ 'c' -- Wrap comments at the char defined in textwidth
-	+ 'q' -- Allow formatting comments with gq
-	+ 'j' -- Remove comment leader when joining lines when possible
-	- 'o' -- Don't continue comments after o/O
-	- 'l' -- Format in insert mode if the line is longer than textwidth
+	+ "r" -- If the line is a comment insert another one below when hitting <CR>
+	+ "c" -- Wrap comments at the char defined in textwidth
+	+ "q" -- Allow formatting comments with gq
+	+ "j" -- Remove comment leader when joining lines when possible
+	- "o" -- Don't continue comments after o/O
+	- "l" -- Format in insert mode if the line is longer than textwidth
 
-vim.opt.cpoptions = vim.opt.cpoptions + 'n' -- Show `showbreak` icon in the number column
+vim.opt.cpoptions = vim.opt.cpoptions + "n" -- Show `showbreak` icon in the number column
 -- end
 
 -- vim.schedule(function()
@@ -71,40 +71,40 @@ vim.opt.cpoptions = vim.opt.cpoptions + 'n' -- Show `showbreak` icon in the numb
 -- end)
 
 -- Extra whitespaces will be highlighted
-vim.fn.matchadd('ErrorMsg', '\\s\\+$')
+vim.fn.matchadd("ErrorMsg", "\\s\\+$")
 
 vim.api.nvim_create_user_command(
-	'EvalYankRegister',
+	"EvalYankRegister",
 	function() vim.cmd.lua(vim.fn.getreg('"')) end,
 	{}
 )
 
 vim.api.nvim_create_autocmd(
-	{ 'WinLeave', 'BufLeave', 'FocusLost', 'InsertLeave' },
+	{ "WinLeave", "BufLeave", "FocusLost", "InsertLeave" },
 	{
 		callback = function()
 			if
 				vim.bo.modified
 				and not vim.bo.readonly
-				and vim.fn.expand('%') ~= ''
-				and vim.bo.buftype == ''
+				and vim.fn.expand("%") ~= ""
+				and vim.bo.buftype == ""
 			then
-				vim.api.nvim_command('silent update')
+				vim.api.nvim_command("silent update")
 			end
 		end,
 	}
 )
 
-vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
-	desc = 'Auto save',
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
+	desc = "Auto save",
 	callback = function()
 		if
 			vim.bo.modified
 			and not vim.bo.readonly
-			and vim.fn.expand('%') ~= ''
-			and vim.bo.buftype == ''
+			and vim.fn.expand("%") ~= ""
+			and vim.bo.buftype == ""
 		then
-			vim.api.nvim_command('silent update')
+			vim.api.nvim_command("silent update")
 		end
 	end,
 })
@@ -118,13 +118,13 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
 --    end,
 -- })
 
-vim.api.nvim_create_user_command('FoldMarkdown', function()
-	local current_line = vim.fn.line('.') -- Get current line number
-	local next_header = vim.fn.search('^#', 'Wn') -- Search for the next header
+vim.api.nvim_create_user_command("FoldMarkdown", function()
+	local current_line = vim.fn.line(".") -- Get current line number
+	local next_header = vim.fn.search("^#", "Wn") -- Search for the next header
 
 	-- If a next header is found, fold from current line to the line before the next header
 	if next_header > 0 then
-		vim.cmd(string.format('%d,%dfold', current_line, next_header - 2))
+		vim.cmd(string.format("%d,%dfold", current_line, next_header - 2))
 	end
 end, {})
 
@@ -139,7 +139,7 @@ end, {})
 -- })
 
 local function tabOut()
-	local closers = { ')', ']', '}', '>', "'", '"', '`', ',' }
+	local closers = { ")", "]", "}", ">", "'", '"', "`", "," }
 	local line = vim.api.nvim_get_current_line()
 	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
 	local after = line:sub(col + 1, -1)
@@ -160,4 +160,4 @@ local function tabOut()
 	end
 end
 
-vim.keymap.set('i', '<C-l>', tabOut, { noremap = true, silent = true })
+vim.keymap.set("i", "<C-l>", tabOut, { noremap = true, silent = true })

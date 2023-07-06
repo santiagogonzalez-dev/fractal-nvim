@@ -7,35 +7,35 @@ return {
 			},
 			hint = {
 				enable = true,
-				arrayIndex = 'Auto', -- 'Enable', 'Auto', 'Disable'
+				arrayIndex = "Auto", -- 'Enable', 'Auto', 'Disable'
 				await = true,
-				paramName = 'Disable', --'All', 'SameLine', 'Disable'
+				paramName = "Disable", --'All', 'SameLine', 'Disable'
 				paramType = true,
-				semicolon = 'Disable', -- 'All', 'SameLine', 'Disable'
+				semicolon = "Disable", -- 'All', 'SameLine', 'Disable'
 				setType = false,
 			},
 			diagnostics = {
 				globals = {
-					'vim',
-					'map', -- See my own implementation of map at `fractal.core.general`
+					"vim",
+					"map", -- See my own implementation of map at `fractal.core.general`
 				},
 			},
 			completion = {
-				keywordSnippet = 'Both',
-				callSnippet = 'Both',
+				keywordSnippet = "Both",
+				callSnippet = "Both",
 			},
 			runtime = {
-				version = 'LuaJIT',
+				version = "LuaJIT",
 				special = {
-					reload = 'require',
+					reload = "require",
 				},
 			},
 			workspace = {
 				library = {
-					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
-					[vim.fn.stdpath('config') .. '/lua'] = true,
-					[vim.fn.stdpath('config') .. '/user'] = true,
-					['/home/st/.local/share/nvim/mason/packages/lua-lan guage-server/libexec/meta/5393ac01'] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.stdpath("config") .. "/lua"] = true,
+					[vim.fn.stdpath("config") .. "/user"] = true,
+					["/home/st/.local/share/nvim/mason/packages/lua-lan guage-server/libexec/meta/5393ac01"] = true,
 				},
 			},
 			telemetry = {
