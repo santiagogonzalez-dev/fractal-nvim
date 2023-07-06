@@ -281,7 +281,7 @@ vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>")
 
 vim.keymap.set("n", "<A-t>", function()
 	vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 2 and 0 or 2
-	vim.lsp.buf.inlay_hint(0, nil)
+	vim.lsp.inlay_hint(0, nil)
 end)
 
 vim.keymap.set("c", "q!", "<CMD>q!<CR>")

@@ -128,16 +128,6 @@ vim.api.nvim_create_user_command("FoldMarkdown", function()
 	end
 end, {})
 
--- vim.api.nvim_create_autocmd('InsertLeave', {
---    callback = function()
---       vim.lsp.buf.format({ async = true })
---    end,
--- })
-
--- vim.api.nvim_create_autocmd('BufWritePre', {
--- 	command = 'Format',
--- })
-
 local function tabOut()
 	local closers = { ")", "]", "}", ">", "'", '"', "`", "," }
 	local line = vim.api.nvim_get_current_line()
@@ -161,3 +151,10 @@ local function tabOut()
 end
 
 vim.keymap.set("i", "<C-l>", tabOut, { noremap = true, silent = true })
+
+vim.defer_fn(function()
+	vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
+	vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
+	vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
+	vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
+end, 600)
