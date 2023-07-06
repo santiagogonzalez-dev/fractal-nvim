@@ -17,4 +17,4 @@ package.path = table.concat({
 dofile(ROOT .. "/user/init.lua") -- Require ./user/init.lua
 
 local fractal_config = get_json(ROOT .. "/user/fractal.json")
-setup(fractal_config)
+if fractal_config then setup(fractal_config) end

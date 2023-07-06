@@ -11,18 +11,14 @@ function folds.foldtext_header()
 		import = "imports",
 		from = "imports",
 	}
-	local header_fold =
-		vim.api.nvim_buf_get_lines(0, vim.v.foldstart - 1, vim.v.foldstart, false)
+	local header_fold = vim.api.nvim_buf_get_lines(0, vim.v.foldstart - 1, vim.v.foldstart, false)
 
 	for key, header in pairs(AVOID) do
 		if header_fold[1]:match(key) then return header end
 	end
 
-	local clean_string = header_fold[1]
-		:gsub("%(%)", "")
-		:gsub("%{", "")
-		:gsub("%=", "")
-		:gsub("%:", " ")
+	local clean_string =
+		header_fold[1]:gsub("%(%)", ""):gsub("%{", ""):gsub("%=", ""):gsub("%:", " ")
 
 	return clean_string
 end

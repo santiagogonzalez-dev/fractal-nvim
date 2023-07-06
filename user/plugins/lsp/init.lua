@@ -35,9 +35,7 @@ for _, server in pairs(SERVERS) do
 	if server ~= "jdtls" then
 		local has_opts, custom_opts =
 			pcall(require, string.format("%s.%s", "plugins.lsp.settings", server))
-		if has_opts then
-			opts = vim.tbl_deep_extend("force", custom_opts, opts)
-		end
+		if has_opts then opts = vim.tbl_deep_extend("force", custom_opts, opts) end
 
 		lspconfig[server].setup(opts)
 	end

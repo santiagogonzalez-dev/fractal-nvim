@@ -79,21 +79,18 @@ vim.api.nvim_create_user_command(
 	{}
 )
 
-vim.api.nvim_create_autocmd(
-	{ "WinLeave", "BufLeave", "FocusLost", "InsertLeave" },
-	{
-		callback = function()
-			if
-				vim.bo.modified
-				and not vim.bo.readonly
-				and vim.fn.expand("%") ~= ""
-				and vim.bo.buftype == ""
-			then
-				vim.api.nvim_command("silent update")
-			end
-		end,
-	}
-)
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost", "InsertLeave" }, {
+	callback = function()
+		if
+			vim.bo.modified
+			and not vim.bo.readonly
+			and vim.fn.expand("%") ~= ""
+			and vim.bo.buftype == ""
+		then
+			vim.api.nvim_command("silent update")
+		end
+	end,
+})
 
 vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
 	desc = "Auto save",
@@ -109,26 +106,15 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
 	end,
 })
 
--- vim.api.nvim_create_autocmd('BufEnter', {
---    callback = function()
---       vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
---       vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
---       vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
---       vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
---    end,
--- })
-
 vim.api.nvim_create_user_command("FoldMarkdown", function()
 	local current_line = vim.fn.line(".") -- Get current line number
 	local next_header = vim.fn.search("^#", "Wn") -- Search for the next header
 
 	-- If a next header is found, fold from current line to the line before the next header
-	if next_header > 0 then
-		vim.cmd(string.format("%d,%dfold", current_line, next_header - 2))
-	end
+	if next_header > 0 then vim.cmd(string.format("%d,%dfold", current_line, next_header - 2)) end
 end, {})
 
-local function tabOut()
+local function tab_out()
 	local closers = { ")", "]", "}", ">", "'", '"', "`", "," }
 	local line = vim.api.nvim_get_current_line()
 	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -150,8 +136,9 @@ local function tabOut()
 	end
 end
 
-vim.keymap.set("i", "<C-l>", tabOut, { noremap = true, silent = true })
+vim.keymap.set("i", "<C-l>", tab_out, { noremap = true, silent = true })
 
+-- Hide quotes and square brackets
 vim.defer_fn(function()
 	vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
 	vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])

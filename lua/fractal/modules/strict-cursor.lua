@@ -15,10 +15,7 @@ function M.strict_h_motion()
 		-- The reason why we feed `h` in here is because you could be using
 		-- vim.opt.whichwrap with h, making the line jump to the line above
 		return vim.api.nvim_feedkeys("h", "n", "v:true")
-	elseif
-		cursor_position[2]
-		<= utils.string_indentation(vim.api.nvim_get_current_line())
-	then
+	elseif cursor_position[2] <= utils.string_indentation(vim.api.nvim_get_current_line()) then
 		-- Each time you press h at the start (^) of the line you'll move with the
 		-- tabstop value
 		local status, _ = pcall(

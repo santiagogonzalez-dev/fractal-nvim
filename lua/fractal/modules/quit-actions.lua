@@ -20,9 +20,7 @@ function M.setup(mapping)
 			if choice == "Keep current" then
 				for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 					if vim.api.nvim_buf_is_valid(buf) then
-						if buf ~= vim.api.nvim_get_current_buf() then
-							vim.api.nvim_buf_delete(buf, {})
-						end
+						if buf ~= vim.api.nvim_get_current_buf() then vim.api.nvim_buf_delete(buf, {}) end
 					end
 				end
 			elseif choice == "Unload all buffers" then

@@ -9,47 +9,22 @@ local dead_keys = vim.iter({
 	"<Space>",
 	"<Up>",
 })
-dead_keys:map(
-	function(value) vim.keymap.set({ "n", "v", "x" }, value, "<Nop>") end
-)
+dead_keys:map(function(value) vim.keymap.set({ "n", "v", "x" }, value, "<Nop>") end)
 
-local break_points =
-	vim.iter({ "!", ",", "-", ".", "<CR>", "<Space>", "=", "?", "_" })
+local break_points = vim.iter({ "!", ",", "-", ".", "<CR>", "<Space>", "=", "?", "_" })
 break_points:map(
-	function(value)
-		vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u"))
-	end
+	function(value) vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u")) end
 )
 
 -- Remap space as leader key
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
-vim.keymap.set(
-	"n",
-	"<C-n>",
-	vim.cmd.bnext,
-	{ desc = "Switch to next buffer", silent = true }
-)
-vim.keymap.set(
-	"n",
-	"<C-p>",
-	vim.cmd.bprevious,
-	{ desc = "Switch to prev buffer", silent = true }
-)
+vim.keymap.set("n", "<C-n>", vim.cmd.bnext, { desc = "Switch to next buffer", silent = true })
+vim.keymap.set("n", "<C-p>", vim.cmd.bprevious, { desc = "Switch to prev buffer", silent = true })
 
-vim.keymap.set(
-	"n",
-	"<Tab>",
-	vim.cmd.bnext,
-	{ desc = "Switch to next buffer", silent = true }
-)
-vim.keymap.set(
-	"n",
-	"<S-Tab>",
-	vim.cmd.bprevious,
-	{ desc = "Switch to prev buffer", silent = true }
-)
+vim.keymap.set("n", "<Tab>", vim.cmd.bnext, { desc = "Switch to next buffer", silent = true })
+vim.keymap.set("n", "<S-Tab>", vim.cmd.bprevious, { desc = "Switch to prev buffer", silent = true })
 
 vim.g.last_accessed_buffer = false
 vim.keymap.set("n", "g<Tab>", function()
@@ -62,12 +37,7 @@ vim.keymap.set("n", "g<Tab>", function()
 	end
 end, { desc = "Switch between two buffers" })
 
-vim.keymap.set(
-	"n",
-	"<Leader>ps",
-	vim.cmd.PackerSync,
-	{ desc = "Packer: PackerSync" }
-)
+vim.keymap.set("n", "<Leader>ps", vim.cmd.PackerSync, { desc = "Packer: PackerSync" })
 vim.keymap.set(
 	"n",
 	"<Leader>pc",
@@ -83,12 +53,7 @@ vim.keymap.set({ "n", "v", "x" }, ";", ":", { desc = "Swap ; with :" })
 vim.keymap.set({ "n", "v", "x" }, ":", ";", { desc = "Swap : with ;" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Center J" })
-vim.keymap.set(
-	"n",
-	"K",
-	"i<CR><ESC>",
-	{ desc = "Normal <CR> behaviour, opposite to J" }
-)
+vim.keymap.set("n", "K", "i<CR><ESC>", { desc = "Normal <CR> behaviour, opposite to J" })
 
 vim.keymap.set("n", "<A-n>", vim.cmd.nohlsearch, {
 	desc = "Disable highlight",
@@ -98,12 +63,7 @@ vim.keymap.set({ "n", "v" }, "$", "g_", {
 	desc = "Better $, behaves as expected",
 })
 
-vim.keymap.set(
-	"n",
-	"gvp",
-	"'`[' . strpart(getregtype(), 0, 1) . '`]'",
-	{ expr = true }
-)
+vim.keymap.set("n", "gvp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true })
 
 vim.keymap.set("n", "cg*", "*Ncgn", {
 	desc = "Find and replace next match of the word under cursor",
@@ -120,8 +80,7 @@ vim.keymap.set({ "n", "x", "o" }, "N", '"nN"[v:searchforward]', {
 })
 
 vim.keymap.set("n", "dD", function()
-	local indentation = utils.string_indentation(vim.api.nvim_get_current_line())
-		+ 1
+	local indentation = utils.string_indentation(vim.api.nvim_get_current_line()) + 1
 	vim.api.nvim_feedkeys("0D", "n", "v:false")
 	vim.api.nvim_feedkeys(string.format("%s|", indentation), "n", "v:false")
 end, {
@@ -135,12 +94,7 @@ vim.keymap.set(
 	{ desc = "Paste without overriding the paste register" }
 )
 
-vim.keymap.set(
-	"n",
-	"y<Leader>",
-	"yy",
-	{ desc = "Use leader key, avoid double taps" }
-)
+vim.keymap.set("n", "y<Leader>", "yy", { desc = "Use leader key, avoid double taps" })
 
 vim.keymap.set(
 	"n",
@@ -161,9 +115,7 @@ vim.keymap.set(
 vim.keymap.set(
 	"n",
 	"dd",
-	function()
-		return vim.api.nvim_get_current_line():match("^%s*$") and '"_dd' or "dd"
-	end,
+	function() return vim.api.nvim_get_current_line():match("^%s*$") and '"_dd' or "dd" end,
 	{
 		desc = "If the line is blank(empty, or whitespace) do not override the delete register",
 		noremap = true,
@@ -180,19 +132,9 @@ vim.keymap.set("n", "<C-Down>", ":resize -1<CR>", {
 	desc = "Resize windows",
 })
 
-vim.keymap.set(
-	"n",
-	"<C-Left>",
-	":vertical resize +1<CR>",
-	{ desc = "Resize windows" }
-)
+vim.keymap.set("n", "<C-Left>", ":vertical resize +1<CR>", { desc = "Resize windows" })
 
-vim.keymap.set(
-	"n",
-	"<C-Right>",
-	":vertical resize -1<CR>",
-	{ desc = "Resize windows" }
-)
+vim.keymap.set("n", "<C-Right>", ":vertical resize -1<CR>", { desc = "Resize windows" })
 
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", {
 	desc = "Move current block of text up and down",
@@ -258,10 +200,12 @@ vim.keymap.set("n", "<Leader>wqa", ":wqa<CR>")
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf",
 	callback = function()
-		vim.keymap.set("n", "<C-]>", function() return ":cn" end, {
-			buffer = 0,
-			desc = "Go to next item in quickfix list",
-		})
+		vim.keymap.set(
+			"n",
+			"<C-]>",
+			function() return ":cn" end,
+			{ buffer = 0, desc = "Go to next item in quickfix list" }
+		)
 
 		vim.keymap.set("n", "<C-[>", function() return ":cp" end, {
 			buffer = 0,
