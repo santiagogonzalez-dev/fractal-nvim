@@ -10,6 +10,7 @@
     "notifications": true,
     "highlight-working-line": true,
     "skeletons": true,
+    "crosshair": true,
     "status": "basic",
     "strict-cursor": "<Leader>c"
   }

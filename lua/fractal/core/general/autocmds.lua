@@ -72,29 +72,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function() vim.keymap.set("n", "q", ":q!<CR>", { buffer = 0 }) end,
 })
 
-vim.api.nvim_create_autocmd({
-	"UIEnter",
-	"BufWinEnter",
-	"BufEnter",
-	"FocusGained",
-	"WinEnter",
-}, {
-	group = buffer_settings,
-	desc = "Make the cursorline appear only on the active focused window/pan",
-	callback = function()
-		local timer, cnt, blink_times = vim.uv.new_timer(), 0, 16
-		timer:start(
-			0,
-			100,
-			vim.schedule_wrap(function()
-				vim.cmd("set cursorcolumn! cursorline!")
-				cnt = cnt + 1
-				if cnt == blink_times then timer:stop() end
-			end)
-		)
-	end,
-})
-
 vim.api.nvim_create_autocmd("BufWritePre", {
 	desc = "Trim whitespace on save",
 	group = session_opts,

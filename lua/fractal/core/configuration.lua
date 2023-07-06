@@ -112,10 +112,12 @@ function M.check(tbl)
 	return tbl.callback
 end
 
+---@param config { conditionals: boolean, modules: table, restore: boolean, colorscheme: string}
 function M.setup(config)
-	M.conditionals(config.conditionals) -- Conditions for sequential and lazy loading.
-	M.modules(config.modules) -- Load fractal modules specified by the user.
+	M.conditionals(config.conditionals)
+	M.modules(config.modules) -- Load of fractal modules.
 	M.restore_session(config.restore)
+
 	vim.cmd.colorscheme(config.colorscheme)
 	vim.cmd.doautocmd("User FractalEnd")
 end
