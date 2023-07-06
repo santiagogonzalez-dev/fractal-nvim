@@ -10,7 +10,7 @@
     "notifications": true,
     "highlight-working-line": true,
     "skeletons": true,
-    "status": "hide",
+    "status": "basic",
     "strict-cursor": "<Leader>c"
   }
 }

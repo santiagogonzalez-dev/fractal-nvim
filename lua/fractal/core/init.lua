@@ -1,19 +1,18 @@
-vim.loader.enable()
+require('fractal.core.general')
 
 local ROOT = vim.fn.stdpath('config') -- "${XDG_CONFIG_HOME}/nvim"
 local get_json = require('fractal.utils').get_json
 local setup = require('fractal.core.configuration').setup
 
-require('fractal.core.general')
-require('fractal.core.general.autocmds')
-
 -- Include ./user files in the path
-package.path = package.path
-	.. ';'
-	.. ROOT
-	.. '/user/?.lua;'
-	.. ROOT
-	.. '/user/?/init.lua;'
+package.path = table.concat({
+	package.path,
+	';',
+	ROOT,
+	'/user/?.lua;',
+	ROOT,
+	'/user/?/init.lua;',
+})
 
 dofile(ROOT .. '/user/init.lua') -- Require ./user/init.lua
 

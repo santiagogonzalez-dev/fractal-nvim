@@ -90,7 +90,7 @@ function M.modules(modules)
 				key
 			)
 			M.check({
-				eval = utils.prequire(mod_path),
+				eval = require(mod_path),
 				on_fail_msg = msg,
 				callback = function(lib) lib.setup(value) end,
 			})

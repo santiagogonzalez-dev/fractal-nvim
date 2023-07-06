@@ -1,14 +1,6 @@
 local utils = {}
 -- local notify_send = require("fractal.modules.notifications").notify_send
 
--- Protected require, notifies if there's an error loading a module
----@return boolean|string|number @ Either nil or the value of require()
-function utils.prequire(package)
-	local ok, lib = pcall(require, package)
-	if not ok then return false end
-	return lib
-end
-
 -- Do not open floating windows if there's already one open
 ---@return boolean @ Returns false if there's a floating window open.
 function utils.not_interfere_on_float()
