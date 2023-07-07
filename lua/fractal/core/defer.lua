@@ -1,8 +1,9 @@
--- require "fractal.core.not"
+require("fractal.core.not")
 
 -- Temporarily disable ftplugin and shadafile.
 vim.cmd.filetype("off")
 vim.cmd.filetype("plugin indent off")
+vim.cmd.syntax("off")
 vim.opt.shadafile = "NONE"
 
 -- PROFILING: About profiling, all the settings before this comment are going
@@ -10,6 +11,8 @@ vim.opt.shadafile = "NONE"
 -- lastly the main function will be scheduled and run so that we defer the load
 -- of the config.
 vim.schedule(function()
+	vim.opt.loadplugins = true
+
 	if not vim.opt.loadplugins:get() then
 		vim.cmd("runtime! plugin/**/*.vim")
 		vim.cmd("runtime! plugin/**/*.lua")
