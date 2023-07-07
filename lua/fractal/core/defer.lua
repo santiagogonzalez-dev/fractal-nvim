@@ -1,6 +1,6 @@
-require("fractal.core.not")
-
 vim.loader.enable()
+
+require("fractal.core.not")
 
 vim.cmd.filetype("off")
 vim.cmd.filetype("plugin indent off")
@@ -11,8 +11,8 @@ vim.schedule(function()
 	vim.opt.loadplugins = true
 
 	if not vim.opt.loadplugins:get() then
-		vim.cmd.runtime("plugin/**/*.lua", { bang = true })
-		vim.cmd.runtime("plugin/**/*.vim", { bang = true })
+		vim.cmd.runtime({ args = "plugin/**/*.lua", bang = true })
+		vim.cmd.runtime({ args = "plugin/**/*.vim", bang = true })
 	end
 
 	-- Enable filetype settings and shadafile.
@@ -24,15 +24,16 @@ vim.schedule(function()
 
 	local buf_curr_path = vim.fn.expand("%F")
 	if not require("fractal.utils").readable(buf_curr_path) then
-		vim.defer_fn(function() vim.api.nvim_exec_autocmds("BufNewFile", {}) end, 0)
+		vim.schedule(function() vim.api.nvim_exec_autocmds("BufNewFile", {}) end)
 	else
-		vim.defer_fn(function() vim.cmd.filetype("detect") end, 0) -- Manual ftplugin
+		vim.schedule(function() vim.cmd.filetype("detect") end) -- Manual ftplugin
 	end
 
-	vim.defer_fn(function()
+	vim.schedule(function()
 		vim.api.nvim_exec_autocmds("BufEnter", {})
 		vim.api.nvim_exec_autocmds("UIEnter", {})
-	end, 0)
+		vim.api.nvim_exec_autocmds("BufWinEnter", {})
+	end)
 
 	require("fractal.core")
 end)
