@@ -1,6 +1,6 @@
 require("keymaps")
 require("plugins")
-require('settings')
+require("settings")
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
@@ -46,39 +46,21 @@ vim.opt.listchars:append({
 	trail = "█", -- · ␣
 })
 
--- Ensure this settings persist in all buffers
--- function _G.all_buffers_settings()
 vim.opt.iskeyword = "@,48-57,192-255"
 
-vim.opt.formatoptions = vim.opt.formatoptions
-	+ "r" -- If the line is a comment insert another one below when hitting <CR>
-	+ "c" -- Wrap comments at the char defined in textwidth
-	+ "q" -- Allow formatting comments with gq
-	+ "j" -- Remove comment leader when joining lines when possible
-	- "o" -- Don't continue comments after o/O
-	- "l" -- Format in insert mode if the line is longer than textwidth
+vim.opt.formatoptions = vim.opt.formatoptions + "r" + "c" + "q" + "j" - "o" - "l"
 
 vim.opt.cpoptions = vim.opt.cpoptions + "n" -- Show `showbreak` icon in the number column
--- end
 
--- vim.schedule(function()
--- 	vim.api.nvim_create_autocmd({ 'UIEnter', 'BufEnter' }, {
--- 		group = 'session_opts',
--- 		callback = _G.all_buffers_settings,
--- 	})
--- 	_G.all_buffers_settings()
--- end)
+local function eval_unnamed_register() vim.cmd.lua(vim.fn.getreg('"')) end
+vim.api.nvim_create_user_command("EvalYankRegister", eval_unnamed_register, {})
 
--- Extra whitespaces will be highlighted
-vim.fn.matchadd("ErrorMsg", "\\s\\+$")
-
-vim.api.nvim_create_user_command(
-	"EvalYankRegister",
-	function() vim.cmd.lua(vim.fn.getreg('"')) end,
-	{}
-)
-
-vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost", "InsertLeave" }, {
+vim.api.nvim_create_autocmd({
+	"WinLeave",
+	"BufLeave",
+	"FocusLost",
+	"InsertLeave",
+}, {
 	callback = function()
 		if
 			vim.bo.modified
