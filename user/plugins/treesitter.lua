@@ -11,7 +11,7 @@ treesitter.setup({
 	sync_install = false,
 	highlight = {
 		enable = true,
-		aditional_vim_regex_highlighting = false,
+		aditional_vim_regex_highlighting = true,
 		disable = {
 			function(_, bufnr)
 				local buf_name = vim.api.nvim_buf_get_name(bufnr)

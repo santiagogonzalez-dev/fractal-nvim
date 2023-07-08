@@ -11,7 +11,7 @@
     "highlight-working-line": true,
     "skeletons": true,
     "crosshair": true,
-    "status": "basic",
+    "status": "hide",
     "strict-cursor": "<Leader>c"
   }
 }

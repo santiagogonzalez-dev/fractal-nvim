@@ -22,18 +22,18 @@ vim.schedule(function()
 	vim.opt.shadafile = ""
 	vim.cmd.rshada({ bang = true })
 
+	require("fractal.core")
+end)
+
+vim.schedule(function()
 	local buf_curr_path = vim.fn.expand("%F")
 	if not require("fractal.utils").readable(buf_curr_path) then
-		vim.schedule(function() vim.api.nvim_exec_autocmds("BufNewFile", {}) end)
+		vim.api.nvim_exec_autocmds("BufNewFile", {}) -- Test tst
 	else
-		vim.schedule(function() vim.cmd.filetype("detect") end) -- Manual ftplugin
+		vim.cmd.filetype("detect")
 	end
 
-	vim.schedule(function()
-		vim.api.nvim_exec_autocmds("BufEnter", {})
-		vim.api.nvim_exec_autocmds("UIEnter", {})
-		vim.api.nvim_exec_autocmds("BufWinEnter", {})
-	end)
-
-	require("fractal.core")
+	vim.api.nvim_exec_autocmds("BufEnter", {})
+	vim.api.nvim_exec_autocmds("UIEnter", {})
+	vim.api.nvim_exec_autocmds("BufWinEnter", {})
 end)

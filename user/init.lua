@@ -10,21 +10,21 @@ vim.opt.fillchars:append({
 })
 
 vim.opt.fillchars:append({
-	-- horiz = '━',
-	-- horizup = '┻',
-	-- horizdown = '┳',
-	-- vert = '┃',
-	-- vertleft = '┫',
-	-- vertright = '┣',
-	-- verthoriz = '╋',
+	horiz = '━',
+	horizup = '┻',
+	horizdown = '┳',
+	vert = '┃',
+	vertleft = '┫',
+	vertright = '┣',
+	verthoriz = '╋',
 
-	horiz = "─",
-	horizup = "┴",
-	horizdown = "┬",
-	vert = "│",
-	vertleft = "┤",
-	vertright = "├",
-	verthoriz = "┼",
+	-- horiz = "─",
+	-- horizup = "┴",
+	-- horizdown = "┬",
+	-- vert = "│",
+	-- vertleft = "┤",
+	-- vertright = "├",
+	-- verthoriz = "┼",
 
 	-- horiz = ' ',
 	-- horizup = ' ',
@@ -137,11 +137,3 @@ local function tab_out()
 end
 
 vim.keymap.set("i", "<C-l>", tab_out, { noremap = true, silent = true })
-
--- Hide quotes and square brackets
-vim.defer_fn(function()
-	vim.cmd([[syntax match hidechars '\'' conceal " cchar= ]])
-	vim.cmd([[syntax match hidechars '\"' conceal " cchar= ]])
-	vim.cmd([[syntax match hidechars '\[\[' conceal " cchar= ]])
-	vim.cmd([[syntax match hidechars '\]\]' conceal " cchar= ]])
-end, 600)
