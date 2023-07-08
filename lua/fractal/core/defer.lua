@@ -25,7 +25,7 @@ vim.schedule(function()
 	require("fractal.core")
 end)
 
-vim.schedule(function()
+vim.schedule_wrap(function()
 	local buf_curr_path = vim.fn.expand("%F")
 	if not require("fractal.utils").readable(buf_curr_path) then
 		vim.api.nvim_exec_autocmds("BufNewFile", {}) -- Test tst
@@ -36,4 +36,4 @@ vim.schedule(function()
 	vim.api.nvim_exec_autocmds("BufEnter", {})
 	vim.api.nvim_exec_autocmds("UIEnter", {})
 	vim.api.nvim_exec_autocmds("BufWinEnter", {})
-end)
+end)()

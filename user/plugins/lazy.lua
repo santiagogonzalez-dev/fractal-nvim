@@ -40,8 +40,8 @@ local plugins = {
 				-- enable_deceleration = true,
 				acceleration_motions = { "w", "b", "+", "-" },
 			})
-			vim.api.nvim_set_keymap("n", "j", "<Plug>(accelerated_jk_gj)", {})
-			vim.api.nvim_set_keymap("n", "k", "<Plug>(accelerated_jk_gk)", {})
+			vim.api.nvim_set_keymap("n", "j", "<Plug>(accelerated_jk_j)", {})
+			vim.api.nvim_set_keymap("n", "k", "<Plug>(accelerated_jk_k)", {})
 		end,
 	},
 
