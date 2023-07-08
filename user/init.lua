@@ -10,13 +10,13 @@ vim.opt.fillchars:append({
 })
 
 vim.opt.fillchars:append({
-	horiz = '━',
-	horizup = '┻',
-	horizdown = '┳',
-	vert = '┃',
-	vertleft = '┫',
-	vertright = '┣',
-	verthoriz = '╋',
+	horiz = "━",
+	horizup = "┻",
+	horizdown = "┳",
+	vert = "┃",
+	vertleft = "┫",
+	vertright = "┣",
+	verthoriz = "╋",
 
 	-- horiz = "─",
 	-- horizup = "┴",
