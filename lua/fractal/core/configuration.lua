@@ -4,9 +4,8 @@ local utils = require("fractal.utils")
 -- Restore session: Folds, view of the window, marks, command line history, and
 -- Cursor position.
 ---@param mode boolean
----@return boolean
 function M.restore_session(mode)
-	if not mode then return false end
+	if not mode then return end
 
 	-- Setup the initial load and maintain some settings between buffers
 	local save_sessions = vim.api.nvim_create_augroup("save_sessions", {})
@@ -44,43 +43,23 @@ function M.restore_session(mode)
 			if not utils.avoid_filetype() then return vim.cmd.mkview() end
 		end,
 	})
-
-	return true
 end
 
 ---@param mode boolean
----@return boolean
 function M.conditionals(mode)
-	if not mode then return false end
+	if not mode or utils.is_git() then return end
 
-	local function run_comprobations()
-		-- Conditionals
-		local conditionals = vim.api.nvim_create_augroup("conditionals", {})
-		-- Run a comprobation for git, if the file is under git control there's no
-		-- need to create an autocommand
-		if utils.is_git() then
-			return
-		else
-			-- If the current buffer wasn't under git version control run the
-			-- comprobation each time you change of directory
-			vim.api.nvim_create_autocmd("DirChanged", {
-				group = conditionals,
-				callback = function() return utils.is_git() end,
-			})
-		end
-	end
-
-	vim.defer_fn(function() run_comprobations() end, 1000)
-
-	return true
+	vim.api.nvim_create_autocmd("DirChanged", {
+		group = vim.api.nvim_create_augroup("conditionals", {}),
+		callback = function() return utils.is_git() end,
+	})
 end
 
 -- List of modules to be loaded, they can be found under
 -- `./lua/modules` k is the name of the module and v is a boolean
 ---@param modules table @ Table containing the modules to be loaded
----@return boolean
 function M.modules(modules)
-	if not modules then return false end
+	if not modules then return end
 
 	map(modules, function(key, value)
 		if value then
@@ -93,8 +72,6 @@ function M.modules(modules)
 			})
 		end
 	end)
-
-	return true
 end
 
 -- This function evaluates the output of `eval`, which is going to be the output
