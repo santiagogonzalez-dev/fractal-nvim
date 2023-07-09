@@ -120,6 +120,14 @@ local plugins = {
 		event = "User FractalEnd",
 		dependencies = {
 			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				module = true,
+			},
+			{
+				"RRethy/nvim-treesitter-textsubjects",
+				module = true,
+			},
+			{
 				"JoosepAlviste/nvim-ts-context-commentstring",
 				module = true,
 			},
