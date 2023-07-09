@@ -12,6 +12,7 @@
     "skeletons": true,
     "crosshair": true,
     "status": "hide",
-    "strict-cursor": "<Leader>c"
+    "strict-cursor": "<Leader>c",
+    "spell": true
   }
 }

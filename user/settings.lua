@@ -1,9 +1,6 @@
 vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.expandtab = true
-vim.opt.spelllang = "en,es,de,cjk"
-vim.opt.spelloptions = "camel,noplainbuffer"
-vim.opt.spellsuggest = "best"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.swapfile = false
@@ -46,4 +43,3 @@ vim.opt.wrap = true
 vim.opt.showmode = false
 vim.opt.showtabline = 0
 vim.opt.smoothscroll = true
-vim.opt.spell = true
