@@ -194,6 +194,10 @@ vim.keymap.set("c", "wqa", vim.cmd.wqa, {
 	desc = "Write all and quit without hitting <CR>",
 })
 
+vim.keymap.set("n", "<A-q>", vim.cmd.q, {
+	desc = "Quit the same way we exit zsh",
+})
+
 vim.keymap.set("n", "<Leader>q", ":q<CR>")
 vim.keymap.set("n", "<Leader>wqa", ":wqa<CR>")
 

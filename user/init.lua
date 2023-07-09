@@ -6,9 +6,7 @@ require("settings")
 vim.opt.fillchars:append({
 	eob = "␃",
 	msgsep = "🮑", -- Separator for cmdline
-})
 
-vim.opt.fillchars:append({
 	horiz = "━",
 	horizup = "┻",
 	horizdown = "┳",
@@ -95,7 +93,7 @@ vim.api.nvim_create_user_command("FoldMarkdown", function()
 	if next_header > 0 then vim.cmd(string.format("%d,%dfold", current_line, next_header - 2)) end
 end, {})
 
-local function tab_out()
+local tab_out = function()
 	local closers = { ")", "]", "}", ">", "'", '"', "`", "," }
 	local line = vim.api.nvim_get_current_line()
 	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
