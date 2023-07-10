@@ -1,5 +1,4 @@
--- require("fractal.core")
-require("fractal.core.defer")
+require("fractal.core")
 
 --  TODO(santigo-zero):
 --    Enable null-ls modules depending if the project is using it
