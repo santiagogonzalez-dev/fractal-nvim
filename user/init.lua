@@ -46,7 +46,7 @@ vim.opt.listchars:append({
 
 vim.fn.matchadd("ErrorMsg", "\\s\\+$")
 
-vim.opt.iskeyword = "@,48-57,192-255"
+vim.opt.iskeyword = "@-@,a-z,A-Z,48-57,_,.,-,>,<"
 
 vim.opt.formatoptions = vim.opt.formatoptions + "r" + "c" + "q" + "j" - "o" - "l"
 
