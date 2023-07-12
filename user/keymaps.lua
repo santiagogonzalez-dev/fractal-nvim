@@ -49,8 +49,8 @@ vim.keymap.set("n", "'", "`", { desc = "Swap ' with `" })
 vim.keymap.set("n", "''", "`^")
 vim.keymap.set("n", "`", "'", { desc = "Swap ` with '" })
 
-vim.keymap.set({ "n", "v", "x" }, ";", ":", { desc = "Swap ; with :" })
-vim.keymap.set({ "n", "v", "x" }, ":", ";", { desc = "Swap : with ;" })
+vim.keymap.set("n", ";", ":", { desc = "Swap ; with :" })
+vim.keymap.set("n", ":", ";", { desc = "Swap : with ;" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Center J" })
 vim.keymap.set("n", "K", "i<CR><ESC>", { desc = "Normal <CR> behaviour, opposite to J" })

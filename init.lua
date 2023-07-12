@@ -7,3 +7,4 @@ require("fractal.core")
 --    Simplify neovim config, don't lazy load, optimize later, but do modularize
 --       more if necessary
 --    Try making .sh files created with a skeleton executable on the same action
+--    Move fractal files to ./fractal and move ./user files to ./lua
