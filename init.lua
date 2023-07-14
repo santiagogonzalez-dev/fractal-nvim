@@ -8,3 +8,4 @@ require("fractal.core")
 --       more if necessary
 --    Try making .sh files created with a skeleton executable on the same action
 --    Move fractal files to ./fractal and move ./user files to ./lua
+--    Extend dd, with dD key mapping, or removing empty lines at EOF
