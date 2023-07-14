@@ -56,9 +56,9 @@ end
 
 function utils.present_in_table(element, T)
 	local val = false
-	map(T, function(_, value)
-		if value == element then val = true end
-	end)
+   for _, value in ipairs(T) do
+      if value == element then val = true end
+   end
 	return val
 end
 

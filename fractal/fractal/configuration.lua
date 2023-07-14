@@ -61,7 +61,7 @@ end
 function M.modules(modules)
 	if not modules then return end
 
-	map(modules, function(key, value)
+	for key, value in pairs(modules) do
 		if value then
 			local mod_path = string.format("fractal.modules.%s", key)
 			local msg = string.format("Failed to load module %s, check your fractal.json", key)
@@ -71,7 +71,7 @@ function M.modules(modules)
 				callback = function(lib) lib.setup(value) end,
 			})
 		end
-	end)
+	end
 end
 
 -- This function evaluates the output of `eval`, which is going to be the output

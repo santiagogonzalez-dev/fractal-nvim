@@ -17,7 +17,6 @@ return {
 			diagnostics = {
 				globals = {
 					"vim",
-					"map", -- See my own implementation of map at `fractal.core.general`
 				},
 			},
 			completion = {
