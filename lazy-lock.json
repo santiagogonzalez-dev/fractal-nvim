@@ -30,6 +30,7 @@
   "plenary.nvim": { "branch": "master", "commit": "bda256fab0eb66a15e8190937e417e6a14ee5d72" },
   "project.nvim": { "branch": "main", "commit": "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   "right-corner-diagnostics.nvim": { "branch": "main", "commit": "f60223447389d7ed63a349d9ffbd578eff81b533" },
+  "rust-tools.nvim": { "branch": "master", "commit": "0cc8adab23117783a0292a0c8a2fbed1005dc645" },
   "telescope.nvim": { "branch": "master", "commit": "276362a8020c6e94c7a76d49aa00d4923b0c02f3" },
   "vim-convert-color-to": { "branch": "master", "commit": "5eb519e33e697606dcace57009e7308761261b46" }
 }
