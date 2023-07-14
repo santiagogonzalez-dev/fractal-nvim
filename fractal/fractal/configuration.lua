@@ -57,21 +57,15 @@ end
 
 -- List of modules to be loaded, they can be found under
 -- `./lua/modules` k is the name of the module and v is a boolean
----@param modules table @ Table containing the modules to be loaded
+---@param modules Iter @ Table containing the modules to be loaded
 function M.modules(modules)
 	if not modules then return end
 
-	for key, value in pairs(modules) do
-		if value then
-			local mod_path = string.format("fractal.modules.%s", key)
-			local msg = string.format("Failed to load module %s, check your fractal.json", key)
-			M.check({
-				eval = require(mod_path),
-				on_fail_msg = msg,
-				callback = function(lib) lib.setup(value) end,
-			})
-		end
-	end
+	modules:any(function(key, value)
+		local success, module = pcall(require, "fractal.modules." .. key)
+		if not success then print("Failed to load module" .. key) end
+		module.setup(value)
+	end)
 end
 
 -- This function evaluates the output of `eval`, which is going to be the output
@@ -89,7 +83,7 @@ end
 ---@param config { conditionals: boolean, modules: table, restore: boolean, colorscheme: string}
 function M.setup(config)
 	M.conditionals(config.conditionals)
-	M.modules(config.modules) -- Load of fractal modules.
+	M.modules(vim.iter(config.modules))
 	M.restore_session(config.restore)
 
 	vim.cmd.colorscheme(config.colorscheme)
