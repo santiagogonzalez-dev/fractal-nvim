@@ -8,5 +8,4 @@ package.path = table.concat({
 	"/fractal/?/init.lua;",
 })
 
-require("user")
 require("fractal")

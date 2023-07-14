@@ -22,7 +22,8 @@ vim.schedule(function()
 	vim.opt.shadafile = ""
 	vim.cmd.rshada({ bang = true })
 
-   dofile(vim.fn.stdpath("config") .. "/fractal/init.lua")
+	require("user")
+	dofile(vim.fn.stdpath("config") .. "/fractal/init.lua")
 end)
 
 vim.schedule_wrap(function()

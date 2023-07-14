@@ -5,14 +5,16 @@ that I wrote and it covers all my basic needs.
 
 ## Config
 
-Most of your configs should go under `./user`, just treat it like the lua
-directory, with the difference that you can clearly differentiate your user
-configs from the modules written by me. Also do note that your
-`./user/init.lua` will be run after reading your `fractal.json`.
+It behaves like any other library, you just need to have the `fractal`
+directory in your repo and load the file after your user configs like so:
+```lua
+require("user")
+dofile(vim.fn.stdpath("config") .. "/fractal/init.lua")
+```
 
 ## fractal.json
 
-The file `./user/fractal.json` is an easy way of using the modules that I've
+The file `fractal.json` is an easy way of using the modules that I've
 written, this is a basic example:
 
 ```json
@@ -20,14 +22,14 @@ written, this is a basic example:
   "colorscheme": "jetjbp",
   "modules": {
     "notifications": true,
-    "status": "hide-completely"
+    "status": "hide"
   }
 }
 ```
 
 ## Modules
 
-There's modules that change the behaviour of the config, for example `"status":
-"hide-completely"` gets rid of the statusline at all, you can figure how
-everything works by searching for `DESCRIPTION` and `setup` in the modules
-located under `./lua/fractal/modules/*.lua`.
+You can check them out under `./fractal/fractal/modules`. To use enable them
+from your `fractal.json` you just need to use the same name of the module and
+depending on the `setup()` you can either pass a `true` or a string for mapping
+which make this modules available.
