@@ -99,7 +99,7 @@ local config = {
 		WORKSPACE_DIR,
 	},
 
-	on_attach = require("plugins.lsp.handlers").on_attach,
+	on_attach = require("user.plugins.lsp.handlers").on_attach,
 	capabilities = capabilities,
 
 	-- 💀

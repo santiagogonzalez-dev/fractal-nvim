@@ -1,5 +1,3 @@
-require("user")
-
 local ROOT = vim.fn.stdpath("config")
 package.path = table.concat({
 	package.path,
@@ -10,6 +8,7 @@ package.path = table.concat({
 	"/fractal/?/init.lua;",
 })
 
+require("user")
 dofile(ROOT .. "/fractal/init.lua")
 
 --  TODO(santigo-zero):

@@ -53,7 +53,7 @@ M.on_attach = function(client, bufnr)
 		end
 	end
 
-	require("plugins.lsp.keymaps").keymaps(bufnr)
+	require("user.plugins.lsp.keymaps").keymaps(bufnr)
 	if
 		client.name ~= "cssls"
 		and client.name ~= "html"
