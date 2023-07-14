@@ -7,8 +7,6 @@ function M.settings()
 	vim.opt.spellsuggest = "best"
 end
 
-function M.setup()
-   M.settings()
-end
+function M.setup() M.settings() end
 
 return M

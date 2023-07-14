@@ -1,4 +1,4 @@
-local utils = require("fractal.utils")
+-- local utils = require("fractal.utils")
 
 local dead_keys = vim.iter({
 	"<BS>",
@@ -79,13 +79,13 @@ vim.keymap.set({ "n", "x", "o" }, "N", '"nN"[v:searchforward]', {
 	desc = "N is always previous",
 })
 
-vim.keymap.set("n", "dD", function()
-	local indentation = utils.string_indentation(vim.api.nvim_get_current_line()) + 1
-	vim.api.nvim_feedkeys("0D", "n", "v:false")
-	vim.api.nvim_feedkeys(string.format("%s|", indentation), "n", "v:false")
-end, {
-	desc = "Middle ground between dd and S or cc",
-})
+-- vim.keymap.set("n", "dD", function()
+-- 	local indentation = utils.string_indentation(vim.api.nvim_get_current_line()) + 1
+-- 	vim.api.nvim_feedkeys("0D", "n", "v:false")
+-- 	vim.api.nvim_feedkeys(string.format("%s|", indentation), "n", "v:false")
+-- end, {
+-- 	desc = "Middle ground between dd and S or cc",
+-- })
 
 vim.keymap.set(
 	{ "n", "v", "x" },

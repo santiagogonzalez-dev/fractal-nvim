@@ -1,6 +1,6 @@
-require("keymaps")
-require("plugins")
-require("settings")
+require("user.keymaps")
+require("user.plugins")
+require("user.settings")
 
 -- Settings for non-visible characters
 vim.opt.fillchars:append({

@@ -1,4 +1,16 @@
-require("fractal.core")
+require("user")
+
+local ROOT = vim.fn.stdpath("config")
+package.path = table.concat({
+	package.path,
+	";",
+	ROOT,
+	"/fractal/?.lua;",
+	ROOT,
+	"/fractal/?/init.lua;",
+})
+
+dofile(ROOT .. "/fractal/init.lua")
 
 --  TODO(santigo-zero):
 --    Enable null-ls modules depending if the project is using it

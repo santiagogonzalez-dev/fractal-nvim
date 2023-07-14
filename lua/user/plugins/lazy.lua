@@ -160,14 +160,14 @@ local plugins = {
 				end,
 			},
 		},
-		config = function() require("plugins.treesitter") end,
+		config = function() require("user.plugins.treesitter") end,
 	},
 
 	-- Git Signs
 	{
 		"lewis6991/gitsigns.nvim",
 		event = "User IsGit",
-		config = function() require("plugins.gitsigns") end,
+		config = function() require("user.plugins.gitsigns") end,
 	},
 
 	-- Telescope
@@ -182,7 +182,7 @@ local plugins = {
 			"<Leader>tp",
 			"<Leader>tt",
 		},
-		config = function() require("plugins.telescope") end,
+		config = function() require("user.plugins.telescope") end,
 	},
 
 	-- JetJBP colorscheme
@@ -192,7 +192,7 @@ local plugins = {
 		dev = true,
 		lazy = true,
 		-- config = function()
-		--    vim.api.nvim_set_hl(0, '@variable', { fg = '#74749C' })
+		-- 	vim.api.nvim_set_hl(0, '@variable', { fg = '#74749C' })
 		-- end,
 	},
 
@@ -231,15 +231,15 @@ local plugins = {
 		"amadeus/vim-convert-color-to",
 	},
 
-	{
-		"navarasu/onedark.nvim",
-		config = function() require("onedark").load() end,
-	},
+	-- {
+	-- 	"navarasu/onedark.nvim",
+	-- 	config = function() require("onedark").load() end,
+	-- },
 
 	-- Nvim lspconfig
 	{
 		"neovim/nvim-lspconfig",
-		config = function() require("plugins.lsp") end,
+		config = function() require("user.plugins.lsp") end,
 		opts = {
 			inlay_hints = { enabled = true },
 		},
@@ -261,7 +261,7 @@ local plugins = {
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 		event = "User FractalEnd",
-		config = function() require("plugins.lsp.null-ls") end,
+		config = function() require("user.plugins.lsp.null-ls") end,
 	},
 
 	-- CMP
@@ -279,7 +279,7 @@ local plugins = {
 			"hrsh7th/cmp-cmdline",
 			"L3MON4D3/LuaSnip",
 		},
-		config = function() require("plugins.cmp") end,
+		config = function() require("user.plugins.cmp") end,
 	},
 
 	-- Colorizer
