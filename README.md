@@ -21,7 +21,7 @@ written, this is a basic example:
 {
   "colorscheme": "jetjbp",
   "modules": {
-    "notifications": true,
+    "system-notifications": true,
     "status": "hide"
   }
 }

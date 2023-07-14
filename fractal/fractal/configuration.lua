@@ -80,7 +80,7 @@ end
 ---@param tbl {desc: string, eval: any, on_fail_msg: string, callback: function }
 ---@return any
 function M.check(tbl)
-	local notify = require("fractal.modules.notifications").notify_send
+	local notify = require("fractal.modules.system-notifications").notify_send
 	if not tbl.eval then return notify(tbl.on_fail_msg) end
 	if type(tbl.callback) == "function" then return tbl.callback(tbl.eval) end
 	return tbl.callback

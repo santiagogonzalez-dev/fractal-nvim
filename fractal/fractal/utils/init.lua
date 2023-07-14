@@ -1,5 +1,4 @@
 local utils = {}
--- local notify_send = require("fractal.modules.notifications").notify_send
 
 -- Do not open floating windows if there's already one open
 ---@return boolean @ Returns false if there's a floating window open.
