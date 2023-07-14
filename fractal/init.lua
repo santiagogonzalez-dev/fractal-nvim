@@ -1,1 +1,1 @@
-require('fractal')
+require("fractal")

@@ -1,6 +1,16 @@
 vim.loader.enable()
 
-require("fractal.core.not")
+local ROOT = vim.fn.stdpath("config")
+package.path = table.concat({
+	package.path,
+	";",
+	ROOT,
+	"/fractal/?.lua;",
+	ROOT,
+	"/fractal/?/init.lua;",
+})
+
+require("fractal.not")
 
 vim.cmd.filetype("off")
 vim.cmd.filetype("plugin indent off")
@@ -22,7 +32,8 @@ vim.schedule(function()
 	vim.opt.shadafile = ""
 	vim.cmd.rshada({ bang = true })
 
-	require("fractal.core")
+	require("user")
+	dofile(ROOT .. "/fractal/init.lua")
 end)
 
 vim.schedule_wrap(function()
