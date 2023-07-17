@@ -59,9 +59,9 @@ vim.keymap.set("n", "<A-n>", vim.cmd.nohlsearch, {
 	desc = "Disable highlight",
 })
 
-vim.keymap.set({ "n", "v" }, "$", "g_", {
-	desc = "Better $, behaves as expected",
-})
+-- vim.keymap.set({ "n", "v" }, "$", "g_", {
+-- 	desc = "Better $, behaves as expected",
+-- })
 
 vim.keymap.set("n", "gvp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true })
 

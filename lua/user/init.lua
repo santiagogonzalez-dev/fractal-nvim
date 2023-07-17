@@ -5,7 +5,8 @@ require("user.settings")
 -- Settings for non-visible characters
 vim.opt.fillchars:append({
 	eob = "␃",
-	msgsep = "🮑", -- Separator for cmdline
+	-- msgsep = "🮑", -- Separator for cmdline
+	msgsep = "⸻",
 
 	horiz = "━",
 	horizup = "┻",
