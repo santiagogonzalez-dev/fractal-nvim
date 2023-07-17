@@ -15,9 +15,7 @@ return {
 				setType = true,
 			},
 			diagnostics = {
-				globals = {
-					"vim",
-				},
+				globals = { "vim", "spec" },
 			},
 			completion = {
 				keywordSnippet = "Both",
@@ -33,8 +31,7 @@ return {
 				library = {
 					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
 					[vim.fn.stdpath("config") .. "/lua"] = true,
-					[vim.fn.stdpath("config") .. "/user"] = true,
-					["/home/st/.local/share/nvim/mason/packages/lua-lan guage-server/libexec/meta/5393ac01"] = true,
+					[vim.fn.stdpath("config") .. "/fractal"] = true,
 				},
 			},
 			telemetry = {

@@ -54,7 +54,13 @@ local buffer_settings = vim.api.nvim_create_augroup("buffer_settings", {})
 vim.api.nvim_create_autocmd("FileType", {
 	desc = "Quit with q in this filetypes",
 	group = buffer_settings,
-	pattern = { "help", "lspinfo", "man", "netrw", "qf" },
+	pattern = {
+		"help",
+		"lspinfo",
+		"man",
+		"netrw",
+		"qf",
+	},
 	callback = function() vim.keymap.set("n", "q", "<CMD>close<CR>", { buffer = 0 }) end,
 })
 

@@ -112,7 +112,10 @@ end
 -- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
-function utils.string_indentation(indented_string) return #indented_string - #string.match(indented_string, "^%s*(.*)") end
+function utils.string_indentation(indented_string)
+	local indented_from = #indented_string - #string.match(indented_string, "^%s*(.*)")
+	return indented_from
+end
 
 -- This function takes the value of each elements in a table and returns the
 -- total sum of all this values.
@@ -120,9 +123,9 @@ function utils.string_indentation(indented_string) return #indented_string - #st
 ---@return integer @ And the total sum of all the elements is going to be 3
 function utils.sum_elements(T)
 	local total_elements = 0
-
-	map(T, function(_, value) total_elements = total_elements + value end)
-
+	for _, value in pairs(T) do
+		total_elements = total_elements + value
+	end
 	return total_elements
 end
 

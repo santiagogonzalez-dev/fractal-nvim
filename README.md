@@ -1,12 +1,14 @@
 # fractal-nvim 🏴
 
-This is my personal config, it reads from a json file to enable some modules
-that I wrote and it covers all my basic needs.
+This is my personal config, I tried to modularize it, the `./fractal` reads from
+the JSON config `./fractal.json` and it loads `./lua/user` for you, you just
+need to load the library from your `init.lua`.
 
 ## Config
 
 It behaves like any other library, you just need to have the `fractal`
 directory in your repo and load the file after your user configs like so:
+
 ```lua
 require("user")
 dofile(vim.fn.stdpath("config") .. "/fractal/init.lua")

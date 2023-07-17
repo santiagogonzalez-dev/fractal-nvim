@@ -1,8 +1,8 @@
+local utils = require("fractal.utils")
 local M = {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 }
-local utils = require("fractal.utils")
 
 local function lsp_keymaps(bufnr)
 	vim.keymap.set("n", "<Leader>i", vim.lsp.buf.implementation, { buffer = bufnr })
@@ -151,7 +151,7 @@ function M.config()
 			capabilities = M.common_capabilities(),
 		}
 
-		local require_ok, settings = pcall(require, "user.lspsettings." .. server)
+		local require_ok, settings = pcall(require, "user.lsp-settings." .. server)
 		if require_ok then opts = vim.tbl_deep_extend("force", settings, opts) end
 
 		lspconfig[server].setup(opts)
