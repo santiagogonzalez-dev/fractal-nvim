@@ -17,8 +17,7 @@ function folds.foldtext_header()
 		if header_fold[1]:match(key) then return header end
 	end
 
-	local clean_string =
-		header_fold[1]:gsub("%(%)", ""):gsub("%{", ""):gsub("%=", ""):gsub("%:", " ")
+	local clean_string = header_fold[1]:gsub("%(%)", ""):gsub("%{", ""):gsub("%=", ""):gsub("%:", " ")
 
 	return clean_string
 end

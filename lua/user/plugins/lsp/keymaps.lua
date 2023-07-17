@@ -15,12 +15,7 @@ function M.keymaps(bufnr)
 		":lua vim.lsp.buf.range_code_action()<CR>",
 		{ buffer = bufnr, desc = "Range code actions" }
 	)
-	vim.keymap.set(
-		"n",
-		"<Leader>ca",
-		vim.lsp.buf.code_action,
-		{ buffer = bufnr, desc = "Code actions" }
-	)
+	vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code actions" })
 
 	-- Formatting
 	vim.keymap.set("n", "<Leader><Leader>f", function()
@@ -71,28 +66,13 @@ function M.keymaps(bufnr)
 		end
 	end, { buffer = bufnr, desc = "Toggle diagnostics" })
 
-	vim.keymap.set(
-		"n",
-		"gl",
-		function() return utils.not_interfere_on_float() and vim.lsp.buf.hover() end,
-		{
-			buffer = bufnr,
-			desc = "Show a description of the word under cursor",
-		}
-	)
+	vim.keymap.set("n", "gl", function() return utils.not_interfere_on_float() and vim.lsp.buf.hover() end, {
+		buffer = bufnr,
+		desc = "Show a description of the word under cursor",
+	})
 
-	vim.keymap.set(
-		"n",
-		"<A-]>",
-		vim.diagnostic.goto_next,
-		{ buffer = bufnr, desc = "Go to next diagnostic" }
-	)
-	vim.keymap.set(
-		"n",
-		"<A-[>",
-		vim.diagnostic.goto_prev,
-		{ buffer = bufnr, desc = "Go to previous diagnostic" }
-	)
+	vim.keymap.set("n", "<A-]>", vim.diagnostic.goto_next, { buffer = bufnr, desc = "Go to next diagnostic" })
+	vim.keymap.set("n", "<A-[>", vim.diagnostic.goto_prev, { buffer = bufnr, desc = "Go to previous diagnostic" })
 
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Definitions" })
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Declarations" })

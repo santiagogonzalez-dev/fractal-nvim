@@ -40,10 +40,8 @@ function M.vcs()
 		fg = utils.get_fg_hl("GitSignsDelete"),
 	})
 	local added = git_info.added and ("%#StatusLineGitSignsAdd#+" .. git_info.added .. " ") or ""
-	local changed = git_info.changed and ("%#StatusLineGitSignsChange#~" .. git_info.changed .. " ")
-		or ""
-	local removed = git_info.removed and ("%#StatusLineGitSignsDelete#-" .. git_info.removed .. " ")
-		or ""
+	local changed = git_info.changed and ("%#StatusLineGitSignsChange#~" .. git_info.changed .. " ") or ""
+	local removed = git_info.removed and ("%#StatusLineGitSignsDelete#-" .. git_info.removed .. " ") or ""
 
 	if git_info.added == 0 then added = "" end
 

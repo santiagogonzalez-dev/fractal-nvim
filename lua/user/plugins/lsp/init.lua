@@ -4,13 +4,14 @@ if not status then
 end
 
 local SERVERS = {
+	"pyright",
 	"bashls",
+	"jsonls",
+	"yamlls",
 	"cssls",
 	"cssmodules_ls",
 	"emmet_ls",
 	"html",
-	"jsonls",
-	"pyright",
 	"lua_ls",
 	"svelte",
 	"tsserver",
@@ -33,8 +34,7 @@ for _, server in pairs(SERVERS) do
 	}
 
 	if server ~= "jdtls" then
-		local has_opts, custom_opts =
-			pcall(require, string.format("%s.%s", "user.plugins.lsp.settings", server))
+		local has_opts, custom_opts = pcall(require, string.format("%s.%s", "user.plugins.lsp.settings", server))
 		if has_opts then opts = vim.tbl_deep_extend("force", custom_opts, opts) end
 
 		lspconfig[server].setup(opts)

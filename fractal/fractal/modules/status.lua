@@ -48,9 +48,7 @@ function M.setup(mode)
 		vim.opt.laststatus = 3
 		vim.opt.statusline = '%{%v:lua.require("fractal.modules.status").get()%}'
 		vim.api.nvim_create_autocmd({ "TabEnter", "BufEnter", "WinEnter" }, {
-			callback = function()
-				vim.opt.statusline = '%{%v:lua.require("fractal.modules.status").get()%}'
-			end,
+			callback = function() vim.opt.statusline = '%{%v:lua.require("fractal.modules.status").get()%}' end,
 		})
 
 		vim.api.nvim_create_autocmd({ "WinEnter", "FileType" }, {

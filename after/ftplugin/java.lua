@@ -78,10 +78,7 @@ local config = {
 		-- 💀
 		"-jar",
 		vim.fn.glob(
-			string.format(
-				"%s/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
-				HOME
-			)
+			string.format("%s/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar", HOME)
 		),
 		-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
 		-- Must point to the                                                     Change this to

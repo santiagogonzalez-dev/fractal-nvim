@@ -1,4 +1,4 @@
--- local utils = require("fractal.utils")
+local utils = require("fractal.utils")
 
 local dead_keys = vim.iter({
 	"<BS>",
@@ -12,19 +12,17 @@ local dead_keys = vim.iter({
 dead_keys:map(function(value) vim.keymap.set({ "n", "v", "x" }, value, "<Nop>") end)
 
 local break_points = vim.iter({ "!", ",", "-", ".", "<CR>", "<Space>", "=", "?", "_" })
-break_points:map(
-	function(value) vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u")) end
-)
+break_points:map(function(value) vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u")) end)
 
 -- Remap space as leader key
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
-vim.keymap.set("n", "<C-n>", vim.cmd.bnext, { desc = "Switch to next buffer", silent = true })
-vim.keymap.set("n", "<C-p>", vim.cmd.bprevious, { desc = "Switch to prev buffer", silent = true })
+vim.keymap.set("n", "<C-n>", vim.cmd.bnext, { desc = "Switch to next buffer" })
+vim.keymap.set("n", "<C-p>", vim.cmd.bprevious, { desc = "Switch to prev buffer" })
 
-vim.keymap.set("n", "<Tab>", vim.cmd.bnext, { desc = "Switch to next buffer", silent = true })
-vim.keymap.set("n", "<S-Tab>", vim.cmd.bprevious, { desc = "Switch to prev buffer", silent = true })
+vim.keymap.set("n", "<Tab>", vim.cmd.bnext, { desc = "Switch to next buffer" })
+vim.keymap.set("n", "<S-Tab>", vim.cmd.bprevious, { desc = "Switch to prev buffer" })
 
 vim.g.last_accessed_buffer = false
 vim.keymap.set("n", "g<Tab>", function()
@@ -38,12 +36,7 @@ vim.keymap.set("n", "g<Tab>", function()
 end, { desc = "Switch between two buffers" })
 
 vim.keymap.set("n", "<Leader>ps", vim.cmd.PackerSync, { desc = "Packer: PackerSync" })
-vim.keymap.set(
-	"n",
-	"<Leader>pc",
-	"<CMD>PackerCompile profile=true<CR>",
-	{ desc = "Packer: PackerCompile" }
-)
+vim.keymap.set("n", "<Leader>pc", "<CMD>PackerCompile profile=true<CR>", { desc = "Packer: PackerCompile" })
 
 vim.keymap.set("n", "'", "`", { desc = "Swap ' with `" })
 vim.keymap.set("n", "''", "`^")
@@ -53,15 +46,13 @@ vim.keymap.set("n", ";", ":", { desc = "Swap ; with :" })
 vim.keymap.set("n", ":", ";", { desc = "Swap : with ;" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Center J" })
-vim.keymap.set("n", "K", "i<CR><ESC>", { desc = "Normal <CR> behaviour, opposite to J" })
+-- vim.keymap.set("n", "K", "i<CR><ESC>", { desc = "Normal <CR> behaviour, opposite to J" })
 
-vim.keymap.set("n", "<A-n>", vim.cmd.nohlsearch, {
-	desc = "Disable highlight",
+vim.keymap.set("n", "<A-n>", vim.cmd.nohlsearch, { desc = "Disable highlight" })
+
+vim.keymap.set({ "n", "v" }, "$", "g_", {
+	desc = "Better $, behaves as expected",
 })
-
--- vim.keymap.set({ "n", "v" }, "$", "g_", {
--- 	desc = "Better $, behaves as expected",
--- })
 
 vim.keymap.set("n", "gvp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true })
 
@@ -79,20 +70,15 @@ vim.keymap.set({ "n", "x", "o" }, "N", '"nN"[v:searchforward]', {
 	desc = "N is always previous",
 })
 
--- vim.keymap.set("n", "dD", function()
--- 	local indentation = utils.string_indentation(vim.api.nvim_get_current_line()) + 1
--- 	vim.api.nvim_feedkeys("0D", "n", "v:false")
--- 	vim.api.nvim_feedkeys(string.format("%s|", indentation), "n", "v:false")
--- end, {
--- 	desc = "Middle ground between dd and S or cc",
--- })
+vim.keymap.set("n", "dD", function()
+	local indentation = utils.string_indentation(vim.api.nvim_get_current_line()) + 1
+	vim.api.nvim_feedkeys("0D", "n", "v:false")
+	vim.api.nvim_feedkeys(string.format("%s|", indentation), "n", "v:false")
+end, {
+	desc = "Middle ground between dd and S or cc",
+})
 
-vim.keymap.set(
-	{ "n", "v", "x" },
-	"<Leader>p",
-	'"_dP',
-	{ desc = "Paste without overriding the paste register" }
-)
+vim.keymap.set({ "n", "v", "x" }, "<Leader>p", '"_dP', { desc = "Paste without overriding the paste register" })
 
 vim.keymap.set("n", "y<Leader>", "yy", { desc = "Use leader key, avoid double taps" })
 
@@ -112,17 +98,12 @@ vim.keymap.set(
 	}
 )
 
-vim.keymap.set(
-	"n",
-	"dd",
-	function() return vim.api.nvim_get_current_line():match("^%s*$") and '"_dd' or "dd" end,
-	{
-		desc = "If the line is blank(empty, or whitespace) do not override the delete register",
-		noremap = true,
-		expr = true,
-		nowait = false,
-	}
-)
+vim.keymap.set("n", "dd", function() return vim.api.nvim_get_current_line():match("^%s*$") and '"_dd' or "dd" end, {
+	desc = "If the line is blank(empty, or whitespace) do not override the delete register",
+	noremap = true,
+	expr = true,
+	nowait = false,
+})
 
 vim.keymap.set("n", "<C-Up>", ":resize +1<CR>", {
 	desc = "Resize windows",
@@ -136,49 +117,24 @@ vim.keymap.set("n", "<C-Left>", ":vertical resize +1<CR>", { desc = "Resize wind
 
 vim.keymap.set("n", "<C-Right>", ":vertical resize -1<CR>", { desc = "Resize windows" })
 
-vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", {
-	desc = "Move current block of text up and down",
-	silent = true,
-}) -- Normal mode
-
-vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", {
-	desc = "Move current block of text up and down",
-	silent = true,
-})
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move selected block up/down" })
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move selected block up/down" })
 
 vim.keymap.set({ "v", "x" }, "<A-j>", ":m '>+1<CR>gv=gv", {
 	desc = "Move block of text up and down",
-	silent = true,
 }) -- Visual mode
 
 vim.keymap.set({ "v", "x" }, "<A-k>", ":m '<-2<CR>gv=gv", {
 	desc = "Move block of text up and down",
-	silent = true,
 })
 
--- vim.keymap.set('n', '<Tab>', 'za', { desc = 'Toggle folds', silent = true })
--- vim.keymap.set('n', '<S-Tab>', 'zm', { desc = 'Close all folds', silent = true })
--- vim.keymap.set('n', 'zo', '<CMD>silent! foldopen<CR>', { desc = 'Silence this keybind', silent = true })
--- vim.keymap.set('n', 'zc', '<CMD>silent! foldclose<CR>', { desc = 'Silence this keybind', silent = true })
-vim.keymap.set("n", "<Space>", "za", {
-	desc = "Toggle folds with space",
-})
-vim.keymap.set({ "v", "x", "o" }, "<Space>", "zf", {
-	desc = "Toggle folds with space",
-})
+vim.keymap.set("n", "<Space>", "za", { desc = "Toggle folds with space" })
+vim.keymap.set({ "v", "x", "o" }, "<Space>", "zf", { desc = "Toggle folds with space" })
 
-vim.keymap.set({ "v", "x" }, "<", "<gv", {
-	desc = "Keep visual selection after shifting codeblock",
-})
-vim.keymap.set({ "v", "x" }, ">", ">gv", {
-	desc = "Keep visual selection after shifting codeblock",
-})
-vim.keymap.set({ "v", "x" }, "<Tab>", ">gv", {
-	desc = "In visual mode use tabs for indentation",
-})
-vim.keymap.set({ "v", "x" }, "<S-Tab>", "<gv", {
-	desc = "In visual mode use tabs for indentation",
-})
+vim.keymap.set({ "v", "x" }, "<", "<gv", { desc = "Keep visual selection after shifting codeblock" })
+vim.keymap.set({ "v", "x" }, ">", ">gv", { desc = "Keep visual selection after shifting codeblock" })
+vim.keymap.set({ "v", "x" }, "<Tab>", ">gv", { desc = "In visual mode use tabs for indentation" })
+vim.keymap.set({ "v", "x" }, "<S-Tab>", "<gv", { desc = "In visual mode use tabs for indentation" })
 
 vim.keymap.set("n", "//", "/<C-r>/", {
 	desc = "Better search",
@@ -218,12 +174,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-vim.keymap.set(
-	"n",
-	"<Leader>e",
-	vim.cmd.EvalYankRegister,
-	{ desc = "Eval whatever it is that the yank register has" }
-)
+vim.keymap.set("n", "<Leader>e", vim.cmd.EvalYankRegister, { desc = "Eval whatever it is that the yank register has" })
 
 vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>")
 
@@ -236,3 +187,9 @@ vim.keymap.set("c", "q!", "<CMD>q!<CR>")
 vim.keymap.set("c", "qa", "<CMD>qa<CR>")
 vim.keymap.set("c", "qa!", "<CMD>qa!<CR>")
 vim.keymap.set("c", "wqa", "<CMD>wqa<CR>")
+
+-- vim.keymap.set("n", "<m-h>", "<C-w>h")
+-- vim.keymap.set("n", "<m-j>", "<C-w>j")
+-- vim.keymap.set("n", "<m-k>", "<C-w>k")
+-- vim.keymap.set("n", "<m-l>", "<C-w>l")
+-- vim.keymap.set("n", "<m-tab>", "<c-6>")

@@ -62,9 +62,11 @@ function M.modules(modules)
 	if not modules then return end
 
 	modules:any(function(key, value)
-		local success, module = pcall(require, "fractal.modules." .. key)
-		if not success then print("Failed to load module" .. key) end
-		module.setup(value)
+		if value then
+			local success, module = pcall(require, "fractal.modules." .. key)
+			if not success then print("Failed to load module" .. key) end
+			module.setup(value)
+		end
 	end)
 end
 

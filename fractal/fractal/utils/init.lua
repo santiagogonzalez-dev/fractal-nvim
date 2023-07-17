@@ -3,12 +3,13 @@ local utils = {}
 -- Do not open floating windows if there's already one open
 ---@return boolean @ Returns false if there's a floating window open.
 function utils.not_interfere_on_float()
-	map(vim.api.nvim_tabpage_list_wins(0), function(_, winid)
+	local winids = vim.api.nvim_tabpage_list_wins(0)
+	for _, winid in ipairs(winids) do
 		if vim.api.nvim_win_get_config(winid).zindex then
 			vim.notify("There is a floating window open already", vim.log.levels.WARN)
 			return false
 		end
-	end)
+	end
 
 	return true
 end
@@ -56,9 +57,9 @@ end
 
 function utils.present_in_table(element, T)
 	local val = false
-   for _, value in ipairs(T) do
-      if value == element then val = true end
-   end
+	for _, value in ipairs(T) do
+		if value == element then val = true end
+	end
 	return val
 end
 
@@ -80,9 +81,7 @@ utils.AVOID_FILETYPES = {
 -- If the filetype of the buffer is in the list `utils.AVOID_FILETYPES` this
 -- function will return true.
 ---@return boolean
-function utils.avoid_filetype()
-	return utils.present_in_table(vim.bo.filetype, utils.AVOID_FILETYPES)
-end
+function utils.avoid_filetype() return utils.present_in_table(vim.bo.filetype, utils.AVOID_FILETYPES) end
 
 -- Highlight utils.
 -- TODO(santigo-zero): Move this to a standalone file.
@@ -113,9 +112,7 @@ end
 -- Determines the indentation of a given string.
 ---@param indented_string string
 ---@return integer
-function utils.string_indentation(indented_string)
-	return #indented_string - #string.match(indented_string, "^%s*(.*)")
-end
+function utils.string_indentation(indented_string) return #indented_string - #string.match(indented_string, "^%s*(.*)") end
 
 -- This function takes the value of each elements in a table and returns the
 -- total sum of all this values.

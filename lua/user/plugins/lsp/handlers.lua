@@ -54,11 +54,7 @@ M.on_attach = function(client, bufnr)
 	end
 
 	require("user.plugins.lsp.keymaps").keymaps(bufnr)
-	if
-		client.name ~= "cssls"
-		and client.name ~= "html"
-		and client.server_capabilities.documentHighlightProvider
-	then
+	if client.name ~= "cssls" and client.name ~= "html" and client.server_capabilities.documentHighlightProvider then
 		vim.api.nvim_create_augroup("lsp_document_highlight", {
 			clear = false,
 		})
