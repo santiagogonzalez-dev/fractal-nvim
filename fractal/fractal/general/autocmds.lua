@@ -71,17 +71,13 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function() vim.keymap.set("n", "q", ":q!<CR>", { buffer = 0 }) end,
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	desc = "Trim whitespace on save",
-	group = session_opts,
-	callback = function()
-		if not vim.o.binary and vim.o.filetype ~= "diff" then
-			local current_view = vim.fn.winsaveview()
-			vim.cmd([[keeppatterns %s/\s\+$//e]])
-			return vim.fn.winrestview(current_view)
-		end
-	end,
-})
+vim.api.nvim_create_user_command("RemoveWhitespace", function()
+	if not vim.o.binary and vim.o.filetype ~= "diff" then
+		local current_view = vim.fn.winsaveview()
+		vim.cmd([[keeppatterns %s/\s\+$//e]])
+		return vim.fn.winrestview(current_view)
+	end
+end, {})
 
 vim.api.nvim_create_autocmd("VimResized", {
 	command = "tabdo wincmd =",

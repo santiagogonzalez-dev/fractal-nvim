@@ -1,6 +1,6 @@
 vim.loader.enable()
 
-require("user.not")
+-- require("user.not")
 
 vim.cmd.filetype("off")
 vim.cmd.filetype("plugin indent off")
@@ -8,12 +8,9 @@ vim.cmd.syntax("off")
 vim.opt.shadafile = "NONE"
 
 vim.schedule(function()
-	vim.opt.loadplugins = true
-
-	if not vim.opt.loadplugins:get() then
-		vim.cmd.runtime({ args = "plugin/**/*.lua", bang = true })
-		vim.cmd.runtime({ args = "plugin/**/*.vim", bang = true })
-	end
+	-- vim.opt.loadplugins = true
+	-- vim.cmd.runtime({ cmd = "plugin/**/*.lua", bang = true })
+	-- vim.cmd.runtime({ cmd = "plugin/**/*.vim", bang = true })
 
 	-- Enable filetype settings and shadafile.
 	vim.cmd.filetype("on")

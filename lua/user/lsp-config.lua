@@ -5,7 +5,7 @@ local M = {
 }
 
 local function lsp_keymaps(bufnr)
-	vim.keymap.set("n", "<Leader>i", vim.lsp.buf.implementation, { buffer = bufnr })
+	-- vim.keymap.set("n", "<Leader>i", vim.lsp.buf.implementation, { buffer = bufnr })
 
 	vim.keymap.set(
 		{ "n", "v", "x" },

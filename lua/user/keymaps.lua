@@ -24,20 +24,6 @@ vim.keymap.set("n", "<C-p>", vim.cmd.bprevious, { desc = "Switch to prev buffer"
 vim.keymap.set("n", "<Tab>", vim.cmd.bnext, { desc = "Switch to next buffer" })
 vim.keymap.set("n", "<S-Tab>", vim.cmd.bprevious, { desc = "Switch to prev buffer" })
 
-vim.g.last_accessed_buffer = false
-vim.keymap.set("n", "g<Tab>", function()
-	if vim.g.last_accessed_buffer == false then
-		vim.cmd.bprevious()
-		vim.g.last_accessed_buffer = true
-	else
-		vim.cmd.bnext()
-		vim.g.last_accessed_buffer = false
-	end
-end, { desc = "Switch between two buffers" })
-
-vim.keymap.set("n", "<Leader>ps", vim.cmd.PackerSync, { desc = "Packer: PackerSync" })
-vim.keymap.set("n", "<Leader>pc", "<CMD>PackerCompile profile=true<CR>", { desc = "Packer: PackerCompile" })
-
 vim.keymap.set("n", "'", "`", { desc = "Swap ' with `" })
 vim.keymap.set("n", "''", "`^")
 vim.keymap.set("n", "`", "'", { desc = "Swap ` with '" })
@@ -46,7 +32,7 @@ vim.keymap.set("n", ";", ":", { desc = "Swap ; with :" })
 vim.keymap.set("n", ":", ";", { desc = "Swap : with ;" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Center J" })
-vim.keymap.set("n", "JJ", "i<CR><ESC>", { desc = "Normal <CR> behaviour, opposite to J" })
+-- vim.keymap.set("n", "JJ", "i<CR><ESC>", { desc = "Normal <CR> behaviour, opposite to J" })
 
 vim.keymap.set("n", "<A-n>", vim.cmd.nohlsearch, { desc = "Disable highlight" })
 

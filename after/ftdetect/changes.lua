@@ -1,5 +1,6 @@
 vim.filetype.add({
 	extension = {
+		wgsl = "wgsl",
 		conf = "dosini",
 		config = "dosini",
 		dirs = "dosini",
