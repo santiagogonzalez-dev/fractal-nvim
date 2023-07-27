@@ -35,3 +35,7 @@ You can check them out under `./fractal/fractal/modules`. To use enable them
 from your `fractal.json` you just need to use the same name of the module and
 depending on the `setup()` you can either pass a `true` or a string for mapping
 which make this modules available.
+
+## Plugins
+
+

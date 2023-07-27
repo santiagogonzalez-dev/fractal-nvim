@@ -17,7 +17,7 @@ M.servers = {
 	"yamlls",
 	"marksman",
 	"cssmodules_ls",
-	"emmet_ls",
+	"emmet_language_server",
 	"svelte",
 	"rust_analyzer",
 }

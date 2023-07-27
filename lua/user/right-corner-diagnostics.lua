@@ -1,5 +1,6 @@
 local M = {
-	"santigo-zero/right-corner-diagnostics.nvim",
+	-- "santigo-zero/right-corner-diagnostics.nvim",
+	dir = "/home/st/workspace/repos/right-corner-diagnostics.nvim",
 	event = "LspAttach",
 }
 
