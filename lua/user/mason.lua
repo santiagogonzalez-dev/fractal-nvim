@@ -18,6 +18,7 @@ M.servers = {
 	"marksman",
 	"cssmodules_ls",
 	"emmet_language_server",
+	"astro",
 	"svelte",
 	"rust_analyzer",
 }

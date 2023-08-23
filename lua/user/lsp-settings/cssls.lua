@@ -15,5 +15,6 @@ return {
 	filetypes = {
 		"svelte",
 		"css",
+		"astro",
 	},
 }

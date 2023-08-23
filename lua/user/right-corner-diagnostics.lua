@@ -29,4 +29,5 @@ function M.config()
 		auto_cmds = true,
 	})
 end
+
 return M

@@ -68,22 +68,6 @@ vim.keymap.set({ "n", "v", "x" }, "<Leader>p", '"_dP', { desc = "Paste without o
 
 vim.keymap.set("n", "y<Leader>", "yy", { desc = "Use leader key, avoid double taps" })
 
-vim.keymap.set(
-	"n",
-	"gx",
-	function()
-		vim.fn.jobstart({
-			"xdg-open",
-			vim.fn.expand("<cfile>", nil, nil),
-		}, {
-			detach = true,
-		})
-	end,
-	{
-		desc = "Better gx",
-	}
-)
-
 vim.keymap.set("n", "dd", function() return vim.api.nvim_get_current_line():match("^%s*$") and '"_dd' or "dd" end, {
 	desc = "If the line is blank(empty, or whitespace) do not override the delete register",
 	noremap = true,
@@ -162,7 +146,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.keymap.set("n", "<Leader>e", vim.cmd.EvalYankRegister, { desc = "Eval whatever it is that the yank register has" })
 
-vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>")
+-- vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>")
 
 vim.keymap.set("n", "<A-t>", function()
 	vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 2 and 0 or 2

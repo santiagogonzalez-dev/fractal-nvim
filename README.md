@@ -37,5 +37,3 @@ depending on the `setup()` you can either pass a `true` or a string for mapping
 which make this modules available.
 
 ## Plugins
-
-

@@ -5,14 +5,16 @@ local M = {
 }
 
 local function lsp_keymaps(bufnr)
-	-- vim.keymap.set("n", "<Leader>i", vim.lsp.buf.implementation, { buffer = bufnr })
+	vim.keymap.set("n", "<Leader>i", vim.lsp.buf.implementation, { buffer = bufnr })
 
 	vim.keymap.set(
 		{ "n", "v", "x" },
 		"<Leader>ls",
-		function() return vim.lsp.stop_client(vim.lsp.get_active_clients()) end,
+		function() return vim.lsp.stop_client(vim.lsp.get_clients()) end,
 		{ buffer = bufnr, desc = "Stop the LS" }
 	)
+
+	vim.keymap.set("n", "<Leader>r", vim.cmd.LspRestart, { desc = "Restart the LSP" })
 
 	vim.keymap.set(
 		{ "v", "x" },

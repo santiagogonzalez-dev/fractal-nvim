@@ -145,14 +145,11 @@ function M.config()
 		},
 	})
 
-	pcall(telescope.load_extension, "projects")
-
 	vim.keymap.set("n", "<Leader>gr", "<CMD>Telescope lsp_references theme=dropdown<CR>")
 	vim.keymap.set("n", "<Leader>tf", "<CMD>Telescope find_files<CR>")
-	vim.keymap.set("n", "<Leader>t/", "<CMD>Telescope live_grep theme=dropdown<CR>")
-	vim.keymap.set("n", "<Leader>t//", "<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>")
+	-- vim.keymap.set("n", "<Leader>t/", "<CMD>Telescope live_grep theme=dropdown<CR>")
+	-- vim.keymap.set("n", "<Leader>t//", "<CMD>Telescope current_buffer_fuzzy_find theme=dropdown<CR>")
 	vim.keymap.set("n", "<Leader>tg", "<CMD>Telescope grep_string<CR>")
-	vim.keymap.set("n", "<Leader>tp", "<CMD>Telescope projects<CR>")
 	vim.keymap.set("n", "<Leader>tt", "<CMD>Telescope<CR>")
 end
 
