@@ -145,9 +145,7 @@ vim.api.nvim_create_user_command("FoldMarkdown", function()
 	local next_header = vim.fn.search("^#", "Wn") -- Search for the next header
 
 	-- If a next header is found, fold from current line to the line before the next header
-	if next_header < 0 then
-		return
-	end
+	if next_header < 0 then return end
 
 	vim.cmd(string.format("%d,%dfold", current_line, next_header - 2))
 end, {})

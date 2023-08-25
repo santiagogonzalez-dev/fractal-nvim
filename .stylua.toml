@@ -12,7 +12,7 @@ call_parentheses = "Always"
 # call_parentheses = "None"
 
 # collapse_simple_statement = "Always" # This makes some functions be one liners
-# collapse_simple_statement = "ConditionalOnly"
+collapse_simple_statement = "ConditionalOnly"
 # collapse_simple_statement = "Never"
 # collapse_simple_statement = "FunctionOnly"
 

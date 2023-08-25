@@ -81,9 +81,7 @@ M.config = function()
 
 			-- Navigation
 			map("n", "]c", function()
-				if vim.wo.diff then
-					return "]c"
-				end
+				if vim.wo.diff then return "]c" end
 				vim.schedule(function()
 					gitsigns.next_hunk()
 				end)
@@ -91,9 +89,7 @@ M.config = function()
 			end, { expr = true })
 
 			map("n", "[c", function()
-				if vim.wo.diff then
-					return "[c"
-				end
+				if vim.wo.diff then return "[c" end
 				vim.schedule(function()
 					gitsigns.prev_hunk()
 				end)

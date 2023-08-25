@@ -1,0 +1,5 @@
+require("user.config.settings")
+require("user.config.keymaps")
+require("user.config.gutter")
+require("user.config.hidden-statusline")
+require("user.config.color-recent-line")

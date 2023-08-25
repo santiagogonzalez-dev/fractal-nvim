@@ -75,6 +75,7 @@ end, {
 })
 
 vim.keymap.set({ "n", "v", "x" }, "<Leader>p", '"_dP', { desc = "Paste without overriding the paste register" })
+-- vim.keymap.set({ "n", "v", "x" }, "<Leader>d", '"_dP', { desc = "Paste without overriding the paste register" })
 
 vim.keymap.set("n", "y<Leader>", "yy", { desc = "Use leader key, avoid double taps" })
 
