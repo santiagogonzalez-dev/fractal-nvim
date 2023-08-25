@@ -1,1 +1,1 @@
-dofile(vim.fn.stdpath("config") .. "/fractal/init.lua")
+require("user")

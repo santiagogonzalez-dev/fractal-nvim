@@ -1,5 +1,3 @@
-local utils = require("fractal.utils")
-
 local dead_keys = vim.iter({
 	"<BS>",
 	"<CR>",
@@ -15,8 +13,8 @@ local break_points = vim.iter({ "!", ",", "-", ".", "<CR>", "<Space>", "=", "?",
 break_points:map(function(value) vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u")) end)
 
 -- Remap space as leader key
-vim.g.mapleader = ","
-vim.g.maplocalleader = ","
+vim.g.mapleader = ";"
+vim.g.maplocalleader = ";"
 
 vim.keymap.set("n", "<C-n>", vim.cmd.bnext, { desc = "Switch to next buffer" })
 vim.keymap.set("n", "<C-p>", vim.cmd.bprevious, { desc = "Switch to prev buffer" })
@@ -28,11 +26,14 @@ vim.keymap.set("n", "'", "`", { desc = "Swap ' with `" })
 vim.keymap.set("n", "''", "`^")
 vim.keymap.set("n", "`", "'", { desc = "Swap ` with '" })
 
-vim.keymap.set("n", ";", ":", { desc = "Swap ; with :" })
-vim.keymap.set("n", ":", ";", { desc = "Swap : with ;" })
+-- vim.keymap.set("n", ";", ":", { desc = "Swap ; with :" })
+-- vim.keymap.set("n", ":", ";", { desc = "Swap : with ;" })
+vim.keymap.set("c", "q!", "<CMD>q!<CR>")
+vim.keymap.set("c", "qa", "<CMD>qa<CR>")
+vim.keymap.set("c", "qa!", "<CMD>qa!<CR>")
+vim.keymap.set("c", "wqa", "<CMD>wqa<CR>")
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Center J" })
--- vim.keymap.set("n", "JJ", "i<CR><ESC>", { desc = "Normal <CR> behaviour, opposite to J" })
 
 vim.keymap.set("n", "<A-n>", vim.cmd.nohlsearch, { desc = "Disable highlight" })
 
@@ -56,8 +57,13 @@ vim.keymap.set({ "n", "x", "o" }, "N", '"nN"[v:searchforward]', {
 	desc = "N is always previous",
 })
 
+local function string_indentation(indented_string)
+	local indented_from = #indented_string - #string.match(indented_string, "^%s*(.*)")
+	return indented_from
+end
+
 vim.keymap.set("n", "dD", function()
-	local indentation = utils.string_indentation(vim.api.nvim_get_current_line()) + 1
+	local indentation = string_indentation(vim.api.nvim_get_current_line()) + 1
 	vim.api.nvim_feedkeys("0D", "n", "v:false")
 	vim.api.nvim_feedkeys(string.format("%s|", indentation), "n", "v:false")
 end, {
@@ -124,9 +130,6 @@ vim.keymap.set("n", "<A-q>", vim.cmd.q, {
 	desc = "Quit the same way we exit zsh",
 })
 
-vim.keymap.set("n", "<Leader>q", ":q<CR>")
-vim.keymap.set("n", "<Leader>wqa", ":wqa<CR>")
-
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf",
 	callback = function()
@@ -146,20 +149,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.keymap.set("n", "<Leader>e", vim.cmd.EvalYankRegister, { desc = "Eval whatever it is that the yank register has" })
 
--- vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>")
-
 vim.keymap.set("n", "<A-t>", function()
 	vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 2 and 0 or 2
 	vim.lsp.inlay_hint(0, nil)
-end)
-
-vim.keymap.set("c", "q!", "<CMD>q!<CR>")
-vim.keymap.set("c", "qa", "<CMD>qa<CR>")
-vim.keymap.set("c", "qa!", "<CMD>qa!<CR>")
-vim.keymap.set("c", "wqa", "<CMD>wqa<CR>")
-
--- vim.keymap.set("n", "<m-h>", "<C-w>h")
--- vim.keymap.set("n", "<m-j>", "<C-w>j")
--- vim.keymap.set("n", "<m-k>", "<C-w>k")
--- vim.keymap.set("n", "<m-l>", "<C-w>l")
--- vim.keymap.set("n", "<m-tab>", "<c-6>")
+end) -- test

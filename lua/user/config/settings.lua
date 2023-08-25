@@ -1,61 +1,59 @@
 local opts = vim.iter({
+	breakindent = true,
+	clipboard = "unnamedplus",
+	conceallevel = 2,
+	confirm = true,
+	expandtab = true,
+	grepprg = "rg --hidden --no-heading --vimgrep",
+	ignorecase = true,
+	inccommand = "split",
+	infercase = true,
+	joinspaces = true,
+	lazyredraw = false,
+	linebreak = true,
+	list = true,
+	matchpairs = "(:),{:},[:],<:>",
+	modeline = false,
+	mousefocus = true,
+	mousescroll = "ver:8,hor:8",
+	pumblend = 9,
+	pumheight = 6,
+	scrolloff = 999999,
+	secure = true,
+	shiftround = true,
+	shortmess = "oOstIFS",
+	showbreak = "↪ ",
+	showmode = false,
+	showtabline = 0,
+	sidescrolloff = 8,
 	smartcase = true,
 	smartindent = true,
-	expandtab = true,
+	smoothscroll = true,
+	softtabstop = -1,
+	spell = true,
+	spelllang = "en_us,es_es,es_mx,cjk,de,la",
+	spelloptions = "camel,noplainbuffer",
+	spellsuggest = "best",
 	splitbelow = true,
 	splitright = true,
 	swapfile = false,
 	synmaxcol = 160,
-	conceallevel = 2,
+	tags = "vim.lsp.tagfunc",
+	textwidth = 80,
 	timeoutlen = 600,
 	undofile = true,
 	undolevels = 6000,
 	updatetime = 30,
 	virtualedit = "all",
 	whichwrap = "<,>,[,],h,l,b,s,~",
-	tags = "vim.lsp.tagfunc",
 	winblend = 9,
-	pumblend = 9,
-	list = true,
-	textwidth = 80,
-	confirm = true,
-	softtabstop = -1,
-	scrolloff = 999999,
-	grepprg = "rg --hidden --no-heading --vimgrep",
-	clipboard = "unnamedplus",
-	ignorecase = true,
-	inccommand = "split",
-	infercase = true,
-	joinspaces = true,
-	matchpairs = "(:),{:},[:],<:>",
-	diffopt = "foldcolumn:0,hiddenoff,vertical",
-	lazyredraw = false,
-	mousefocus = true,
-	mousescroll = "ver:8,hor:8",
-	modeline = false,
-	sidescrolloff = 8,
-	secure = true,
-	shiftround = true,
-	shortmess = "oOstIFS",
-	pumheight = 6,
 	wrap = false,
-	breakindent = true,
-	linebreak = true,
-	showbreak = "↪ ",
-	-- showbreak = string.rep(" ", 3),
-	showmode = false,
-	showtabline = 0,
-	smoothscroll = true,
-	spell = true,
-	spelllang = "en,es,de,cjk",
-	spelloptions = "camel,noplainbuffer",
-	spellsuggest = "best",
-	-- hidden = false,
 })
 
-opts:any(function(settings, value) vim.opt[settings] = value end)
+opts:any(function(settings, value)
+	vim.opt[settings] = value
+end)
 
--- Settings for non-visible characters
 vim.opt.fillchars:append({
 	eob = "␃",
 	-- msgsep = "🮑", -- Separator for cmdline
@@ -111,39 +109,43 @@ vim.opt.formatoptions = vim.opt.formatoptions + "r" + "c" + "q" + "j" - "o" - "l
 
 vim.opt.cpoptions = vim.opt.cpoptions + "n"
 
-local function eval_unnamed_register() vim.cmd.lua(vim.fn.getreg('"')) end
+local function eval_unnamed_register()
+	vim.cmd.lua(vim.fn.getreg('"'))
+end
 vim.api.nvim_create_user_command("EvalYankRegister", eval_unnamed_register, {})
 
-vim.api.nvim_create_autocmd({
-	"WinLeave",
-	"BufLeave",
-	"FocusLost",
-	"InsertLeave",
-}, {
-	callback = function()
-		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
-			vim.api.nvim_command("silent update")
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd({
+-- 	"WinLeave",
+-- 	"BufLeave",
+-- 	"FocusLost",
+-- 	"InsertLeave",
+-- }, {
+-- 	callback = function()
+-- 		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+-- 			vim.api.nvim_command("silent update")
+-- 		end
+-- 	end,
+-- })
 
-vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
-	-- There's vim.opt.autowrite vim.opt.autowritell but they are not exactly
-	-- what I want.
-	desc = "Auto save when leaving the nvim window",
-	callback = function()
-		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
-			vim.api.nvim_command("silent update")
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
+-- 	-- There's vim.opt.autowrite vim.opt.autowritell but they are not exactly
+-- 	-- what I want.
+-- 	desc = "Auto save when leaving the nvim window",
+-- 	callback = function()
+-- 		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+-- 			vim.api.nvim_command("silent update")
+-- 		end
+-- 	end,
+-- })
 
 vim.api.nvim_create_user_command("FoldMarkdown", function()
 	local current_line = vim.fn.line(".") -- Get current line number
 	local next_header = vim.fn.search("^#", "Wn") -- Search for the next header
 
 	-- If a next header is found, fold from current line to the line before the next header
-	if next_header < 0 then return end
+	if next_header < 0 then
+		return
+	end
 
 	vim.cmd(string.format("%d,%dfold", current_line, next_header - 2))
 end, {})
@@ -171,3 +173,4 @@ local tab_out = function()
 end
 
 vim.keymap.set("i", "<C-l>", tab_out, { noremap = true, silent = true })
+vim.g.colorscheme = 'jetjbp'
