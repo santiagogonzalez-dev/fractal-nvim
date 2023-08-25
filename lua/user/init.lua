@@ -13,5 +13,6 @@ spec("user.modules.comment")
 spec("user.modules.surround")
 spec("user.modules.accelerated-jk")
 spec("user.modules.treesitter")
+spec("user.modules.harpoon")
 
 require("user.lazy")
