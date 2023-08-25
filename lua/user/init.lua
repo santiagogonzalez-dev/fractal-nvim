@@ -16,5 +16,7 @@ spec("user.modules.harpoon")
 spec("user.modules.telescope")
 spec("user.modules.gitsigns")
 spec("user.modules.project")
+spec("user.modules.cmp")
+spec("user.modules.colorizer")
 
 require("user.lazy")

@@ -95,9 +95,9 @@ vim.api.nvim_create_autocmd("VimResized", {
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function() 
-      vim.highlight.on_yank({ higroup = "Visual", timeout = 600 })
-   end,
+	callback = function()
+		vim.highlight.on_yank({ higroup = "Visual", timeout = 600 })
+	end,
 	desc = "Highlight on yank",
 	group = session_opts,
 })
