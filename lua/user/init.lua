@@ -18,5 +18,6 @@ spec("user.modules.gitsigns")
 spec("user.modules.project")
 spec("user.modules.cmp")
 spec("user.modules.colorizer")
+spec("user.modules.lsp-config")
 
 require("user.lazy")
