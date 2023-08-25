@@ -1,4 +1,5 @@
 local utils = require("utils")
+
 local M = {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
@@ -151,7 +152,7 @@ function M.config()
 			capabilities = M.common_capabilities(),
 		}
 
-		local require_ok, settings = pcall(require, "user.module.lsp-settings." .. server)
+		local require_ok, settings = pcall(require, "user.modules.lsp-settings." .. server)
 		if require_ok then opts = vim.tbl_deep_extend("force", settings, opts) end
 
 		lspconfig[server].setup(opts)
