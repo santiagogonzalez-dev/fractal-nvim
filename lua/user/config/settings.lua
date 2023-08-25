@@ -22,7 +22,7 @@ local opts = vim.iter({
 	secure = true,
 	shiftround = true,
 	shiftwidth = 3, -- Default size of a > or < when indenting
-	shortmess = "oOstIFS",
+	shortmess = "oOstIFSmnrw",
 	showbreak = "↪ ",
 	showmode = false,
 	showtabline = 0,
@@ -107,7 +107,7 @@ vim.opt.listchars:append({
 
 vim.fn.matchadd("ErrorMsg", "\\s\\+$")
 
-vim.opt.formatoptions = vim.opt.formatoptions + "r" + "c" + "q" + "j" - "o" - "l"
+vim.opt.formatoptions = vim.opt.formatoptions + "r" + "c" + "q" + "j" - "o" - "l" - "t"
 
 vim.opt.cpoptions = vim.opt.cpoptions + "n"
 
