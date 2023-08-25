@@ -22,7 +22,7 @@ local M = {
 }
 
 function M.config()
-	local icons = require("user.icons")
+	local icons = require("user.modules.icons")
 	local actions = require("telescope.actions")
 	local telescope = require("telescope")
 	local previewers_utils = require("telescope.previewers.utils")

@@ -2,7 +2,6 @@ vim.loader.enable()
 
 require("user.launch")
 
-require("user.modules.icons")
 spec("user.modules.devicons")
 
 require("user.config.settings")
