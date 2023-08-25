@@ -14,5 +14,6 @@ spec("user.modules.surround")
 spec("user.modules.accelerated-jk")
 spec("user.modules.treesitter")
 spec("user.modules.harpoon")
+spec("user.modules.telescope")
 
 require("user.lazy")

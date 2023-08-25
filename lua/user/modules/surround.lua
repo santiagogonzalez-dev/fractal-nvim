@@ -1,6 +1,5 @@
 local M = {
 	"kylechui/nvim-surround",
-	event = "User FractalEnd",
 }
 
 function M.config()

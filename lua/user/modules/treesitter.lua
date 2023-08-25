@@ -1,7 +1,6 @@
 local M = {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	event = "User FractalEnd",
 	dependencies = {
 		{
 			"nvim-treesitter/nvim-treesitter-textobjects",
