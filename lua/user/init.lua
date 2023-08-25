@@ -3,7 +3,6 @@ vim.loader.enable()
 require("user.config.settings")
 require("user.config.keymaps")
 require("user.config.gutter")
--- require("user.config.statusline")
 require("user.config.hidden-statusline")
 
 require("user.launch")
