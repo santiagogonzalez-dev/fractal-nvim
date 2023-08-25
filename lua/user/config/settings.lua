@@ -21,6 +21,7 @@ local opts = vim.iter({
 	scrolloff = 999999,
 	secure = true,
 	shiftround = true,
+	shiftwidth = 3, -- Default size of a > or < when indenting
 	shortmess = "oOstIFS",
 	showbreak = "↪ ",
 	showmode = false,
@@ -38,6 +39,7 @@ local opts = vim.iter({
 	splitright = true,
 	swapfile = false,
 	synmaxcol = 160,
+	tabstop = 3, -- Default tab length
 	tags = "vim.lsp.tagfunc",
 	textwidth = 80,
 	timeoutlen = 600,
@@ -60,26 +62,25 @@ vim.opt.fillchars:append({
 	msgsep = "⸻",
 })
 
--- Window separators
-vim.opt.fillchars:append({
-	horiz = "━",
-	horizup = "┻",
-	horizdown = "┳",
-	vert = "┃",
-	vertleft = "┫",
-	vertright = "┣",
-	verthoriz = "╋",
-})
-
 -- vim.opt.fillchars:append({
--- 	horiz = "─",
--- 	horizup = "┴",
--- 	horizdown = "┬",
--- 	vert = "│",
--- 	vertleft = "┤",
--- 	vertright = "├",
--- 	verthoriz = "┼",
+-- 	horiz = "━",
+-- 	horizup = "┻",
+-- 	horizdown = "┳",
+-- 	vert = "┃",
+-- 	vertleft = "┫",
+-- 	vertright = "┣",
+-- 	verthoriz = "╋",
 -- })
+
+vim.opt.fillchars:append({
+	horiz = "─",
+	horizup = "┴",
+	horizdown = "┬",
+	vert = "│",
+	vertleft = "┤",
+	vertright = "├",
+	verthoriz = "┼",
+})
 
 -- vim.opt.fillchars:append({
 -- 	horiz = ' ',
@@ -98,7 +99,8 @@ vim.opt.listchars:append({
 	nbsp = "␣",
 	precedes = "◢",
 	multispace = "󱦰  ",
-	tab = "󱦰  ",
+	-- tab = "󱦰  ",
+	tab = " 󱦰 ",
 	leadmultispace = "󱦰   ",
 	trail = "█", -- · ␣
 })
@@ -114,29 +116,29 @@ local function eval_unnamed_register()
 end
 vim.api.nvim_create_user_command("EvalYankRegister", eval_unnamed_register, {})
 
--- vim.api.nvim_create_autocmd({
--- 	"WinLeave",
--- 	"BufLeave",
--- 	"FocusLost",
--- 	"InsertLeave",
--- }, {
--- 	callback = function()
--- 		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
--- 			vim.api.nvim_command("silent update")
--- 		end
--- 	end,
--- })
+vim.api.nvim_create_autocmd({
+	"WinLeave",
+	"BufLeave",
+	"FocusLost",
+	"InsertLeave",
+}, {
+	callback = function()
+		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+			vim.api.nvim_command("silent update")
+		end
+	end,
+})
 
--- vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
--- 	-- There's vim.opt.autowrite vim.opt.autowritell but they are not exactly
--- 	-- what I want.
--- 	desc = "Auto save when leaving the nvim window",
--- 	callback = function()
--- 		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
--- 			vim.api.nvim_command("silent update")
--- 		end
--- 	end,
--- })
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
+	-- There's vim.opt.autowrite vim.opt.autowritell but they are not exactly
+	-- what I want.
+	desc = "Auto save when leaving the nvim window",
+	callback = function()
+		if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
+			vim.api.nvim_command("silent update")
+		end
+	end,
+})
 
 vim.api.nvim_create_user_command("FoldMarkdown", function()
 	local current_line = vim.fn.line(".") -- Get current line number

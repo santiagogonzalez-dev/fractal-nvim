@@ -17,5 +17,6 @@ spec("user.modules.accelerated-jk")
 spec("user.modules.treesitter")
 spec("user.modules.harpoon")
 spec("user.modules.telescope")
+spec("user.modules.gitsigns")
 
 require("user.lazy")
