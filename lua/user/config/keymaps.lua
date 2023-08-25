@@ -7,10 +7,14 @@ local dead_keys = vim.iter({
 	"<Space>",
 	"<Up>",
 })
-dead_keys:map(function(value) vim.keymap.set({ "n", "v", "x" }, value, "<Nop>") end)
+dead_keys:map(function(value)
+	vim.keymap.set({ "n", "v", "x" }, value, "<Nop>")
+end)
 
 local break_points = vim.iter({ "!", ",", "-", ".", "<CR>", "<Space>", "=", "?", "_" })
-break_points:map(function(value) vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u")) end)
+break_points:map(function(value)
+	vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u"))
+end)
 
 -- Remap space as leader key
 vim.g.mapleader = ";"
@@ -74,7 +78,9 @@ vim.keymap.set({ "n", "v", "x" }, "<Leader>p", '"_dP', { desc = "Paste without o
 
 vim.keymap.set("n", "y<Leader>", "yy", { desc = "Use leader key, avoid double taps" })
 
-vim.keymap.set("n", "dd", function() return vim.api.nvim_get_current_line():match("^%s*$") and '"_dd' or "dd" end, {
+vim.keymap.set("n", "dd", function()
+	return vim.api.nvim_get_current_line():match("^%s*$") and '"_dd' or "dd"
+end, {
 	desc = "If the line is blank(empty, or whitespace) do not override the delete register",
 	noremap = true,
 	expr = true,
@@ -133,14 +139,13 @@ vim.keymap.set("n", "<A-q>", vim.cmd.q, {
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf",
 	callback = function()
-		vim.keymap.set(
-			"n",
-			"<C-]>",
-			function() return ":cn" end,
-			{ buffer = 0, desc = "Go to next item in quickfix list" }
-		)
+		vim.keymap.set("n", "<C-]>", function()
+			return ":cn"
+		end, { buffer = 0, desc = "Go to next item in quickfix list" })
 
-		vim.keymap.set("n", "<C-[>", function() return ":cp" end, {
+		vim.keymap.set("n", "<C-[>", function()
+			return ":cp"
+		end, {
 			buffer = 0,
 			desc = "Go to previous item in quickfix list",
 		})

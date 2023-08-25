@@ -173,4 +173,4 @@ local tab_out = function()
 end
 
 vim.keymap.set("i", "<C-l>", tab_out, { noremap = true, silent = true })
-vim.g.colorscheme = 'jetjbp'
+vim.g.colorscheme = "jetjbp"
