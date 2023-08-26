@@ -1,4 +1,4 @@
-local readable = require("fractal.utils").readable
+local readable = require("utils").readable
 local tab_lenght = 3
 vim.opt_local.tabstop = tab_lenght
 vim.opt_local.shiftwidth = tab_lenght
