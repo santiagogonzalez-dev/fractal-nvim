@@ -2,6 +2,7 @@ local opts = vim.iter({
 	breakindent = true,
 	clipboard = "unnamedplus",
 	conceallevel = 2,
+	concealcursor = 'n',
 	confirm = true,
 	expandtab = true,
 	grepprg = "rg --hidden --no-heading --vimgrep",

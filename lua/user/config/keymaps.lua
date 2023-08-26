@@ -27,7 +27,6 @@ vim.keymap.set("n", "<Tab>", vim.cmd.bnext, { desc = "Switch to next buffer" })
 vim.keymap.set("n", "<S-Tab>", vim.cmd.bprevious, { desc = "Switch to prev buffer" })
 
 vim.keymap.set("n", "'", "`", { desc = "Swap ' with `" })
-vim.keymap.set("n", "''", "`^")
 vim.keymap.set("n", "`", "'", { desc = "Swap ` with '" })
 
 -- vim.keymap.set("n", ";", ":", { desc = "Swap ; with :" })
@@ -59,19 +58,6 @@ vim.keymap.set({ "n", "x", "o" }, "n", '"Nn"[v:searchforward]', {
 vim.keymap.set({ "n", "x", "o" }, "N", '"nN"[v:searchforward]', {
 	expr = true,
 	desc = "N is always previous",
-})
-
-local function string_indentation(indented_string)
-	local indented_from = #indented_string - #string.match(indented_string, "^%s*(.*)")
-	return indented_from
-end
-
-vim.keymap.set("n", "dD", function()
-	local indentation = string_indentation(vim.api.nvim_get_current_line()) + 1
-	vim.api.nvim_feedkeys("0D", "n", "v:false")
-	vim.api.nvim_feedkeys(string.format("%s|", indentation), "n", "v:false")
-end, {
-	desc = "Middle ground between dd and S or cc",
 })
 
 vim.keymap.set({ "n", "v", "x" }, "<Leader>p", '"_dP', { desc = "Paste without overriding the paste register" })
