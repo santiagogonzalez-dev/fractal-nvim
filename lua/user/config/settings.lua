@@ -8,7 +8,6 @@ local opts = vim.iter({
 	ignorecase = true,
 	inccommand = "split",
 	infercase = true,
-	joinspaces = true,
 	lazyredraw = false,
 	linebreak = true,
 	list = true,
@@ -48,7 +47,7 @@ local opts = vim.iter({
 	undofile = true,
 	undolevels = 6000,
 	updatetime = 30,
-	virtualedit = "all",
+	virtualedit = "block", -- all
 	whichwrap = "<,>,[,],h,l,b,s,~",
 	winblend = 9,
 	wrap = false,
@@ -93,6 +92,9 @@ vim.opt.fillchars:append({
 -- 	vertright = ' ',
 -- 	verthoriz = ' ',
 -- })
+--
+
+vim.opt.jumpoptions:append("view")
 
 vim.opt.listchars:append({
 	-- eol = '↴', -- ↪ ↲ ⏎ 
@@ -109,7 +111,16 @@ vim.opt.listchars:append({
 
 vim.fn.matchadd("ErrorMsg", "\\s\\+$")
 
-vim.opt.formatoptions = vim.opt.formatoptions + "r" + "c" + "q" + "j" - "o" - "l" - "t"
+-- vim.opt.formatoptions = vim.opt.formatoptions + "r" + "c" + "q" + "j" - "o" - "l" - "t"
+vim.opt.formatoptions = vim.opt.formatoptions
+	+ "r" -- continue comments after return
+	+ "c" -- wrap comments using textwidth
+	+ "q" -- allow to format comments w/ gq
+	+ "j" -- remove comment leader when joining lines when possible
+	- "t" -- don't autoformat
+	- "a" -- no autoformatting
+	- "o" -- don't continue comments after o/O
+	- "2" -- don't use indent of second line for rest of paragraph
 
 vim.opt.cpoptions = vim.opt.cpoptions + "n"
 
