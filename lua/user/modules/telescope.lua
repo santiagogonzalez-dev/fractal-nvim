@@ -1,14 +1,6 @@
 local M = {
 	"nvim-telescope/telescope.nvim",
-	dependencies = {
-		{ "nvim-lua/plenary.nvim" },
-		{
-			"nvim-telescope/telescope-fzf-native.nvim",
-			build = "make",
-			lazy = true,
-		},
-	},
-	lazy = true,
+	event = "VeryLazy",
 	cmd = "Telescope",
 	keys = {
 		"<Leader>gr",
@@ -18,6 +10,14 @@ local M = {
 		"<Leader>tg",
 		"<Leader>tp",
 		"<Leader>tt",
+	},
+	dependencies = {
+		{ "nvim-lua/plenary.nvim" },
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+			lazy = true,
+		},
 	},
 }
 

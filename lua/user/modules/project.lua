@@ -1,5 +1,6 @@
 local M = {
 	"ahmedkhalf/project.nvim",
+	event = "VeryLazy",
 	module = true,
 }
 
