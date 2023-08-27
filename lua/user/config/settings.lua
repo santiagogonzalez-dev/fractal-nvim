@@ -164,7 +164,7 @@ vim.api.nvim_create_user_command("FoldMarkdown", function()
 end, {})
 
 local tab_out = function()
-	local closers = { ")", "]", "}", ">", "'", '"', "`", "," }
+	local closers = { ")", "]", "}", ">", "'", '"', "`", ",", "=" }
 	local line = vim.api.nvim_get_current_line()
 	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
 	local after = line:sub(col + 1, -1)

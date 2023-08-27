@@ -28,6 +28,7 @@ vim.g.netrw_browse_split = 4
 vim.g.netrw_localcopydircmd = "cp -r" -- Enable recursive copy of directories
 vim.g.netrw_localmkdir = "mkdir -p" -- Enable recursive creation of directories
 vim.g.netrw_localrmdir = "rm -r" -- Enable recursive removal of directories and files
+vim.g.netrw_altv = 1
 
 -- Highlight marked files in the same way search matches are
 vim.api.nvim_set_hl(0, "netrwMarkFile", { link = "Search" })
