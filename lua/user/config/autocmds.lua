@@ -118,3 +118,10 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 		vim.opt.mouse = mouse_original_value
 	end,
 })
+
+-- from https://github.com/omega-nvim/omega-nvim
+vim.api.nvim_create_autocmd({"WinEnter", "BufEnter" }, {
+	callback = function(data)
+		require("user.config.highlight_undo").setup(data.buf)
+	end,
+})
