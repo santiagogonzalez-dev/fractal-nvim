@@ -6,9 +6,11 @@ function M.hide_completely()
 	return vim.fn["repeat"](expr, sign)
 end
 
-vim.opt.statusline = '%{%v:lua.require("user.config.hidden-statusline").hide_completely()%}'
-vim.opt.laststatus = 0
-vim.opt.cmdheight = 0
-vim.opt.ruler = false
+function M.setup()
+	vim.opt.statusline = '%{%v:lua.require("user.config.hidden-statusline").hide_completely()%}'
+	vim.opt.laststatus = 0
+	vim.opt.cmdheight = 0
+	vim.opt.ruler = false
+end
 
 return M

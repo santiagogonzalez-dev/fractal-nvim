@@ -145,7 +145,7 @@ function utils.readable(filepath)
 end
 
 -- Wrapper around `vim.fn.filewritable`.
----@param filename string
+---@param filename string|string[]
 ---@param as_string? boolean
 ---@return integer|string
 function utils.writable(filename, as_string)
