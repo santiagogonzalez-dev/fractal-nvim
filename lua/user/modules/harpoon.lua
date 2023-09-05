@@ -10,7 +10,7 @@ function M.config()
 	vim.keymap.set("n", "<Leader>h", require("harpoon.mark").add_file)
 	vim.keymap.set("n", "<Leader>ho", require("harpoon.ui").toggle_quick_menu)
 
-	-- Because I use dvorak
+	-- Because I use Dvorak
 	vim.keymap.set("n", "<C-h>", function()
 		require("harpoon.ui").nav_file(1)
 	end)

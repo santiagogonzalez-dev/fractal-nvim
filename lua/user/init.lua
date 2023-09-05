@@ -4,7 +4,7 @@ require("user.launch")
 
 require("user.config")
 spec("user.modules.colorscheme")
-spec("user.modules.rcd")
+-- spec("user.modules.rcd")
 
 spec("user.modules.devicons")
 spec("user.modules.comment")

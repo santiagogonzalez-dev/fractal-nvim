@@ -4,9 +4,13 @@ vim.opt_local.shiftwidth = tab_lenght
 vim.opt_local.colorcolumn = "80,81"
 vim.opt_local.textwidth = 0
 vim.opt_local.colorcolumn = "0"
-vim.opt_local.conceallevel = 2
-vim.opt_local.concealcursor = "n"
+vim.opt_local.conceallevel = 0
+-- vim.opt_local.concealcursor = "n"
 vim.opt_local.wrap = true
+
+vim.opt.listchars:append({
+	multispace = "   ",
+})
 
 ---@diagnostic disable: param-type-mismatch
 vim.keymap.set("n", "<CR>", function()

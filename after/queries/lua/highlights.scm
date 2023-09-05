@@ -123,7 +123,7 @@
 (("return" @keyword.return) (#set! "priority" 130))
 ; (("return" @keyword) (#set! conceal ""))
 ; (("then" @keyword) (#set! conceal ""))
-(("function" @keyword) (#set! conceal ""))
+; (("function" @keyword) (#set! conceal ""))
 ; (("not" @operator) (#set! conceal ""))
 ; (("if" @conditional) (#set! conceal ""))
 ; (("for" @repeat) (#set! conceal ""))

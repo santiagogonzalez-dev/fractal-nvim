@@ -115,28 +115,9 @@ vim.keymap.set("c", "<C-j>", "<Down>", {
 vim.keymap.set("c", "<C-k>", "<Up>", {
 	desc = "Better history cmdline navigation",
 })
+
 vim.keymap.set("c", "wqa", vim.cmd.wqa, {
 	desc = "Write all and quit without hitting <CR>",
-})
-
-vim.keymap.set("n", "<A-q>", vim.cmd.q, {
-	desc = "Quit the same way we exit zsh",
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "qf",
-	callback = function()
-		vim.keymap.set("n", "<C-]>", function()
-			return ":cn"
-		end, { buffer = 0, desc = "Go to next item in quickfix list" })
-
-		vim.keymap.set("n", "<C-[>", function()
-			return ":cp"
-		end, {
-			buffer = 0,
-			desc = "Go to previous item in quickfix list",
-		})
-	end,
 })
 
 vim.keymap.set("n", "<Leader>e", vim.cmd.EvalYankRegister, { desc = "Eval whatever it is that the yank register has" })
