@@ -8,7 +8,8 @@ local log_level_to_urgency = {
 	[1] = "low",
 	[2] = "low",
 	[3] = "normal",
-	[4] = "critical",
+	-- [4] = "critical",
+	[4] = "normal",
 }
 
 -- Send notifications through the `notify-send` command line application.

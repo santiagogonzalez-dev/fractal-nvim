@@ -20,5 +20,6 @@ spec("user.modules.mason")
 spec("user.modules.lsp-config")
 spec("user.modules.cmp")
 spec("user.modules.colorizer")
+spec("user.modules.vimtex")
 
 require("user.lazy")
