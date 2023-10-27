@@ -1,61 +1,61 @@
-local opts = vim.iter({
-	breakindent = true,
-	clipboard = "unnamedplus",
-	conceallevel = 2,
-	confirm = true,
-	expandtab = true,
-	grepprg = "rg --hidden --no-heading --vimgrep",
-	ignorecase = true,
-	inccommand = "split",
-	infercase = true,
-	lazyredraw = false,
-	linebreak = true,
-	list = true,
-	matchpairs = "(:),{:},[:],<:>",
-	modeline = false,
-	mousefocus = true,
-	mousescroll = "ver:8,hor:8",
-	pumblend = 9,
-	pumheight = 6,
-	scrolloff = 999999,
-	secure = true,
-	shiftround = true,
-	cursorline = true,
-	cursorcolumn = true,
-	shiftwidth = 3, -- Default size of a > or < when indenting
-	shortmess = "oOstIFSmnrw",
-	showbreak = "↪ ",
-	showmode = false,
-	showtabline = 0,
-	sidescrolloff = 8,
-	smartcase = true,
-	smartindent = true,
-	smoothscroll = true,
-	softtabstop = -1,
-	spell = true,
-	spelllang = "en_us,es_es,es_mx,cjk,de,la",
-	spelloptions = "camel,noplainbuffer",
-	spellsuggest = "best",
-	splitbelow = true,
-	splitright = true,
-	swapfile = false,
-	synmaxcol = 160,
-	tabstop = 3, -- Default tab length
-	tags = "vim.lsp.tagfunc",
-	textwidth = 80,
-	timeoutlen = 600,
-	undofile = true,
-	undolevels = 6000,
-	updatetime = 30,
-	virtualedit = "all", -- all block
-	whichwrap = "<,>,[,],h,l,b,s,~",
-	winblend = 9,
-	wrap = false,
-})
+-- local opts = vim.iter({
+vim.opt.breakindent = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.conceallevel = 2
+vim.opt.confirm = true
+vim.opt.expandtab = true
+vim.opt.grepprg = "rg --hidden --no-heading --vimgrep"
+vim.opt.ignorecase = true
+vim.opt.inccommand = "split"
+vim.opt.infercase = true
+vim.opt.lazyredraw = false
+vim.opt.linebreak = true
+vim.opt.list = true
+vim.opt.matchpairs = "(:),{:},[:],<:>"
+vim.opt.modeline = false
+vim.opt.mousefocus = true
+vim.opt.mousescroll = "ver:8,hor:8"
+vim.opt.pumblend = 9
+vim.opt.pumheight = 6
+vim.opt.scrolloff = 999999
+vim.opt.secure = true
+vim.opt.shiftround = true
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
+vim.opt.shiftwidth = 3 -- Default size of a > or < when indenting
+vim.opt.shortmess = "oOstIFSmnrw"
+vim.opt.showbreak = "↪ "
+vim.opt.showmode = false
+vim.opt.showtabline = 0
+vim.opt.sidescrolloff = 8
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+-- vim.opt.smoothscroll = true
+vim.opt.softtabstop = -1
+vim.opt.spell = true
+vim.opt.spelllang = "en_us,es_es,es_mx,cjk,de,la"
+vim.opt.spelloptions = "camel,noplainbuffer"
+vim.opt.spellsuggest = "best"
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.swapfile = false
+vim.opt.synmaxcol = 160
+vim.opt.tabstop = 3 -- Default tab length
+vim.opt.tags = "vim.lsp.tagfunc"
+vim.opt.textwidth = 80
+vim.opt.timeoutlen = 600
+vim.opt.undofile = true
+vim.opt.undolevels = 6000
+vim.opt.updatetime = 30
+vim.opt.virtualedit = "all" -- all bloc
+vim.opt.whichwrap = "<,>,[,],h,l,b,s,~"
+vim.opt.winblend = 9
+vim.opt.wrap = false
+-- })
 
-opts:any(function(settings, value)
-	vim.opt[settings] = value
-end)
+-- opts:any(function(settings, value)
+-- 	vim.opt[settings] = value
+-- end)
 
 vim.opt.fillchars:append({
 	eob = "␃",
@@ -142,7 +142,7 @@ vim.api.nvim_create_autocmd({
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave", "FocusLost" }, {
+vim.api.nvim_create_autocmd({ "CmdlineEnter", "WinLeave", "BufLeave", "FocusLost" }, {
 	-- There's vim.opt.autowrite vim.opt.autowritell but they are not exactly
 	-- what I want.
 	desc = "Auto save when leaving the nvim window",

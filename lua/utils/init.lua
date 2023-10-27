@@ -140,7 +140,7 @@ function utils.sum_elements(T)
 end
 
 function utils.readable(filepath)
-	local stat = vim.uv.fs_stat(filepath)
+	local stat = vim.loop.fs_stat(filepath)
 	return stat and stat.type == "file" and stat.mode and bit.band(stat.mode, 292) > 0
 end
 

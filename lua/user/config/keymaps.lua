@@ -1,20 +1,29 @@
-local dead_keys = vim.iter({
-	"<BS>",
-	"<CR>",
-	"<Down>",
-	"<Left>",
-	"<Right>",
-	"<Space>",
-	"<Up>",
-})
-dead_keys:map(function(value)
-	vim.keymap.set({ "n", "v", "x" }, value, "<Nop>")
-end)
+-- local dead_keys = vim.iter({
+vim.keymap.set({ "n", "v", "x" }, "<BS>", "<Nop>")
+vim.keymap.set({ "n", "v", "x" }, "<CR>", "<Nop>")
+vim.keymap.set({ "n", "v", "x" }, "<Down>", "<Nop>")
+vim.keymap.set({ "n", "v", "x" }, "<Left>", "<Nop>")
+vim.keymap.set({ "n", "v", "x" }, "<Right>", "<Nop>")
+vim.keymap.set({ "n", "v", "x" }, "<Space>", "<Nop>")
+vim.keymap.set({ "n", "v", "x" }, "<Up>", "<Nop>")
+-- })
+-- dead_keys:map(function(value)
+-- 	vim.keymap.set({ "n", "v", "x" }, value, "<Nop>")
+-- end)
 
-local break_points = vim.iter({ "!", ",", "-", ".", "<CR>", "<Space>", "=", "?", "_" })
-break_points:map(function(value)
-	vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u"))
-end)
+-- local break_points = vim.iter({ "!", ",", "-", ".", "<CR>", "<Space>", "=", "?", "_" })
+-- break_points:map(function(value)
+-- 	vim.keymap.set("i", value, string.format("%s%s", value, "<C-g>u"))
+-- end)
+vim.keymap.set("i", "!", "!<C-g>u")
+vim.keymap.set("i", ",", "!<C-g>u")
+vim.keymap.set("i", "-", "!<C-g>u")
+vim.keymap.set("i", ".", "!<C-g>u")
+vim.keymap.set("i", "<CR>", "!<C-g>u")
+vim.keymap.set("i", "<Space>", "!<C-g>u")
+vim.keymap.set("i", "=", "!<C-g>u")
+vim.keymap.set("i", "?", "!<C-g>u")
+vim.keymap.set("i", "_", "!<C-g>u")
 
 -- Remap space as leader key
 vim.g.mapleader = ";"
