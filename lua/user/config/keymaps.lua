@@ -19,11 +19,11 @@ vim.keymap.set("i", "!", "!<C-g>u")
 vim.keymap.set("i", ",", "!<C-g>u")
 vim.keymap.set("i", "-", "!<C-g>u")
 vim.keymap.set("i", ".", "!<C-g>u")
-vim.keymap.set("i", "<CR>", "!<C-g>u")
-vim.keymap.set("i", "<Space>", "!<C-g>u")
-vim.keymap.set("i", "=", "!<C-g>u")
-vim.keymap.set("i", "?", "!<C-g>u")
-vim.keymap.set("i", "_", "!<C-g>u")
+vim.keymap.set("i", "<CR>", "<CR><C-g>u")
+vim.keymap.set("i", "<Space>", "<Space><C-g>u")
+vim.keymap.set("i", "=", "=<C-g>u")
+vim.keymap.set("i", "?", "?<C-g>u")
+vim.keymap.set("i", "_", "_<C-g>u")
 
 -- Remap space as leader key
 vim.g.mapleader = ";"

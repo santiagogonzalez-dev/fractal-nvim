@@ -14,5 +14,7 @@ vim.filetype.add({
 		["tsconfig.json"] = "jsonc",
 
 		[".prettierignore"] = "dosini",
+
+      ["!"]
 	},
 })
