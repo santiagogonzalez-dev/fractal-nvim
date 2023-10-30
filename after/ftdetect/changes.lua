@@ -15,6 +15,7 @@ vim.filetype.add({
 
 		[".prettierignore"] = "dosini",
 
-      ["!"]
+		[".justfile"] = "make",
+		["Justfile"] = "make",
 	},
 })
