@@ -12,10 +12,6 @@ local M = {
 			event = "VeryLazy",
 		},
 		{
-			"JoosepAlviste/nvim-ts-context-commentstring",
-			event = "VeryLazy",
-		},
-		{
 			"nvim-treesitter/playground",
 			cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" },
 			keys = "<Leader>tsh",
@@ -69,7 +65,6 @@ function M.config()
 				"latex",
 			},
 		},
-		context_commentstring = { enable = true, enable_autocmd = false },
 		indent = { enable = true, disable = { "yaml", "python" } },
 		autopairs = { enable = true },
 		autotag = {
